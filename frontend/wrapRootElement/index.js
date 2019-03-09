@@ -1,18 +1,13 @@
 import { compose } from 'lodash/fp'
-import redux from './redux'
 import script from './script'
-import mui from './mui'
-import notistack from './notistack'
+import devTools from './devtools'
 
 export default element => {
-  // don't wrap react-admin
-  if (element.props.location.pathname.startsWith((process.env.GATSBY_PATH_PREFIX || '') + '/admin/')) {
+  if (element.props.noWrap) {
     return element
   }
   return compose(
-    redux,
+    devTools,
     script,
-    mui,
-    notistack,
   )(element)
 }

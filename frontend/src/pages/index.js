@@ -3,17 +3,17 @@ import { Router } from '@reach/router'
 
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
-import Browse from '$con/browse'
-import Cart from '$con/cart'
-import ProductDetail from '$con/product-detail'
-import Profile from '$con/profile'
-import Checkout from '$con/checkout'
-import CheckoutComplete from '$con/checkout-complete'
+// import Browse from '$con/browse'
+// import Cart from '$con/cart'
+// import ProductDetail from '$con/product-detail'
+// import Profile from '$con/profile'
+// import Checkout from '$con/checkout'
+// import CheckoutComplete from '$con/checkout-complete'
 
 const Page = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <Router>
+    {/* <Router>
       <Browse path='/' />
       <Browse path='/browse/*' />
       <Cart path='/cart' />
@@ -21,7 +21,7 @@ const Page = () => (
       <Profile path='/profile' />
       <Checkout path='/checkout' />
       <CheckoutComplete path='/checkout-complete' />
-    </Router>
+    </Router> */}
   </Layout>
 )
 

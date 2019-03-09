@@ -1,20 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import reducers from './reducers'
-import rootSaga from './sagas'
+const store = {}
 
-const sagaMiddleware = createSagaMiddleware()
-
-const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-
-const enhancer = composeEnhancers(
-  applyMiddleware(
-    sagaMiddleware
-  )
-)
-
-const store = createStore(reducers, enhancer)
-
-sagaMiddleware.run(rootSaga)
+load('user', 'script')
 
 export default store
+
+function load (...names) {
+  names.forEach(name => {
+    store[name] = require(`./${name}`).default
+  })
+}

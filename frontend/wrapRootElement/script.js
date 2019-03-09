@@ -1,18 +1,13 @@
 import React, { useEffect } from 'react'
 import Helmet from 'react-helmet'
 
-import store from '$src/store'
-import { addScript } from '$act/script'
-
 import { PAYPAL_ID } from '$src/const'
-
-const dispatch = params => {
-  store.dispatch(addScript(params))
-}
+import store from '$src/store'
 
 const checkScripts = () => {
-  const state = store.getState()
-  !state.script.paypal && typeof paypal !== 'undefined' && dispatch({ paypal })
+  !store.script.paypal
+    && typeof paypal !== 'undefined' 
+    && store.script.setScript('paypal', paypal)
 }
 
 const Script = ({ children }) => {

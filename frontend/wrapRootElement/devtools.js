@@ -1,11 +1,11 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import store from '$src/store'
+import DevTools from 'mobx-react-devtools'
 
 const wrapRootElement = element => (
-  <Provider store={store}>
+  <div>
     {element}
-  </Provider>
+    <DevTools />
+  </div>
 )
 
 export default wrapRootElement

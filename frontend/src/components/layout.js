@@ -2,21 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
-import { withStyles } from '@material-ui/core/styles'
+// import Header from "$comp/header"
+// import Footer from "$comp/footer"
 
-import Header from "$con/header"
-import Footer from "$con/footer"
-
-import containerStyle from '$styles/container'
-
-const styles = theme => ({
-  root: {
-    margin: '0 auto',
-    ...containerStyle(theme)
-  }
-})
-
-const Layout = ({ classes, children }) => (
+const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -29,10 +18,10 @@ const Layout = ({ classes, children }) => (
       }
     `}
     render={data => (
-      <div className={classes.root}>
-        <Header siteTitle={data.site.siteMetadata.title} />
+      <div>
+        {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
         <main>{children}</main>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     )}
   />
@@ -42,4 +31,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default withStyles(styles)(Layout)
+export default Layout

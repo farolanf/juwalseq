@@ -7,24 +7,13 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: `TShirtShop`,
-    description: `Online shop`,
+    title: `Juwal`,
+    description: `Iklan gratis`,
     author: `Farolan Faisal`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-tailwindcss`,
-    {
-      resolve: `gatsby-plugin-create-client-paths`,
-      options: {
-        prefixes: [
-          `/browse/*`, 
-          `/products/*`, 
-          `/profile/*`,
-          `/checkout/*`,
-        ]
-      }
-    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
