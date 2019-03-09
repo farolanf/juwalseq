@@ -12,7 +12,7 @@
     }],
     ["babel-plugin-import", {
       "libraryName": "antd",
-      "style": true,
+      "style": "css",
     }]
   ]
 }

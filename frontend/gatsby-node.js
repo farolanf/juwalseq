@@ -13,6 +13,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $src: path.resolve(__dirname, 'src'),
         $lib: path.resolve(__dirname, 'src/lib'),
         $comp: path.resolve(__dirname, 'src/components'),
+        $store: path.resolve(__dirname, 'src/store'),
       }
     }
   })

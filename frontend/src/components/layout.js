@@ -2,6 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
+import { Layout as AntLayout } from 'antd'
+
+const { Header, Content, Footer, Sider } = AntLayout
+
 // import Header from "$comp/header"
 // import Footer from "$comp/footer"
 
@@ -18,11 +22,16 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <div>
+      <AntLayout>
+        <Header>
         {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-        <main>{children}</main>
-        {/* <Footer /> */}
-      </div>
+        </Header>
+        <AntLayout>
+          <Sider></Sider>
+          <Content>{children}</Content>
+        </AntLayout>
+        <Footer></Footer>
+      </AntLayout>
     )}
   />
 )

@@ -1,5 +1,6 @@
 import { compose } from 'lodash/fp'
 import script from './script'
+import mobx from './mobx'
 import devTools from './devtools'
 
 export default element => {
@@ -8,6 +9,7 @@ export default element => {
   }
   return compose(
     devTools,
+    mobx,
     script,
   )(element)
 }

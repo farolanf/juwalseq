@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Helmet from 'react-helmet'
 
 import { PAYPAL_ID } from '$src/const'
-import store from '$src/store'
+import store from '$store'
 
 const checkScripts = () => {
   !store.script.paypal
