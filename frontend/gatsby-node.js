@@ -5,6 +5,12 @@
  */
 const path = require('path')
 
+exports.onCreatePage = ({ page }) => {
+  if (page.jsonName === 'index') {
+    page.matchPath = '/*'
+  }
+}
+
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {

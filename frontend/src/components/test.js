@@ -1,8 +1,8 @@
 import React from 'react'
-import { observer } from 'mobx'
+import { observer, inject } from 'mobx-react'
 
-const Test = () => (
-  <div>Hello</div>
+const Test = ({ store }) => (
+  <div>Hello {store.user.user}</div>
 )
 
-export default observer(Test)
+export default inject('store')(observer(Test))
