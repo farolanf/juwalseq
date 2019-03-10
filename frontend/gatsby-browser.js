@@ -2,7 +2,6 @@ import './init'
 // import GAnalytics from 'ganalytics'
 import _wrapRootElement from './wrapRootElement'
 import { verify } from '$src/lib/auth'
-import store from '$store'
 
 // const ga = GAnalytics('UA-49818631-2')
 

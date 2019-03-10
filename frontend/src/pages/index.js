@@ -4,6 +4,7 @@ import { Router } from '@reach/router'
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
 import Session from '$comp/pages/session'
+import Admin from '$comp/pages/admin'
 // import Browse from '$con/browse'
 // import Cart from '$con/cart'
 // import ProductDetail from '$con/product-detail'
@@ -11,7 +12,7 @@ import Session from '$comp/pages/session'
 // import Checkout from '$con/checkout'
 // import CheckoutComplete from '$con/checkout-complete'
 
-const Page = () => (
+const App = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Router>
@@ -27,6 +28,13 @@ const Page = () => (
       <CheckoutComplete path='/checkout-complete' />
     </Router> */}
   </Layout>
+)
+
+const Page = () => (
+  <Router>
+    <Admin path='/admin' />
+    <App path='/*' />
+  </Router>
 )
 
 export default Page

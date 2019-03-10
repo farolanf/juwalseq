@@ -98,13 +98,16 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
-        {user.loggedIn ? (
+        {user.loggedIn ? [
+          user.user.admin && (
+            <Menu.Item key='admin'><Link to='/admin'>Admin</Link></Menu.Item>
+          ),
           <Menu.Item key='profile'>
             <Dropdown overlay={profileMenu(user)} trigger={['click']}>
               <Link to='/profile'>Hai {user.user.username}!</Link>
             </Dropdown>
           </Menu.Item>
-        ) : (
+         ] : (
           <Menu.Item onClick={() => setLoginOpen(true)}>Login</Menu.Item>
         )}
       </Menu>

@@ -4,7 +4,7 @@ import devTools from './devtools'
 import location from './location'
 
 export default element => {
-  if (element.props.noWrap) {
+  if (element.props['*'].startsWith('admin')) {
     return element
   }
   return compose(
