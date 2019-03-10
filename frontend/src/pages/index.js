@@ -3,7 +3,7 @@ import { Router } from '@reach/router'
 
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
-import Test from '$comp/pages/test'
+import Session from '$comp/pages/session'
 // import Browse from '$con/browse'
 // import Cart from '$con/cart'
 // import ProductDetail from '$con/product-detail'
@@ -15,7 +15,7 @@ const Page = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Router>
-      <Test path='/test' />
+      <Session path='/session' />
     </Router>
     {/* <Router>
       <Browse path='/' />
