@@ -14,8 +14,9 @@ cmd.add('data', 'populate', 'Populate database', populateDb)
 cmd.add('data', 'create-admin', 'Create admin user', createAdmin)
 cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 
-function initDb(program, argv) {
+async function initDb(program, argv) {
   program.parse(argv)
+  await db.sequelize.sync({ force: true })
   const prjPath = path.resolve(__dirname, '../../../')
   return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
 }
