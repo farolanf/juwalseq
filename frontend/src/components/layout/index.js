@@ -2,14 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 
-import { Layout as AntLayout } from 'antd'
+import { Layout } from 'antd'
 
-const { Header, Content, Footer, Sider } = AntLayout
+import Header from './header'
 
-// import Header from "$comp/header"
-// import Footer from "$comp/footer"
+const { Content, Footer, Sider } = Layout
 
-const Layout = ({ children }) => (
+const PageLayout = ({ children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -22,22 +21,20 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <AntLayout>
-        <Header>
-        {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-        </Header>
-        <AntLayout>
+      <Layout>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <Layout>
           <Sider></Sider>
           <Content>{children}</Content>
-        </AntLayout>
+        </Layout>
         <Footer></Footer>
-      </AntLayout>
+      </Layout>
     )}
   />
 )
 
-Layout.propTypes = {
+PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default PageLayout

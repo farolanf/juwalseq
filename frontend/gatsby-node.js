@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 const path = require('path')
+const ReactJssHmrPlugin = require('react-jss-hmr/webpack')
 
 exports.onCreatePage = ({ page }) => {
   if (page.jsonName === 'index') {
@@ -20,7 +21,10 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $lib: path.resolve(__dirname, 'src/lib'),
         $comp: path.resolve(__dirname, 'src/components'),
         $store: path.resolve(__dirname, 'src/store'),
-      }
+      },
+      plugins: [
+        new ReactJssHmrPlugin(),
+      ]
     }
   })
 }

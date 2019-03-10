@@ -3,7 +3,7 @@ import { Router } from '@reach/router'
 
 import Layout from "$comp/layout"
 import SEO from "$comp/seo"
-import Test from '$comp/test'
+import Test from '$comp/pages/test'
 // import Browse from '$con/browse'
 // import Cart from '$con/cart'
 // import ProductDetail from '$con/product-detail'
