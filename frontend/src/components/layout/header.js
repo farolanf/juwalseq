@@ -60,7 +60,9 @@ const PageHeader = ({
 
   const [loginOpen, setLoginOpen] = useState(false)
 
-  const lastSegment = (location.pathname || '').replace('/browse/', '').toLowerCase()
+  const lastSegment = location.pathname
+    .substring(location.pathname.lastIndexOf('/') + 1)
+    .toLowerCase()
 
   return (
     <Header className={classes.root}>
@@ -84,8 +86,15 @@ const PageHeader = ({
         ))}
       </Menu>
       <Spacer />
-      <Menu theme='dark' mode='horizontal' className={classes.menu}>
-        <Menu.Item>Profile</Menu.Item>
+      <Menu 
+        theme='dark' 
+        mode='horizontal' 
+        className={classes.menu}
+        selectedKeys={[lastSegment]}
+      >
+        <Menu.Item key='profile'>
+          <Link to='/profile'>Profile</Link>
+        </Menu.Item>
       </Menu>
     </Header>
   )
