@@ -20,7 +20,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart
 import { API_HOST, PREFIX } from '$const'
 import { logout } from "$lib/auth";
 import useStore from '$useStore'
-import withLocation from '$helpers/location'
+import withLocation from '$lib/location'
 
 const styles = {
   root: tw`flex`,

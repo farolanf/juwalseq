@@ -1,5 +1,5 @@
 import React from 'react'
-import { LocationContext } from '$src/helpers/location'
+import { LocationContext } from '$lib/location'
 
 const wrapRootElement = element => (
   <LocationContext.Provider value={element.props.location}>
