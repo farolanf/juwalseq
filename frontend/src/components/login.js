@@ -1,44 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import injectSheet from 'react-jss'
 import { navigate } from '@reach/router'
 import { Link } from 'gatsby'
+import { compose } from 'lodash/fp'
+import { Formik, Form as FormikForm } from 'formik'
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core/styles'
-
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth'
-
+import { Modal, Button, Form, Input, Icon } from 'antd'
+import { Grid } from '@material-ui/core'
+import FormikInput from '$comp/formik-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons'
 
-import { Formik, Form } from 'formik'
-import FormikTextField from '$comp/formik-text-field'
-
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
-
 import loginSchema from '$src/schemas/login'
 import registerSchema from '$src/schemas/register'
 
-const styles = theme => ({
-  buttonIcon: tw`text-xl mr-2`,
-  link: {
-    ...tw`no-underline`,
-    color: theme.palette.secondary.main
-  }
-})
+const styles = {
+  inputIcon: tw`text-grey`,
+  marginBottom: tw`mb-2`,
+}
 
-const LoginBox = ({ open, onClose, classes, width }) => {
+const LoginBox = ({ open, onClose, classes }) => {
   const [mode, setMode] = useState('login')
   const otherMode = mode === 'login' ? 'register' : 'login'
 
-  function toggleMode () {
+  function toggleMode() {
     setMode(otherMode)
   }
 
@@ -50,7 +38,8 @@ const LoginBox = ({ open, onClose, classes, width }) => {
   }, [open])
 
 
-  function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
+  function onSubmit({ email, password }, { setSubmitting, setErrors }) {
+    console.log(email, password)
     if (mode === 'login') {
       login(email, password)
         .then(() => {
@@ -74,100 +63,78 @@ const LoginBox = ({ open, onClose, classes, width }) => {
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth='xs' fullScreen={isWidthDown('sm', width)}>
-      <DialogTitle>
-        {mode === 'login' ? 'Login' : 'Register'}
-      </DialogTitle>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          passwordConfirm: '',
-        }}
-        validationSchema={mode === 'login' ? loginSchema : registerSchema}
-        onSubmit={onSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <DialogContent>
-              <Grid container>
-                <Grid item xs={12}>
-                  <FormikTextField
-                    name='email'
-                    label={mode === 'login' ? 'Email or Username' : 'Email'}
-                    placeholder='Email address'
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormikTextField
-                    name='password'
-                    type='password'
-                    label='Password'
-                    placeholder='Enter password'
-                    fullWidth
-                    margin='normal'
-                  />
-                </Grid>
-                {mode === 'login' && (
-                  <Grid item xs={12} container justify='flex-end'>
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      }}
+      validationSchema={mode === 'login' ? loginSchema : registerSchema}
+      onSubmit={onSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Modal
+          title={mode === 'login' ? 'Login' : 'Register'}
+          visible={open}
+          onCancel={onClose}
+          width={320}
+          footer={[
+            <Button key='back' onClick={onClose}>Cancel</Button>,
+            <Button key='mode' onClick={toggleMode}>{otherMode}</Button>,
+          ]}
+        >
+          <FormikForm>
+            <Grid container direction='column'>
+              <FormikInput 
+                name='email'
+                placeholder='Email address / username'
+                prefix={<Icon type='user' className={classes.inputIcon} />}
+              />
+              <FormikInput 
+                name='password'
+                type='password'
+                placeholder='Password'
+                prefix={<Icon type='lock' className={classes.inputIcon} />}
+                extra={mode === 'login' && (
+                  <div style={tw`text-right`}>
                     <Link to='/forgot-password' className={classes.link} onClick={onClose}>Forgot password?</Link>
-                  </Grid>
+                  </div>
                 )}
-                {mode === 'register' && (
-                  <Grid item xs={12}>
-                    <FormikTextField
-                      name='passwordConfirm'
-                      type='password'
-                      label='Password confirm'
-                      placeholder='Confirm password'
-                      fullWidth
-                      margin='normal'
-                    />
-                  </Grid>
-                )}
-              </Grid>
-              <Grid container spacing={8}>
-                <Grid item xs={12} style={tw`mt-6`}>
-                  <Typography variant='button'>Or login with</Typography>
-                </Grid>
-                <Grid item xs={12} md>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    href={API_HOST + '/auth/facebook'}
-                    fullWidth={isWidthDown('sm', width)}
-                  >
-                    <FontAwesomeIcon icon={faFacebook} className={classes.buttonIcon} />
-                    Facebook
-                  </Button>
-                </Grid>
-                <Grid item xs={12} md>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    href={API_HOST + '/auth/google'}
-                    fullWidth={isWidthDown('sm', width)}
-                  >
-                    <FontAwesomeIcon icon={faGoogle} className={classes.buttonIcon} />
-                    Google
-                  </Button>
-                </Grid>
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Button color='primary' onClick={onClose}>Cancel</Button>
-              <Button color='primary' onClick={toggleMode}>
-                {mode === 'login' ? 'Register' : 'Login'}
-              </Button>
-              <Button variant='contained' color='primary' type='submit' disabled={isSubmitting}>
+              />
+              {mode === 'register' && (
+                <FormikInput 
+                  name='passwordConfirm'
+                  type='password'
+                  placeholder='Confirm password'
+                  prefix={<Icon type='lock' className={classes.inputIcon} />}
+                />
+              )}
+              <Button htmlType='submit' type='primary' disabled={isSubmitting} className={classes.marginBottom}>
                 {mode}
               </Button>
-            </DialogActions>
-          </Form>
-        )}
-      </Formik>
-    </Dialog>
+              Or login with
+              <Button
+                href={API_HOST + '/auth/facebook'}
+                type='primary'
+                block
+                className={classes.marginBottom}
+              >
+                <FontAwesomeIcon icon={faFacebook} className={classes.buttonIcon} />
+                Facebook
+              </Button>
+              <Button
+                href={API_HOST + '/auth/google'}
+                type='primary'
+                block
+              >
+                <FontAwesomeIcon icon={faGoogle} className={classes.buttonIcon} />
+                Google
+              </Button>
+            </Grid>
+          </FormikForm>
+        </Modal>
+      )}
+    </Formik>
   )
 }
 
@@ -175,7 +142,8 @@ LoginBox.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  width: PropTypes.string,
 }
 
-export default withStyles(styles)(withWidth()(LoginBox))
+export default compose(
+  injectSheet(styles),
+)(LoginBox)

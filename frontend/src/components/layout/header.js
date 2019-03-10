@@ -6,8 +6,9 @@ import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Dropdown } from 'antd'
 import Spacer from '$comp/spacer'
+import LoginBox from '$comp/login'
 
 const { Header } = Layout
 
@@ -31,24 +32,35 @@ const styles = {
   }
 }
 
+const profileMenu = (
+  <Menu>
+    <Menu.Item>Profile</Menu.Item>
+    <Menu.Item>Logout</Menu.Item>
+  </Menu>
+)
+
 const PageHeader = ({
   // clearFilters,
   // setQuery: setSearchQuery,
   // user,
-  // loggedIn,
+  loggedIn,
   // fetchCart,
   // items,
   location,
   classes,
 }) => {
   const department = useStore().department
+  const [query, setQuery] = useState('')
+  const [loginOpen, setLoginOpen] = useState(false)
+
+  const lastSegment = location.pathname
+    .substring(location.pathname.lastIndexOf('/') + 1)
+    .toLowerCase()
 
   useEffect(() => {
     department.fetchDepartments()
     // fetchCart()
   }, [])
-
-  const [query, setQuery] = useState('')
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -57,12 +69,6 @@ const PageHeader = ({
     // setQuery('')
     navigate(PREFIX + '/browse?q=' + query)
   }
-
-  const [loginOpen, setLoginOpen] = useState(false)
-
-  const lastSegment = location.pathname
-    .substring(location.pathname.lastIndexOf('/') + 1)
-    .toLowerCase()
 
   return (
     <Header className={classes.root}>
@@ -92,10 +98,17 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
-        <Menu.Item key='profile'>
-          <Link to='/profile'>Profile</Link>
-        </Menu.Item>
+        {loggedIn ? (
+          <Menu.Item key='profile'>
+            <Dropdown overlay={profileMenu} trigger={['click']}>
+              <Link to='/profile'>Profile</Link>
+            </Dropdown>
+          </Menu.Item>
+        ) : (
+          <Menu.Item onClick={() => setLoginOpen(true)}>Login</Menu.Item>
+        )}
       </Menu>
+      <LoginBox open={loginOpen} onClose={() => setLoginOpen(false)} />
     </Header>
   )
 }
