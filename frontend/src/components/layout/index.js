@@ -1,12 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-
 import { Layout } from 'antd'
+const { Content } = Layout
 
 import Header from './header'
-
-const { Content, Footer, Sider } = Layout
 
 const PageLayout = ({ children }) => (
   <StaticQuery
@@ -24,10 +22,8 @@ const PageLayout = ({ children }) => (
       <Layout>
         <Header siteTitle={data.site.siteMetadata.title} />
         <Layout>
-          <Sider></Sider>
           <Content>{children}</Content>
         </Layout>
-        <Footer></Footer>
       </Layout>
     )}
   />

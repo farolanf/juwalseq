@@ -1,7 +1,7 @@
 import { compose } from 'lodash/fp'
 import script from './script'
-import mobx from './mobx'
 import devTools from './devtools'
+import location from './location'
 
 export default element => {
   if (element.props.noWrap) {
@@ -9,7 +9,7 @@ export default element => {
   }
   return compose(
     devTools,
-    mobx,
     script,
+    location,
   )(element)
 }

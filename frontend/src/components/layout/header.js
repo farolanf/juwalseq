@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import injectSheet from 'react-jss'
 import { navigate } from '@reach/router'
 import { compose } from 'lodash/fp'
-import injectSheet from 'react-jss'
+import { Link } from "gatsby"
+import { observer } from 'mobx-react-lite'
 
 import { Layout, Menu } from 'antd'
+import Spacer from '$comp/spacer'
 
 const { Header } = Layout
 
@@ -13,32 +16,35 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons/faUserAlt'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 
-import { Link } from "gatsby"
-import { API_HOST, PREFIX } from '$src/const'
-
+import { API_HOST, PREFIX } from '$const'
 import { logout } from "$lib/auth";
+import useStore from '$useStore'
+import withLocation from '$helpers/location'
 
 const styles = {
-  imgContainer: tw`h-full float-left`,
+  root: tw`flex`,
+  imgContainer: tw`h-full float-left mr-8`,
   img: tw`h-full`,
   menu: {
+    display: 'inline-block',
     lineHeight: '64px',
   }
 }
 
 const PageHeader = ({
-  // departments,
-  // fetchDepartments,
   // clearFilters,
   // setQuery: setSearchQuery,
   // user,
   // loggedIn,
   // fetchCart,
   // items,
+  location,
   classes,
 }) => {
+  const department = useStore().department
+
   useEffect(() => {
-    // fetchDepartments()
+    department.fetchDepartments()
     // fetchCart()
   }, [])
 
@@ -54,14 +60,32 @@ const PageHeader = ({
 
   const [loginOpen, setLoginOpen] = useState(false)
 
+  const lastSegment = (location.pathname || '').replace('/browse/', '').toLowerCase()
+
   return (
-    <Header>
+    <Header className={classes.root}>
       <div className={classes.imgContainer}>
-        <img src={API_HOST + '/tshirtshop.png'} className={classes.img} />
+        <Link to='/'>
+          <img src={API_HOST + '/tshirtshop.png'} className={classes.img} />
+        </Link>
       </div>
+      <Menu 
+        theme='dark' 
+        mode='horizontal' 
+        className={classes.menu}
+        selectedKeys={[lastSegment]}
+      >
+        {department.departments.map(department => (
+          <Menu.Item key={department.name.toLowerCase()}>
+            <Link to={'/browse/' + department.name.toLowerCase()}>
+              {department.name}
+            </Link>
+          </Menu.Item>
+        ))}
+      </Menu>
+      <Spacer />
       <Menu theme='dark' mode='horizontal' className={classes.menu}>
-        <Menu.Item>Department 1</Menu.Item>
-        <Menu.Item>Department 2</Menu.Item>
+        <Menu.Item>Profile</Menu.Item>
       </Menu>
     </Header>
   )
@@ -75,4 +99,8 @@ PageHeader.defaultProps = {
   siteTitle: ``,
 }
 
-export default injectSheet(styles)(PageHeader)
+export default compose(
+  injectSheet(styles),
+  withLocation,
+  observer,
+)(PageHeader)

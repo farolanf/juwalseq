@@ -21,6 +21,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $lib: path.resolve(__dirname, 'src/lib'),
         $comp: path.resolve(__dirname, 'src/components'),
         $store: path.resolve(__dirname, 'src/store'),
+        $useStore: path.resolve(__dirname, 'src/store/helpers/use-store'),
+        $const: path.resolve(__dirname, 'src/const'),
+        $helpers: path.resolve(__dirname, 'src/helpers'),
       },
       plugins: [
         new ReactJssHmrPlugin(),
