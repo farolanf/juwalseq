@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   }, {});
   Product.associate = function(models) {
+    Product.belongsTo(models.User)
     Product.belongsToMany(models.Category, { through: 'ProductCategory' })
     Product.belongsToMany(models.AttributeValue, { through: 'ProductAttribute' })
     Product.belongsToMany(models.Reaction, { through: 'ProductReaction' })

@@ -5,8 +5,8 @@ const saltRounds = 10
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: { type: DataTypes.STRING(100), allowNull: false },
-    username: { type: DataTypes.STRING(50), allowNull: false },
+    email: { type: DataTypes.STRING(100), allowNull: false, unique: true },
+    username: { type: DataTypes.STRING(50), allowNull: false, unique: true },
     password: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('password', User.generatePassword(val))
       }
     },
-    facebookId: DataTypes.STRING(100),
-    googleId: DataTypes.STRING(100),
+    facebookId: { type: DataTypes.STRING(100), unique: true },
+    googleId: { type: DataTypes.STRING(100), unique: true },
   }, {
   });
   User.associate = function (models) {

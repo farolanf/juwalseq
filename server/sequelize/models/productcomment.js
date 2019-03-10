@@ -1,9 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ProductComment = sequelize.define('ProductComment', {
-    CommentId: { type: DataTypes.INTEGER, unique: true }
   }, {
     tableName: 'ProductComment',
+    indexes: [
+      { fields: ['CommentId'], unique: true },
+    ],
   });
   return ProductComment;
 };
