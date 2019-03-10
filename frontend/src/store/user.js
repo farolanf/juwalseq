@@ -1,10 +1,12 @@
 import { observable, action } from 'mobx'
 
-export default observable({
-  user: null,
-  
+class UserStore {
+  @observable user = null
+    
   @action
   setUser (user) {
     this.user = user
-  },
-})
+  }
+}
+
+export default UserStore
