@@ -9,11 +9,6 @@ class DepartmentStore {
     try {
       this.departments = yield axios.get(API_BASE + '/departments')
         .then(res => res.data)
-        .then(data => {
-          return new Promise(resolve => {
-            setTimeout(() => resolve(data), 2000)
-          })
-        })
     } catch (err) {
       console.error(err)
     }
