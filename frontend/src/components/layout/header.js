@@ -32,10 +32,11 @@ const styles = {
   }
 }
 
-const profileMenu = (
+const profileMenu = user => (
   <Menu>
+    <Menu.Item disabled>{user.user.email}</Menu.Item>
     <Menu.Item>Profile</Menu.Item>
-    <Menu.Item>Logout</Menu.Item>
+    <Menu.Item onClick={logout}>Logout</Menu.Item>
   </Menu>
 )
 
@@ -43,13 +44,12 @@ const PageHeader = ({
   // clearFilters,
   // setQuery: setSearchQuery,
   // user,
-  loggedIn,
   // fetchCart,
   // items,
   location,
   classes,
 }) => {
-  const department = useStore().department
+  const { user, department } = useStore()
   const [query, setQuery] = useState('')
   const [loginOpen, setLoginOpen] = useState(false)
 
@@ -98,10 +98,10 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
-        {loggedIn ? (
+        {user.loggedIn ? (
           <Menu.Item key='profile'>
-            <Dropdown overlay={profileMenu} trigger={['click']}>
-              <Link to='/profile'>Profile</Link>
+            <Dropdown overlay={profileMenu(user)} trigger={['click']}>
+              <Link to='/profile'>Hai {user.user.username}!</Link>
             </Dropdown>
           </Menu.Item>
         ) : (
