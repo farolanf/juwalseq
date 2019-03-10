@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import injectSheet from 'react-jss'
+import withStyles from 'react-jss'
 import { navigate } from '@reach/router'
 import { Link } from 'gatsby'
 import { compose } from 'lodash/fp'
-import { Formik, Form as FormikForm } from 'formik'
+import { Formik } from 'formik'
+import _ from 'lodash'
 
-import { Modal, Button, Form, Input, Icon } from 'antd'
+import { Modal, Button, Form, Icon } from 'antd'
 import { Grid } from '@material-ui/core'
 import FormikInput from '$comp/formik-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -39,7 +40,6 @@ const LoginBox = ({ open, onClose, classes }) => {
 
 
   function onSubmit({ email, password }, { setSubmitting, setErrors }) {
-    console.log(email, password)
     if (mode === 'login') {
       login(email, password)
         .then(() => {
@@ -72,18 +72,17 @@ const LoginBox = ({ open, onClose, classes }) => {
       validationSchema={mode === 'login' ? loginSchema : registerSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ handleSubmit, isSubmitting }) => (
         <Modal
-          title={mode === 'login' ? 'Login' : 'Register'}
+          title={_.upperFirst(mode)}
           visible={open}
           onCancel={onClose}
           width={320}
           footer={[
-            <Button key='back' onClick={onClose}>Cancel</Button>,
-            <Button key='mode' onClick={toggleMode}>{otherMode}</Button>,
+            <Button key='cancel' onClick={onClose}>Cancel</Button>,
           ]}
         >
-          <FormikForm>
+          <Form onSubmit={handleSubmit}>
             <Grid container direction='column'>
               <FormikInput 
                 name='email'
@@ -109,9 +108,12 @@ const LoginBox = ({ open, onClose, classes }) => {
                   prefix={<Icon type='lock' className={classes.inputIcon} />}
                 />
               )}
-              <Button htmlType='submit' type='primary' disabled={isSubmitting} className={classes.marginBottom}>
-                {mode}
+              <Button htmlType='submit' type='primary' disabled={isSubmitting}>
+                {_.upperFirst(mode)}
               </Button>
+              <div style={tw`flex justify-end mt-1`}>
+                {<a onClick={toggleMode}>{_.upperFirst(otherMode)}</a>}
+              </div>
               Or login with
               <Button
                 href={API_HOST + '/auth/facebook'}
@@ -131,7 +133,7 @@ const LoginBox = ({ open, onClose, classes }) => {
                 Google
               </Button>
             </Grid>
-          </FormikForm>
+          </Form>
         </Modal>
       )}
     </Formik>
@@ -145,5 +147,5 @@ LoginBox.propTypes = {
 }
 
 export default compose(
-  injectSheet(styles),
+  withStyles(styles),
 )(LoginBox)
