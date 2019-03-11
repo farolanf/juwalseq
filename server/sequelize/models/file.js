@@ -7,5 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
   });
+  File.associate = function(models) {
+    File.belongsTo(models.User)
+  };
   return File;
 };

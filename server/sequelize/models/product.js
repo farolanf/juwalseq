@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
   Product.associate = function(models) {
     Product.addScope('defaultScope', {
       include: [
-        { model: models.Tag },
+        models.Tag,
+        models.Reaction,
+        models.Comment,
         { model: models.File, as: 'Images' },
       ]
     }, {
@@ -20,24 +22,31 @@ module.exports = (sequelize, DataTypes) => {
     Product.belongsTo(models.User)
     Product.belongsToMany(models.AttributeValue, { through: 'ProductAttribute' })
     Product.belongsToMany(models.Category, { through: 'ProductCategory' })
-    Product.belongsToMany(models.Reaction, { through: 'ProductReaction' })
-    Product.belongsToMany(models.Comment, { through: 'ProductComment' })
     Product.belongsToMany(models.Tag, { 
       through: {
         model: 'EntityTag',
-        scope: {
-          entity: 'Product'
-        },
+        scope: { entity: 'Product' },
+      },  
+      foreignKey: 'EntityId',
+    })
+    Product.belongsToMany(models.Reaction, { 
+      through: {
+        model: 'EntityReaction',
+        scope: { entity: 'Product' },
+      },  
+      foreignKey: 'EntityId',
+    })
+    Product.belongsToMany(models.Comment, { 
+      through: {
+        model: 'EntityComment',
+        scope: { entity: 'Product' },
       },  
       foreignKey: 'EntityId',
     })
     Product.belongsToMany(models.File, { 
       through: {
         model: 'EntityFile',
-        scope: {
-          entity: 'Product', 
-          meta: 'image'
-        },
+        scope: { entity: 'Product', meta: 'image' },
       },
       foreignKey: 'EntityId',
       as: 'Images'

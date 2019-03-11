@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ProductComment = sequelize.define('ProductComment', {
+  const EntityComment = sequelize.define('EntityComment', {
     id: { 
       type: DataTypes.INTEGER, 
       primaryKey: true,
@@ -8,12 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       unique: true,
     },
+    entity: { type: DataTypes.STRING(50), allowNull: false },
   }, {
-    tableName: 'ProductComment',
-    indexes: [
-      { fields: ['CommentId'], unique: true },
-    ],
+    tableName: 'EntityComment',
     timestamps: false,
   });
-  return ProductComment;
+  return EntityComment;
 };

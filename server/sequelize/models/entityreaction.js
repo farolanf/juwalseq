@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ProductReaction = sequelize.define('ProductReaction', {
+  const EntityReaction = sequelize.define('EntityReaction', {
     id: { 
       type: DataTypes.INTEGER, 
       primaryKey: true,
@@ -8,12 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       unique: true,
     },
+    entity: { type: DataTypes.STRING(50), allowNull: false },
   }, {
-    tableName: 'ProductReaction',
-    indexes: [
-      { fields: ['ReactionId'], unique: true },
-    ],
+    tableName: 'EntityReaction',
     timestamps: false,
   });
-  return ProductReaction;
+  return EntityReaction;
 };
