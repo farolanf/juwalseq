@@ -16,6 +16,7 @@ describe('Product', () => {
     await product.addImage(image)
     const _product = await Product.findOne({
       where: { id: product.id },
+      include: [{ model: File, as: 'Images' }],
     })
     assert.isOk(_product)
     assert.lengthOf(_product.Images, 1)
@@ -34,6 +35,7 @@ describe('Product', () => {
     await product.addTag(tag)
     const _product = await Product.findOne({
       where: { id: product.id },
+      include: [Tag]
     })
     assert.isOk(_product)
     assert.lengthOf(_product.Tags, 1)
@@ -50,6 +52,7 @@ describe('Product', () => {
     await product.addReaction(reaction)
     const _product = await Product.findOne({
       where: { id: product.id },
+      include: [Reaction]
     })
     assert.isOk(_product)
     assert.lengthOf(_product.Reactions, 1)
@@ -67,6 +70,7 @@ describe('Product', () => {
     await product.addComment(comment)
     const _product = await Product.findOne({
       where: { id: product.id },
+      include: [Comment]
     })
     assert.isOk(_product)
     assert.lengthOf(_product.Comments, 1)

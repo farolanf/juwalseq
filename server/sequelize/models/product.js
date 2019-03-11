@@ -8,17 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
   Product.associate = function(models) {
-    Product.addScope('defaultScope', {
-      include: [
-        models.Tag,
-        models.Reaction,
-        models.Comment,
-        { model: models.File, as: 'Images' },
-      ]
-    }, {
-      override: true
-    })
-
     Product.belongsTo(models.User)
     Product.belongsToMany(models.AttributeValue, { through: 'ProductAttribute' })
     Product.belongsToMany(models.Category, { through: 'ProductCategory' })
