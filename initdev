@@ -1,4 +1,3 @@
-./dropdb
 npm run initdb
 node cmd data:create-admin admin admin@foo.com
-node cmd es:rebuild
+#node cmd es:rebuild
