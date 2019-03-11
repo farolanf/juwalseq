@@ -56,12 +56,9 @@ module.exports = {
           { path: '/Departments(/.*)?', method: 'GET' },
           { path: '/Categories(/.*)?', method: 'GET' },
           { path: '/Products(/.*)?', method: 'GET' },
-          { path: '/ProductCategories(/.*)?', method: 'GET' },
-          { path: '/ProductAttributes(/.*)?', method: 'GET' },
           { path: '/Attributes(/.*)?', method: 'GET' },
           { path: '/AttributeValues(/.*)?', method: 'GET' },
           { path: '/Comments(/.*)?', method: 'GET' },
-          { path: '/Reactions(/.*)?', method: 'GET' },
         ]
       },
       member: {
