@@ -17,8 +17,6 @@ cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 async function initDb(program, argv) {
   program.parse(argv)
   await db.sequelize.sync({ force: true })
-  const prjPath = path.resolve(__dirname, '../../../')
-  return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
 }
 
 function populateDb(program, argv) {
@@ -60,7 +58,7 @@ async function createAdmin(program, argv) {
   await db.User
     .create({ email, username, password: inputs.password })
     .then(user => {
-      return db.UserGroup.create({ user_id: user.user_id, group: 'admin' })
+      return db.UserGroup.create({ UserId: user.id, group: 'admin' })
     })
 }
 

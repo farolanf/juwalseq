@@ -24,7 +24,7 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
     User.findOrCreate({
       where: {
         [Op.or]: [
-          { [provider + '_id']: profile.id },
+          { [provider + 'Id']: profile.id },
           { email }
         ]
       },
@@ -32,20 +32,20 @@ async function handleProfile (accessToken, refreshToken, profile, done) {
         email,
         username,
         password: uuid(),
-        [provider + '_id']: profile.id,
+        [provider + 'Id']: profile.id,
       },
       include: userInclude()
     })
     .then(async ([user, created]) => {
       if (created) {
         await UserGroup.bulkCreate((config.auth.defaultGroups || []).map(group => ({
-          user_id: user.user_id,
+          UserId: user.id,
           group
         })))
         await events.emit('userCreated', user)
         await user.reload()
       } else {
-        user[provider + '_id'] = profile.id
+        user[provider + 'Id'] = profile.id
         user = await user.save()
       }
       user ? done(null, user) : done(null, false)

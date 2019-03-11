@@ -21,7 +21,7 @@ function tokenFromRequest (req) {
 }
 
 function generateToken (user, secret) {
-  return jwt.sign({ userId: user.user_id, jwtId: user.jwtId }, secret)
+  return jwt.sign({ userId: user.id, jwtId: user.jwtId }, secret)
 }
 
 function verifyToken (token, secret) {
@@ -43,7 +43,7 @@ module.exports = function (app, config) {
           return res.sendStatus(401)
         }
         User.findOne({
-          where: { user_id: payload.userId },
+          where: { id: payload.userId },
           include: userInclude()
         })
         .then(user => {
@@ -74,11 +74,11 @@ module.exports = function (app, config) {
       const user = await User.create({ username, email, password })
       await events.emit('userCreated', user)
       await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
-        user_id: user.user_id,
+        UserId: user.id,
         group
       })))
       const _user = await User.findOne({
-        where: { user_id: user.user_id },
+        where: { id: user.id },
         include: userInclude()
       })
       sendUser(_user, res)
@@ -96,7 +96,7 @@ module.exports = function (app, config) {
         return res.sendStatus(401)
       }
       User.findOne({
-        where: { user_id: payload.userId },
+        where: { id: payload.userId },
         include: userInclude()
       })
       .then(user => {

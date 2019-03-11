@@ -10,7 +10,7 @@ describe('shoppingcarts API', () => {
   let authorization
 
   const item = {
-    product_id: 1,
+    id: 1,
     attrs: [
       { name: 'Color', value: 'Green' },
       { name: 'Size', value: 'XL' }
@@ -19,7 +19,7 @@ describe('shoppingcarts API', () => {
   }
 
   const item2 = {
-    product_id: 2,
+    id: 2,
     attrs: [
       { name: 'Color', value: 'Red' },
       { name: 'Size', value: 'M' }
@@ -51,10 +51,10 @@ describe('shoppingcarts API', () => {
         assert.equal(res.status, 200)
         assert.isArray(res.body)
         assert.deepEqual(
-          _.pick(res.body[0], ['product_id', 'attrs', 'quantity']),
+          _.pick(res.body[0], ['id', 'attrs', 'quantity']),
           item)
         assert.deepEqual(
-          _.pick(res.body[1], ['product_id', 'attrs', 'quantity']),
+          _.pick(res.body[1], ['id', 'attrs', 'quantity']),
           item2)
       })
   })
@@ -77,8 +77,8 @@ describe('shoppingcarts API', () => {
       .then(res => {
         assert.equal(res.status, 200)
         assert.deepEqual(
-          _.pick(res.body, ['product_id', 'attrs', 'quantity']),
-          _.pick(item, ['product_id', 'attrs', 'quantity'])
+          _.pick(res.body, ['id', 'attrs', 'quantity']),
+          _.pick(item, ['id', 'attrs', 'quantity'])
         )
       })
   })
@@ -92,7 +92,7 @@ describe('shoppingcarts API', () => {
       .then(res => {
         assert.equal(res.status, 200)
         assert.deepEqual(
-          _.pick(res.body, ['product_id', 'attrs', 'quantity']),
+          _.pick(res.body, ['id', 'attrs', 'quantity']),
           item2)
       })
   })

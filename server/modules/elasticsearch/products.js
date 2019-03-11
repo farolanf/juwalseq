@@ -54,7 +54,7 @@ const ProductDoc = {
           include: [
             {
               model: db.Department,
-              where: { department_id: department.department_id }
+              where: { id: department.id }
             }
           ]
         },
@@ -69,9 +69,7 @@ const ProductDoc = {
       include: category => [
         {
           model: db.Category,
-          where: {
-            category_id: category.category_id
-          }
+          where: { id: category.id }
         },
       ],
       getPartialBody: record => ({
@@ -84,9 +82,7 @@ const ProductDoc = {
       include: productCategory => [
         {
           model: db.Category,
-          where: {
-            category_id: productCategory.category_id
-          }
+          where: { id: productCategory.ProductId }
         },
       ],
       getPartialBody: record => ({
@@ -102,7 +98,7 @@ const ProductDoc = {
           include: [
             {
               model: db.Attribute,
-              where: { attribute_id: attribute.attribute_id }
+              where: { id: attribute.id }
             }
           ]
         },
@@ -118,7 +114,7 @@ const ProductDoc = {
       include: attributeValue => [
         {
           model: db.AttributeValue,
-          where: { attribute_value_id: attributeValue.attribute_value_id },
+          where: { id: attributeValue.id },
           include: db.Attribute
         }
       ],
@@ -136,7 +132,7 @@ const ProductDoc = {
 
 function getDoc (record) {
   const doc = _.pick(record.dataValues, [
-    'product_id',
+    'id',
     'name',
     'description',
     'price',
