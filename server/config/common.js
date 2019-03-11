@@ -15,11 +15,11 @@ module.exports = {
     'data',
     'auth',
     'finale',
-    'elasticsearch',
-    'order',
-    'customer',
-    'checkout',
     'email',
+    // 'elasticsearch',
+    // 'order',
+    // 'customer',
+    // 'checkout',
   ],
 
   // module options
