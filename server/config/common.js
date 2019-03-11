@@ -28,7 +28,7 @@ module.exports = {
     jwtSecret: ']ZW%/tOrZ:PeI,y5~C|y4rWoPQtx%g',
 
     // new customers will be assigned to these groups
-    defaultGroups: ['public', 'customer'],
+    defaultGroups: ['public', 'member'],
 
     groups: {
       public: {
@@ -52,27 +52,21 @@ module.exports = {
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
 
-          { path: '/search/.*', method: 'GET' },
-
           // public resources
-          { path: '/departments(/.*)?', method: 'GET' },
-          { path: '/categories(/.*)?', method: 'GET' },
-          { path: '/productcategories(/.*)?', method: 'GET' },
-          { path: '/products(/.*)?', method: 'GET' },
-          { path: '/productattributes(/.*)?', method: 'GET' },
-          { path: '/attributes(/.*)?', method: 'GET' },
-          { path: '/attributeValues(/.*)?', method: 'GET' },
-          { path: '/reviews(/.*)?', method: 'GET' },
-          { path: '/taxes(/.*)?', method: 'GET' },
-          { path: '/shippings(/.*)?', method: 'GET' },
-          { path: '/shippingregions(/.*)?', method: 'GET' },
+          { path: '/Departments(/.*)?', method: 'GET' },
+          { path: '/Categories(/.*)?', method: 'GET' },
+          { path: '/Products(/.*)?', method: 'GET' },
+          { path: '/ProductCategories(/.*)?', method: 'GET' },
+          { path: '/ProductAttributes(/.*)?', method: 'GET' },
+          { path: '/Attributes(/.*)?', method: 'GET' },
+          { path: '/AttributeValues(/.*)?', method: 'GET' },
+          { path: '/Comments(/.*)?', method: 'GET' },
+          { path: '/Reactions(/.*)?', method: 'GET' },
         ]
       },
-      customer: {
+      member: {
         routes: [
-          { path: '/shoppingcarts(/.*)?', method: '*' },
-          { path: '/customers(/.*)?', method: 'PUT' },
-          { path: '/paypal/.*', method: ['GET', 'POST']},
+          // { path: '/paypal/.*', method: ['GET', 'POST']},
         ]
       },
       // admin passed all checks
@@ -84,7 +78,7 @@ module.exports = {
   },
 
   elasticsearch: {
-    index: 'tshirtshop',
+    index: 'juwal',
     maxCount: 100
   }
 }
