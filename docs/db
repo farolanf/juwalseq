@@ -1,3 +1,7 @@
+
+Only add associations on the model where you would query from.
+Adding on both sides is useful on hooks for elasticsearch.
+
 Tag
   name
   ParentId { ref: Tag }

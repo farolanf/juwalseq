@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     Category.belongsTo(models.Department)
     Category.belongsToMany(models.Product, { 
       through: 'ProductCategory', 
-      uniqueKey: 'id',
       timestamps: false 
     })
   };
