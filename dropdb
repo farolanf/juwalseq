@@ -1,2 +1,0 @@
-echo Warning!!! Will drop all databases including production!
-echo 'DROP DATABASE IF EXISTS juwal_dev; CREATE DATABASE juwal_dev CHARACTER SET=utf8 COLLATE=utf8_general_ci; DROP DATABASE IF EXISTS juwal_test; CREATE DATABASE juwal_test CHARACTER SET=utf8 COLLATE=utf8_general_ci; DROP DATABASE IF EXISTS juwal; CREATE DATABASE juwal CHARACTER SET=utf8 COLLATE=utf8_general_ci' | mysql -uadmin -p
