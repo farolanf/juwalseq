@@ -21,8 +21,7 @@ async function initDb(program, argv) {
 
 function populateDb(program, argv) {
   program.parse(argv)
-  const prjPath = path.resolve(__dirname, '../../../')
-  return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop-populate.sql'))
+  return importSql(path.resolve(__dirname, 'seeds/juwal_dev.sql'))
 }
 
 function importSql(sqlPath) {
