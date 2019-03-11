@@ -15,6 +15,10 @@ exports.destroy = async (...models) => {
   }, Promise.resolve())
 }
 
+exports.initdb = function populate () {
+  return cmd._run('data', 'initdb', ['node', 'cmd'])
+}
+
 exports.populate = function populate () {
   return cmd._run('data', 'populate', ['node', 'cmd'])
 }
@@ -24,6 +28,6 @@ exports.truncate = function truncate () {
 }
 
 exports.reset = async function reset () {
-  await exports.truncate()
+  await exports.initdb()
   await exports.populate()
 }

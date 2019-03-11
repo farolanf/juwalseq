@@ -26,12 +26,9 @@ function populateDb(program, argv) {
 
 function importSql(sqlPath) {
   const { username, password, database } = sqlConfig
-  const cmd = `cat ${sqlPath} | mysql -u${username} -p${password} ${database}`
+  const cmd = `cat ${sqlPath} | mysql -s -u${username} -p${password} ${database}`
   return new Promise(resolve => {
-    exec(cmd, (err, stdout, stderr) => {
-      (stdout || stderr) && console.log(stdout, stderr)
-      resolve()
-    })
+    exec(cmd, () => resolve())
   })
 }
 
