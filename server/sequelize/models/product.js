@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         scope: { entity: 'Product' },
       },  
       foreignKey: 'EntityId',
+      constraints: false,
     })
     Product.belongsToMany(models.Reaction, { 
       through: {
@@ -35,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         scope: { entity: 'Product' },
       },  
       foreignKey: 'EntityId',
+      constraints: false,
     })
     Product.belongsToMany(models.Comment, { 
       through: {
@@ -42,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         scope: { entity: 'Product' },
       },  
       foreignKey: 'EntityId',
+      constraints: false,
     })
     Product.belongsToMany(models.File, { 
       through: {
@@ -49,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         scope: { entity: 'Product', meta: 'image' },
       },
       foreignKey: 'EntityId',
+      constraints: false,
       as: 'Images'
     })
   };
