@@ -13,9 +13,9 @@ import {
   CategoryCreate
 } from '$src/lib/react-admin/category'
 import {
-  ProductcategoryList,
-  ProductcategoryEdit,
-  ProductcategoryCreate
+  ProductCategoryList,
+  ProductCategoryEdit,
+  ProductCategoryCreate
 } from '$src/lib/react-admin/product-category'
 import {
   ProductList,
@@ -41,45 +41,45 @@ import {
 const Page = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider}>
     <Resource
-      name='departments'
+      name='Departments'
       list={DepartmentList}
       edit={DepartmentEdit}
       create={DepartmentCreate}
     />
     <Resource
-      name='categories'
+      name='Categories'
       list={CategoryList}
       edit={CategoryEdit}
       create={CategoryCreate}
     />
     <Resource
-      name='productcategories'
-      list={ProductcategoryList}
-      edit={ProductcategoryEdit}
-      create={ProductcategoryCreate}
+      name='ProductCategories'
+      list={ProductCategoryList}
+      edit={ProductCategoryEdit}
+      create={ProductCategoryCreate}
       options={{ label: 'Product Categories' }}
     />
     <Resource
-      name='products'
+      name='Products'
       list={ProductList}
       edit={ProductEdit}
       create={ProductCreate}
     />
     <Resource
-      name='productattributes'
+      name='ProductAttributes'
       list={ProductAttributeList}
       edit={ProductAttributeEdit}
       create={ProductAttributeCreate}
       options={{ label: 'Product Attributes' }}
     />
     <Resource
-      name='attributes'
+      name='Attributes'
       list={AttributeList}
       edit={AttributeEdit}
       create={AttributeCreate}
     />
     <Resource
-      name='attributevalues'
+      name='AttributeValues'
       list={AttributeValueList}
       edit={AttributeValueEdit}
       create={AttributeValueCreate}

@@ -13,47 +13,23 @@ import {
 } from 'react-admin'
 import queryString from 'query-string'
 
-const resourcePk = {
-  departments: 'department_id',
-  categories: 'category_id',
-  productcategories: 'product_category_id',
-  products: 'product_id',
-  productattributes: 'product_attribute_id',
-  attributes: 'attribute_id',
-  attributevalues: 'attribute_value_id',
-}
-
-// this is necessary because react-admin expects records primary key to be 'id'
-const makeId = resource => d => {
-  const pk = resourcePk[resource]
-  d.id = d[pk]
-  return d
-}
-
-const idToPk = (field, resource) => {
-  if (field === 'id') return resourcePk[resource]
-  return field
-}
-
 // eslint-disable-next-line
 function convertResponse (response, type, resource, params) {
-  let data, total
+  let total
   switch (type) {
     case GET_LIST:
       total = +response.headers['content-range'].match(/(\d+)$/)[1]
-      data = response.data.map(makeId(resource))
-      return { data, total }
+      return { data: response.data, total }
     case GET_ONE:
     case CREATE:
     case UPDATE:
     case DELETE:
-      return { data: makeId(resource)(response.data) }
+      return { data: response.data }
     case UPDATE_MANY:
     case DELETE_MANY:
       return { data: response } // response is a list of ids
     case GET_MANY:
-      data = response.data.map(makeId(resource))
-      return { data }
+      return { data: response.data }
     case GET_MANY_REFERENCE:
       throw new Error('Not implemented')
   }
@@ -68,7 +44,7 @@ export default (type, resource, params) => {
       method = 'get'
       url = listUrl
       query = {
-        sort: (params.sort.order === 'ASC' ? '-' : '') + idToPk(params.sort.field, resource),
+        sort: (params.sort.order === 'ASC' ? '' : '-') + params.sort.field,
         count: params.pagination.perPage
       }
       if (params.pagination.page - 1) {
@@ -112,7 +88,7 @@ export default (type, resource, params) => {
     case GET_MANY:
       method = 'get'
       url = listUrl
-      query = { [idToPk('id', resource)]: params.ids }
+      query = { id: params.ids }
       data = { params: query }
       break
     case GET_MANY_REFERENCE:

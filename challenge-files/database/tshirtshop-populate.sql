@@ -1,11 +1,11 @@
 -- Populate department table
-INSERT INTO `department` (`department_id`, `name`, `description`) VALUES
+INSERT INTO `Departments` (`id`, `name`, `description`) VALUES
        (1, 'Regional', 'Proud of your country? Wear a T-shirt with a national symbol stamp!'),
        (2, 'Nature', 'Find beautiful T-shirts with animals and flowers in our Nature department!'),
        (3, 'Seasonal', 'Each time of the year has a special flavor. Our seasonal T-shirts express traditional symbols using unique postal stamp pictures.');
 
 -- Populate category table
-INSERT INTO `category` (`category_id`, `department_id`, `name`, `description`) VALUES
+INSERT INTO `Categories` (`id`, `DepartmentId`, `name`, `description`) VALUES
        (1, 1, 'French', 'The French have always had an eye for beauty. One look at the T-shirts below and you''ll see that same appreciation has been applied abundantly to their postage stamps. Below are some of our most beautiful and colorful T-shirts, so browse away! And don''t forget to go all the way to the bottom - you don''t want to miss any of them!'),
        (2, 1, 'Italian', 'The full and resplendent treasure chest of art, literature, music, and science that Italy has given the world is reflected splendidly in its postal stamps. If we could, we would dedicate hundreds of T-shirts to this amazing treasure of beautiful images, but for now we will have to live with what you see here. You don''t have to be Italian to love these gorgeous T-shirts, just someone who appreciates the finer things in life!'),
        (3, 1, 'Irish', 'It was Churchill who remarked that he thought the Irish most curious because they didn''t want to be English. How right he was! But then, he was half-American, wasn''t he? If you have an Irish genealogy you will want these T-shirts! If you suddenly turn Irish on St. Patrick''s Day, you too will want these T-shirts! Take a look at some of the coolest T-shirts we have!'),
@@ -15,7 +15,7 @@ INSERT INTO `category` (`category_id`, `department_id`, `name`, `description`) V
        (7, 3, 'Valentine''s', 'For the more timid, all you have to do is wear your heartfelt message to get it across. Buy one for you and your sweetie(s) today!');
 
 -- Populate product table
-INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted_price`, `image`, `image_2`, `thumbnail`, `display`) VALUES
+INSERT INTO `Products` (`id`, `name`, `description`, `price`, `discountedPrice`, `image`, `image2`, `thumbnail`, `display`) VALUES
        (1, 'Arc d''Triomphe', 'This beautiful and iconic T-shirt will no doubt lead you to your own triumph.', 14.99, 0.00, 'arc-d-triomphe.gif', 'arc-d-triomphe-2.gif', 'arc-d-triomphe-thumbnail.gif', 0),
        (2, 'Chartres Cathedral', '"The Fur Merchants". Not all the beautiful stained glass in the great cathedrals depicts saints and angels! Lay aside your furs for the summer and wear this beautiful T-shirt!', 16.95, 15.95, 'chartres-cathedral.gif', 'chartres-cathedral-2.gif', 'chartres-cathedral-thumbnail.gif', 2),
        (3, 'Coat of Arms', 'There''s good reason why the ship plays a prominent part on this shield!', 14.50, 0.00, 'coat-of-arms.gif', 'coat-of-arms-2.gif', 'coat-of-arms-thumbnail.gif', 0),
@@ -119,7 +119,7 @@ INSERT INTO `product` (`product_id`, `name`, `description`, `price`, `discounted
        (101, 'The Promise of Spring', 'With Valentine''s Day come, can Spring be far behind?', 21.00, 19.50, 'the-promise-of-spring.gif', 'the-promise-of-spring-2.gif', 'the-promise-of-spring-thumbnail.gif', 0);
 
 -- Populate product_category table
-INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
+INSERT INTO `ProductCategory` (`ProductId`, `CategoryId`) VALUES
        (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1),
        (10, 1), (11, 1), (12, 1), (13, 1), (14, 1), (15, 1), (16, 1), (17, 1),
        (18, 1), (19, 2), (20, 2), (21, 2), (22, 2), (23, 2), (24, 2), (25, 2),
@@ -135,38 +135,17 @@ INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
        (95, 6), (96, 7), (97, 7), (98, 7), (99, 7), (100, 7), (101, 7);
 
 -- Populate attribute table
-INSERT INTO `attribute` (`attribute_id`, `name`) VALUES
+INSERT INTO `Attributes` (`id`, `name`) VALUES
        (1, 'Size'), (2, 'Color');
 
 -- Populate attribute_value table
-INSERT INTO `attribute_value` (`attribute_value_id`, `attribute_id`, `value`) VALUES
+INSERT INTO `AttributeValues` (`id`, `AttributeId`, `value`) VALUES
        (1, 1, 'S'), (2, 1, 'M'), (3, 1, 'L'), (4, 1, 'XL'), (5, 1, 'XXL'),
        (6, 2, 'White'),  (7, 2, 'Black'), (8, 2, 'Red'), (9, 2, 'Orange'),
        (10, 2, 'Yellow'), (11, 2, 'Green'), (12, 2, 'Blue'),
        (13, 2, 'Indigo'), (14, 2, 'Purple');
 
 -- Populate product_attribute table
-INSERT INTO `product_attribute` (`product_id`, `attribute_value_id`)
-       SELECT `p`.`product_id`, `av`.`attribute_value_id`
-       FROM   `product` `p`, `attribute_value` `av`;
-
--- Populate shipping_region table
-INSERT INTO `shipping_region` (`shipping_region_id`, `shipping_region`) VALUES
-       (1, 'Please Select') , (2, 'US / Canada'),
-       (3, 'Europe'),         (4, 'Rest of World');
-
--- Populate shipping table
-INSERT INTO `shipping` (`shipping_id`,   `shipping_type`,
-                        `shipping_cost`, `shipping_region_id`) VALUES
-       (1, 'Next Day Delivery ($20)', 20.00, 2),
-       (2, '3-4 Days ($10)',          10.00, 2),
-       (3, '7 Days ($5)',              5.00, 2),
-       (4, 'By air (7 days, $25)',    25.00, 3),
-       (5, 'By sea (28 days, $10)',   10.00, 3),
-       (6, 'By air (10 days, $35)',   35.00, 4),
-       (7, 'By sea (28 days, $30)',   30.00, 4);
-
--- Populate tax table
-INSERT INTO `tax` (`tax_id`, `tax_type`, `tax_percentage`) VALUES
-       (1, 'Sales Tax at 8.5%', 8.50),
-       (2, 'No Tax',            0.00);
+INSERT INTO `ProductAttribute` (`ProductId`, `AttributeValueId`)
+       SELECT `p`.`id`, `av`.`id`
+       FROM   `Products` `p`, `AttributeValues` `av`;

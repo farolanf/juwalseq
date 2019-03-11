@@ -8,7 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   });
   Category.associate = function(models) {
     Category.belongsTo(models.Department)
-    Category.belongsToMany(models.Product, { through: 'ProductCategory' })
+    Category.belongsToMany(models.Product, { 
+      through: 'ProductCategory', 
+      uniqueKey: 'id',
+      timestamps: false 
+    })
   };
   return Category;
 };

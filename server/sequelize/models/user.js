@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     facebookId: { type: DataTypes.STRING(100), unique: true },
     googleId: { type: DataTypes.STRING(100), unique: true },
-  }, {
-  });
+  }, {});
   User.associate = function (models) {
     User.hasOne(models.Profile)
     User.hasMany(models.UserGroup)

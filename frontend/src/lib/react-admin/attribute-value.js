@@ -18,7 +18,9 @@ export const AttributeValueList = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      <ReferenceField source="attribute_id" reference="attributes"><TextField source="name" /></ReferenceField>
+      <ReferenceField source="AttributeId" reference="Attributes">
+        <TextField source="name" />
+      </ReferenceField>
       <TextField source="value" />
       <EditButton />
     </Datagrid>
@@ -29,7 +31,9 @@ export const AttributeValueEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <DisabledInput source="id" />
-      <ReferenceInput source="attribute_id" reference="attributes"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="AttributeId" reference="Attributes">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
       <TextInput source="value" />
     </SimpleForm>
   </Edit>
@@ -38,7 +42,9 @@ export const AttributeValueEdit = props => (
 export const AttributeValueCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput source="attribute_id" reference="attributes"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="AttributeId" reference="Attributes">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
       <TextInput source="value" />
     </SimpleForm>
   </Create>

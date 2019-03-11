@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const ProductReaction = sequelize.define('ProductReaction', {
+  const ProductCategory = sequelize.define('ProductCategory', {
     id: { 
       type: DataTypes.INTEGER, 
       primaryKey: true,
@@ -9,11 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
   }, {
-    tableName: 'ProductReaction',
-    indexes: [
-      { fields: ['ReactionId'], unique: true },
-    ],
+    tableName: 'ProductCategory',
     timestamps: false,
   });
-  return ProductReaction;
+  return ProductCategory;
 };
