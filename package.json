@@ -7,7 +7,7 @@
     "start": "nodemon -w server server",
     "start:prod": "NODE_ENV=production nodemon -w server server",
     "lint": "eslint server/**",
-    "reset:dev": "node cmd data:initdb; sequelize db:migrate; sequelize db:seed:all; node cmd data:populate; node cmd data:create-admin admin admin@foo.com",
+    "reset:dev": "node cmd data:initdb; sequelize db:migrate; sequelize db:seed:all; node cmd data:create-admin admin admin@foo.com",
     "reset:prod": "NODE_ENV=production node cmd data:initdb; NODE_ENV=production sequelize db:migrate;",
     "sync:dev": "node -e \"require('./server/sequelize').sequelize.sync({ alter: true }).then(() => process.exit())\"",
     "test": "NODE_ENV=test mocha --exit --file server/tests/init.js server/**/*Test.js",

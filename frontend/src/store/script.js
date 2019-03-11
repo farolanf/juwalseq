@@ -9,4 +9,4 @@ class ScriptStore {
   }
 }
 
-export default new ScriptStore()
+export default ScriptStore
