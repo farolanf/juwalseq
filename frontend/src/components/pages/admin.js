@@ -13,15 +13,25 @@ import {
   CategoryCreate
 } from '$src/lib/react-admin/category'
 import {
+  ProductList,
+  ProductEdit,
+  ProductCreate
+} from '$src/lib/react-admin/product'
+import {
   ProductCategoryList,
   ProductCategoryEdit,
   ProductCategoryCreate
 } from '$src/lib/react-admin/product-category'
 import {
-  ProductList,
-  ProductEdit,
-  ProductCreate
-} from '$src/lib/react-admin/product'
+  ProductTypeList,
+  ProductTypeEdit,
+  ProductTypeCreate
+} from '$src/lib/react-admin/product-type'
+import {
+  ProductTypeCategoryList,
+  ProductTypeCategoryEdit,
+  ProductTypeCategoryCreate
+} from '$src/lib/react-admin/product-type-category'
 import {
   ProductAttributeList,
   ProductAttributeEdit,
@@ -53,6 +63,12 @@ const Page = () => (
       create={CategoryCreate}
     />
     <Resource
+      name='Products'
+      list={ProductList}
+      edit={ProductEdit}
+      create={ProductCreate}
+    />
+    <Resource
       name='ProductCategories'
       list={ProductCategoryList}
       edit={ProductCategoryEdit}
@@ -60,10 +76,18 @@ const Page = () => (
       options={{ label: 'Product Categories' }}
     />
     <Resource
-      name='Products'
-      list={ProductList}
-      edit={ProductEdit}
-      create={ProductCreate}
+      name='ProductTypes'
+      list={ProductTypeList}
+      edit={ProductTypeEdit}
+      create={ProductTypeCreate}
+      options={{ label: 'Product Types' }}
+    />
+    <Resource
+      name='ProductTypeCategories'
+      list={ProductTypeCategoryList}
+      edit={ProductTypeCategoryEdit}
+      create={ProductTypeCategoryCreate}
+      options={{ label: 'Product Type Categories' }}
     />
     <Resource
       name='ProductAttributes'

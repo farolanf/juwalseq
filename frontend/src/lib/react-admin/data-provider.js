@@ -13,6 +13,11 @@ import {
 } from 'react-admin'
 import queryString from 'query-string'
 
+const noPagination = [
+  'Departments',
+  'Categories',
+]
+
 // eslint-disable-next-line
 function convertResponse (response, type, resource, params) {
   let total
@@ -45,7 +50,9 @@ export default (type, resource, params) => {
       url = listUrl
       query = {
         sort: (params.sort.order === 'ASC' ? '' : '-') + params.sort.field,
-        count: params.pagination.perPage
+      }
+      if (!noPagination.includes(resource)) {
+        query.count = 100
       }
       if (params.pagination.page - 1) {
         query.page = params.pagination.page - 1
