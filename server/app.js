@@ -1,3 +1,4 @@
+require('module-alias/register')
 const url = require('url')
 const path = require('path')
 require('dotenv').config({

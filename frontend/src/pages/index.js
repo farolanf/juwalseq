@@ -5,7 +5,7 @@ import Layout from "$comp/layout"
 import SEO from "$comp/seo"
 import Session from '$comp/pages/session'
 import Admin from '$comp/pages/admin'
-import Search from '$comp/pages/search'
+// import Search from '$comp/pages/search'
 // import Browse from '$con/browse'
 // import Cart from '$con/cart'
 // import ProductDetail from '$con/product-detail'
@@ -18,7 +18,7 @@ const App = () => (
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Router>
       <Session path='/session' />
-      <Search path='/search' />
+      {/* <Search path='/search' /> */}
     </Router>
     {/* <Router>
       <Browse path='/' />

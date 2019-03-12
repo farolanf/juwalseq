@@ -1,6 +1,6 @@
 const _ = require('lodash')
-const db = require('../../sequelize')
-const config = require('../../config')
+const db = require('@db')
+const config = require('@config')
 
 const ProductDoc = {
   model: db.Product,
@@ -11,8 +11,6 @@ const ProductDoc = {
       name: { type: 'text' },
       description: { type: 'text' },
       price: { type: 'float' },
-      discounted_price: { type: 'float' },
-      display: { type: 'integer' },
       departments: {
         type: 'nested',
         properties: {
@@ -59,11 +57,6 @@ const ProductDoc = {
           ]
         },
       ],
-      getPartialBody: record => ({
-        departments: (record.Categories || []).map(c => ({
-          name: c.Department.name
-        }))
-      })
     },
     Category: {
       include: category => [
@@ -72,11 +65,6 @@ const ProductDoc = {
           where: { id: category.id }
         },
       ],
-      getPartialBody: record => ({
-        categories: (record.Categories || []).map(c => ({
-          name: c.name
-        }))
-      })
     },
     ProductCategory: {
       include: productCategory => [
@@ -85,11 +73,6 @@ const ProductDoc = {
           where: { id: productCategory.ProductId }
         },
       ],
-      getPartialBody: record => ({
-        categories: (record.Categories || []).map(c => ({
-          name: c.name
-        }))
-      })
     },
     Attribute: {
       include: attribute => [
@@ -103,27 +86,14 @@ const ProductDoc = {
           ]
         },
       ],
-      getPartialBody: record => ({
-        attributes: (record.AttributeValues || []).map(av => ({
-          name: av.Attribute.name,
-          value: av.value
-        }))
-      })
     },
     AttributeValue: {
       include: attributeValue => [
         {
           model: db.AttributeValue,
           where: { id: attributeValue.id },
-          include: db.Attribute
         }
       ],
-      getPartialBody: record => ({
-        attributes: (record.AttributeValues || []).map(av => ({
-          name: av.Attribute.name,
-          value: av.value
-        }))
-      })
     }
   },
   getDoc: getDoc,
@@ -136,11 +106,6 @@ function getDoc (record) {
     'name',
     'description',
     'price',
-    'discounted_price',
-    'display',
-    'image',
-    'image_2',
-    'thumbnail'
   ])
   doc.departments = (record.Categories || []).map(c => ({
     name: c.Department.name

@@ -36,6 +36,7 @@
     "finale-rest": "^1.0.2",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
+    "module-alias": "^2.2.0",
     "mustache": "^3.0.1",
     "mysql2": "^1.6.5",
     "node-linux": "^0.1.12",
@@ -60,5 +61,12 @@
     "gh-pages": "^2.0.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.10"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@db": "server/sequelize",
+    "@lib": "server/lib",
+    "@config": "server/config",
+    "@test": "server/tests"
   }
 }

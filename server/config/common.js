@@ -16,7 +16,7 @@ module.exports = {
     'auth',
     'finale',
     'email',
-    // 'elasticsearch',
+    'elasticsearch',
     // 'order',
     // 'customer',
     // 'checkout',
@@ -51,6 +51,8 @@ module.exports = {
           { path: '/auth/logout', method: 'GET' },
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
+
+          { path: '/search/.*', method: 'GET' },
 
           // public resources
           { path: '/Departments(/.*)?', method: 'GET' },

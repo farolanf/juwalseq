@@ -73,20 +73,6 @@ function updateRecord (Doc) {
   }
 }
 
-function partialUpdate (Doc, association) {
-  const pk = Doc.model.primaryKeyAttributes[0]
-  return record => {
-    client.update({
-      index: Doc.index,
-      type: Doc.type,
-      id: record[pk],
-      body: {
-        doc: association.getPartialBody(record)
-      }
-    })
-  }
-}
-
 function deleteRecord (Doc) {
   const pk = Doc.model.primaryKeyAttributes[0]
   return record => {
