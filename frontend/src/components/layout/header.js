@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
-import injectSheet from 'react-jss'
 import { navigate } from '@reach/router'
 import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
+import { withStyles } from '@material-ui/core/styles'
 import { Layout, Menu, Dropdown } from 'antd'
 import Spacer from '$comp/spacer'
 import LoginBox from '$comp/login'
@@ -120,7 +120,7 @@ PageHeader.defaultProps = {
 }
 
 export default compose(
-  injectSheet(styles),
+  withStyles(styles),
   withLocation,
   observer,
 )(PageHeader)
