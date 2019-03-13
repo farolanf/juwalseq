@@ -15,7 +15,7 @@ import {
 } from 'react-admin'
 
 export const AttributeValueList = props => (
-  <List {...props}>
+  <List {...props} sort={{ field: 'AttributeId', order: 'ASC' }}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <ReferenceField source="AttributeId" reference="Attributes">

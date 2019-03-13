@@ -12,16 +12,15 @@ import {
   ReferenceInput,
   EditButton,
 } from 'react-admin'
-import CategorySelectInput from './category-select-input'
 
-export const ProductTypeCategoryList = props => (
-  <List {...props}>
+export const ProductTypeAttributeList = props => (
+  <List {...props} sort={{ field: 'ProductTypeId', order: 'ASC' }}>
     <Datagrid rowClick="edit">
-      <TextField source="id" />
+      <TextField source='id' />
       <ReferenceField source="ProductTypeId" reference="ProductTypes" label='Product Type'>
         <TextField source="name" />
       </ReferenceField>
-      <ReferenceField source="CategoryId" reference="Categories">
+      <ReferenceField source="AttributeId" reference="Attributes">
         <TextField source="name" />
       </ReferenceField>
       <EditButton />
@@ -29,28 +28,28 @@ export const ProductTypeCategoryList = props => (
   </List>
 )
 
-export const ProductTypeCategoryEdit = props => (
+export const ProductTypeAttributeEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <DisabledInput source="id" />
       <ReferenceInput source="ProductTypeId" reference="ProductTypes">
         <SelectInput optionText="name" />
       </ReferenceInput>
-      <ReferenceInput source="CategoryId" reference="Categories" label='Category'>
-        <CategorySelectInput />
+      <ReferenceInput source="AttributeId" reference="Attributes">
+        <SelectInput optionText='name' />
       </ReferenceInput>
     </SimpleForm>
   </Edit>
 )
 
-export const ProductTypeCategoryCreate = props => (
+export const ProductTypeAttributeCreate = props => (
   <Create {...props}>
     <SimpleForm>
       <ReferenceInput source="ProductTypeId" reference="ProductTypes">
         <SelectInput optionText="name" />
       </ReferenceInput>
-      <ReferenceInput source="CategoryId" reference="Categories" label='Category'>
-        <CategorySelectInput />
+      <ReferenceInput source="AttributeId" reference="Attributes">
+        <SelectInput optionText='name' />
       </ReferenceInput>
     </SimpleForm>
   </Create>

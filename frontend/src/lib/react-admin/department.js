@@ -12,7 +12,7 @@ import {
 } from 'react-admin'
 
 export const DepartmentList = props => (
-  <List {...props}>
+  <List {...props} sort={{ field: 'name', order: 'ASC' }}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="name" />
