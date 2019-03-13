@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -55,7 +55,7 @@ var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
 var Button_1 = __importDefault(require("../button/Button"));
 var BulkDeleteAction_1 = __importDefault(require("./BulkDeleteAction"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     bulkActionsButton: {
         opacity: 1,
         transition: theme.transitions.create('opacity', {
@@ -132,16 +132,17 @@ var BulkActions = /** @class */ (function (_super) {
                         smart_count: selectedIds.length,
                     }) }),
                     react_1.default.createElement(FilterNone_1.default, { className: classes.icon })),
-                react_1.default.createElement(Menu_1.default, { id: "bulk-actions-menu", anchorEl: this.anchorElement, onClose: this.handleClose, open: isOpen }, react_1.Children.map(children, function (child, index) { return (react_1.default.createElement(MenuItem_1.default, __assign({ key: index, className: classnames_1.default('bulk-actions-menu-item', child.props.className), onClick: function () { return _this.handleLaunchAction(index); } }, sanitizeRestProps(rest)), translate(child.props.label))); })),
+                react_1.default.createElement(Menu_1.default, { id: "bulk-actions-menu", anchorEl: this.anchorElement, onClose: this.handleClose, open: isOpen }, react_1.Children.map(children, function (child, index) { return react_1.isValidElement(child) ? (react_1.default.createElement(MenuItem_1.default, __assign({ key: index, className: classnames_1.default('bulk-actions-menu-item', child.props.className), onClick: function () { return _this.handleLaunchAction(index); } }, sanitizeRestProps(rest)), translate(child.props.label))) : null; })),
                 react_1.Children.map(children, function (child, index) {
-                    return _this.state.activeAction === index &&
+                    return react_1.isValidElement(child) &&
+                        _this.state.activeAction === index ?
                         react_1.cloneElement(child, {
                             basePath: basePath,
                             filterValues: filterValues,
                             onExit: _this.handleExitAction,
                             resource: resource,
                             selectedIds: selectedIds,
-                        });
+                        }) : null;
                 }))));
     };
     return BulkActions;

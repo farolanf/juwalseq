@@ -11,8 +11,8 @@ var __assign = (this && this.__assign) || function () {
 };
 import React from 'react';
 import ChipInput from 'material-ui-chip-input';
-import { withStyles } from '@material-ui/core/styles';
-var chipInputStyles = {
+import { withStyles, createStyles } from '@material-ui/core/styles';
+var chipInputStyles = createStyles({
     label: {
         top: 18,
     },
@@ -24,6 +24,6 @@ var chipInputStyles = {
         display: 'flex',
         minHeight: 50,
     },
-};
+});
 var AutocompleteArrayInputChip = function (props) { return React.createElement(ChipInput, __assign({}, props)); };
 export default withStyles(chipInputStyles)(AutocompleteArrayInputChip);

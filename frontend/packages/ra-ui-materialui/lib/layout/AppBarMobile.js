@@ -35,7 +35,7 @@ var Menu_1 = __importDefault(require("@material-ui/icons/Menu"));
 var compose_1 = __importDefault(require("recompose/compose"));
 var ra_core_1 = require("ra-core");
 var LoadingIndicator_1 = __importDefault(require("./LoadingIndicator"));
-var styles = {
+var styles = styles_1.createStyles({
     title: {
         fontSize: '1.25em',
         lineHeight: '2.5em',
@@ -54,7 +54,7 @@ var styles = {
         color: '#fff',
         textDecoration: 'none',
     },
-};
+});
 /**
  * @deprecated
  */

@@ -31,3 +31,5 @@ var TabbedShowLayout_1 = __importDefault(require("./TabbedShowLayout"));
 exports.TabbedShowLayout = TabbedShowLayout_1.default;
 var Tab_1 = __importDefault(require("./Tab"));
 exports.Tab = Tab_1.default;
+var TabbedShowLayoutTabs_1 = __importDefault(require("./TabbedShowLayoutTabs"));
+exports.TabbedShowLayoutTabs = TabbedShowLayoutTabs_1.default;

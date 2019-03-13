@@ -35,7 +35,7 @@ var react_router_dom_1 = require("react-router-dom");
 var ra_core_1 = require("ra-core");
 var Button_2 = __importDefault(require("./Button"));
 var Responsive_1 = __importDefault(require("../layout/Responsive"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     floating: {
         color: theme.palette.getContrastText(theme.palette.primary.main),
         margin: 0,

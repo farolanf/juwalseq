@@ -18,17 +18,17 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Children, Fragment } from 'react';
+import React, { Children, Fragment, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import withWidth from '@material-ui/core/withWidth';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { SaveButton, DeleteButton } from '../button';
 var styles = function (theme) {
     var _a;
-    return ({
+    return createStyles({
         toolbar: {
             backgroundColor: theme.palette.type === 'light'
                 ? theme.palette.grey[100]
@@ -64,7 +64,7 @@ var valueOrDefault = function (value, defaultValue) {
     return typeof value === 'undefined' ? defaultValue : value;
 };
 var Toolbar = function (_a) {
-    var basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, width = _a.width, rest = __rest(_a, ["basePath", "children", "classes", "className", "handleSubmit", "handleSubmitWithRedirect", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "width"]);
+    var basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, undoable = _a.undoable, width = _a.width, rest = __rest(_a, ["basePath", "children", "classes", "className", "handleSubmit", "handleSubmitWithRedirect", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "undoable", "width"]);
     var _b;
     return (React.createElement(Fragment, null,
         React.createElement(MuiToolbar, __assign({ className: classnames(classes.toolbar, (_b = {},
@@ -72,16 +72,19 @@ var Toolbar = function (_a) {
                 _b[classes.desktopToolbar] = width !== 'xs',
                 _b), className), role: "toolbar" }, rest), Children.count(children) === 0 ? (React.createElement("div", { className: classes.defaultToolbar },
             React.createElement(SaveButton, { handleSubmitWithRedirect: handleSubmitWithRedirect, invalid: invalid, redirect: redirect, saving: saving, submitOnEnter: submitOnEnter }),
-            record && typeof record.id !== 'undefined' && (React.createElement(DeleteButton, { basePath: basePath, record: record, resource: resource })))) : (Children.map(children, function (button) {
-            return button
+            record && typeof record.id !== 'undefined' && (React.createElement(DeleteButton, { basePath: basePath, record: record, resource: resource, undoable: undoable })))) : (Children.map(children, function (button) {
+            return button && isValidElement(button)
                 ? React.cloneElement(button, {
                     basePath: basePath,
                     handleSubmit: valueOrDefault(button.props.handleSubmit, handleSubmit),
                     handleSubmitWithRedirect: valueOrDefault(button.props.handleSubmitWithRedirect, handleSubmitWithRedirect),
                     invalid: invalid,
                     pristine: pristine,
+                    record: record,
+                    resource: resource,
                     saving: saving,
                     submitOnEnter: valueOrDefault(button.props.submitOnEnter, submitOnEnter),
+                    undoable: valueOrDefault(button.props.undoable, undoable),
                 })
                 : null;
         }))),
@@ -105,6 +108,7 @@ Toolbar.propTypes = {
     resource: PropTypes.string,
     saving: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     submitOnEnter: PropTypes.bool,
+    undoable: PropTypes.bool,
     width: PropTypes.string,
 };
 Toolbar.defaultProps = {

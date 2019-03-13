@@ -31,11 +31,11 @@ var InputAdornment_1 = __importDefault(require("@material-ui/core/InputAdornment
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
 var TextInput_1 = __importDefault(require("./TextInput"));
-var searchFilterStyles = {
+var searchFilterStyles = styles_1.createStyles({
     input: {
         marginTop: 32,
     },
-};
+});
 var SearchInput = function (_a) {
     var classes = _a.classes, translate = _a.translate, props = __rest(_a, ["classes", "translate"]);
     return (react_1.default.createElement(TextInput_1.default, __assign({ label: false, placeholder: translate('ra.action.search'), InputProps: {

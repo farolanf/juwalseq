@@ -23,20 +23,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import inflection from 'inflection';
 import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { getResources, translate } from 'ra-core';
 import DefaultIcon from '@material-ui/icons/ViewList';
 import DashboardMenuItem from './DashboardMenuItem';
 import MenuItemLink from './MenuItemLink';
 import Responsive from '../layout/Responsive';
-var styles = {
+var styles = createStyles({
     main: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },
-};
+});
 var translatedResourceName = function (resource, translate) {
     return translate("resources." + resource.name + ".name", {
         smart_count: 2,

@@ -46,7 +46,7 @@ var Title_1 = __importDefault(require("./Title"));
 var ra_core_1 = require("ra-core");
 var styles = function (theme) {
     var _a;
-    return ({
+    return styles_1.createStyles({
         container: (_a = {
                 display: 'flex',
                 flexDirection: 'column',

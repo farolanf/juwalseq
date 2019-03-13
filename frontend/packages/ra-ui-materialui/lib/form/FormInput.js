@@ -32,7 +32,7 @@ var sanitizeRestProps = function (_a) {
     var basePath = _a.basePath, record = _a.record, rest = __rest(_a, ["basePath", "record"]);
     return rest;
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     input: { width: theme.spacing.unit * 32 },
 }); };
 exports.FormInput = function (_a) {

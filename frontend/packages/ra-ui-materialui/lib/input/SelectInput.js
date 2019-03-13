@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -52,10 +52,10 @@ var compose_1 = __importDefault(require("recompose/compose"));
 var ra_core_1 = require("ra-core");
 var ResettableTextField_1 = __importDefault(require("./ResettableTextField"));
 var sanitizeRestProps = function (_a) {
-    var addLabel = _a.addLabel, allowEmpty = _a.allowEmpty, basePath = _a.basePath, choices = _a.choices, className = _a.className, component = _a.component, crudGetMatching = _a.crudGetMatching, crudGetOne = _a.crudGetOne, defaultValue = _a.defaultValue, filter = _a.filter, filterToQuery = _a.filterToQuery, formClassName = _a.formClassName, initializeForm = _a.initializeForm, input = _a.input, isRequired = _a.isRequired, label = _a.label, locale = _a.locale, meta = _a.meta, onChange = _a.onChange, options = _a.options, optionValue = _a.optionValue, optionText = _a.optionText, disableValue = _a.disableValue, perPage = _a.perPage, record = _a.record, reference = _a.reference, resource = _a.resource, setFilter = _a.setFilter, setPagination = _a.setPagination, setSort = _a.setSort, sort = _a.sort, source = _a.source, textAlign = _a.textAlign, translate = _a.translate, translateChoice = _a.translateChoice, validation = _a.validation, rest = __rest(_a, ["addLabel", "allowEmpty", "basePath", "choices", "className", "component", "crudGetMatching", "crudGetOne", "defaultValue", "filter", "filterToQuery", "formClassName", "initializeForm", "input", "isRequired", "label", "locale", "meta", "onChange", "options", "optionValue", "optionText", "disableValue", "perPage", "record", "reference", "resource", "setFilter", "setPagination", "setSort", "sort", "source", "textAlign", "translate", "translateChoice", "validation"]);
+    var addLabel = _a.addLabel, allowEmpty = _a.allowEmpty, emptyValue = _a.emptyValue, basePath = _a.basePath, choices = _a.choices, className = _a.className, component = _a.component, crudGetMatching = _a.crudGetMatching, crudGetOne = _a.crudGetOne, defaultValue = _a.defaultValue, filter = _a.filter, filterToQuery = _a.filterToQuery, formClassName = _a.formClassName, initializeForm = _a.initializeForm, input = _a.input, isRequired = _a.isRequired, label = _a.label, locale = _a.locale, meta = _a.meta, onChange = _a.onChange, options = _a.options, optionValue = _a.optionValue, optionText = _a.optionText, disableValue = _a.disableValue, perPage = _a.perPage, record = _a.record, reference = _a.reference, resource = _a.resource, setFilter = _a.setFilter, setPagination = _a.setPagination, setSort = _a.setSort, sort = _a.sort, source = _a.source, textAlign = _a.textAlign, translate = _a.translate, translateChoice = _a.translateChoice, validation = _a.validation, rest = __rest(_a, ["addLabel", "allowEmpty", "emptyValue", "basePath", "choices", "className", "component", "crudGetMatching", "crudGetOne", "defaultValue", "filter", "filterToQuery", "formClassName", "initializeForm", "input", "isRequired", "label", "locale", "meta", "onChange", "options", "optionValue", "optionText", "disableValue", "perPage", "record", "reference", "resource", "setFilter", "setPagination", "setSort", "sort", "source", "textAlign", "translate", "translateChoice", "validation"]);
     return rest;
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     input: {
         minWidth: theme.spacing.unit * 20,
     },
@@ -156,7 +156,7 @@ var SelectInput = /** @class */ (function (_super) {
         };
         _this.addAllowEmpty = function (choices) {
             if (_this.props.allowEmpty) {
-                return [react_1.default.createElement(MenuItem_1.default, { value: "", key: "null" })].concat(choices);
+                return [react_1.default.createElement(MenuItem_1.default, { value: _this.props.emptyValue, key: "null" })].concat(choices);
             }
             return choices;
         };
@@ -197,6 +197,7 @@ var SelectInput = /** @class */ (function (_super) {
 exports.SelectInput = SelectInput;
 SelectInput.propTypes = {
     allowEmpty: prop_types_1.default.bool.isRequired,
+    emptyValue: prop_types_1.default.any,
     choices: prop_types_1.default.arrayOf(prop_types_1.default.object),
     classes: prop_types_1.default.object,
     className: prop_types_1.default.string,
@@ -219,6 +220,7 @@ SelectInput.propTypes = {
 };
 SelectInput.defaultProps = {
     allowEmpty: false,
+    emptyValue: '',
     classes: {},
     choices: [],
     options: {},

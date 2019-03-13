@@ -30,7 +30,7 @@ var ra_core_1 = require("ra-core");
  * @deprecated Use Title instead
  */
 var Title = function (_a) {
-    var className = _a.className, defaultTitle = _a.defaultTitle, record = _a.record, title = _a.title, translate = _a.translate, rest = __rest(_a, ["className", "defaultTitle", "record", "title", "translate"]);
+    var className = _a.className, defaultTitle = _a.defaultTitle, record = _a.record, title = _a.title, translate = _a.translate, locale = _a.locale, rest = __rest(_a, ["className", "defaultTitle", "record", "title", "translate", "locale"]);
     if (!title) {
         return (react_1.default.createElement("span", __assign({ className: className }, rest), defaultTitle));
     }
@@ -42,6 +42,7 @@ var Title = function (_a) {
 Title.propTypes = {
     defaultTitle: prop_types_1.default.string.isRequired,
     className: prop_types_1.default.string,
+    locale: prop_types_1.default.string,
     record: prop_types_1.default.object,
     translate: prop_types_1.default.func.isRequired,
     title: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.element]),

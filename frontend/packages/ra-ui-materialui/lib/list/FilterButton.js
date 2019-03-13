@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -54,9 +54,9 @@ var compose_1 = __importDefault(require("recompose/compose"));
 var ra_core_1 = require("ra-core");
 var FilterButtonMenuItem_1 = __importDefault(require("./FilterButtonMenuItem"));
 var Button_1 = __importDefault(require("../button/Button"));
-var styles = {
+var styles = styles_1.createStyles({
     root: { display: 'inline-block' },
-};
+});
 var FilterButton = /** @class */ (function (_super) {
     __extends(FilterButton, _super);
     function FilterButton(props) {

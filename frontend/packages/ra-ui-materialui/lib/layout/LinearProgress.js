@@ -28,7 +28,7 @@ var LinearProgress_1 = __importDefault(require("@material-ui/core/LinearProgress
 var prop_types_1 = __importDefault(require("prop-types"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     root: {
         margin: theme.spacing.unit + "px 0",
         width: theme.spacing.unit * 20 + "px",

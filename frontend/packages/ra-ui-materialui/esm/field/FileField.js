@@ -21,12 +21,12 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import sanitizeRestProps from './sanitizeRestProps';
-var styles = {
+var styles = createStyles({
     root: { display: 'inline-block' },
-};
+});
 export var FileField = function (_a) {
     var _b = _a.classes, classes = _b === void 0 ? {} : _b, className = _a.className, record = _a.record, source = _a.source, title = _a.title, src = _a.src, target = _a.target, rest = __rest(_a, ["classes", "className", "record", "source", "title", "src", "target"]);
     var sourceValue = get(record, source);

@@ -95,7 +95,7 @@ exports.default = {
         component: function (props) { return react_1.default.createElement(TextField_1.default, __assign({ source: "id" }, props)); },
         representation: function () { return "<TextField source=\"id\" />"; },
     },
-    richText: false,
+    richText: undefined,
     string: {
         component: TextField_1.default,
         representation: function (props) { return "<TextField source=\"" + props.source + "\" />"; },

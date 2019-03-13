@@ -32,7 +32,7 @@ var styles_1 = require("@material-ui/core/styles");
 var PowerSettingsNew_1 = __importDefault(require("@material-ui/icons/PowerSettingsNew"));
 var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     menuItem: {
         color: theme.palette.text.secondary,
     },

@@ -34,7 +34,7 @@ var Tooltip_1 = __importDefault(require("@material-ui/core/Tooltip"));
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
 // remove the sort icons when not active
-var styles = {
+var styles = styles_1.createStyles({
     icon: {
         display: 'none',
     },
@@ -43,7 +43,7 @@ var styles = {
             display: 'inline',
         },
     },
-};
+});
 exports.DatagridHeaderCell = function (_a) {
     var classes = _a.classes, className = _a.className, field = _a.field, currentSort = _a.currentSort, updateSort = _a.updateSort, resource = _a.resource, isSorting = _a.isSorting, translate = _a.translate, rest = __rest(_a, ["classes", "className", "field", "currentSort", "updateSort", "resource", "isSorting", "translate"]);
     return (react_1.default.createElement(TableCell_1.default, __assign({ className: classnames_1.default(className, field.props.headerClassName), numeric: field.props.textAlign === 'right', padding: "none", variant: "head" }, rest), field.props.sortable !== false &&

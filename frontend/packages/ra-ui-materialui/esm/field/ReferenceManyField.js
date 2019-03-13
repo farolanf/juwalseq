@@ -18,13 +18,13 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Fragment, cloneElement } from 'react';
+import React, { Fragment, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 import { ReferenceManyFieldController } from 'ra-core';
 export var ReferenceManyFieldView = function (_a) {
     var children = _a.children, className = _a.className, currentSort = _a.currentSort, data = _a.data, ids = _a.ids, loadedOnce = _a.loadedOnce, page = _a.page, pagination = _a.pagination, perPage = _a.perPage, reference = _a.reference, referenceBasePath = _a.referenceBasePath, setPage = _a.setPage, setPerPage = _a.setPerPage, setSort = _a.setSort, total = _a.total;
     return (React.createElement(Fragment, null,
-        cloneElement(children, {
+        cloneElement(Children.only(children), {
             className: className,
             resource: reference,
             ids: ids,

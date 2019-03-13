@@ -19,24 +19,31 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var LinearProgress_1 = __importDefault(require("@material-ui/core/LinearProgress"));
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
-var styles = {
+var styles = styles_1.createStyles({
     progress: { marginTop: '1em' },
-};
+});
 exports.ReferenceArrayFieldView = function (_a) {
     var children = _a.children, className = _a.className, _b = _a.classes, classes = _b === void 0 ? {} : _b, data = _a.data, ids = _a.ids, loadedOnce = _a.loadedOnce, reference = _a.reference, referenceBasePath = _a.referenceBasePath;
     if (loadedOnce === false) {
         return react_1.default.createElement(LinearProgress_1.default, { className: classes.progress });
     }
-    return react_1.default.cloneElement(children, {
+    return react_1.default.cloneElement(react_1.Children.only(children), {
         className: className,
         resource: reference,
         ids: ids,

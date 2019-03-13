@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,7 +31,7 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component } from 'react';
+import React, { Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import MuiTab from '@material-ui/core/Tab';
@@ -95,11 +95,11 @@ var Tab = /** @class */ (function (_super) {
         _this.renderContent = function (_a) {
             var className = _a.className, children = _a.children, basePath = _a.basePath, record = _a.record, resource = _a.resource;
             return (React.createElement("span", { className: className }, React.Children.map(children, function (field) {
-                return field && (React.createElement("div", { key: field.props.source, className: classnames('ra-field', "ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (React.createElement(Labeled, { label: field.props.label, source: field.props.source, basePath: basePath, record: record, resource: resource }, field)) : typeof field.type === 'string' ? (field) : (React.cloneElement(field, {
+                return field && isValidElement(field) ? (React.createElement("div", { key: field.props.source, className: classnames('ra-field', "ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (React.createElement(Labeled, { label: field.props.label, source: field.props.source, basePath: basePath, record: record, resource: resource }, field)) : typeof field.type === 'string' ? (field) : (React.cloneElement(field, {
                     basePath: basePath,
                     record: record,
                     resource: resource,
-                }))));
+                })))) : null;
             })));
         };
         return _this;

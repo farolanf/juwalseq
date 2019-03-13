@@ -29,9 +29,9 @@ var get_1 = __importDefault(require("lodash/get"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
 var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
-var styles = {
+var styles = styles_1.createStyles({
     root: { display: 'inline-block' },
-};
+});
 exports.FileField = function (_a) {
     var _b = _a.classes, classes = _b === void 0 ? {} : _b, className = _a.className, record = _a.record, source = _a.source, title = _a.title, src = _a.src, target = _a.target, rest = __rest(_a, ["classes", "className", "record", "source", "title", "src", "target"]);
     var sourceValue = get_1.default(record, source);

@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -66,7 +66,7 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
@@ -90,7 +90,7 @@ var DatagridRow = /** @class */ (function (_super) {
         _this.coomponentDidUpdate = function (prevProps, prevState) {
             var colSpan = _this.computeColSpan(_this.props);
             if (colSpan !== prevState.colSpan) {
-                _this.setState({ colspan: colspan });
+                _this.setState({ colSpan: colSpan });
             }
         };
         _this.handleToggleExpanded = function (event) {
@@ -164,7 +164,7 @@ var DatagridRow = /** @class */ (function (_super) {
                 hasBulkActions && (React.createElement(TableCell, { padding: "none" },
                     React.createElement(Checkbox, { color: "primary", className: "select-item " + classes.checkbox, checked: selected, onClick: this.handleToggle }))),
                 React.Children.map(children, function (field, index) {
-                    return field ? (React.createElement(DatagridCell, __assign({ key: id + "-" + (field.props.source || index), className: classnames("column-" + field.props.source, classes.rowCell), record: record, id: id }, { field: field, basePath: basePath, resource: resource }))) : null;
+                    return isValidElement(field) ? (React.createElement(DatagridCell, __assign({ key: id + "-" + (field.props.source || index), className: classnames("column-" + field.props.source, classes.rowCell), record: record, id: id }, { field: field, basePath: basePath, resource: resource }))) : null;
                 })),
             expand && expanded && (React.createElement(TableRow, { key: id + "-expand" },
                 React.createElement(TableCell, { colSpan: colSpan, role: "expand-content" }, React.cloneElement(expand, {

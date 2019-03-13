@@ -18,15 +18,15 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { ReferenceFieldController } from 'ra-core';
 import LinearProgress from '../layout/LinearProgress';
 import Link from '../Link';
 import sanitizeRestProps from './sanitizeRestProps';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     link: {
         color: theme.palette.primary.main,
     },
@@ -39,12 +39,12 @@ export var ReferenceFieldView = function (_a) {
         return React.createElement(LinearProgress, null);
     }
     if (resourceLinkPath) {
-        return (React.createElement(Link, { to: resourceLinkPath, className: className, onClick: stopPropagation }, React.cloneElement(children, __assign({ className: classnames(children.props.className, classes.link // force color override for Typography components
+        return (React.createElement(Link, { to: resourceLinkPath, className: className, onClick: stopPropagation }, React.cloneElement(Children.only(children), __assign({ className: classnames(children.props.className, classes.link // force color override for Typography components
             ), record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
             basePath: basePath,
             translateChoice: translateChoice }, sanitizeRestProps(rest)))));
     }
-    return React.cloneElement(children, __assign({ record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
+    return React.cloneElement(Children.only(children), __assign({ record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
         basePath: basePath,
         translateChoice: translateChoice }, sanitizeRestProps(rest)));
 };

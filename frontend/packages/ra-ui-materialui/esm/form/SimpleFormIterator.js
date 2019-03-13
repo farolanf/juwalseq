@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import React, { Children, cloneElement, Component } from 'react';
+import React, { Children, cloneElement, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -19,7 +19,7 @@ import get from 'lodash/get';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/RemoveCircleOutline';
 import AddIcon from '@material-ui/icons/AddCircleOutline';
 import { translate } from 'ra-core';
@@ -27,7 +27,7 @@ import classNames from 'classnames';
 import FormInput from '../form/FormInput';
 var styles = function (theme) {
     var _a, _b;
-    return ({
+    return createStyles({
         root: {
             padding: 0,
             marginBottom: 0,
@@ -84,6 +84,16 @@ var SimpleFormIterator = /** @class */ (function (_super) {
             _this.ids.splice(index, 1);
             fields.remove(index);
         }; };
+        // Returns a boolean to indicate whether to disable the remove button for certain fields.
+        // If disableRemove is a function, then call the function with the current record to
+        // determing if the button should be disabled. Otherwise, use a boolean property that
+        // enables or disables the button for all of the fields.
+        _this.disableRemoveField = function (record, disableRemove) {
+            if (typeof disableRemove === "boolean") {
+                return disableRemove;
+            }
+            return disableRemove && disableRemove(record);
+        };
         _this.addField = function () {
             var fields = _this.props.fields;
             _this.ids.push(_this.nextId++);
@@ -113,7 +123,7 @@ var SimpleFormIterator = /** @class */ (function (_super) {
             React.createElement(TransitionGroup, null, fields.map(function (member, index) { return (React.createElement(CSSTransition, { key: _this.ids[index], timeout: 500, classNames: "fade" },
                 React.createElement("li", { className: classes.line },
                     React.createElement(Typography, { variant: "body1", className: classes.index }, index + 1),
-                    React.createElement("section", { className: classes.form }, Children.map(children, function (input, index2) { return (React.createElement(FormInput, { basePath: input.props.basePath || basePath, input: cloneElement(input, {
+                    React.createElement("section", { className: classes.form }, Children.map(children, function (input, index2) { return isValidElement(input) ? (React.createElement(FormInput, { basePath: input.props.basePath || basePath, input: cloneElement(input, {
                             source: input.props.source
                                 ? member + "." + input.props.source
                                 : member,
@@ -123,8 +133,8 @@ var SimpleFormIterator = /** @class */ (function (_super) {
                             label: input.props.label ||
                                 input.props.source,
                         }), record: (records && records[index]) ||
-                            {}, resource: resource })); })),
-                    !disableRemove && (React.createElement("span", { className: classes.action },
+                            {}, resource: resource })) : null; })),
+                    !(_this.disableRemoveField((records && records[index]) || {}, disableRemove)) && (React.createElement("span", { className: classes.action },
                         React.createElement(Button, { className: classNames('button-remove', "button-remove-" + source + "-" + index), size: "small", onClick: _this.removeField(index) },
                             React.createElement(CloseIcon, { className: classes.leftIcon }),
                             translate('ra.action.remove'))))))); })),
@@ -154,6 +164,6 @@ SimpleFormIterator.propTypes = {
     resource: PropTypes.string,
     translate: PropTypes.func,
     disableAdd: PropTypes.bool,
-    disableRemove: PropTypes.bool,
+    disableRemove: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
 };
 export default compose(translate, withStyles(styles))(SimpleFormIterator);

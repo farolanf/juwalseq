@@ -18,16 +18,16 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Children, cloneElement } from 'react';
+import React, { Children, cloneElement, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 var getTabFullPath = function (tab, index, baseUrl) {
     return "" + baseUrl + (tab.props.path ? "/" + tab.props.path : index > 0 ? "/" + index : '');
 };
 var TabbedShowLayoutTabs = function (_a) {
-    var children = _a.children, match = _a.match, rest = __rest(_a, ["children", "match"]);
-    return (React.createElement(Tabs, __assign({ indicatorColor: "primary" }, rest), Children.map(children, function (tab, index) {
-        if (!tab)
+    var children = _a.children, match = _a.match, value = _a.value, rest = __rest(_a, ["children", "match", "value"]);
+    return (React.createElement(Tabs, __assign({ indicatorColor: "primary", value: value }, rest), Children.map(children, function (tab, index) {
+        if (!tab || !isValidElement(tab))
             return null;
         // Builds the full tab tab which is the concatenation of the last matched route in the
         // TabbedShowLayout hierarchy (ex: '/posts/create', '/posts/12', , '/posts/12/show')

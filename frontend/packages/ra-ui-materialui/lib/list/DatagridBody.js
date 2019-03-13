@@ -91,5 +91,6 @@ var PureDatagridBody = shouldUpdate_1.default(function (props, nextProps) {
         props.data !== nextProps.data;
 })(DatagridBody);
 // trick material-ui Table into thinking this is one of the child type it supports
+// @ts-ignore
 PureDatagridBody.muiName = 'TableBody';
 exports.default = PureDatagridBody;

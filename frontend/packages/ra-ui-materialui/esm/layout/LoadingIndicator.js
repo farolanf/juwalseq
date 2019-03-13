@@ -22,15 +22,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import compose from 'recompose/compose';
 import RefreshIconButton from '../button/RefreshIconButton';
-var styles = {
+var styles = createStyles({
     loader: {
         margin: 14,
     },
-};
+});
 export var LoadingIndicator = function (_a) {
     var classes = _a.classes, className = _a.className, isLoading = _a.isLoading, rest = __rest(_a, ["classes", "className", "isLoading"]);
     return isLoading ? (React.createElement(CircularProgress, __assign({ className: classNames('app-loader', classes.loader, className), color: "inherit", size: 18, thickness: 5 }, rest))) : (React.createElement(RefreshIconButton, null));

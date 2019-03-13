@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -49,7 +49,7 @@ var classnames_1 = __importDefault(require("classnames"));
 var react_router_dom_1 = require("react-router-dom");
 var MenuItem_1 = __importDefault(require("@material-ui/core/MenuItem"));
 var styles_1 = require("@material-ui/core/styles");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     root: {
         color: theme.palette.text.secondary,
         display: 'flex',
@@ -80,7 +80,7 @@ var MenuItemLink = /** @class */ (function (_super) {
         className: prop_types_1.default.string,
         leftIcon: prop_types_1.default.node,
         onClick: prop_types_1.default.func,
-        primaryText: prop_types_1.default.string,
+        primaryText: prop_types_1.default.node,
         staticContext: prop_types_1.default.object,
         to: prop_types_1.default.oneOfType([prop_types_1.default.string, prop_types_1.default.object])
             .isRequired,

@@ -40,7 +40,7 @@ var classnames_1 = __importDefault(require("classnames"));
 var button_1 = require("../button");
 var styles = function (theme) {
     var _a;
-    return ({
+    return styles_1.createStyles({
         toolbar: {
             backgroundColor: theme.palette.type === 'light'
                 ? theme.palette.grey[100]
@@ -76,7 +76,7 @@ var valueOrDefault = function (value, defaultValue) {
     return typeof value === 'undefined' ? defaultValue : value;
 };
 var Toolbar = function (_a) {
-    var basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, width = _a.width, rest = __rest(_a, ["basePath", "children", "classes", "className", "handleSubmit", "handleSubmitWithRedirect", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "width"]);
+    var basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, undoable = _a.undoable, width = _a.width, rest = __rest(_a, ["basePath", "children", "classes", "className", "handleSubmit", "handleSubmitWithRedirect", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "undoable", "width"]);
     var _b;
     return (react_1.default.createElement(react_1.Fragment, null,
         react_1.default.createElement(Toolbar_1.default, __assign({ className: classnames_1.default(classes.toolbar, (_b = {},
@@ -84,16 +84,19 @@ var Toolbar = function (_a) {
                 _b[classes.desktopToolbar] = width !== 'xs',
                 _b), className), role: "toolbar" }, rest), react_1.Children.count(children) === 0 ? (react_1.default.createElement("div", { className: classes.defaultToolbar },
             react_1.default.createElement(button_1.SaveButton, { handleSubmitWithRedirect: handleSubmitWithRedirect, invalid: invalid, redirect: redirect, saving: saving, submitOnEnter: submitOnEnter }),
-            record && typeof record.id !== 'undefined' && (react_1.default.createElement(button_1.DeleteButton, { basePath: basePath, record: record, resource: resource })))) : (react_1.Children.map(children, function (button) {
-            return button
+            record && typeof record.id !== 'undefined' && (react_1.default.createElement(button_1.DeleteButton, { basePath: basePath, record: record, resource: resource, undoable: undoable })))) : (react_1.Children.map(children, function (button) {
+            return button && react_1.isValidElement(button)
                 ? react_1.default.cloneElement(button, {
                     basePath: basePath,
                     handleSubmit: valueOrDefault(button.props.handleSubmit, handleSubmit),
                     handleSubmitWithRedirect: valueOrDefault(button.props.handleSubmitWithRedirect, handleSubmitWithRedirect),
                     invalid: invalid,
                     pristine: pristine,
+                    record: record,
+                    resource: resource,
                     saving: saving,
                     submitOnEnter: valueOrDefault(button.props.submitOnEnter, submitOnEnter),
+                    undoable: valueOrDefault(button.props.undoable, undoable),
                 })
                 : null;
         }))),
@@ -117,6 +120,7 @@ Toolbar.propTypes = {
     resource: prop_types_1.default.string,
     saving: prop_types_1.default.oneOfType([prop_types_1.default.object, prop_types_1.default.bool]),
     submitOnEnter: prop_types_1.default.bool,
+    undoable: prop_types_1.default.bool,
     width: prop_types_1.default.string,
 };
 Toolbar.defaultProps = {

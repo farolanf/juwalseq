@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -97,7 +97,7 @@ var ArrayInput = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.renderFieldArray = function (fieldProps) {
             var _a = _this.props, children = _a.children, record = _a.record, resource = _a.resource, source = _a.source;
-            return react_1.cloneElement(children, __assign({}, fieldProps, { record: record,
+            return react_1.cloneElement(react_1.Children.only(children), __assign({}, fieldProps, { record: record,
                 resource: resource,
                 source: source }));
         };
@@ -123,7 +123,10 @@ ArrayInput.propTypes = {
     source: prop_types_1.default.string,
     record: prop_types_1.default.object,
     options: prop_types_1.default.object,
-    validate: prop_types_1.default.func,
+    validate: prop_types_1.default.oneOfType([
+        prop_types_1.default.func,
+        prop_types_1.default.arrayOf(prop_types_1.default.func),
+    ]),
 };
 ArrayInput.defaultProps = {
     options: {},

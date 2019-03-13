@@ -12,4 +12,5 @@ import ShowGuesser from './ShowGuesser';
 import SimpleShowLayout from './SimpleShowLayout';
 import TabbedShowLayout from './TabbedShowLayout';
 import Tab from './Tab';
-export { Create, CreateView, CreateActions, Edit, EditView, EditActions, EditGuesser, Show, ShowView, ShowActions, ShowGuesser, SimpleShowLayout, TabbedShowLayout, Tab, };
+import TabbedShowLayoutTabs from './TabbedShowLayoutTabs';
+export { Create, CreateView, CreateActions, Edit, EditView, EditActions, EditGuesser, Show, ShowView, ShowActions, ShowGuesser, SimpleShowLayout, TabbedShowLayout, Tab, TabbedShowLayoutTabs, };

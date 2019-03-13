@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -107,11 +107,11 @@ var Tab = /** @class */ (function (_super) {
         _this.renderContent = function (_a) {
             var className = _a.className, children = _a.children, basePath = _a.basePath, record = _a.record, resource = _a.resource;
             return (react_1.default.createElement("span", { className: className }, react_1.default.Children.map(children, function (field) {
-                return field && (react_1.default.createElement("div", { key: field.props.source, className: classnames_1.default('ra-field', "ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (react_1.default.createElement(Labeled_1.default, { label: field.props.label, source: field.props.source, basePath: basePath, record: record, resource: resource }, field)) : typeof field.type === 'string' ? (field) : (react_1.default.cloneElement(field, {
+                return field && react_1.isValidElement(field) ? (react_1.default.createElement("div", { key: field.props.source, className: classnames_1.default('ra-field', "ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (react_1.default.createElement(Labeled_1.default, { label: field.props.label, source: field.props.source, basePath: basePath, record: record, resource: resource }, field)) : typeof field.type === 'string' ? (field) : (react_1.default.cloneElement(field, {
                     basePath: basePath,
                     record: record,
                     resource: resource,
-                }))));
+                })))) : null;
             })));
         };
         return _this;

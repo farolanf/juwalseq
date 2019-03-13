@@ -19,12 +19,19 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var Card_1 = __importDefault(require("@material-ui/core/Card"));
 var classnames_1 = __importDefault(require("classnames"));
@@ -37,7 +44,8 @@ var BulkDeleteButton_1 = __importDefault(require("../button/BulkDeleteButton"));
 var BulkActionsToolbar_1 = __importDefault(require("./BulkActionsToolbar"));
 var ListActions_1 = __importDefault(require("./ListActions"));
 var defaultTheme_1 = __importDefault(require("../defaultTheme"));
-exports.styles = {
+var DefaultBulkActionButtons = function (props) { return react_1.default.createElement(BulkDeleteButton_1.default, __assign({}, props)); };
+exports.styles = styles_1.createStyles({
     root: {
         display: 'flex',
     },
@@ -57,7 +65,7 @@ exports.styles = {
         alignSelf: 'flex-start',
     },
     noResults: { padding: 20 },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, basePath = _a.basePath, bulkActions = _a.bulkActions, changeListParams = _a.changeListParams, children = _a.children, classes = _a.classes, className = _a.className, crudGetList = _a.crudGetList, currentSort = _a.currentSort, data = _a.data, defaultTitle = _a.defaultTitle, displayedFilters = _a.displayedFilters, exporter = _a.exporter, filter = _a.filter, filterDefaultValues = _a.filterDefaultValues, filters = _a.filters, filterValues = _a.filterValues, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, hideFilter = _a.hideFilter, history = _a.history, ids = _a.ids, isLoading = _a.isLoading, loadedOnce = _a.loadedOnce, locale = _a.locale, location = _a.location, match = _a.match, onSelect = _a.onSelect, onToggleItem = _a.onToggleItem, onUnselectItems = _a.onUnselectItems, options = _a.options, page = _a.page, pagination = _a.pagination, params = _a.params, permissions = _a.permissions, perPage = _a.perPage, push = _a.push, query = _a.query, refresh = _a.refresh, resource = _a.resource, selectedIds = _a.selectedIds, setFilters = _a.setFilters, setPage = _a.setPage, setPerPage = _a.setPerPage, setSelectedIds = _a.setSelectedIds, setSort = _a.setSort, showFilter = _a.showFilter, sort = _a.sort, theme = _a.theme, title = _a.title, toggleItem = _a.toggleItem, total = _a.total, translate = _a.translate, version = _a.version, rest = __rest(_a, ["actions", "basePath", "bulkActions", "changeListParams", "children", "classes", "className", "crudGetList", "currentSort", "data", "defaultTitle", "displayedFilters", "exporter", "filter", "filterDefaultValues", "filters", "filterValues", "hasCreate", "hasEdit", "hasList", "hasShow", "hideFilter", "history", "ids", "isLoading", "loadedOnce", "locale", "location", "match", "onSelect", "onToggleItem", "onUnselectItems", "options", "page", "pagination", "params", "permissions", "perPage", "push", "query", "refresh", "resource", "selectedIds", "setFilters", "setPage", "setPerPage", "setSelectedIds", "setSort", "showFilter", "sort", "theme", "title", "toggleItem", "total", "translate", "version"]);
     return rest;
@@ -65,11 +73,8 @@ var sanitizeRestProps = function (_a) {
 exports.ListView = function (_a) {
     var 
     // component props
-    _b = _a.actions, 
-    // component props
-    actions = _b === void 0 ? react_1.default.createElement(ListActions_1.default, null) : _b, aside = _a.aside, filters = _a.filters, bulkActions = _a.bulkActions, // deprecated
-    _c = _a.bulkActionButtons, // deprecated
-    bulkActionButtons = _c === void 0 ? react_1.default.createElement(BulkDeleteButton_1.default, null) : _c, _d = _a.pagination, pagination = _d === void 0 ? react_1.default.createElement(Pagination_1.default, null) : _d, 
+    actions = _a.actions, aside = _a.aside, filters = _a.filters, bulkActions = _a.bulkActions, // deprecated
+    bulkActionButtons = _a.bulkActionButtons, pagination = _a.pagination, 
     // overridable by user
     children = _a.children, className = _a.className, classes = _a.classes, exporter = _a.exporter, title = _a.title, rest = __rest(_a, ["actions", "aside", "filters", "bulkActions", "bulkActionButtons", "pagination", "children", "className", "classes", "exporter", "title"]);
     var defaultTitle = rest.defaultTitle, version = rest.version;
@@ -84,11 +89,10 @@ exports.ListView = function (_a) {
             (filters || actions) && (react_1.default.createElement(ListToolbar_1.default, __assign({ filters: filters }, controllerProps, { actions: actions, bulkActions: bulkActions, exporter: exporter }))),
             react_1.default.createElement("div", { key: version },
                 children &&
-                    react_1.default.cloneElement(children, __assign({}, controllerProps, { hasBulkActions: bulkActions !== false &&
+                    react_1.cloneElement(react_1.Children.only(children), __assign({}, controllerProps, { hasBulkActions: bulkActions !== false &&
                             bulkActionButtons !== false })),
-                pagination &&
-                    react_1.default.cloneElement(pagination, controllerProps))),
-        aside && react_1.default.cloneElement(aside, controllerProps)));
+                pagination && react_1.cloneElement(pagination, controllerProps))),
+        aside && react_1.cloneElement(aside, controllerProps)));
 };
 exports.ListView.propTypes = {
     actions: prop_types_1.default.element,
@@ -134,7 +138,10 @@ exports.ListView.propTypes = {
     version: prop_types_1.default.number,
 };
 exports.ListView.defaultProps = {
+    actions: react_1.default.createElement(ListActions_1.default, null),
     classes: {},
+    bulkActionButtons: react_1.default.createElement(DefaultBulkActionButtons, null),
+    pagination: react_1.default.createElement(Pagination_1.default, null),
 };
 /**
  * List page component

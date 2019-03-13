@@ -74,7 +74,7 @@ var sanitizeRestProps = function (_a) {
 exports.SimpleShowLayout = function (_a) {
     var basePath = _a.basePath, className = _a.className, children = _a.children, record = _a.record, resource = _a.resource, version = _a.version, rest = __rest(_a, ["basePath", "className", "children", "record", "resource", "version"]);
     return (react_1.default.createElement(CardContentInner_1.default, __assign({ className: className, key: version }, sanitizeRestProps(rest)), react_1.Children.map(children, function (field) {
-        return field ? (react_1.default.createElement("div", { key: field.props.source, className: classnames_1.default("ra-field ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (react_1.default.createElement(Labeled_1.default, { record: record, resource: resource, basePath: basePath, label: field.props.label, source: field.props.source, disabled: false }, field)) : typeof field.type === 'string' ? (field) : (react_1.default.cloneElement(field, {
+        return field && react_1.isValidElement(field) ? (react_1.default.createElement("div", { key: field.props.source, className: classnames_1.default("ra-field ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (react_1.default.createElement(Labeled_1.default, { record: record, resource: resource, basePath: basePath, label: field.props.label, source: field.props.source, disabled: false }, field)) : typeof field.type === 'string' ? (field) : (react_1.cloneElement(field, {
             record: record,
             resource: resource,
             basePath: basePath,

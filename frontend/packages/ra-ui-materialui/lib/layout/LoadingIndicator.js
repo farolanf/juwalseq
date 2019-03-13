@@ -31,11 +31,11 @@ var styles_1 = require("@material-ui/core/styles");
 var CircularProgress_1 = __importDefault(require("@material-ui/core/CircularProgress"));
 var compose_1 = __importDefault(require("recompose/compose"));
 var RefreshIconButton_1 = __importDefault(require("../button/RefreshIconButton"));
-var styles = {
+var styles = styles_1.createStyles({
     loader: {
         margin: 14,
     },
-};
+});
 exports.LoadingIndicator = function (_a) {
     var classes = _a.classes, className = _a.className, isLoading = _a.isLoading, rest = __rest(_a, ["classes", "className", "isLoading"]);
     return isLoading ? (react_1.default.createElement(CircularProgress_1.default, __assign({ className: classnames_1.default('app-loader', classes.loader, className), color: "inherit", size: 18, thickness: 5 }, rest))) : (react_1.default.createElement(RefreshIconButton_1.default, null));

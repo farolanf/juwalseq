@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,7 +31,7 @@ var compose_1 = __importDefault(require("recompose/compose"));
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
 var FileInput_1 = require("./FileInput");
-var styles = {
+var styles = styles_1.createStyles({
     root: { width: '100%' },
     dropZone: {
         background: '#efefef',
@@ -56,7 +56,7 @@ var styles = {
             opacity: 1,
         },
     },
-};
+});
 var ImageInput = /** @class */ (function (_super) {
     __extends(ImageInput, _super);
     function ImageInput() {

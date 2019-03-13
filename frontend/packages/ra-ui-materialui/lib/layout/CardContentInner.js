@@ -10,7 +10,7 @@ var CardContent_1 = __importDefault(require("@material-ui/core/CardContent"));
 var styles_1 = require("@material-ui/core/styles");
 var styles = function (theme) {
     var _a;
-    return ({
+    return styles_1.createStyles({
         root: {
             paddingTop: 0,
             paddingBottom: 0,

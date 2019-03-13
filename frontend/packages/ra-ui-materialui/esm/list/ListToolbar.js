@@ -21,14 +21,14 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles } from '@material-ui/core/styles';
-var styles = {
+import { withStyles, createStyles } from '@material-ui/core/styles';
+var styles = createStyles({
     toolbar: {
         justifyContent: 'space-between',
     },
-};
+});
 var ListToolbar = function (_a) {
-    var _b = _a.classes, classes = _b === void 0 ? {} : _b, filters = _a.filters, actions = _a.actions, bulkActions = _a.bulkActions, exporter = _a.exporter, rest = __rest(_a, ["classes", "filters", "actions", "bulkActions", "exporter"]);
+    var classes = _a.classes, filters = _a.filters, actions = _a.actions, bulkActions = _a.bulkActions, exporter = _a.exporter, rest = __rest(_a, ["classes", "filters", "actions", "bulkActions", "exporter"]);
     return (React.createElement(Toolbar, { className: classes.toolbar },
         filters &&
             React.cloneElement(filters, __assign({}, rest, { context: 'form' })),
@@ -44,5 +44,8 @@ ListToolbar.propTypes = {
     actions: PropTypes.element,
     bulkActions: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
     exporter: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+};
+ListToolbar.defaultProps = {
+    classes: {},
 };
 export default withStyles(styles)(ListToolbar);

@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -32,7 +32,7 @@ var ChevronLeft_1 = __importDefault(require("@material-ui/icons/ChevronLeft"));
 var ChevronRight_1 = __importDefault(require("@material-ui/icons/ChevronRight"));
 var compose_1 = __importDefault(require("recompose/compose"));
 var ra_core_1 = require("ra-core");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     actions: {
         flexShrink: 0,
         color: theme.palette.text.secondary,

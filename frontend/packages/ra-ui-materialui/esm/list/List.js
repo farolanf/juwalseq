@@ -19,20 +19,21 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { ListController, getListControllerProps } from 'ra-core';
 import Title from '../layout/Title';
 import ListToolbar from './ListToolbar';
 import DefaultPagination from './Pagination';
-import DefaultBulkActionButtons from '../button/BulkDeleteButton';
+import BulkDeleteButton from '../button/BulkDeleteButton';
 import BulkActionsToolbar from './BulkActionsToolbar';
 import DefaultActions from './ListActions';
 import defaultTheme from '../defaultTheme';
-export var styles = {
+var DefaultBulkActionButtons = function (props) { return React.createElement(BulkDeleteButton, __assign({}, props)); };
+export var styles = createStyles({
     root: {
         display: 'flex',
     },
@@ -52,7 +53,7 @@ export var styles = {
         alignSelf: 'flex-start',
     },
     noResults: { padding: 20 },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, basePath = _a.basePath, bulkActions = _a.bulkActions, changeListParams = _a.changeListParams, children = _a.children, classes = _a.classes, className = _a.className, crudGetList = _a.crudGetList, currentSort = _a.currentSort, data = _a.data, defaultTitle = _a.defaultTitle, displayedFilters = _a.displayedFilters, exporter = _a.exporter, filter = _a.filter, filterDefaultValues = _a.filterDefaultValues, filters = _a.filters, filterValues = _a.filterValues, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, hideFilter = _a.hideFilter, history = _a.history, ids = _a.ids, isLoading = _a.isLoading, loadedOnce = _a.loadedOnce, locale = _a.locale, location = _a.location, match = _a.match, onSelect = _a.onSelect, onToggleItem = _a.onToggleItem, onUnselectItems = _a.onUnselectItems, options = _a.options, page = _a.page, pagination = _a.pagination, params = _a.params, permissions = _a.permissions, perPage = _a.perPage, push = _a.push, query = _a.query, refresh = _a.refresh, resource = _a.resource, selectedIds = _a.selectedIds, setFilters = _a.setFilters, setPage = _a.setPage, setPerPage = _a.setPerPage, setSelectedIds = _a.setSelectedIds, setSort = _a.setSort, showFilter = _a.showFilter, sort = _a.sort, theme = _a.theme, title = _a.title, toggleItem = _a.toggleItem, total = _a.total, translate = _a.translate, version = _a.version, rest = __rest(_a, ["actions", "basePath", "bulkActions", "changeListParams", "children", "classes", "className", "crudGetList", "currentSort", "data", "defaultTitle", "displayedFilters", "exporter", "filter", "filterDefaultValues", "filters", "filterValues", "hasCreate", "hasEdit", "hasList", "hasShow", "hideFilter", "history", "ids", "isLoading", "loadedOnce", "locale", "location", "match", "onSelect", "onToggleItem", "onUnselectItems", "options", "page", "pagination", "params", "permissions", "perPage", "push", "query", "refresh", "resource", "selectedIds", "setFilters", "setPage", "setPerPage", "setSelectedIds", "setSort", "showFilter", "sort", "theme", "title", "toggleItem", "total", "translate", "version"]);
     return rest;
@@ -60,11 +61,8 @@ var sanitizeRestProps = function (_a) {
 export var ListView = function (_a) {
     var 
     // component props
-    _b = _a.actions, 
-    // component props
-    actions = _b === void 0 ? React.createElement(DefaultActions, null) : _b, aside = _a.aside, filters = _a.filters, bulkActions = _a.bulkActions, // deprecated
-    _c = _a.bulkActionButtons, // deprecated
-    bulkActionButtons = _c === void 0 ? React.createElement(DefaultBulkActionButtons, null) : _c, _d = _a.pagination, pagination = _d === void 0 ? React.createElement(DefaultPagination, null) : _d, 
+    actions = _a.actions, aside = _a.aside, filters = _a.filters, bulkActions = _a.bulkActions, // deprecated
+    bulkActionButtons = _a.bulkActionButtons, pagination = _a.pagination, 
     // overridable by user
     children = _a.children, className = _a.className, classes = _a.classes, exporter = _a.exporter, title = _a.title, rest = __rest(_a, ["actions", "aside", "filters", "bulkActions", "bulkActionButtons", "pagination", "children", "className", "classes", "exporter", "title"]);
     var defaultTitle = rest.defaultTitle, version = rest.version;
@@ -79,11 +77,10 @@ export var ListView = function (_a) {
             (filters || actions) && (React.createElement(ListToolbar, __assign({ filters: filters }, controllerProps, { actions: actions, bulkActions: bulkActions, exporter: exporter }))),
             React.createElement("div", { key: version },
                 children &&
-                    React.cloneElement(children, __assign({}, controllerProps, { hasBulkActions: bulkActions !== false &&
+                    cloneElement(Children.only(children), __assign({}, controllerProps, { hasBulkActions: bulkActions !== false &&
                             bulkActionButtons !== false })),
-                pagination &&
-                    React.cloneElement(pagination, controllerProps))),
-        aside && React.cloneElement(aside, controllerProps)));
+                pagination && cloneElement(pagination, controllerProps))),
+        aside && cloneElement(aside, controllerProps)));
 };
 ListView.propTypes = {
     actions: PropTypes.element,
@@ -129,7 +126,10 @@ ListView.propTypes = {
     version: PropTypes.number,
 };
 ListView.defaultProps = {
+    actions: React.createElement(DefaultActions, null),
     classes: {},
+    bulkActionButtons: React.createElement(DefaultBulkActionButtons, null),
+    pagination: React.createElement(DefaultPagination, null),
 };
 /**
  * List page component

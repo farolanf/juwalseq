@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -60,7 +60,7 @@ var sanitizeRestProps = function (_a) {
     var setFilter = _a.setFilter, setPagination = _a.setPagination, setSort = _a.setSort, rest = __rest(_a, ["setFilter", "setPagination", "setSort"]);
     return sanitizeRestProps_1.default(rest);
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     root: {},
     label: {
         transform: 'translate(0, 1.5px) scale(0.75)',

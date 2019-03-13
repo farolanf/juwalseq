@@ -34,7 +34,7 @@ var TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 var CircularProgress_1 = __importDefault(require("@material-ui/core/CircularProgress"));
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
-var styles = function () { return ({
+var styles = function () { return styles_1.createStyles({
     form: {
         padding: '0 1em 1em 1em',
     },
@@ -47,7 +47,7 @@ var styles = function () { return ({
 }); };
 // see http://redux-form.com/6.4.3/examples/material-ui/
 var renderInput = function (_a) {
-    var _b = _a.meta, _c = _b === void 0 ? {} : _b, touched = _c.touched, error = _c.error, inputProps = __rest(_a.input, []), // eslint-disable-line react/prop-types
+    var _b = _a.meta, _c = _b === void 0 ? { touched: false, error: '' } : _b, touched = _c.touched, error = _c.error, inputProps = __rest(_a.input, []), // eslint-disable-line react/prop-types
     props = __rest(_a, ["meta", "input"]);
     return (react_1.default.createElement(TextField_1.default, __assign({ error: !!(touched && error), helperText: touched && error }, inputProps, props, { fullWidth: true })));
 };

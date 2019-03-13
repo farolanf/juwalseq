@@ -18,23 +18,23 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React from 'react';
+import React, { cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { ShowController } from 'ra-core';
 import DefaultActions from './ShowActions';
 import TitleForRecord from '../layout/TitleForRecord';
 import CardContentInner from '../layout/CardContentInner';
-export var styles = {
+export var styles = createStyles({
     root: {
         display: 'flex',
     },
     card: {
         flex: '1 1 auto',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, aside = _a.aside, title = _a.title, children = _a.children, className = _a.className, crudGetOne = _a.crudGetOne, id = _a.id, data = _a.data, isLoading = _a.isLoading, resource = _a.resource, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, translate = _a.translate, version = _a.version, match = _a.match, location = _a.location, history = _a.history, options = _a.options, locale = _a.locale, permissions = _a.permissions, rest = __rest(_a, ["actions", "aside", "title", "children", "className", "crudGetOne", "id", "data", "isLoading", "resource", "hasCreate", "hasEdit", "hasList", "hasShow", "translate", "version", "match", "location", "history", "options", "locale", "permissions"]);
     return rest;
@@ -50,7 +50,7 @@ export var ShowView = function (_a) {
     return (React.createElement("div", __assign({ className: classnames('show-page', classes.root, className) }, sanitizeRestProps(rest)),
         React.createElement(TitleForRecord, { title: title, record: record, defaultTitle: defaultTitle }),
         React.createElement(Card, { className: classes.card },
-            actions && (React.createElement(CardContentInner, null, React.cloneElement(actions, {
+            actions && (React.createElement(CardContentInner, null, cloneElement(actions, {
                 basePath: basePath,
                 data: record,
                 hasList: hasList,
@@ -58,14 +58,14 @@ export var ShowView = function (_a) {
                 resource: resource,
             }))),
             record &&
-                React.cloneElement(children, {
+                cloneElement(Children.only(children), {
                     resource: resource,
                     basePath: basePath,
                     record: record,
                     version: version,
                 })),
         aside &&
-            React.cloneElement(aside, {
+            cloneElement(aside, {
                 resource: resource,
                 basePath: basePath,
                 record: record,

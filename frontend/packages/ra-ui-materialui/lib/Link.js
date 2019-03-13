@@ -28,7 +28,7 @@ var prop_types_1 = __importDefault(require("prop-types"));
 var classnames_1 = __importDefault(require("classnames"));
 var react_router_dom_1 = require("react-router-dom");
 var styles_1 = require("@material-ui/core/styles");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     link: {
         textDecoration: 'none',
         color: theme.palette.primary.main,

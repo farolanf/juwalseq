@@ -1,20 +1,22 @@
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import React from 'react';
+import React, { isValidElement, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { ListController, getListControllerProps } from 'ra-core';
 
 import Title from '../layout/Title';
 import ListToolbar from './ListToolbar';
 import DefaultPagination from './Pagination';
-import DefaultBulkActionButtons from '../button/BulkDeleteButton';
+import BulkDeleteButton from '../button/BulkDeleteButton';
 import BulkActionsToolbar from './BulkActionsToolbar';
 import DefaultActions from './ListActions';
 import defaultTheme from '../defaultTheme';
 
-export const styles = {
+const DefaultBulkActionButtons = props => <BulkDeleteButton {...props} />;
+
+export const styles = createStyles({
     root: {
         display: 'flex',
     },
@@ -34,7 +36,7 @@ export const styles = {
         alignSelf: 'flex-start',
     },
     noResults: { padding: 20 },
-};
+});
 
 const sanitizeRestProps = ({
     actions,
@@ -98,12 +100,12 @@ const sanitizeRestProps = ({
 
 export const ListView = ({
     // component props
-    actions = <DefaultActions />,
+    actions,
     aside,
     filters,
     bulkActions, // deprecated
-    bulkActionButtons = <DefaultBulkActionButtons />,
-    pagination = <DefaultPagination />,
+    bulkActionButtons,
+    pagination,
     // overridable by user
     children,
     className,
@@ -140,17 +142,16 @@ export const ListView = ({
                 )}
                 <div key={version}>
                     {children &&
-                        React.cloneElement(children, {
+                        cloneElement(Children.only(children), {
                             ...controllerProps,
                             hasBulkActions:
                                 bulkActions !== false &&
                                 bulkActionButtons !== false,
                         })}
-                    {pagination &&
-                        React.cloneElement(pagination, controllerProps)}
+                    {pagination && cloneElement(pagination, controllerProps)}
                 </div>
             </Card>
-            {aside && React.cloneElement(aside, controllerProps)}
+            {aside && cloneElement(aside, controllerProps)}
         </div>
     );
 };
@@ -200,7 +201,10 @@ ListView.propTypes = {
 };
 
 ListView.defaultProps = {
+    actions: <DefaultActions />,
     classes: {},
+    bulkActionButtons: <DefaultBulkActionButtons />,
+    pagination: <DefaultPagination />,
 };
 
 /**

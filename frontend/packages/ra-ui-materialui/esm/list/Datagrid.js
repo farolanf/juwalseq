@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,10 +31,10 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component } from 'react';
+import React, { Component, isValidElement, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { sanitizeListRestProps } from 'ra-core';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -44,7 +44,7 @@ import classnames from 'classnames';
 import DatagridHeaderCell from './DatagridHeaderCell';
 import DatagridBody from './DatagridBody';
 import DatagridLoading from './DatagridLoading';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     table: {
         tableLayout: 'auto',
     },
@@ -174,12 +174,12 @@ var Datagrid = /** @class */ (function (_super) {
                         React.createElement(Checkbox, { className: "select-all", color: "primary", checked: selectedIds.length > 0 &&
                                 ids.length > 0 &&
                                 !ids.find(function (it) { return selectedIds.indexOf(it) === -1; }), onChange: this.handleSelectAll }))),
-                    React.Children.map(children, function (field, index) {
-                        return field ? (React.createElement(DatagridHeaderCell, { className: classes.headerCell, currentSort: currentSort, field: field, isSorting: currentSort.field ===
+                    Children.map(children, function (field, index) {
+                        return isValidElement(field) ? (React.createElement(DatagridHeaderCell, { className: classes.headerCell, currentSort: currentSort, field: field, isSorting: currentSort.field ===
                                 (field.props.sortBy ||
                                     field.props.source), key: field.props.source || index, resource: resource, updateSort: _this.updateSort })) : null;
                     }))),
-            React.cloneElement(body, {
+            cloneElement(body, {
                 basePath: basePath,
                 className: classes.tbody,
                 classes: classes,

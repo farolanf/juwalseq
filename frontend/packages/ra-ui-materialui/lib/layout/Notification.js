@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -45,7 +45,7 @@ var styles_1 = require("@material-ui/core/styles");
 var compose_1 = __importDefault(require("recompose/compose"));
 var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     confirm: {
         backgroundColor: theme.palette.background.default,
     },

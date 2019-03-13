@@ -25,7 +25,7 @@ import { translate } from 'ra-core';
  * @deprecated Use Title instead
  */
 var Title = function (_a) {
-    var className = _a.className, defaultTitle = _a.defaultTitle, record = _a.record, title = _a.title, translate = _a.translate, rest = __rest(_a, ["className", "defaultTitle", "record", "title", "translate"]);
+    var className = _a.className, defaultTitle = _a.defaultTitle, record = _a.record, title = _a.title, translate = _a.translate, locale = _a.locale, rest = __rest(_a, ["className", "defaultTitle", "record", "title", "translate", "locale"]);
     if (!title) {
         return (React.createElement("span", __assign({ className: className }, rest), defaultTitle));
     }
@@ -37,6 +37,7 @@ var Title = function (_a) {
 Title.propTypes = {
     defaultTitle: PropTypes.string.isRequired,
     className: PropTypes.string,
+    locale: PropTypes.string,
     record: PropTypes.object,
     translate: PropTypes.func.isRequired,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),

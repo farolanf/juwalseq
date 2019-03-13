@@ -29,7 +29,7 @@ var InputLabel_1 = __importDefault(require("@material-ui/core/InputLabel"));
 var FormControl_1 = __importDefault(require("@material-ui/core/FormControl"));
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     label: {
         position: 'relative',
     },

@@ -24,12 +24,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { translate } from 'ra-core';
 import MenuItemLink from './MenuItemLink';
 var DashboardMenuItem = function (_a) {
-    var className = _a.className, onClick = _a.onClick, translate = _a.translate, props = __rest(_a, ["className", "onClick", "translate"]);
+    var className = _a.className, locale = _a.locale, onClick = _a.onClick, translate = _a.translate, props = __rest(_a, ["className", "locale", "onClick", "translate"]);
     return (React.createElement(MenuItemLink, __assign({ onClick: onClick, to: "/", primaryText: translate('ra.page.dashboard'), leftIcon: React.createElement(DashboardIcon, null), exact: true }, props)));
 };
 DashboardMenuItem.propTypes = {
     classes: PropTypes.object,
     className: PropTypes.string,
+    locale: PropTypes.string,
     onClick: PropTypes.func,
     translate: PropTypes.func.isRequired,
 };

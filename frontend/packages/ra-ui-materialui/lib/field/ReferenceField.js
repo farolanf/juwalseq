@@ -19,11 +19,18 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var classnames_1 = __importDefault(require("classnames"));
 var styles_1 = require("@material-ui/core/styles");
@@ -31,7 +38,7 @@ var ra_core_1 = require("ra-core");
 var LinearProgress_1 = __importDefault(require("../layout/LinearProgress"));
 var Link_1 = __importDefault(require("../Link"));
 var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     link: {
         color: theme.palette.primary.main,
     },
@@ -44,12 +51,12 @@ exports.ReferenceFieldView = function (_a) {
         return react_1.default.createElement(LinearProgress_1.default, null);
     }
     if (resourceLinkPath) {
-        return (react_1.default.createElement(Link_1.default, { to: resourceLinkPath, className: className, onClick: stopPropagation }, react_1.default.cloneElement(children, __assign({ className: classnames_1.default(children.props.className, classes.link // force color override for Typography components
+        return (react_1.default.createElement(Link_1.default, { to: resourceLinkPath, className: className, onClick: stopPropagation }, react_1.default.cloneElement(react_1.Children.only(children), __assign({ className: classnames_1.default(children.props.className, classes.link // force color override for Typography components
             ), record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
             basePath: basePath,
             translateChoice: translateChoice }, sanitizeRestProps_1.default(rest)))));
     }
-    return react_1.default.cloneElement(children, __assign({ record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
+    return react_1.default.cloneElement(react_1.Children.only(children), __assign({ record: referenceRecord, resource: reference, allowEmpty: allowEmpty,
         basePath: basePath,
         translateChoice: translateChoice }, sanitizeRestProps_1.default(rest)));
 };

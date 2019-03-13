@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,19 +31,19 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { cloneElement, Children, Component } from 'react';
+import React, { cloneElement, Children, Component, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import FilterNoneIcon from '@material-ui/icons/FilterNone';
 import compose from 'recompose/compose';
 import classnames from 'classnames';
 import { translate } from 'ra-core';
 import Button from '../button/Button';
 import BulkDeleteAction from './BulkDeleteAction';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     bulkActionsButton: {
         opacity: 1,
         transition: theme.transitions.create('opacity', {
@@ -120,16 +120,17 @@ var BulkActions = /** @class */ (function (_super) {
                         smart_count: selectedIds.length,
                     }) }),
                     React.createElement(FilterNoneIcon, { className: classes.icon })),
-                React.createElement(Menu, { id: "bulk-actions-menu", anchorEl: this.anchorElement, onClose: this.handleClose, open: isOpen }, Children.map(children, function (child, index) { return (React.createElement(MenuItem, __assign({ key: index, className: classnames('bulk-actions-menu-item', child.props.className), onClick: function () { return _this.handleLaunchAction(index); } }, sanitizeRestProps(rest)), translate(child.props.label))); })),
+                React.createElement(Menu, { id: "bulk-actions-menu", anchorEl: this.anchorElement, onClose: this.handleClose, open: isOpen }, Children.map(children, function (child, index) { return isValidElement(child) ? (React.createElement(MenuItem, __assign({ key: index, className: classnames('bulk-actions-menu-item', child.props.className), onClick: function () { return _this.handleLaunchAction(index); } }, sanitizeRestProps(rest)), translate(child.props.label))) : null; })),
                 Children.map(children, function (child, index) {
-                    return _this.state.activeAction === index &&
+                    return isValidElement(child) &&
+                        _this.state.activeAction === index ?
                         cloneElement(child, {
                             basePath: basePath,
                             filterValues: filterValues,
                             onExit: _this.handleExitAction,
                             resource: resource,
                             selectedIds: selectedIds,
-                        });
+                        }) : null;
                 }))));
     };
     return BulkActions;

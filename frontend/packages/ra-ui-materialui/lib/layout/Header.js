@@ -28,12 +28,12 @@ var prop_types_1 = __importDefault(require("prop-types"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
 var ViewTitle_1 = __importDefault(require("./ViewTitle"));
-var styles = {
+var styles = styles_1.createStyles({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-};
+});
 /**
  * @deprecated
  */

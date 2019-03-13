@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +40,7 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import blue from '@material-ui/core/colors/blue';
@@ -48,7 +48,7 @@ import compose from 'recompose/compose';
 import classNames from 'classnames';
 import { addField, translate, FieldTitle } from 'ra-core';
 import AutocompleteArrayInputChip from './AutocompleteArrayInputChip';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     container: {
         flexGrow: 1,
         position: 'relative',
@@ -58,6 +58,10 @@ var styles = function (theme) { return ({
         position: 'absolute',
         marginBottom: theme.spacing.unit * 3,
         zIndex: 2,
+    },
+    suggestionsPaper: {
+        maxHeight: '50vh',
+        overflowY: 'auto',
     },
     suggestion: {
         display: 'block',
@@ -134,13 +138,18 @@ var AutocompleteArrayInput = /** @class */ (function (_super) {
     __extends(AutocompleteArrayInput, _super);
     function AutocompleteArrayInput() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.initialInputValue = [];
         _this.state = {
             dirty: false,
-            inputValue: null,
+            inputValue: _this.initialInputValue,
             searchText: '',
             suggestions: [],
         };
         _this.inputEl = null;
+        _this.anchorEl = null;
+        _this.getInputValue = function (inputValue) {
+            return inputValue === '' ? _this.initialInputValue : inputValue;
+        };
         _this.getSuggestionValue = function (suggestion) { return get(suggestion, _this.props.optionValue); };
         _this.getSuggestionText = function (suggestion) {
             if (!suggestion)
@@ -207,9 +216,10 @@ var AutocompleteArrayInput = /** @class */ (function (_super) {
             // but Autosuggest also needs this reference (it provides the ref prop)
             var storeInputRef = function (input) {
                 _this.inputEl = input;
+                _this.updateAnchorEl();
                 ref(input);
             };
-            return (React.createElement(AutocompleteArrayInputChip, __assign({ clearInputValueOnChange: true, onUpdateInput: onChange, onAdd: _this.handleAdd, onDelete: _this.handleDelete, value: input.value, inputRef: storeInputRef, error: touched && error, helperText: touched && error && helperText, chipRenderer: _this.renderChip, label: React.createElement(FieldTitle, { label: label, source: source, resource: resource, isRequired: isRequired }) }, other, options)));
+            return (React.createElement(AutocompleteArrayInputChip, __assign({ clearInputValueOnChange: true, onUpdateInput: onChange, onAdd: _this.handleAdd, onDelete: _this.handleDelete, value: _this.getInputValue(input.value), inputRef: storeInputRef, error: touched && error, helperText: touched && error && helperText, chipRenderer: _this.renderChip, label: React.createElement(FieldTitle, { label: label, source: source, resource: resource, isRequired: isRequired }) }, other, options)));
         };
         _this.renderChip = function (_a, key) {
             var value = _a.value, isFocused = _a.isFocused, isDisabled = _a.isDisabled, handleClick = _a.handleClick, handleDelete = _a.handleDelete;
@@ -245,10 +255,13 @@ var AutocompleteArrayInput = /** @class */ (function (_super) {
             var input = _this.props.input;
             input.onChange(_this.state.inputValue.filter(function (value) { return value !== chip; }));
         };
-        _this.renderSuggestionsContainer = function (options) {
-            var _a = options.containerProps, className = _a.className, containerProps = __rest(_a, ["className"]), children = options.children;
-            return (React.createElement(Popper, { className: className, open: true, anchorEl: _this.inputEl, placement: "bottom-start" },
-                React.createElement(Paper, __assign({ square: true }, containerProps), children)));
+        _this.renderSuggestionsContainer = function (autosuggestOptions) {
+            var _a = autosuggestOptions.containerProps, className = _a.className, containerProps = __rest(_a, ["className"]), children = autosuggestOptions.children;
+            var _b = _this.props.classes, classes = _b === void 0 ? {} : _b;
+            // Force the Popper component to reposition the popup only when this.inputEl is moved to another location
+            _this.updateAnchorEl();
+            return (React.createElement(Popper, { className: className, open: Boolean(children), anchorEl: _this.anchorEl, placement: "bottom-start" },
+                React.createElement(Paper, __assign({ square: true, className: classes.suggestionsPaper }, containerProps), children)));
         };
         _this.renderSuggestionComponent = function (_a) {
             var suggestion = _a.suggestion, query = _a.query, isHighlighted = _a.isHighlighted, props = __rest(_a, ["suggestion", "query", "isHighlighted"]);
@@ -300,16 +313,16 @@ var AutocompleteArrayInput = /** @class */ (function (_super) {
     }
     AutocompleteArrayInput.prototype.componentWillMount = function () {
         this.setState({
-            inputValue: this.props.input.value,
+            inputValue: this.getInputValue(this.props.input.value),
             suggestions: this.props.choices,
         });
     };
     AutocompleteArrayInput.prototype.componentWillReceiveProps = function (nextProps) {
         var _this = this;
         var choices = nextProps.choices, input = nextProps.input, inputValueMatcher = nextProps.inputValueMatcher;
-        if (!isEqual(input.value, this.state.inputValue)) {
+        if (!isEqual(this.getInputValue(input.value), this.state.inputValue)) {
             this.setState({
-                inputValue: input.value,
+                inputValue: this.getInputValue(input.value),
                 dirty: false,
                 suggestions: this.props.choices,
             });
@@ -325,6 +338,22 @@ var AutocompleteArrayInput = /** @class */ (function (_super) {
                     }),
                 });
             });
+        }
+    };
+    AutocompleteArrayInput.prototype.updateAnchorEl = function () {
+        if (!this.inputEl) {
+            return;
+        }
+        var inputPosition = this.inputEl.getBoundingClientRect();
+        if (!this.anchorEl) {
+            this.anchorEl = { getBoundingClientRect: function () { return inputPosition; } };
+        }
+        else {
+            var anchorPosition = this.anchorEl.getBoundingClientRect();
+            if (anchorPosition.x !== inputPosition.x ||
+                anchorPosition.y !== inputPosition.y) {
+                this.anchorEl = { getBoundingClientRect: function () { return inputPosition; } };
+            }
         }
     };
     AutocompleteArrayInput.prototype.render = function () {

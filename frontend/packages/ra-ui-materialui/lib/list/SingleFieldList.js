@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50,9 +50,9 @@ var LinearProgress_1 = __importDefault(require("@material-ui/core/LinearProgress
 var styles_1 = require("@material-ui/core/styles");
 var ra_core_1 = require("ra-core");
 var Link_1 = __importDefault(require("../Link"));
-var styles = {
+var styles = styles_1.createStyles({
     root: { display: 'flex', flexWrap: 'wrap' },
-};
+});
 // useful to prevent click bubbling in a datagrid with rowClick
 var stopPropagation = function (e) { return e.stopPropagation(); };
 var sanitizeRestProps = function (_a) {
@@ -112,7 +112,7 @@ var SingleFieldList = /** @class */ (function (_super) {
                 ? false
                 : ra_core_1.linkToRecord(basePath, id, linkType);
             if (resourceLinkPath) {
-                return (react_1.default.createElement(Link_1.default, { className: classnames_1.default(classes.link, className), key: id, to: resourceLinkPath, onClick: stopPropagation }, react_1.cloneElement(children, {
+                return (react_1.default.createElement(Link_1.default, { className: classnames_1.default(classes.link, className), key: id, to: resourceLinkPath, onClick: stopPropagation }, react_1.cloneElement(react_1.Children.only(children), {
                     record: data[id],
                     resource: resource,
                     basePath: basePath,
@@ -120,7 +120,7 @@ var SingleFieldList = /** @class */ (function (_super) {
                     onClick: _this.handleClick,
                 })));
             }
-            return react_1.cloneElement(children, {
+            return react_1.cloneElement(react_1.Children.only(children), {
                 key: id,
                 record: data[id],
                 resource: resource,

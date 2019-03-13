@@ -36,7 +36,7 @@ var ra_core_1 = require("ra-core");
 exports.ReferenceManyFieldView = function (_a) {
     var children = _a.children, className = _a.className, currentSort = _a.currentSort, data = _a.data, ids = _a.ids, loadedOnce = _a.loadedOnce, page = _a.page, pagination = _a.pagination, perPage = _a.perPage, reference = _a.reference, referenceBasePath = _a.referenceBasePath, setPage = _a.setPage, setPerPage = _a.setPerPage, setSort = _a.setSort, total = _a.total;
     return (react_1.default.createElement(react_1.Fragment, null,
-        react_1.cloneElement(children, {
+        react_1.cloneElement(react_1.Children.only(children), {
             className: className,
             resource: reference,
             ids: ids,

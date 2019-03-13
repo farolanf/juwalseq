@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,7 +31,7 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component, Children, cloneElement } from 'react';
+import React, { Component, Children, cloneElement, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import { withRouter, Route } from 'react-router-dom';
@@ -101,14 +101,14 @@ var TabbedShowLayout = /** @class */ (function (_super) {
             }, children),
             React.createElement(Divider, null),
             React.createElement(CardContentInner, null, Children.map(children, function (tab, index) {
-                return tab && (React.createElement(Route, { exact: true, path: getTabFullPath(tab, index, match.url), render: function () {
+                return tab && isValidElement(tab) ? (React.createElement(Route, { exact: true, path: getTabFullPath(tab, index, match.url), render: function () {
                         return cloneElement(tab, {
                             context: 'content',
                             resource: resource,
                             record: record,
                             basePath: basePath,
                         });
-                    } }));
+                    } })) : null;
             }))));
     };
     return TabbedShowLayout;

@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -42,7 +42,7 @@ import FormInput from './FormInput';
 import Toolbar from './Toolbar';
 import CardContentInner from '../layout/CardContentInner';
 var sanitizeRestProps = function (_a) {
-    var anyTouched = _a.anyTouched, array = _a.array, asyncBlurFields = _a.asyncBlurFields, asyncValidate = _a.asyncValidate, asyncValidating = _a.asyncValidating, autofill = _a.autofill, blur = _a.blur, change = _a.change, clearAsyncError = _a.clearAsyncError, clearFields = _a.clearFields, clearSubmit = _a.clearSubmit, clearSubmitErrors = _a.clearSubmitErrors, destroy = _a.destroy, dirty = _a.dirty, dispatch = _a.dispatch, form = _a.form, handleSubmit = _a.handleSubmit, initialize = _a.initialize, initialized = _a.initialized, initialValues = _a.initialValues, pristine = _a.pristine, pure = _a.pure, redirect = _a.redirect, reset = _a.reset, resetSection = _a.resetSection, save = _a.save, submit = _a.submit, submitFailed = _a.submitFailed, submitSucceeded = _a.submitSucceeded, submitting = _a.submitting, touch = _a.touch, translate = _a.translate, triggerSubmit = _a.triggerSubmit, untouch = _a.untouch, valid = _a.valid, validate = _a.validate, props = __rest(_a, ["anyTouched", "array", "asyncBlurFields", "asyncValidate", "asyncValidating", "autofill", "blur", "change", "clearAsyncError", "clearFields", "clearSubmit", "clearSubmitErrors", "destroy", "dirty", "dispatch", "form", "handleSubmit", "initialize", "initialized", "initialValues", "pristine", "pure", "redirect", "reset", "resetSection", "save", "submit", "submitFailed", "submitSucceeded", "submitting", "touch", "translate", "triggerSubmit", "untouch", "valid", "validate"]);
+    var anyTouched = _a.anyTouched, array = _a.array, asyncBlurFields = _a.asyncBlurFields, asyncValidate = _a.asyncValidate, asyncValidating = _a.asyncValidating, autofill = _a.autofill, blur = _a.blur, change = _a.change, clearAsyncError = _a.clearAsyncError, clearFields = _a.clearFields, clearSubmit = _a.clearSubmit, clearSubmitErrors = _a.clearSubmitErrors, destroy = _a.destroy, dirty = _a.dirty, dispatch = _a.dispatch, form = _a.form, handleSubmit = _a.handleSubmit, initialize = _a.initialize, initialized = _a.initialized, initialValues = _a.initialValues, pristine = _a.pristine, pure = _a.pure, redirect = _a.redirect, reset = _a.reset, resetSection = _a.resetSection, save = _a.save, submit = _a.submit, submitFailed = _a.submitFailed, submitSucceeded = _a.submitSucceeded, submitting = _a.submitting, touch = _a.touch, translate = _a.translate, triggerSubmit = _a.triggerSubmit, undoable = _a.undoable, untouch = _a.untouch, valid = _a.valid, validate = _a.validate, props = __rest(_a, ["anyTouched", "array", "asyncBlurFields", "asyncValidate", "asyncValidating", "autofill", "blur", "change", "clearAsyncError", "clearFields", "clearSubmit", "clearSubmitErrors", "destroy", "dirty", "dispatch", "form", "handleSubmit", "initialize", "initialized", "initialValues", "pristine", "pure", "redirect", "reset", "resetSection", "save", "submit", "submitFailed", "submitSucceeded", "submitting", "touch", "translate", "triggerSubmit", "undoable", "untouch", "valid", "validate"]);
     return props;
 };
 var SimpleForm = /** @class */ (function (_super) {
@@ -56,7 +56,7 @@ var SimpleForm = /** @class */ (function (_super) {
         return _this;
     }
     SimpleForm.prototype.render = function () {
-        var _a = this.props, basePath = _a.basePath, children = _a.children, className = _a.className, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, toolbar = _a.toolbar, version = _a.version, rest = __rest(_a, ["basePath", "children", "className", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "toolbar", "version"]);
+        var _a = this.props, basePath = _a.basePath, children = _a.children, className = _a.className, invalid = _a.invalid, pristine = _a.pristine, record = _a.record, redirect = _a.redirect, resource = _a.resource, saving = _a.saving, submitOnEnter = _a.submitOnEnter, toolbar = _a.toolbar, undoable = _a.undoable, version = _a.version, rest = __rest(_a, ["basePath", "children", "className", "invalid", "pristine", "record", "redirect", "resource", "saving", "submitOnEnter", "toolbar", "undoable", "version"]);
         return (React.createElement("form", __assign({ className: classnames('simple-form', className) }, sanitizeRestProps(rest)),
             React.createElement(CardContentInner, { key: version }, Children.map(children, function (input) { return (React.createElement(FormInput, { basePath: basePath, input: input, record: record, resource: resource })); })),
             toolbar &&
@@ -71,6 +71,7 @@ var SimpleForm = /** @class */ (function (_super) {
                     resource: resource,
                     saving: saving,
                     submitOnEnter: submitOnEnter,
+                    undoable: undoable,
                 })));
     };
     return SimpleForm;
@@ -95,6 +96,7 @@ SimpleForm.propTypes = {
     saving: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     submitOnEnter: PropTypes.bool,
     toolbar: PropTypes.element,
+    undoable: PropTypes.bool,
     validate: PropTypes.func,
     version: PropTypes.number,
 };

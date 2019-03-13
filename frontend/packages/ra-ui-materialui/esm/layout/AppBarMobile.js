@@ -25,12 +25,12 @@ import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import compose from 'recompose/compose';
 import { toggleSidebar } from 'ra-core';
 import LoadingIndicator from './LoadingIndicator';
-var styles = {
+var styles = createStyles({
     title: {
         fontSize: '1.25em',
         lineHeight: '2.5em',
@@ -49,7 +49,7 @@ var styles = {
         color: '#fff',
         textDecoration: 'none',
     },
-};
+});
 /**
  * @deprecated
  */

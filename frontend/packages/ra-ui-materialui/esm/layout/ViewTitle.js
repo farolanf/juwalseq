@@ -29,7 +29,7 @@ import AppBarMobile from './AppBarMobile';
  * @deprecated
  */
 var ViewTitle = function (_a) {
-    var className = _a.className, title = _a.title, rest = __rest(_a, ["className", "title"]);
+    var _b = _a.className, className = _b === void 0 ? undefined : _b, title = _a.title, rest = __rest(_a, ["className", "title"]);
     if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.warn('<ViewTitle> is deprecated, please use <Title> instead');
