@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -50,7 +50,7 @@ var IconButton_1 = __importDefault(require("@material-ui/core/IconButton"));
 var styles_1 = require("@material-ui/core/styles");
 var RemoveCircle_1 = __importDefault(require("@material-ui/icons/RemoveCircle"));
 var ra_core_1 = require("ra-core");
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     removeButton: {},
     removeIcon: {
         color: theme.palette.accent1Color,

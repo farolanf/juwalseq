@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import { addField, translate, FieldTitle } from 'ra-core';
 import ResettableTextField from './ResettableTextField';
@@ -10,6 +10,7 @@ import ResettableTextField from './ResettableTextField';
 const sanitizeRestProps = ({
     addLabel,
     allowEmpty,
+    emptyValue,
     basePath,
     choices,
     className,
@@ -47,7 +48,7 @@ const sanitizeRestProps = ({
     ...rest
 }) => rest;
 
-const styles = theme => ({
+const styles = theme => createStyles({
     input: {
         minWidth: theme.spacing.unit * 20,
     },
@@ -155,7 +156,7 @@ export class SelectInput extends Component {
 
     addAllowEmpty = choices => {
         if (this.props.allowEmpty) {
-            return [<MenuItem value="" key="null" />, ...choices];
+            return [<MenuItem value={this.props.emptyValue} key="null" />, ...choices];
         }
 
         return choices;
@@ -240,6 +241,7 @@ export class SelectInput extends Component {
 
 SelectInput.propTypes = {
     allowEmpty: PropTypes.bool.isRequired,
+    emptyValue: PropTypes.any,
     choices: PropTypes.arrayOf(PropTypes.object),
     classes: PropTypes.object,
     className: PropTypes.string,
@@ -263,6 +265,7 @@ SelectInput.propTypes = {
 
 SelectInput.defaultProps = {
     allowEmpty: false,
+    emptyValue: '',
     classes: {},
     choices: [],
     options: {},

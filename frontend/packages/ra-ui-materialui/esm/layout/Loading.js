@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import classnames from 'classnames';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { translate } from 'ra-core';
 var styles = function (theme) {
     var _a;
-    return ({
+    return createStyles({
         container: (_a = {
                 display: 'flex',
                 flexDirection: 'column',

@@ -20,9 +20,9 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-var styles = {
+var styles = createStyles({
     cardActions: {
         zIndex: 2,
         display: 'flex',
@@ -31,7 +31,7 @@ var styles = {
         flexWrap: 'wrap',
         padding: 0,
     },
-};
+});
 var CardActions = function (_a) {
     var classes = _a.classes, className = _a.className, children = _a.children, rest = __rest(_a, ["classes", "className", "children"]);
     return (React.createElement("div", __assign({ className: classnames(classes.cardActions, className) }, rest), children));

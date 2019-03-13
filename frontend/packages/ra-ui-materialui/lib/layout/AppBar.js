@@ -46,7 +46,7 @@ var ra_core_1 = require("ra-core");
 var LoadingIndicator_1 = __importDefault(require("./LoadingIndicator"));
 var UserMenu_1 = __importDefault(require("./UserMenu"));
 var Headroom_1 = __importDefault(require("./Headroom"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     toolbar: {
         paddingRight: 24,
     },

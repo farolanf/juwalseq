@@ -25,15 +25,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
+var compose_1 = __importDefault(require("recompose/compose"));
 var get_1 = __importDefault(require("lodash/get"));
 var pure_1 = __importDefault(require("recompose/pure"));
 var Chip_1 = __importDefault(require("@material-ui/core/Chip"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
 var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
-var styles = {
+var styles = styles_1.createStyles({
     chip: { margin: 4 },
-};
+});
 exports.ChipField = function (_a) {
     var className = _a.className, _b = _a.classes, classes = _b === void 0 ? {} : _b, source = _a.source, _c = _a.record, record = _c === void 0 ? {} : _c, rest = __rest(_a, ["className", "classes", "source", "record"]);
     return (react_1.default.createElement(Chip_1.default, __assign({ className: classnames_1.default(classes.chip, className), label: get_1.default(record, source) }, sanitizeRestProps_1.default(rest))));
@@ -48,5 +49,5 @@ exports.ChipField.propTypes = {
 };
 // wat? TypeScript looses the displayName if we don't set it explicitly
 exports.ChipField.displayName = 'ChipField';
-var PureChipField = styles_1.withStyles(styles)(pure_1.default(exports.ChipField));
+var PureChipField = compose_1.default(styles_1.withStyles(styles), pure_1.default)(exports.ChipField);
 exports.default = PureChipField;

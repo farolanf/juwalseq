@@ -13,20 +13,35 @@ import {
   CategoryCreate
 } from '$src/lib/react-admin/category'
 import {
-  ProductcategoryList,
-  ProductcategoryEdit,
-  ProductcategoryCreate
-} from '$src/lib/react-admin/product-category'
-import {
   ProductList,
   ProductEdit,
   ProductCreate
 } from '$src/lib/react-admin/product'
 import {
+  ProductCategoryList,
+  ProductCategoryEdit,
+  ProductCategoryCreate
+} from '$src/lib/react-admin/product-category'
+import {
   ProductAttributeList,
   ProductAttributeEdit,
   ProductAttributeCreate
 } from '$src/lib/react-admin/product-attribute'
+import {
+  ProductTypeList,
+  ProductTypeEdit,
+  ProductTypeCreate
+} from '$src/lib/react-admin/product-type'
+import {
+  ProductTypeCategoryList,
+  ProductTypeCategoryEdit,
+  ProductTypeCategoryCreate
+} from '$src/lib/react-admin/product-type-category'
+import {
+  ProductTypeAttributeList,
+  ProductTypeAttributeEdit,
+  ProductTypeAttributeCreate
+} from '$src/lib/react-admin/product-type-attribute'
 import {
   AttributeList,
   AttributeEdit,
@@ -41,45 +56,66 @@ import {
 const Page = () => (
   <Admin dataProvider={dataProvider} authProvider={authProvider}>
     <Resource
-      name='departments'
+      name='Departments'
       list={DepartmentList}
       edit={DepartmentEdit}
       create={DepartmentCreate}
     />
     <Resource
-      name='categories'
+      name='Categories'
       list={CategoryList}
       edit={CategoryEdit}
       create={CategoryCreate}
     />
     <Resource
-      name='productcategories'
-      list={ProductcategoryList}
-      edit={ProductcategoryEdit}
-      create={ProductcategoryCreate}
-      options={{ label: 'Product Categories' }}
-    />
-    <Resource
-      name='products'
+      name='Products'
       list={ProductList}
       edit={ProductEdit}
       create={ProductCreate}
     />
     <Resource
-      name='productattributes'
+      name='ProductCategories'
+      list={ProductCategoryList}
+      edit={ProductCategoryEdit}
+      create={ProductCategoryCreate}
+      options={{ label: 'Product Categories' }}
+    />
+    <Resource
+      name='ProductAttributes'
       list={ProductAttributeList}
       edit={ProductAttributeEdit}
       create={ProductAttributeCreate}
       options={{ label: 'Product Attributes' }}
     />
     <Resource
-      name='attributes'
+      name='ProductTypes'
+      list={ProductTypeList}
+      edit={ProductTypeEdit}
+      create={ProductTypeCreate}
+      options={{ label: 'Product Types' }}
+    />
+    <Resource
+      name='ProductTypeCategories'
+      list={ProductTypeCategoryList}
+      edit={ProductTypeCategoryEdit}
+      create={ProductTypeCategoryCreate}
+      options={{ label: 'Product Type Categories' }}
+    />
+    <Resource
+      name='ProductTypeAttributes'
+      list={ProductTypeAttributeList}
+      edit={ProductTypeAttributeEdit}
+      create={ProductTypeAttributeCreate}
+      options={{ label: 'Product Type Attributes' }}
+    />
+    <Resource
+      name='Attributes'
       list={AttributeList}
       edit={AttributeEdit}
       create={AttributeCreate}
     />
     <Resource
-      name='attributevalues'
+      name='AttributeValues'
       list={AttributeValueList}
       edit={AttributeValueEdit}
       create={AttributeValueCreate}

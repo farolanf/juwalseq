@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53,16 +53,16 @@ var styles_1 = require("@material-ui/core/styles");
 var Save_1 = __importDefault(require("@material-ui/icons/Save"));
 var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
-var styles = {
+var styles = styles_1.createStyles({
     button: {
         position: 'relative',
     },
     iconPaddingStyle: {
         marginRight: '0.5em',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
-    var basePath = _a.basePath, className = _a.className, classes = _a.classes, saving = _a.saving, label = _a.label, invalid = _a.invalid, variant = _a.variant, translate = _a.translate, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, submitOnEnter = _a.submitOnEnter, redirect = _a.redirect, locale = _a.locale, showNotification = _a.showNotification, rest = __rest(_a, ["basePath", "className", "classes", "saving", "label", "invalid", "variant", "translate", "handleSubmit", "handleSubmitWithRedirect", "submitOnEnter", "redirect", "locale", "showNotification"]);
+    var basePath = _a.basePath, className = _a.className, classes = _a.classes, saving = _a.saving, label = _a.label, invalid = _a.invalid, variant = _a.variant, translate = _a.translate, handleSubmit = _a.handleSubmit, handleSubmitWithRedirect = _a.handleSubmitWithRedirect, submitOnEnter = _a.submitOnEnter, record = _a.record, redirect = _a.redirect, resource = _a.resource, locale = _a.locale, showNotification = _a.showNotification, rest = __rest(_a, ["basePath", "className", "classes", "saving", "label", "invalid", "variant", "translate", "handleSubmit", "handleSubmitWithRedirect", "submitOnEnter", "record", "redirect", "resource", "locale", "showNotification"]);
     return rest;
 };
 var SaveButton = /** @class */ (function (_super) {

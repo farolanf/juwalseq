@@ -27,7 +27,7 @@ var react_1 = __importDefault(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
-var styles = {
+var styles = styles_1.createStyles({
     cardActions: {
         zIndex: 2,
         display: 'flex',
@@ -36,7 +36,7 @@ var styles = {
         flexWrap: 'wrap',
         padding: 0,
     },
-};
+});
 var CardActions = function (_a) {
     var classes = _a.classes, className = _a.className, children = _a.children, rest = __rest(_a, ["classes", "className", "children"]);
     return (react_1.default.createElement("div", __assign({ className: classnames_1.default(classes.cardActions, className) }, rest), children));

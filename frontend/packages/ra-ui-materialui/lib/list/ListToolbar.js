@@ -27,13 +27,13 @@ var react_1 = __importDefault(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var Toolbar_1 = __importDefault(require("@material-ui/core/Toolbar"));
 var styles_1 = require("@material-ui/core/styles");
-var styles = {
+var styles = styles_1.createStyles({
     toolbar: {
         justifyContent: 'space-between',
     },
-};
+});
 var ListToolbar = function (_a) {
-    var _b = _a.classes, classes = _b === void 0 ? {} : _b, filters = _a.filters, actions = _a.actions, bulkActions = _a.bulkActions, exporter = _a.exporter, rest = __rest(_a, ["classes", "filters", "actions", "bulkActions", "exporter"]);
+    var classes = _a.classes, filters = _a.filters, actions = _a.actions, bulkActions = _a.bulkActions, exporter = _a.exporter, rest = __rest(_a, ["classes", "filters", "actions", "bulkActions", "exporter"]);
     return (react_1.default.createElement(Toolbar_1.default, { className: classes.toolbar },
         filters &&
             react_1.default.cloneElement(filters, __assign({}, rest, { context: 'form' })),
@@ -49,5 +49,8 @@ ListToolbar.propTypes = {
     actions: prop_types_1.default.element,
     bulkActions: prop_types_1.default.oneOfType([prop_types_1.default.element, prop_types_1.default.bool]),
     exporter: prop_types_1.default.oneOfType([prop_types_1.default.func, prop_types_1.default.bool]),
+};
+ListToolbar.defaultProps = {
+    classes: {},
 };
 exports.default = styles_1.withStyles(styles)(ListToolbar);

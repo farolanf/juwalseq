@@ -17,12 +17,12 @@ module.exports = function (app, config) {
     .filter(key => key.toLowerCase() !== 'sequelize')
     .forEach(name => {
       const model = db[name]
-      const plural = pluralize(name).toLowerCase()
+      const plural = pluralize(name)
       const pk = model.primaryKeyAttributes[0]
       const resource = finale.resource({
         model,
         endpoints: [`/${plural}`, `/${plural}/:${pk}`],
-        include: includes[plural]
+        include: includes[name]
       })
       resources[plural] = resource
       initMilestones(resource)

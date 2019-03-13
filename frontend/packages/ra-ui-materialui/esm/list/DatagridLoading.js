@@ -8,12 +8,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 var RawPlaceholder = function (_a) {
     var classes = _a.classes;
     return (React.createElement("div", { className: classes.root }, "\u00A0"));
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     root: {
         backgroundColor: theme.palette.grey[300],
         display: 'flex',

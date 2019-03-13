@@ -1,3 +1,4 @@
+require('module-alias/register')
 const url = require('url')
 const path = require('path')
 require('dotenv').config({
@@ -25,11 +26,7 @@ app.use(bodyParser.json({
 }))
 
 app.use(
-  serveStatic(path.resolve(__dirname, '../challenge-files/Images/images'), {
-    index: false,
-    maxAge: '1d'
-  }),
-  serveStatic(path.resolve(__dirname, '../challenge-files/Images/product_images'), {
+  serveStatic(path.resolve(__dirname, 'uploads'), {
     index: false,
     maxAge: '1d'
   })

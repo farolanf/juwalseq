@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,13 +40,13 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import compose from 'recompose/compose';
 import classnames from 'classnames';
 import { addField, translate, FieldTitle } from 'ra-core';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     container: {
         flexGrow: 1,
         position: 'relative',
@@ -135,6 +135,7 @@ var AutocompleteInput = /** @class */ (function (_super) {
             suggestions: [],
         };
         _this.inputEl = null;
+        _this.anchorEl = null;
         _this.getSelectedItem = function (_a, inputValue) {
             var choices = _a.choices;
             return choices && inputValue
@@ -205,6 +206,7 @@ var AutocompleteInput = /** @class */ (function (_super) {
             // but Autosuggest also needs this reference (it provides the ref prop)
             var storeInputRef = function (input) {
                 _this.inputEl = input;
+                _this.updateAnchorEl();
                 ref(input);
             };
             return (React.createElement(TextField, __assign({ label: React.createElement(FieldTitle, { label: label, source: source, resource: resource, isRequired: isRequired }), value: value, onChange: onChange, autoFocus: autoFocus, margin: "normal", className: classnames(classes.root, className), inputRef: storeInputRef, error: !!(touched && error), helperText: (touched && error) || helperText, name: input.name }, options, { InputProps: __assign({ classes: {
@@ -214,7 +216,9 @@ var AutocompleteInput = /** @class */ (function (_super) {
         _this.renderSuggestionsContainer = function (autosuggestOptions) {
             var _a = autosuggestOptions.containerProps, className = _a.className, containerProps = __rest(_a, ["className"]), children = autosuggestOptions.children;
             var _b = _this.props, _c = _b.classes, classes = _c === void 0 ? {} : _c, options = _b.options;
-            return (React.createElement(Popper, __assign({ className: className, open: Boolean(children), anchorEl: _this.inputEl, placement: "bottom-start" }, options.suggestionsContainerProps),
+            // Force the Popper component to reposition the popup only when this.inputEl is moved to another location
+            _this.updateAnchorEl();
+            return (React.createElement(Popper, __assign({ className: className, open: Boolean(children), anchorEl: _this.anchorEl, placement: "bottom-start" }, options.suggestionsContainerProps),
                 React.createElement(Paper, __assign({ square: true, className: classes.suggestionsPaper }, containerProps), children)));
         };
         _this.renderSuggestionComponent = function (_a) {
@@ -330,6 +334,22 @@ var AutocompleteInput = /** @class */ (function (_super) {
                     prevSuggestions: false,
                 });
             });
+        }
+    };
+    AutocompleteInput.prototype.updateAnchorEl = function () {
+        if (!this.inputEl) {
+            return;
+        }
+        var inputPosition = this.inputEl.getBoundingClientRect();
+        if (!this.anchorEl) {
+            this.anchorEl = { getBoundingClientRect: function () { return inputPosition; } };
+        }
+        else {
+            var anchorPosition = this.anchorEl.getBoundingClientRect();
+            if (anchorPosition.x !== inputPosition.x ||
+                anchorPosition.y !== inputPosition.y) {
+                this.anchorEl = { getBoundingClientRect: function () { return inputPosition; } };
+            }
         }
     };
     AutocompleteInput.prototype.render = function () {

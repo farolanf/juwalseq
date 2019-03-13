@@ -18,7 +18,7 @@ var RawPlaceholder = function (_a) {
     var classes = _a.classes;
     return (react_1.default.createElement("div", { className: classes.root }, "\u00A0"));
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     root: {
         backgroundColor: theme.palette.grey[300],
         display: 'flex',

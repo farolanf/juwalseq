@@ -36,9 +36,9 @@ var sanitizeRestProps = function (_a) {
     return props;
 };
 var FilterFormInput = function (_a) {
-    var filterElement = _a.filterElement, handleHide = _a.handleHide, classes = _a.classes, resource = _a.resource, translate = _a.translate;
+    var filterElement = _a.filterElement, handleHide = _a.handleHide, classes = _a.classes, resource = _a.resource, translate = _a.translate, locale = _a.locale;
     return (react_1.default.createElement("div", { "data-source": filterElement.props.source, className: classnames_1.default('filter-field', classes.body) },
-        !filterElement.props.alwaysOn && (react_1.default.createElement(IconButton_1.default, { className: "hide-filter", onClick: handleHide, "data-key": filterElement.props.source, tooltip: translate('ra.action.remove_filter') },
+        !filterElement.props.alwaysOn && (react_1.default.createElement(IconButton_1.default, { className: "hide-filter", onClick: handleHide, "data-key": filterElement.props.source, title: translate('ra.action.remove_filter') },
             react_1.default.createElement(HighlightOff_1.default, null))),
         react_1.default.createElement(redux_form_1.Field, __assign({ allowEmpty: true }, sanitizeRestProps(filterElement.props), { name: filterElement.props.source, component: filterElement.type, resource: resource, record: emptyRecord })),
         react_1.default.createElement("div", { className: classes.spacer }, "\u00A0")));
@@ -48,6 +48,7 @@ FilterFormInput.propTypes = {
     handleHide: prop_types_1.default.func,
     classes: prop_types_1.default.object,
     resource: prop_types_1.default.string,
+    locale: prop_types_1.default.string,
     translate: prop_types_1.default.func,
 };
 exports.default = ra_core_1.translate(FilterFormInput);

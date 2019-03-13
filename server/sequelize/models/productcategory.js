@@ -1,16 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ProductCategory = sequelize.define('ProductCategory', {
-    product_category_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    id: { 
+      type: DataTypes.INTEGER, 
       primaryKey: true,
-      autoIncrement: true
+      allowNull: false,
+      autoIncrement: true,
+      unique: true,
     },
-    product_id: { type: DataTypes.INTEGER, allowNull: false },
-    category_id: { type: DataTypes.INTEGER, allowNull: false }
   }, {
-    tableName: 'product_category',
+    tableName: 'ProductCategory',
     timestamps: false,
   });
   return ProductCategory;

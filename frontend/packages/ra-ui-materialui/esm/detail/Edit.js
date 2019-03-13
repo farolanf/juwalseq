@@ -18,30 +18,30 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { EditController } from 'ra-core';
 import DefaultActions from './EditActions';
 import TitleForRecord from '../layout/TitleForRecord';
 import CardContentInner from '../layout/CardContentInner';
-export var styles = {
+export var styles = createStyles({
     root: {
         display: 'flex',
     },
     card: {
         flex: '1 1 auto',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, aside = _a.aside, children = _a.children, className = _a.className, crudGetOne = _a.crudGetOne, crudUpdate = _a.crudUpdate, data = _a.data, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, id = _a.id, isLoading = _a.isLoading, resetForm = _a.resetForm, resource = _a.resource, title = _a.title, translate = _a.translate, version = _a.version, match = _a.match, location = _a.location, history = _a.history, options = _a.options, locale = _a.locale, permissions = _a.permissions, undoable = _a.undoable, rest = __rest(_a, ["actions", "aside", "children", "className", "crudGetOne", "crudUpdate", "data", "hasCreate", "hasEdit", "hasList", "hasShow", "id", "isLoading", "resetForm", "resource", "title", "translate", "version", "match", "location", "history", "options", "locale", "permissions", "undoable"]);
     return rest;
 };
 export var EditView = function (_a) {
-    var actions = _a.actions, aside = _a.aside, basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, defaultTitle = _a.defaultTitle, hasList = _a.hasList, hasShow = _a.hasShow, record = _a.record, redirect = _a.redirect, resource = _a.resource, save = _a.save, title = _a.title, version = _a.version, rest = __rest(_a, ["actions", "aside", "basePath", "children", "classes", "className", "defaultTitle", "hasList", "hasShow", "record", "redirect", "resource", "save", "title", "version"]);
+    var actions = _a.actions, aside = _a.aside, basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, defaultTitle = _a.defaultTitle, hasList = _a.hasList, hasShow = _a.hasShow, record = _a.record, redirect = _a.redirect, resource = _a.resource, save = _a.save, title = _a.title, undoable = _a.undoable, version = _a.version, rest = __rest(_a, ["actions", "aside", "basePath", "children", "classes", "className", "defaultTitle", "hasList", "hasShow", "record", "redirect", "resource", "save", "title", "undoable", "version"]);
     if (typeof actions === 'undefined' && hasShow) {
         actions = React.createElement(DefaultActions, null);
     }
@@ -51,14 +51,14 @@ export var EditView = function (_a) {
     return (React.createElement("div", __assign({ className: classnames('edit-page', classes.root, className) }, sanitizeRestProps(rest)),
         React.createElement(TitleForRecord, { title: title, record: record, defaultTitle: defaultTitle }),
         React.createElement(Card, { className: classes.card },
-            actions && (React.createElement(CardContentInner, null, React.cloneElement(actions, {
+            actions && (React.createElement(CardContentInner, null, cloneElement(actions, {
                 basePath: basePath,
                 data: record,
                 hasShow: hasShow,
                 hasList: hasList,
                 resource: resource,
             }))),
-            record ? (React.cloneElement(children, {
+            record ? (cloneElement(Children.only(children), {
                 basePath: basePath,
                 record: record,
                 redirect: typeof children.props.redirect === 'undefined'
@@ -66,6 +66,7 @@ export var EditView = function (_a) {
                     : children.props.redirect,
                 resource: resource,
                 save: save,
+                undoable: undoable,
                 version: version,
             })) : (React.createElement(CardContent, null, "\u00A0"))),
         aside &&

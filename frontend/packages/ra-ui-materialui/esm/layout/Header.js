@@ -20,15 +20,15 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import ViewTitle from './ViewTitle';
-var styles = {
+var styles = createStyles({
     root: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-};
+});
 /**
  * @deprecated
  */

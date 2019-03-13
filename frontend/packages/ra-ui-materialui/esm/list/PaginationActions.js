@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -15,12 +15,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import pure from 'recompose/pure';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import compose from 'recompose/compose';
 import { translate } from 'ra-core';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     actions: {
         flexShrink: 0,
         color: theme.palette.text.secondary,

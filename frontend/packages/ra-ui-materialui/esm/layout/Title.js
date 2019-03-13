@@ -23,7 +23,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { translate, warning } from 'ra-core';
 var Title = function (_a) {
-    var className = _a.className, defaultTitle = _a.defaultTitle, record = _a.record, title = _a.title, translate = _a.translate, rest = __rest(_a, ["className", "defaultTitle", "record", "title", "translate"]);
+    var className = _a.className, defaultTitle = _a.defaultTitle, locale = _a.locale, record = _a.record, title = _a.title, translate = _a.translate, rest = __rest(_a, ["className", "defaultTitle", "locale", "record", "title", "translate"]);
     var container = document.getElementById('react-admin-title');
     if (!container)
         return null;
@@ -34,6 +34,7 @@ var Title = function (_a) {
 Title.propTypes = {
     defaultTitle: PropTypes.string,
     className: PropTypes.string,
+    locale: PropTypes.string,
     record: PropTypes.object,
     translate: PropTypes.func.isRequired,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),

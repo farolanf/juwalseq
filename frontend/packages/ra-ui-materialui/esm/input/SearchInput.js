@@ -23,14 +23,14 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { translate } from 'ra-core';
 import TextInput from './TextInput';
-var searchFilterStyles = {
+var searchFilterStyles = createStyles({
     input: {
         marginTop: 32,
     },
-};
+});
 var SearchInput = function (_a) {
     var classes = _a.classes, translate = _a.translate, props = __rest(_a, ["classes", "translate"]);
     return (React.createElement(TextInput, __assign({ label: false, placeholder: translate('ra.action.search'), InputProps: {

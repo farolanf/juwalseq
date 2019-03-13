@@ -18,7 +18,7 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Children } from 'react';
+import React, { Children, isValidElement, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import CardContentInner from '../layout/CardContentInner';
@@ -62,7 +62,7 @@ var sanitizeRestProps = function (_a) {
 export var SimpleShowLayout = function (_a) {
     var basePath = _a.basePath, className = _a.className, children = _a.children, record = _a.record, resource = _a.resource, version = _a.version, rest = __rest(_a, ["basePath", "className", "children", "record", "resource", "version"]);
     return (React.createElement(CardContentInner, __assign({ className: className, key: version }, sanitizeRestProps(rest)), Children.map(children, function (field) {
-        return field ? (React.createElement("div", { key: field.props.source, className: classnames("ra-field ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (React.createElement(Labeled, { record: record, resource: resource, basePath: basePath, label: field.props.label, source: field.props.source, disabled: false }, field)) : typeof field.type === 'string' ? (field) : (React.cloneElement(field, {
+        return field && isValidElement(field) ? (React.createElement("div", { key: field.props.source, className: classnames("ra-field ra-field-" + field.props.source, field.props.className) }, field.props.addLabel ? (React.createElement(Labeled, { record: record, resource: resource, basePath: basePath, label: field.props.label, source: field.props.source, disabled: false }, field)) : typeof field.type === 'string' ? (field) : (cloneElement(field, {
             record: record,
             resource: resource,
             basePath: basePath,

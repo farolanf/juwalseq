@@ -15,11 +15,12 @@ module.exports = {
     'data',
     'auth',
     'finale',
-    'elasticsearch',
-    'order',
-    'customer',
-    'checkout',
     'email',
+    'elasticsearch',
+    'uploadfs',
+    // 'order',
+    // 'customer',
+    // 'checkout',
   ],
 
   // module options
@@ -28,7 +29,7 @@ module.exports = {
     jwtSecret: ']ZW%/tOrZ:PeI,y5~C|y4rWoPQtx%g',
 
     // new customers will be assigned to these groups
-    defaultGroups: ['public', 'customer'],
+    defaultGroups: ['public', 'member'],
 
     groups: {
       public: {
@@ -55,24 +56,19 @@ module.exports = {
           { path: '/search/.*', method: 'GET' },
 
           // public resources
-          { path: '/departments(/.*)?', method: 'GET' },
-          { path: '/categories(/.*)?', method: 'GET' },
-          { path: '/productcategories(/.*)?', method: 'GET' },
-          { path: '/products(/.*)?', method: 'GET' },
-          { path: '/productattributes(/.*)?', method: 'GET' },
-          { path: '/attributes(/.*)?', method: 'GET' },
-          { path: '/attributeValues(/.*)?', method: 'GET' },
-          { path: '/reviews(/.*)?', method: 'GET' },
-          { path: '/taxes(/.*)?', method: 'GET' },
-          { path: '/shippings(/.*)?', method: 'GET' },
-          { path: '/shippingregions(/.*)?', method: 'GET' },
+          { path: '/Departments(/.*)?', method: 'GET' },
+          { path: '/Categories(/.*)?', method: 'GET' },
+          { path: '/Attributes(/.*)?', method: 'GET' },
+          { path: '/AttributeValues(/.*)?', method: 'GET' },
+          { path: '/Products(/.*)?', method: 'GET' },
+          { path: '/ProductTypes(/.*)?', method: 'GET' },
+          { path: '/ProductTypeCategories(/.*)?', method: 'GET' },
+          { path: '/Comments(/.*)?', method: 'GET' },
         ]
       },
-      customer: {
+      member: {
         routes: [
-          { path: '/shoppingcarts(/.*)?', method: '*' },
-          { path: '/customers(/.*)?', method: 'PUT' },
-          { path: '/paypal/.*', method: ['GET', 'POST']},
+          // { path: '/paypal/.*', method: ['GET', 'POST']},
         ]
       },
       // admin passed all checks
@@ -84,7 +80,7 @@ module.exports = {
   },
 
   elasticsearch: {
-    index: 'tshirtshop',
+    index: 'juwal',
     maxCount: 100
-  }
+  },
 }

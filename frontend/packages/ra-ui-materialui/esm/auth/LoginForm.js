@@ -27,9 +27,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { translate, userLogin } from 'ra-core';
-var styles = function () { return ({
+var styles = function () { return createStyles({
     form: {
         padding: '0 1em 1em 1em',
     },
@@ -42,7 +42,7 @@ var styles = function () { return ({
 }); };
 // see http://redux-form.com/6.4.3/examples/material-ui/
 var renderInput = function (_a) {
-    var _b = _a.meta, _c = _b === void 0 ? {} : _b, touched = _c.touched, error = _c.error, inputProps = __rest(_a.input, []), // eslint-disable-line react/prop-types
+    var _b = _a.meta, _c = _b === void 0 ? { touched: false, error: '' } : _b, touched = _c.touched, error = _c.error, inputProps = __rest(_a.input, []), // eslint-disable-line react/prop-types
     props = __rest(_a, ["meta", "input"]);
     return (React.createElement(TextField, __assign({ error: !!(touched && error), helperText: touched && error }, inputProps, props, { fullWidth: true })));
 };

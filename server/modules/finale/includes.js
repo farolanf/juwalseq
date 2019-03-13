@@ -1,17 +1,7 @@
 const db = require('../../sequelize')
 
 module.exports = {
-  customers: [
-    {
-      model: db.ShippingRegion,
-      include: [
-        {
-          model: db.Shipping
-        }
-      ]
-    }
-  ],
-  products: [
+  Product: [
     {
       model: db.AttributeValue,
       include: [
@@ -19,11 +9,6 @@ module.exports = {
           model: db.Attribute
         }
       ]
-    }
-  ],
-  shoppingcarts: [
-    {
-      model: db.Product
     }
   ],
 }

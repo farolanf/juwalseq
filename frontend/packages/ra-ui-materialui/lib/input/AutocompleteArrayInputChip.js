@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
 var material_ui_chip_input_1 = __importDefault(require("material-ui-chip-input"));
 var styles_1 = require("@material-ui/core/styles");
-var chipInputStyles = {
+var chipInputStyles = styles_1.createStyles({
     label: {
         top: 18,
     },
@@ -29,6 +29,6 @@ var chipInputStyles = {
         display: 'flex',
         minHeight: 50,
     },
-};
+});
 var AutocompleteArrayInputChip = function (props) { return react_1.default.createElement(material_ui_chip_input_1.default, __assign({}, props)); };
 exports.default = styles_1.withStyles(chipInputStyles)(AutocompleteArrayInputChip);

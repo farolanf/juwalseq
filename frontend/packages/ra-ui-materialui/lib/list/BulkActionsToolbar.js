@@ -39,7 +39,7 @@ var styles_1 = require("@material-ui/core/styles");
 var colorManipulator_1 = require("@material-ui/core/styles/colorManipulator");
 var ra_core_1 = require("ra-core");
 var CardActions_1 = __importDefault(require("../layout/CardActions"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     toolbar: {
         position: 'absolute',
         top: 0,
@@ -81,7 +81,7 @@ var BulkActionsToolbar = function (_a) {
                 smart_count: selectedIds.length,
             }))),
         react_1.default.createElement(CardActions_1.default, null, react_1.Children.map(children, function (child) {
-            return react_1.cloneElement(child, {
+            return react_1.cloneElement(react_1.Children.only(child), {
                 basePath: basePath,
                 filterValues: filterValues,
                 resource: resource,

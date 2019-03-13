@@ -37,9 +37,9 @@ var getTabFullPath = function (tab, index, baseUrl) {
     return "" + baseUrl + (tab.props.path ? "/" + tab.props.path : index > 0 ? "/" + index : '');
 };
 var TabbedShowLayoutTabs = function (_a) {
-    var children = _a.children, match = _a.match, rest = __rest(_a, ["children", "match"]);
-    return (react_1.default.createElement(Tabs_1.default, __assign({ indicatorColor: "primary" }, rest), react_1.Children.map(children, function (tab, index) {
-        if (!tab)
+    var children = _a.children, match = _a.match, value = _a.value, rest = __rest(_a, ["children", "match", "value"]);
+    return (react_1.default.createElement(Tabs_1.default, __assign({ indicatorColor: "primary", value: value }, rest), react_1.Children.map(children, function (tab, index) {
+        if (!tab || !react_1.isValidElement(tab))
             return null;
         // Builds the full tab tab which is the concatenation of the last matched route in the
         // TabbedShowLayout hierarchy (ex: '/posts/create', '/posts/12', , '/posts/12/show')

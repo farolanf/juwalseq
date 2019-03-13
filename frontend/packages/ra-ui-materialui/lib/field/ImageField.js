@@ -29,7 +29,7 @@ var get_1 = __importDefault(require("lodash/get"));
 var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
 var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
-var styles = {
+var styles = styles_1.createStyles({
     list: {
         display: 'flex',
         listStyleType: 'none',
@@ -38,7 +38,7 @@ var styles = {
         margin: '0.5rem',
         maxHeight: '10rem',
     },
-};
+});
 exports.ImageField = function (_a) {
     var className = _a.className, _b = _a.classes, classes = _b === void 0 ? {} : _b, record = _a.record, source = _a.source, src = _a.src, title = _a.title, rest = __rest(_a, ["className", "classes", "record", "source", "src", "title"]);
     var sourceValue = get_1.default(record, source);

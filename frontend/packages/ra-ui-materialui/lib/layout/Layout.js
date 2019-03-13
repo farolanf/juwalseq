@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -58,7 +58,7 @@ var Error_1 = __importDefault(require("./Error"));
 var defaultTheme_1 = __importDefault(require("../defaultTheme"));
 var styles = function (theme) {
     var _a;
-    return ({
+    return styles_1.createStyles({
         root: {
             display: 'flex',
             flexDirection: 'column',
@@ -81,6 +81,7 @@ var styles = function (theme) {
                 display: 'flex',
                 flexDirection: 'column',
                 flexGrow: 1,
+                flexBasis: 0,
                 padding: theme.spacing.unit * 3
             },
             _a[theme.breakpoints.up('xs')] = {

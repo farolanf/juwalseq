@@ -26,15 +26,15 @@ export const ProductAttributeList = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField source='id' />
-      <ReferenceField source="product_id" reference="products">
+      <ReferenceField source="ProductId" reference="Products">
         <TextField source="name" />
       </ReferenceField>
-      <ReferenceField source="attribute_value_id" reference="attributevalues" label='Attribute' linkType={false}>
-        <NestedReferenceField source="attribute_id" reference="attributes">
+      <ReferenceField source="AttributeValueId" reference="AttributeValues" label='Attribute' linkType={false}>
+        <NestedReferenceField source="AttributeId" reference="Attributes">
           <TextField source='name' />
         </NestedReferenceField>
       </ReferenceField>
-      <ReferenceField source="attribute_value_id" reference="attributevalues">
+      <ReferenceField source="AttributeValueId" reference="AttributeValues">
         <TextField source="value" />
       </ReferenceField>
       <EditButton />
@@ -45,22 +45,22 @@ export const ProductAttributeList = props => (
 export const ProductAttributeEdit = props => (
   <Edit {...props}>
     <SimpleForm>
-      <ReferenceInput source="product_id" reference="products">
+      <ReferenceInput source="ProductId" reference="Products">
         <SelectInput optionText="name" disabled />
       </ReferenceInput>
-      <ReferenceInput source="attribute_id" reference="attributes" label='Attribute'>
+      <ReferenceInput source="AttributeId" reference="Attributes" label='Attribute'>
           <SelectInput optionText='name' />
       </ReferenceInput>
-      <ReferenceInput source="attribute_value_id" reference="attributevalues" label='Attribute'>
+      <ReferenceInput source="AttributeValueId" reference="AttributeValues" label='Attribute'>
         <FormDataConsumer>
           {({ formData, input, choices, dispatch }) => {
-            // initialize attribute_id
+            // initialize id
             if (formData) {
-              if (!formData.attribute_id) {
+              if (!formData.id) {
                 const record = choices.find(c => c.attribute_value_id === input.value)
-                dispatch(change(REDUX_FORM_NAME, 'attribute_id', record.attribute_id))
+                dispatch(change(REDUX_FORM_NAME, 'id', record.id))
               } else {
-                choices = choices.filter(c => c.attribute_id === formData.attribute_id)
+                choices = choices.filter(c => c.id === formData.id)
               }
             }
             return <SelectInput source={input.name} choices={choices} optionText='value' />
@@ -74,8 +74,12 @@ export const ProductAttributeEdit = props => (
 export const ProductAttributeCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput source="product_id" reference="products"><SelectInput optionText="name" /></ReferenceInput>
-      <ReferenceInput source="attribute_value_id" reference="attributevalues"><SelectInput optionText="value" /></ReferenceInput>
+      <ReferenceInput source="ProductId" reference="Products">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
+      <ReferenceInput source="AttributeValueId" reference="AttributeValues">
+        <SelectInput optionText="value" />
+      </ReferenceInput>
     </SimpleForm>
   </Create>
 )

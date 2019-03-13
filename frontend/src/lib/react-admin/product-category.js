@@ -13,16 +13,16 @@ import {
 } from 'react-admin'
 import ImageField from './image-field'
 
-export const ProductcategoryList = props => (
+export const ProductCategoryList = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
-      <ReferenceField source="product_id" reference="products" label='Product name'>
+      <ReferenceField source="ProductId" reference="Products" label='Product name'>
         <TextField source="name" />
       </ReferenceField>
-      <ReferenceField source="product_id" reference="products" label='Thumbnail' sortable={false}>
+      <ReferenceField source="ProductId" reference="Products" label='Thumbnail' sortable={false}>
         <ImageField source="thumbnail" style={tw`w-16`} />
       </ReferenceField>
-      <ReferenceField source="category_id" reference="categories">
+      <ReferenceField source="CategoryId" reference="Categories">
         <TextField source="name" />
       </ReferenceField>
       <EditButton />
@@ -30,20 +30,28 @@ export const ProductcategoryList = props => (
   </List>
 )
 
-export const ProductcategoryEdit = props => (
+export const ProductCategoryEdit = props => (
   <Edit {...props}>
     <SimpleForm>
-      <ReferenceInput source="product_id" reference="products"><SelectInput optionText="name" disabled /></ReferenceInput>
-      <ReferenceInput source="category_id" reference="categories"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="ProductId" reference="Products">
+        <SelectInput optionText="name" disabled />
+      </ReferenceInput>
+      <ReferenceInput source="CategoryId" reference="Categories">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
     </SimpleForm>
   </Edit>
 )
 
-export const ProductcategoryCreate = props => (
+export const ProductCategoryCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput source="product_id" reference="products"><SelectInput optionText="name" /></ReferenceInput>
-      <ReferenceInput source="category_id" reference="categories"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="ProductId" reference="Products">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
+      <ReferenceInput source="CategoryId" reference="Categories">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
     </SimpleForm>
   </Create>
 )

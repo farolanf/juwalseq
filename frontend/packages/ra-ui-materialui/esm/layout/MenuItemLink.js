@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -36,8 +36,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
-var styles = function (theme) { return ({
+import { withStyles, createStyles } from '@material-ui/core/styles';
+var styles = function (theme) { return createStyles({
     root: {
         color: theme.palette.text.secondary,
         display: 'flex',
@@ -68,7 +68,7 @@ var MenuItemLink = /** @class */ (function (_super) {
         className: PropTypes.string,
         leftIcon: PropTypes.node,
         onClick: PropTypes.func,
-        primaryText: PropTypes.string,
+        primaryText: PropTypes.node,
         staticContext: PropTypes.object,
         to: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
             .isRequired,

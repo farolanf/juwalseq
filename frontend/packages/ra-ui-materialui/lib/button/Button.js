@@ -33,7 +33,7 @@ var styles_1 = require("@material-ui/core/styles");
 var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
 var Responsive_1 = __importDefault(require("../layout/Responsive"));
-var styles = {
+var styles = styles_1.createStyles({
     button: {
         display: 'inline-flex',
         alignItems: 'center',
@@ -53,10 +53,10 @@ var styles = {
     largeIcon: {
         fontSize: 24,
     },
-};
+});
 var Button = function (_a) {
-    var _b = _a.alignIcon, alignIcon = _b === void 0 ? 'left' : _b, children = _a.children, _c = _a.classes, classes = _c === void 0 ? {} : _c, className = _a.className, _d = _a.color, color = _d === void 0 ? 'primary' : _d, disabled = _a.disabled, label = _a.label, _e = _a.size, size = _e === void 0 ? 'small' : _e, translate = _a.translate, rest = __rest(_a, ["alignIcon", "children", "classes", "className", "color", "disabled", "label", "size", "translate"]);
-    var _f;
+    var _b = _a.alignIcon, alignIcon = _b === void 0 ? 'left' : _b, children = _a.children, _c = _a.classes, classes = _c === void 0 ? {} : _c, className = _a.className, color = _a.color, disabled = _a.disabled, label = _a.label, size = _a.size, translate = _a.translate, rest = __rest(_a, ["alignIcon", "children", "classes", "className", "color", "disabled", "label", "size", "translate"]);
+    var _d;
     return (react_1.default.createElement(Responsive_1.default, { small: label && !disabled ? (react_1.default.createElement(Tooltip_1.default, { title: translate(label, { _: label }) },
             react_1.default.createElement(IconButton_1.default, __assign({ "aria-label": translate(label, { _: label }), className: className, color: color }, rest), children))) : (react_1.default.createElement(IconButton_1.default, __assign({ className: className, color: color, disabled: disabled }, rest), children)), medium: react_1.default.createElement(Button_1.default, __assign({ className: classnames_1.default(classes.button, className), color: color, size: size, "aria-label": label ? translate(label, { _: label }) : undefined, disabled: disabled }, rest),
             alignIcon === 'left' &&
@@ -64,10 +64,10 @@ var Button = function (_a) {
                 react_1.default.cloneElement(children, {
                     className: classes[size + "Icon"],
                 }),
-            label && (react_1.default.createElement("span", { className: classnames_1.default((_f = {},
-                    _f[classes.label] = alignIcon === 'left',
-                    _f[classes.labelRightIcon] = alignIcon !== 'left',
-                    _f)) }, translate(label, { _: label }))),
+            label && (react_1.default.createElement("span", { className: classnames_1.default((_d = {},
+                    _d[classes.label] = alignIcon === 'left',
+                    _d[classes.labelRightIcon] = alignIcon !== 'left',
+                    _d)) }, translate(label, { _: label }))),
             alignIcon === 'right' &&
                 children &&
                 react_1.default.cloneElement(children, {
@@ -82,8 +82,12 @@ Button.propTypes = {
     color: prop_types_1.default.string,
     disabled: prop_types_1.default.bool,
     label: prop_types_1.default.string,
-    size: prop_types_1.default.string,
+    size: prop_types_1.default.oneOf(['small', 'medium', 'large']),
     translate: prop_types_1.default.func.isRequired,
+};
+Button.defaultProps = {
+    color: 'primary',
+    size: 'small'
 };
 var enhance = compose_1.default(styles_1.withStyles(styles), ra_core_1.translate);
 exports.default = enhance(Button);

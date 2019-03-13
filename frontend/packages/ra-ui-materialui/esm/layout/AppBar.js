@@ -26,7 +26,7 @@ import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import withWidth from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
@@ -34,7 +34,7 @@ import { toggleSidebar as toggleSidebarAction } from 'ra-core';
 import LoadingIndicator from './LoadingIndicator';
 import UserMenu from './UserMenu';
 import Headroom from './Headroom';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     toolbar: {
         paddingRight: 24,
     },

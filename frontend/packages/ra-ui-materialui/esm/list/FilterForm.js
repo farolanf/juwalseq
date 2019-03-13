@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -35,27 +35,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import withProps from 'recompose/withProps';
 import lodashSet from 'lodash/set';
 import FilterFormInput from './FilterFormInput';
-var styles = function (_a) {
-    var primary1Color = _a.palette.primary1Color;
-    return ({
-        form: {
-            marginTop: '-10px',
-            paddingTop: 0,
-            display: 'flex',
-            alignItems: 'flex-end',
-            flexWrap: 'wrap',
-        },
-        body: { display: 'flex', alignItems: 'flex-end' },
-        spacer: { width: '1em' },
-        icon: { color: primary1Color || '#00bcd4', paddingBottom: 0 },
-        clearFix: { clear: 'right' },
-    });
-};
+var styles = function (theme) { return createStyles({
+    form: {
+        marginTop: '-10px',
+        paddingTop: 0,
+        display: 'flex',
+        alignItems: 'flex-end',
+        flexWrap: 'wrap',
+    },
+    body: { display: 'flex', alignItems: 'flex-end' },
+    spacer: { width: '1em' },
+    icon: { color: theme.palette.primary1Color || '#00bcd4', paddingBottom: 0 },
+    clearFix: { clear: 'right' },
+}); };
 var sanitizeRestProps = function (_a) {
     var anyTouched = _a.anyTouched, asyncValidate = _a.asyncValidate, asyncValidating = _a.asyncValidating, autofill = _a.autofill, blur = _a.blur, change = _a.change, clearAsyncError = _a.clearAsyncError, clearFields = _a.clearFields, clearSubmit = _a.clearSubmit, clearSubmitErrors = _a.clearSubmitErrors, destroy = _a.destroy, dirty = _a.dirty, dispatch = _a.dispatch, displayedFilters = _a.displayedFilters, filterValues = _a.filterValues, handleSubmit = _a.handleSubmit, hideFilter = _a.hideFilter, initialize = _a.initialize, initialized = _a.initialized, initialValues = _a.initialValues, invalid = _a.invalid, pristine = _a.pristine, pure = _a.pure, reset = _a.reset, resetSection = _a.resetSection, save = _a.save, setFilter = _a.setFilter, setFilters = _a.setFilters, submit = _a.submit, submitFailed = _a.submitFailed, submitSucceeded = _a.submitSucceeded, submitting = _a.submitting, touch = _a.touch, triggerSubmit = _a.triggerSubmit, untouch = _a.untouch, valid = _a.valid, validate = _a.validate, props = __rest(_a, ["anyTouched", "asyncValidate", "asyncValidating", "autofill", "blur", "change", "clearAsyncError", "clearFields", "clearSubmit", "clearSubmitErrors", "destroy", "dirty", "dispatch", "displayedFilters", "filterValues", "handleSubmit", "hideFilter", "initialize", "initialized", "initialValues", "invalid", "pristine", "pure", "reset", "resetSection", "save", "setFilter", "setFilters", "submit", "submitFailed", "submitSucceeded", "submitting", "touch", "triggerSubmit", "untouch", "valid", "validate"]);
     return props;

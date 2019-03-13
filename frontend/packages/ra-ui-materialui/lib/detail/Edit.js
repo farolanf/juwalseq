@@ -19,11 +19,18 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var Card_1 = __importDefault(require("@material-ui/core/Card"));
 var CardContent_1 = __importDefault(require("@material-ui/core/CardContent"));
@@ -33,20 +40,20 @@ var ra_core_1 = require("ra-core");
 var EditActions_1 = __importDefault(require("./EditActions"));
 var TitleForRecord_1 = __importDefault(require("../layout/TitleForRecord"));
 var CardContentInner_1 = __importDefault(require("../layout/CardContentInner"));
-exports.styles = {
+exports.styles = styles_1.createStyles({
     root: {
         display: 'flex',
     },
     card: {
         flex: '1 1 auto',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, aside = _a.aside, children = _a.children, className = _a.className, crudGetOne = _a.crudGetOne, crudUpdate = _a.crudUpdate, data = _a.data, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, id = _a.id, isLoading = _a.isLoading, resetForm = _a.resetForm, resource = _a.resource, title = _a.title, translate = _a.translate, version = _a.version, match = _a.match, location = _a.location, history = _a.history, options = _a.options, locale = _a.locale, permissions = _a.permissions, undoable = _a.undoable, rest = __rest(_a, ["actions", "aside", "children", "className", "crudGetOne", "crudUpdate", "data", "hasCreate", "hasEdit", "hasList", "hasShow", "id", "isLoading", "resetForm", "resource", "title", "translate", "version", "match", "location", "history", "options", "locale", "permissions", "undoable"]);
     return rest;
 };
 exports.EditView = function (_a) {
-    var actions = _a.actions, aside = _a.aside, basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, defaultTitle = _a.defaultTitle, hasList = _a.hasList, hasShow = _a.hasShow, record = _a.record, redirect = _a.redirect, resource = _a.resource, save = _a.save, title = _a.title, version = _a.version, rest = __rest(_a, ["actions", "aside", "basePath", "children", "classes", "className", "defaultTitle", "hasList", "hasShow", "record", "redirect", "resource", "save", "title", "version"]);
+    var actions = _a.actions, aside = _a.aside, basePath = _a.basePath, children = _a.children, classes = _a.classes, className = _a.className, defaultTitle = _a.defaultTitle, hasList = _a.hasList, hasShow = _a.hasShow, record = _a.record, redirect = _a.redirect, resource = _a.resource, save = _a.save, title = _a.title, undoable = _a.undoable, version = _a.version, rest = __rest(_a, ["actions", "aside", "basePath", "children", "classes", "className", "defaultTitle", "hasList", "hasShow", "record", "redirect", "resource", "save", "title", "undoable", "version"]);
     if (typeof actions === 'undefined' && hasShow) {
         actions = react_1.default.createElement(EditActions_1.default, null);
     }
@@ -56,14 +63,14 @@ exports.EditView = function (_a) {
     return (react_1.default.createElement("div", __assign({ className: classnames_1.default('edit-page', classes.root, className) }, sanitizeRestProps(rest)),
         react_1.default.createElement(TitleForRecord_1.default, { title: title, record: record, defaultTitle: defaultTitle }),
         react_1.default.createElement(Card_1.default, { className: classes.card },
-            actions && (react_1.default.createElement(CardContentInner_1.default, null, react_1.default.cloneElement(actions, {
+            actions && (react_1.default.createElement(CardContentInner_1.default, null, react_1.cloneElement(actions, {
                 basePath: basePath,
                 data: record,
                 hasShow: hasShow,
                 hasList: hasList,
                 resource: resource,
             }))),
-            record ? (react_1.default.cloneElement(children, {
+            record ? (react_1.cloneElement(react_1.Children.only(children), {
                 basePath: basePath,
                 record: record,
                 redirect: typeof children.props.redirect === 'undefined'
@@ -71,6 +78,7 @@ exports.EditView = function (_a) {
                     : children.props.redirect,
                 resource: resource,
                 save: save,
+                undoable: undoable,
                 version: version,
             })) : (react_1.default.createElement(CardContent_1.default, null, "\u00A0"))),
         aside &&

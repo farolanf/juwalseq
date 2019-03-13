@@ -1,14 +1,14 @@
-import React, { Children, Fragment } from 'react';
+import React, { Children, Fragment, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import withWidth from '@material-ui/core/withWidth';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 
 import { SaveButton, DeleteButton } from '../button';
 
-const styles = theme => ({
+const styles = theme => createStyles({
     toolbar: {
         backgroundColor:
             theme.palette.type === 'light'
@@ -58,6 +58,7 @@ const Toolbar = ({
     resource,
     saving,
     submitOnEnter,
+    undoable,
     width,
     ...rest
 }) => (
@@ -88,12 +89,13 @@ const Toolbar = ({
                             basePath={basePath}
                             record={record}
                             resource={resource}
+                            undoable={undoable}
                         />
                     )}
                 </div>
             ) : (
                 Children.map(children, button =>
-                    button
+                    button && isValidElement(button)
                         ? React.cloneElement(button, {
                               basePath,
                               handleSubmit: valueOrDefault(
@@ -106,10 +108,16 @@ const Toolbar = ({
                               ),
                               invalid,
                               pristine,
+                              record,
+                              resource,
                               saving,
                               submitOnEnter: valueOrDefault(
                                   button.props.submitOnEnter,
                                   submitOnEnter
+                              ),
+                              undoable: valueOrDefault(
+                                  button.props.undoable,
+                                  undoable
                               ),
                           })
                         : null
@@ -138,6 +146,7 @@ Toolbar.propTypes = {
     resource: PropTypes.string,
     saving: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     submitOnEnter: PropTypes.bool,
+    undoable: PropTypes.bool,
     width: PropTypes.string,
 };
 

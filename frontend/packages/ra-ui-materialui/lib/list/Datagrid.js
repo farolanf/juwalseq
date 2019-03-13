@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -56,7 +56,7 @@ var classnames_1 = __importDefault(require("classnames"));
 var DatagridHeaderCell_1 = __importDefault(require("./DatagridHeaderCell"));
 var DatagridBody_1 = __importDefault(require("./DatagridBody"));
 var DatagridLoading_1 = __importDefault(require("./DatagridLoading"));
-var styles = function (theme) { return ({
+var styles = function (theme) { return styles_1.createStyles({
     table: {
         tableLayout: 'auto',
     },
@@ -186,12 +186,12 @@ var Datagrid = /** @class */ (function (_super) {
                         react_1.default.createElement(Checkbox_1.default, { className: "select-all", color: "primary", checked: selectedIds.length > 0 &&
                                 ids.length > 0 &&
                                 !ids.find(function (it) { return selectedIds.indexOf(it) === -1; }), onChange: this.handleSelectAll }))),
-                    react_1.default.Children.map(children, function (field, index) {
-                        return field ? (react_1.default.createElement(DatagridHeaderCell_1.default, { className: classes.headerCell, currentSort: currentSort, field: field, isSorting: currentSort.field ===
+                    react_1.Children.map(children, function (field, index) {
+                        return react_1.isValidElement(field) ? (react_1.default.createElement(DatagridHeaderCell_1.default, { className: classes.headerCell, currentSort: currentSort, field: field, isSorting: currentSort.field ===
                                 (field.props.sortBy ||
                                     field.props.source), key: field.props.source || index, resource: resource, updateSort: _this.updateSort })) : null;
                     }))),
-            react_1.default.cloneElement(body, {
+            react_1.cloneElement(body, {
                 basePath: basePath,
                 className: classes.tbody,
                 classes: classes,

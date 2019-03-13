@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -55,7 +55,7 @@ var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
  * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
  */
 var dateFormatter = function (v) {
-    if (!(v instanceof Date) || isNaN(v))
+    if (!(v instanceof Date) || isNaN(v.getDate()))
         return;
     var pad = '00';
     var yyyy = v.getFullYear().toString();
@@ -70,12 +70,14 @@ var sanitizeValue = function (value) {
     if (value == null || value === '') {
         return '';
     }
+    if (value instanceof Date) {
+        return dateFormatter(value);
+    }
     // valid dates should not be converted
     if (dateRegex.test(value)) {
         return value;
     }
-    var finalValue = typeof value instanceof Date ? value : new Date(value);
-    return dateFormatter(finalValue);
+    return dateFormatter(new Date(value));
 };
 var DateInput = /** @class */ (function (_super) {
     __extends(DateInput, _super);

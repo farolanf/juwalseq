@@ -13,15 +13,18 @@ import {
   DisabledInput,
   ReferenceInput
 } from 'react-admin'
-
+import OrderSelect from './OrderSelect'
 
 export const CategoryList = props => (
-  <List {...props}>
+  <List {...props} sort={{ field: 'DepartmentId', order: 'ASC' }}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
-      <ReferenceField source="department_id" reference="departments"><TextField source="name" /></ReferenceField>
+      <ReferenceField source="DepartmentId" reference="Departments">
+        <TextField source="name" />
+      </ReferenceField>
       <TextField source="name" />
       <TextField source="description" />
+      <OrderSelect source='order' />
     </Datagrid>
   </List>
 )
@@ -30,7 +33,9 @@ export const CategoryEdit = props => (
   <Edit {...props}>
     <SimpleForm>
       <DisabledInput source="id" />
-      <ReferenceInput source="department_id" reference="departments"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="DepartmentId" reference="Departments">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
       <TextInput source="name" />
       <LongTextInput source="description" />
     </SimpleForm>
@@ -40,7 +45,9 @@ export const CategoryEdit = props => (
 export const CategoryCreate = props => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput source="department_id" reference="departments"><SelectInput optionText="name" /></ReferenceInput>
+      <ReferenceInput source="DepartmentId" reference="Departments">
+        <SelectInput optionText="name" />
+      </ReferenceInput>
       <TextInput source="name" />
       <LongTextInput source="description" />
     </SimpleForm>

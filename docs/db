@@ -1,0 +1,41 @@
+
+Only add associations on the model where you would query from.
+Adding on both sides is useful on hooks for elasticsearch.
+
+Tag
+  name
+  ParentId { ref: Tag }
+
+EntityTag
+  model // File|Product|...
+  EntityId
+  TagId { unique }
+
+File
+  storage // s3|file|etc
+  name
+  url
+
+EntityFile
+  model // Product|Ad|...
+  EntityId
+  TagId
+
+# query for product tags
+Product.findAll({
+  include = [
+    {
+      model: Tag,
+    }
+  ]
+})
+
+# query for product images
+Product.findAll({
+  include = [
+    {
+      model: File,
+      as: 'Images',
+    }
+  ]
+})

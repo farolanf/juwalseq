@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -53,7 +53,7 @@ var TextField_1 = __importDefault(require("@material-ui/core/TextField"));
 var styles_1 = require("@material-ui/core/styles");
 var Clear_1 = __importDefault(require("@material-ui/icons/Clear"));
 var ra_core_1 = require("ra-core");
-var styles = {
+var styles = styles_1.createStyles({
     clearIcon: {
         height: 16,
         width: 0,
@@ -68,7 +68,7 @@ var styles = {
     visibleClearButton: {
         width: 24,
     },
-};
+});
 /**
  * An override of the default Material-UI TextField which is resettable
  */

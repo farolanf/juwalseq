@@ -26,10 +26,10 @@ import compose from 'recompose/compose';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { FieldTitle, translate } from 'ra-core';
 // remove the sort icons when not active
-var styles = {
+var styles = createStyles({
     icon: {
         display: 'none',
     },
@@ -38,7 +38,7 @@ var styles = {
             display: 'inline',
         },
     },
-};
+});
 export var DatagridHeaderCell = function (_a) {
     var classes = _a.classes, className = _a.className, field = _a.field, currentSort = _a.currentSort, updateSort = _a.updateSort, resource = _a.resource, isSorting = _a.isSorting, translate = _a.translate, rest = __rest(_a, ["classes", "className", "field", "currentSort", "updateSort", "resource", "isSorting", "translate"]);
     return (React.createElement(TableCell, __assign({ className: classnames(className, field.props.headerClassName), numeric: field.props.textAlign === 'right', padding: "none", variant: "head" }, rest), field.props.sortable !== false &&

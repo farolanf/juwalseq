@@ -35,13 +35,13 @@ var ViewList_1 = __importDefault(require("@material-ui/icons/ViewList"));
 var DashboardMenuItem_1 = __importDefault(require("./DashboardMenuItem"));
 var MenuItemLink_1 = __importDefault(require("./MenuItemLink"));
 var Responsive_1 = __importDefault(require("../layout/Responsive"));
-var styles = {
+var styles = styles_1.createStyles({
     main: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },
-};
+});
 var translatedResourceName = function (resource, translate) {
     return translate("resources." + resource.name + ".name", {
         smart_count: 2,

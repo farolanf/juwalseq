@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,16 +31,16 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { cloneElement, Component } from 'react';
+import React, { cloneElement, Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { withStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles } from '@material-ui/core/styles';
 import { linkToRecord } from 'ra-core';
 import Link from '../Link';
-var styles = {
+var styles = createStyles({
     root: { display: 'flex', flexWrap: 'wrap' },
-};
+});
 // useful to prevent click bubbling in a datagrid with rowClick
 var stopPropagation = function (e) { return e.stopPropagation(); };
 var sanitizeRestProps = function (_a) {
@@ -100,7 +100,7 @@ var SingleFieldList = /** @class */ (function (_super) {
                 ? false
                 : linkToRecord(basePath, id, linkType);
             if (resourceLinkPath) {
-                return (React.createElement(Link, { className: classnames(classes.link, className), key: id, to: resourceLinkPath, onClick: stopPropagation }, cloneElement(children, {
+                return (React.createElement(Link, { className: classnames(classes.link, className), key: id, to: resourceLinkPath, onClick: stopPropagation }, cloneElement(Children.only(children), {
                     record: data[id],
                     resource: resource,
                     basePath: basePath,
@@ -108,7 +108,7 @@ var SingleFieldList = /** @class */ (function (_super) {
                     onClick: _this.handleClick,
                 })));
             }
-            return cloneElement(children, {
+            return cloneElement(Children.only(children), {
                 key: id,
                 record: data[id],
                 resource: resource,

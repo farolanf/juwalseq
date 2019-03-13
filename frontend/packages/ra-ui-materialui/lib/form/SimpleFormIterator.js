@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -39,7 +39,7 @@ var classnames_1 = __importDefault(require("classnames"));
 var FormInput_1 = __importDefault(require("../form/FormInput"));
 var styles = function (theme) {
     var _a, _b;
-    return ({
+    return styles_1.createStyles({
         root: {
             padding: 0,
             marginBottom: 0,
@@ -96,6 +96,16 @@ var SimpleFormIterator = /** @class */ (function (_super) {
             _this.ids.splice(index, 1);
             fields.remove(index);
         }; };
+        // Returns a boolean to indicate whether to disable the remove button for certain fields.
+        // If disableRemove is a function, then call the function with the current record to
+        // determing if the button should be disabled. Otherwise, use a boolean property that
+        // enables or disables the button for all of the fields.
+        _this.disableRemoveField = function (record, disableRemove) {
+            if (typeof disableRemove === "boolean") {
+                return disableRemove;
+            }
+            return disableRemove && disableRemove(record);
+        };
         _this.addField = function () {
             var fields = _this.props.fields;
             _this.ids.push(_this.nextId++);
@@ -125,7 +135,7 @@ var SimpleFormIterator = /** @class */ (function (_super) {
             react_1.default.createElement(react_transition_group_1.TransitionGroup, null, fields.map(function (member, index) { return (react_1.default.createElement(react_transition_group_1.CSSTransition, { key: _this.ids[index], timeout: 500, classNames: "fade" },
                 react_1.default.createElement("li", { className: classes.line },
                     react_1.default.createElement(Typography_1.default, { variant: "body1", className: classes.index }, index + 1),
-                    react_1.default.createElement("section", { className: classes.form }, react_1.Children.map(children, function (input, index2) { return (react_1.default.createElement(FormInput_1.default, { basePath: input.props.basePath || basePath, input: react_1.cloneElement(input, {
+                    react_1.default.createElement("section", { className: classes.form }, react_1.Children.map(children, function (input, index2) { return react_1.isValidElement(input) ? (react_1.default.createElement(FormInput_1.default, { basePath: input.props.basePath || basePath, input: react_1.cloneElement(input, {
                             source: input.props.source
                                 ? member + "." + input.props.source
                                 : member,
@@ -135,8 +145,8 @@ var SimpleFormIterator = /** @class */ (function (_super) {
                             label: input.props.label ||
                                 input.props.source,
                         }), record: (records && records[index]) ||
-                            {}, resource: resource })); })),
-                    !disableRemove && (react_1.default.createElement("span", { className: classes.action },
+                            {}, resource: resource })) : null; })),
+                    !(_this.disableRemoveField((records && records[index]) || {}, disableRemove)) && (react_1.default.createElement("span", { className: classes.action },
                         react_1.default.createElement(Button_1.default, { className: classnames_1.default('button-remove', "button-remove-" + source + "-" + index), size: "small", onClick: _this.removeField(index) },
                             react_1.default.createElement(RemoveCircleOutline_1.default, { className: classes.leftIcon }),
                             translate('ra.action.remove'))))))); })),
@@ -166,6 +176,6 @@ SimpleFormIterator.propTypes = {
     resource: prop_types_1.default.string,
     translate: prop_types_1.default.func,
     disableAdd: prop_types_1.default.bool,
-    disableRemove: prop_types_1.default.bool,
+    disableRemove: prop_types_1.default.oneOfType([prop_types_1.default.func, prop_types_1.default.bool]),
 };
 exports.default = compose_1.default(ra_core_1.translate, styles_1.withStyles(styles))(SimpleFormIterator);

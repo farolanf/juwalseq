@@ -21,10 +21,10 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import sanitizeRestProps from './sanitizeRestProps';
-var styles = {
+var styles = createStyles({
     list: {
         display: 'flex',
         listStyleType: 'none',
@@ -33,7 +33,7 @@ var styles = {
         margin: '0.5rem',
         maxHeight: '10rem',
     },
-};
+});
 export var ImageField = function (_a) {
     var className = _a.className, _b = _a.classes, classes = _b === void 0 ? {} : _b, record = _a.record, source = _a.source, src = _a.src, title = _a.title, rest = __rest(_a, ["className", "classes", "record", "source", "src", "title"]);
     var sourceValue = get(record, source);

@@ -1,6 +1,12 @@
 const store = {}
 
-load('user', 'department', 'route', 'script')
+load(
+  'user', 
+  'department', 
+  'product', 
+  'route', 
+  'script',
+)
 
 export default store
 

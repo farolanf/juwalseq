@@ -23,11 +23,11 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import { translate, sanitizeListRestProps } from 'ra-core';
 import CardActions from '../layout/CardActions';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     toolbar: {
         position: 'absolute',
         top: 0,
@@ -69,7 +69,7 @@ var BulkActionsToolbar = function (_a) {
                 smart_count: selectedIds.length,
             }))),
         React.createElement(CardActions, null, Children.map(children, function (child) {
-            return cloneElement(child, {
+            return cloneElement(Children.only(child), {
                 basePath: basePath,
                 filterValues: filterValues,
                 resource: resource,

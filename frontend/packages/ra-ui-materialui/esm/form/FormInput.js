@@ -21,13 +21,13 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Labeled from '../input/Labeled';
 var sanitizeRestProps = function (_a) {
     var basePath = _a.basePath, record = _a.record, rest = __rest(_a, ["basePath", "record"]);
     return rest;
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     input: { width: theme.spacing.unit * 32 },
 }); };
 export var FormInput = function (_a) {

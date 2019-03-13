@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -102,7 +102,7 @@ var DatagridRow = /** @class */ (function (_super) {
         _this.coomponentDidUpdate = function (prevProps, prevState) {
             var colSpan = _this.computeColSpan(_this.props);
             if (colSpan !== prevState.colSpan) {
-                _this.setState({ colspan: colspan });
+                _this.setState({ colSpan: colSpan });
             }
         };
         _this.handleToggleExpanded = function (event) {
@@ -176,7 +176,7 @@ var DatagridRow = /** @class */ (function (_super) {
                 hasBulkActions && (react_1.default.createElement(TableCell_1.default, { padding: "none" },
                     react_1.default.createElement(Checkbox_1.default, { color: "primary", className: "select-item " + classes.checkbox, checked: selected, onClick: this.handleToggle }))),
                 react_1.default.Children.map(children, function (field, index) {
-                    return field ? (react_1.default.createElement(DatagridCell_1.default, __assign({ key: id + "-" + (field.props.source || index), className: classnames_2.default("column-" + field.props.source, classes.rowCell), record: record, id: id }, { field: field, basePath: basePath, resource: resource }))) : null;
+                    return react_1.isValidElement(field) ? (react_1.default.createElement(DatagridCell_1.default, __assign({ key: id + "-" + (field.props.source || index), className: classnames_2.default("column-" + field.props.source, classes.rowCell), record: record, id: id }, { field: field, basePath: basePath, resource: resource }))) : null;
                 })),
             expand && expanded && (react_1.default.createElement(TableRow_1.default, { key: id + "-expand" },
                 react_1.default.createElement(TableCell_1.default, { colSpan: colSpan, role: "expand-content" }, react_1.default.cloneElement(expand, {

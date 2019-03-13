@@ -21,7 +21,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import HotTub from '@material-ui/icons/HotTub';
 import History from '@material-ui/icons/History';
 import compose from 'recompose/compose';
@@ -30,7 +30,7 @@ import { translate } from 'ra-core';
 import Title from './Title';
 var styles = function (theme) {
     var _a;
-    return ({
+    return createStyles({
         container: (_a = {
                 display: 'flex',
                 flexDirection: 'column',

@@ -27,16 +27,16 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { linkToRecord, sanitizeListRestProps } from 'ra-core';
-var styles = {
+var styles = createStyles({
     link: {
         textDecoration: 'none',
         color: 'inherit',
     },
     tertiary: { float: 'right', opacity: 0.541176 },
-};
+});
 var LinkOrNot = withStyles(styles)(function (_a) {
     var classes = _a.classes, linkType = _a.linkType, basePath = _a.basePath, id = _a.id, children = _a.children;
     return linkType === 'edit' || linkType === true ? (React.createElement(Link, { to: linkToRecord(basePath, id), className: classes.link }, children)) : linkType === 'show' ? (React.createElement(Link, { to: linkToRecord(basePath, id) + "/show", className: classes.link }, children)) : (React.createElement("span", null, children));

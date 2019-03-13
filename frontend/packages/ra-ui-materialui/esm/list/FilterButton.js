@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -35,16 +35,16 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import ContentFilter from '@material-ui/icons/FilterList';
 import classnames from 'classnames';
 import compose from 'recompose/compose';
 import { translate } from 'ra-core';
 import FilterButtonMenuItem from './FilterButtonMenuItem';
 import Button from '../button/Button';
-var styles = {
+var styles = createStyles({
     root: { display: 'inline-block' },
-};
+});
 var FilterButton = /** @class */ (function (_super) {
     __extends(FilterButton, _super);
     function FilterButton(props) {

@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -40,7 +40,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import { addField, translate, FieldTitle } from 'ra-core';
 import defaultSanitizeRestProps from './sanitizeRestProps';
@@ -48,7 +48,7 @@ var sanitizeRestProps = function (_a) {
     var setFilter = _a.setFilter, setPagination = _a.setPagination, setSort = _a.setSort, rest = __rest(_a, ["setFilter", "setPagination", "setSort"]);
     return defaultSanitizeRestProps(rest);
 };
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     root: {},
     label: {
         transform: 'translate(0, 1.5px) scale(0.75)',

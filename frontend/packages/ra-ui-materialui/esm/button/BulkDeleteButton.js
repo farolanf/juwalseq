@@ -1,16 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -31,73 +18,23 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import compose from 'recompose/compose';
-import ActionDelete from '@material-ui/icons/Delete';
-import { withStyles } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { crudDeleteMany, startUndoable } from 'ra-core';
-import Button from './Button';
-var sanitizeRestProps = function (_a) {
-    var basePath = _a.basePath, classes = _a.classes, dispatchCrudDeleteMany = _a.dispatchCrudDeleteMany, filterValues = _a.filterValues, label = _a.label, resource = _a.resource, selectedIds = _a.selectedIds, startUndoable = _a.startUndoable, undoable = _a.undoable, rest = __rest(_a, ["basePath", "classes", "dispatchCrudDeleteMany", "filterValues", "label", "resource", "selectedIds", "startUndoable", "undoable"]);
-    return rest;
+import BulkDeleteWithConfirmButton from './BulkDeleteWithConfirmButton';
+import BulkDeleteWithUndoButton from './BulkDeleteWithUndoButton';
+var BulkDeleteButton = function (_a) {
+    var undoable = _a.undoable, props = __rest(_a, ["undoable"]);
+    return undoable ? (React.createElement(BulkDeleteWithUndoButton, __assign({}, props))) : (React.createElement(BulkDeleteWithConfirmButton, __assign({}, props)));
 };
-var styles = function (theme) { return ({
-    deleteButton: {
-        color: theme.palette.error.main,
-        '&:hover': {
-            backgroundColor: fade(theme.palette.error.main, 0.12),
-            // Reset on mouse devices
-            '@media (hover: none)': {
-                backgroundColor: 'transparent',
-            },
-        },
-    },
-}); };
-var BulkDeleteButton = /** @class */ (function (_super) {
-    __extends(BulkDeleteButton, _super);
-    function BulkDeleteButton() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.handleClick = function () {
-            var _a = _this.props, basePath = _a.basePath, dispatchCrudDeleteMany = _a.dispatchCrudDeleteMany, resource = _a.resource, selectedIds = _a.selectedIds, startUndoable = _a.startUndoable, undoable = _a.undoable, onClick = _a.onClick;
-            if (undoable) {
-                startUndoable(crudDeleteMany(resource, selectedIds, basePath));
-            }
-            else {
-                dispatchCrudDeleteMany(resource, selectedIds, basePath);
-            }
-            if (typeof onClick === 'function') {
-                onClick();
-            }
-        };
-        return _this;
-    }
-    BulkDeleteButton.prototype.render = function () {
-        var _a = this.props, classes = _a.classes, label = _a.label, icon = _a.icon, onClick = _a.onClick, rest = __rest(_a, ["classes", "label", "icon", "onClick"]);
-        return (React.createElement(Button, __assign({ onClick: this.handleClick, label: label, className: classes.deleteButton }, sanitizeRestProps(rest)), icon));
-    };
-    BulkDeleteButton.propTypes = {
-        basePath: PropTypes.string,
-        classes: PropTypes.object,
-        dispatchCrudDeleteMany: PropTypes.func.isRequired,
-        label: PropTypes.string,
-        resource: PropTypes.string.isRequired,
-        startUndoable: PropTypes.func,
-        selectedIds: PropTypes.arrayOf(PropTypes.any).isRequired,
-        undoable: PropTypes.bool,
-        icon: PropTypes.element,
-    };
-    BulkDeleteButton.defaultProps = {
-        label: 'ra.action.delete',
-        undoable: true,
-        icon: React.createElement(ActionDelete, null),
-    };
-    return BulkDeleteButton;
-}(Component));
-var EnhancedBulkDeleteButton = compose(connect(undefined, {
-    startUndoable: startUndoable,
-    dispatchCrudDeleteMany: crudDeleteMany,
-}), withStyles(styles))(BulkDeleteButton);
-export default EnhancedBulkDeleteButton;
+BulkDeleteButton.propTypes = {
+    basePath: PropTypes.string,
+    label: PropTypes.string,
+    resource: PropTypes.string.isRequired,
+    selectedIds: PropTypes.arrayOf(PropTypes.any).isRequired,
+    undoable: PropTypes.bool,
+    icon: PropTypes.element,
+};
+BulkDeleteButton.defaultProps = {
+    undoable: true,
+};
+export default BulkDeleteButton;

@@ -14,26 +14,21 @@ cmd.add('data', 'populate', 'Populate database', populateDb)
 cmd.add('data', 'create-admin', 'Create admin user', createAdmin)
 cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 
-function initDb(program, argv) {
+async function initDb(program, argv) {
   program.parse(argv)
-  const prjPath = path.resolve(__dirname, '../../../')
-  return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop.sql'))
+  await db.sequelize.sync({ force: true })
 }
 
 function populateDb(program, argv) {
   program.parse(argv)
-  const prjPath = path.resolve(__dirname, '../../../')
-  return importSql(path.resolve(prjPath, 'challenge-files/database/tshirtshop-populate.sql'))
+  return importSql(path.resolve(__dirname, 'seeds/juwal_dev.sql'))
 }
 
 function importSql(sqlPath) {
   const { username, password, database } = sqlConfig
-  const cmd = `cat ${sqlPath} | mysql -u${username} -p${password} ${database} > /dev/null 2>&1`
+  const cmd = `cat ${sqlPath} | mysql -s -u${username} -p${password} ${database}`
   return new Promise(resolve => {
-    exec(cmd, (err, stdout, stderr) => {
-      (stdout || stderr) && console.log(stdout, stderr)
-      resolve()
-    })
+    exec(cmd, () => resolve())
   })
 }
 
@@ -59,7 +54,7 @@ async function createAdmin(program, argv) {
   await db.User
     .create({ email, username, password: inputs.password })
     .then(user => {
-      return db.UserGroup.create({ user_id: user.user_id, group: 'admin' })
+      return db.UserGroup.create({ UserId: user.id, group: 'admin' })
     })
 }
 

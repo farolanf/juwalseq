@@ -19,11 +19,18 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(require("react"));
+var react_1 = __importStar(require("react"));
 var prop_types_1 = __importDefault(require("prop-types"));
 var Card_1 = __importDefault(require("@material-ui/core/Card"));
 var styles_1 = require("@material-ui/core/styles");
@@ -31,14 +38,14 @@ var classnames_1 = __importDefault(require("classnames"));
 var ra_core_1 = require("ra-core");
 var TitleForRecord_1 = __importDefault(require("../layout/TitleForRecord"));
 var CardContentInner_1 = __importDefault(require("../layout/CardContentInner"));
-var styles = {
+var styles = styles_1.createStyles({
     root: {
         display: 'flex',
     },
     card: {
         flex: '1 1 auto',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, children = _a.children, className = _a.className, crudCreate = _a.crudCreate, isLoading = _a.isLoading, resource = _a.resource, title = _a.title, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, match = _a.match, location = _a.location, history = _a.history, options = _a.options, locale = _a.locale, permissions = _a.permissions, translate = _a.translate, rest = __rest(_a, ["actions", "children", "className", "crudCreate", "isLoading", "resource", "title", "hasCreate", "hasEdit", "hasList", "hasShow", "match", "location", "history", "options", "locale", "permissions", "translate"]);
     return rest;
@@ -48,12 +55,12 @@ exports.CreateView = function (_a) {
     return (react_1.default.createElement("div", __assign({ className: classnames_1.default('create-page', classes.root, className) }, sanitizeRestProps(rest)),
         react_1.default.createElement(TitleForRecord_1.default, { title: title, record: record, defaultTitle: defaultTitle }),
         react_1.default.createElement(Card_1.default, { className: classes.card },
-            actions && (react_1.default.createElement(CardContentInner_1.default, null, react_1.default.cloneElement(actions, {
+            actions && (react_1.default.createElement(CardContentInner_1.default, null, react_1.cloneElement(actions, {
                 basePath: basePath,
                 resource: resource,
                 hasList: hasList,
             }))),
-            react_1.default.cloneElement(children, {
+            react_1.cloneElement(react_1.Children.only(children), {
                 basePath: basePath,
                 record: record,
                 redirect: typeof children.props.redirect === 'undefined'
@@ -63,7 +70,7 @@ exports.CreateView = function (_a) {
                 save: save,
             })),
         aside &&
-            react_1.default.cloneElement(aside, {
+            react_1.cloneElement(aside, {
                 basePath: basePath,
                 record: record,
                 resource: resource,

@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "turing",
-    "password": "turing",
-    "database": "turing_fullstack",
+    "username": "juwal",
+    "password": "juwal",
+    "database": "juwal_dev",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": false,
@@ -11,9 +11,9 @@
     }
   },
   "test": {
-    "username": "turing",
-    "password": "turing",
-    "database": "turing_fullstack_test",
+    "username": "juwal",
+    "password": "juwal",
+    "database": "juwal_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": false,
@@ -22,9 +22,9 @@
     }
   },
   "production": {
-    "username": "turing",
-    "password": "turing",
-    "database": "turing_fullstack_prod",
+    "username": "juwal",
+    "password": "juwal",
+    "database": "juwal",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": false,

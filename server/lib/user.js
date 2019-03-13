@@ -1,8 +1,8 @@
 const _ = require('lodash')
-const { UserGroup, Customer, ShippingRegion, Shipping } = require('../sequelize')
+const { UserGroup, Profile } = require('../sequelize')
 
 exports.publicUser = _user => {
-  const user = _.pick(_user.dataValues, ['user_id', 'email', 'username', 'Customer'])
+  const user = _.pick(_user.dataValues, ['id', 'email', 'username', 'Profile'])
   user.groups = _user.UserGroups.map(group => group.group)
   user.admin = user.groups.includes('admin')
   return user
@@ -16,15 +16,9 @@ exports.internalUser = user => {
 
 exports.userInclude = () => [
   {
-    model: UserGroup
+    model: UserGroup,
   },
   {
-    model: Customer,
-    include: [
-      {
-        model: ShippingRegion,
-        include: Shipping
-      }
-    ]
+    model: Profile,
   }
 ]

@@ -4,14 +4,14 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import React, { Children, cloneElement } from 'react';
+import React, { Children, cloneElement, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
@@ -55,7 +55,8 @@ var UserMenu = /** @class */ (function (_super) {
                     horizontal: 'right',
                 }, open: open, onClose: this.handleClose },
                 Children.map(children, function (menuItem) {
-                    return cloneElement(menuItem, { onClick: _this.handleClose });
+                    return isValidElement(menuItem) ?
+                        cloneElement(menuItem, { onClick: _this.handleClose }) : null;
                 }),
                 logout)));
     };

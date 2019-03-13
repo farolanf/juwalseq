@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -113,14 +113,14 @@ var TabbedShowLayout = /** @class */ (function (_super) {
             }, children),
             react_1.default.createElement(Divider_1.default, null),
             react_1.default.createElement(CardContentInner_1.default, null, react_1.Children.map(children, function (tab, index) {
-                return tab && (react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: getTabFullPath(tab, index, match.url), render: function () {
+                return tab && react_1.isValidElement(tab) ? (react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: getTabFullPath(tab, index, match.url), render: function () {
                         return react_1.cloneElement(tab, {
                             context: 'content',
                             resource: resource,
                             record: record,
                             basePath: basePath,
                         });
-                    } }));
+                    } })) : null;
             }))));
     };
     return TabbedShowLayout;

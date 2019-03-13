@@ -20,15 +20,16 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'recompose/compose';
 import get from 'lodash/get';
 import pure from 'recompose/pure';
 import Chip from '@material-ui/core/Chip';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import sanitizeRestProps from './sanitizeRestProps';
-var styles = {
+var styles = createStyles({
     chip: { margin: 4 },
-};
+});
 export var ChipField = function (_a) {
     var className = _a.className, _b = _a.classes, classes = _b === void 0 ? {} : _b, source = _a.source, _c = _a.record, record = _c === void 0 ? {} : _c, rest = __rest(_a, ["className", "classes", "source", "record"]);
     return (React.createElement(Chip, __assign({ className: classnames(classes.chip, className), label: get(record, source) }, sanitizeRestProps(rest))));
@@ -43,5 +44,5 @@ ChipField.propTypes = {
 };
 // wat? TypeScript looses the displayName if we don't set it explicitly
 ChipField.displayName = 'ChipField';
-var PureChipField = withStyles(styles)(pure(ChipField));
+var PureChipField = compose(withStyles(styles), pure)(ChipField);
 export default PureChipField;

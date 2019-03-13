@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -35,10 +35,10 @@ import React, { Component } from 'react';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import RemoveCircle from '@material-ui/icons/RemoveCircle';
 import { translate } from 'ra-core';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     removeButton: {},
     removeIcon: {
         color: theme.palette.accent1Color,

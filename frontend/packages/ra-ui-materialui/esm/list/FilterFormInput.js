@@ -31,9 +31,9 @@ var sanitizeRestProps = function (_a) {
     return props;
 };
 var FilterFormInput = function (_a) {
-    var filterElement = _a.filterElement, handleHide = _a.handleHide, classes = _a.classes, resource = _a.resource, translate = _a.translate;
+    var filterElement = _a.filterElement, handleHide = _a.handleHide, classes = _a.classes, resource = _a.resource, translate = _a.translate, locale = _a.locale;
     return (React.createElement("div", { "data-source": filterElement.props.source, className: classnames('filter-field', classes.body) },
-        !filterElement.props.alwaysOn && (React.createElement(IconButton, { className: "hide-filter", onClick: handleHide, "data-key": filterElement.props.source, tooltip: translate('ra.action.remove_filter') },
+        !filterElement.props.alwaysOn && (React.createElement(IconButton, { className: "hide-filter", onClick: handleHide, "data-key": filterElement.props.source, title: translate('ra.action.remove_filter') },
             React.createElement(ActionHide, null))),
         React.createElement(Field, __assign({ allowEmpty: true }, sanitizeRestProps(filterElement.props), { name: filterElement.props.source, component: filterElement.type, resource: resource, record: emptyRecord })),
         React.createElement("div", { className: classes.spacer }, "\u00A0")));
@@ -43,6 +43,7 @@ FilterFormInput.propTypes = {
     handleHide: PropTypes.func,
     classes: PropTypes.object,
     resource: PropTypes.string,
+    locale: PropTypes.string,
     translate: PropTypes.func,
 };
 export default translate(FilterFormInput);

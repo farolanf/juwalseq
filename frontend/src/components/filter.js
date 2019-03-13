@@ -1,48 +1,29 @@
 import React from 'react'
 
-import withStyles from '@material-ui/core/styles/withStyles'
-import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Button from '@material-ui/core/Button'
+import withStyles from 'react-jss'
+import { Button } from 'antd'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
-const styles = theme => ({
-  root: {
-    maxWidth: 240,
-    position: 'relative',
-    [theme.breakpoints.down('sm')]: tw`px-2`,
-  },
-  filterGroup: tw`block my-4`,
-  checkbox: tw`py-1`,
-  icon: tw`text-base mr-2`,
-  iconLabel: tw`ml-2`,
-  clear: tw`text-grey-darker`,
-})
+import useStore from '$useStore'
 
-const Filter = ({
-  classes,
-  products,
-  filters,
-  clearFilters,
-  toggleDepartment,
-  toggleCategory,
-  toggleAttribute,
-}) => {
-  const departments = products && products.aggregations.all.search.departments.name.buckets
-  const categories = products && products.aggregations.all.search.categories.name.buckets
-  const attributes = products && products.aggregations.all.search.attributes.name.buckets
+const styles = {
+}
 
-  const hasFilters = !!filters.get('departments').size
-    || !!filters.get('categories').size
-    || !!filters.get('attributes').size
+const Filter = ({ classes }) => {
+  const { product, filter } = useStore()
+
+  const departments = product.products.aggregations.all.search.departments.name.buckets
+  const categories = product.products.aggregations.all.search.categories.name.buckets
+  const attributes = product.products.aggregations.all.search.attributes.name.buckets
+
+  const hasFilters = !!filter.departments.length
+    || !!filter.categories.length
+    || !!filter.attributes.length
 
   function handleClickClear () {
-    clearFilters({ exclude: ['q'] })
+    filter.clearFilters()
   }
 
   return (
@@ -55,16 +36,16 @@ const Filter = ({
           </Button>
         </div>
       )}
-      <FormControl component='fieldset' className={classes.filterGroup}>
-        <FormLabel component='legend'>Departments</FormLabel>
-        <FormGroup>
+      <div component='fieldset' className={classes.filterGroup}>
+        <div component='legend'>Departments</div>
+        <div>
           {departments && departments.map(d => (
-            <FormControlLabel
+            <div
               key={d.key}
               control={
                 <Checkbox
-                  checked={filters.get('departments').includes(d.key) || departments.length === 1}
-                  onChange={() => toggleDepartment(d.key)}
+                  checked={filter.departments.includes(d.key) || departments.length === 1}
+                  onChange={() => filter.toggleDepartment(d.key)}
                   className={classes.checkbox}
                   disabled={departments.length === 1}
                 />
@@ -72,18 +53,18 @@ const Filter = ({
               label={d.key + ` (${d.doc_count})`}
               />
           ))}
-        </FormGroup>
-      </FormControl>
-      <FormControl component='fieldset' className={classes.filterGroup}>
-        <FormLabel component='legend'>Categories</FormLabel>
-        <FormGroup>
+        </div>
+      </div>
+      <div component='fieldset' className={classes.filterGroup}>
+        <div component='legend'>Categories</div>
+        <div>
           {categories && categories.map(d => (
-            <FormControlLabel
+            <div
               key={d.key}
               control={
                 <Checkbox
-                  checked={filters.get('categories').includes(d.key) || categories.length === 1}
-                  onChange={() => toggleCategory(d.key)}
+                  checked={filter.categories.includes(d.key) || categories.length === 1}
+                  onChange={() => filter.toggleCategory(d.key)}
                   className={classes.checkbox}
                   disabled={categories.length === 1}
                 />
@@ -91,29 +72,29 @@ const Filter = ({
               label={d.key + ` (${d.doc_count})`}
               />
           ))}
-        </FormGroup>
-      </FormControl>
+        </div>
+      </div>
       {attributes && attributes.map(d => (
-        <FormControl component='fieldset' className={classes.filterGroup} key={d.key}>
-          <FormLabel component='legend'>{d.key}</FormLabel>
-          <FormGroup>
+        <div component='fieldset' className={classes.filterGroup} key={d.key}>
+          <div component='legend'>{d.key}</div>
+          <div>
             {d.value.buckets.map(v => (
-              <FormControlLabel
+              <div
                 key={v.key}
                 control={
                   <Checkbox
-                    checked={!!filters.get('attributes').find(
+                    checked={!!filter.attributes.find(
                       a => a.name === d.key && a.value === v.key
                     )}
-                    onChange={() => toggleAttribute(d.key, v.key)}
+                    onChange={() => filter.toggleAttribute(d.key, v.key)}
                     className={classes.checkbox}
                   />
                 }
                 label={v.key + ` (${v.doc_count})`}
               />
             ))}
-          </FormGroup>
-        </FormControl>
+          </div>
+        </div>
       ))}
     </div>
   )

@@ -5,14 +5,8 @@ const saltRounds = 10
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    email: { type: DataTypes.STRING(100), allowNull: false },
-    username: { type: DataTypes.STRING(50), allowNull: false },
+    email: { type: DataTypes.STRING(100), allowNull: false, unique: true },
+    username: { type: DataTypes.STRING(50), allowNull: false, unique: true },
     password: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -20,19 +14,14 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('password', User.generatePassword(val))
       }
     },
-    customer_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    facebook_id: DataTypes.STRING(100),
-    google_id: DataTypes.STRING(100),
-  }, {
-    tableName: 'user'
-  });
+    facebookId: { type: DataTypes.STRING(100), unique: true },
+    googleId: { type: DataTypes.STRING(100), unique: true },
+  }, {});
   User.associate = function (models) {
-    User.belongsTo(models.Customer, { foreignKey: 'customer_id' })
-    User.hasMany(models.UserGroup, { foreignKey: 'user_id' })
+    User.hasOne(models.Profile)
+    User.hasMany(models.UserGroup)
+    User.hasMany(models.Reaction)
+    User.hasMany(models.Comment)
   };
   User.generatePassword = function (plain) {
     return bcrypt.hashSync(plain, saltRounds)

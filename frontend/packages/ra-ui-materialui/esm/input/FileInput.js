@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,19 +31,19 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { Component } from 'react';
+import React, { Component, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { shallowEqual } from 'recompose';
 import Dropzone from 'react-dropzone';
 import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import classnames from 'classnames';
 import { addField, translate } from 'ra-core';
 import Labeled from './Labeled';
 import FileInputPreview from './FileInputPreview';
 import sanitizeRestProps from './sanitizeRestProps';
-var styles = {
+var styles = createStyles({
     dropZone: {
         background: '#efefef',
         cursor: 'pointer',
@@ -54,7 +54,7 @@ var styles = {
     preview: {},
     removeButton: {},
     root: { width: '100%' },
-};
+});
 var FileInput = /** @class */ (function (_super) {
     __extends(FileInput, _super);
     function FileInput(props) {
@@ -88,7 +88,7 @@ var FileInput = /** @class */ (function (_super) {
             if (!(file instanceof File)) {
                 return file;
             }
-            var _b = React.Children.toArray(_this.props.children)[0].props, source = _b.source, title = _b.title;
+            var _b = Children.only(_this.props.children).props, source = _b.source, title = _b.title;
             var transformedFile = (_a = {
                     rawFile: file
                 },
@@ -131,7 +131,7 @@ var FileInput = /** @class */ (function (_super) {
         return (React.createElement(Labeled, __assign({ id: id, label: label, className: classnames(classes.root, className), source: source, resource: resource, isRequired: isRequired, meta: meta }, sanitizeRestProps(rest)),
             React.createElement("span", null,
                 React.createElement(Dropzone, __assign({ onDrop: this.onDrop, accept: accept, disableClick: disableClick, maxSize: maxSize, minSize: minSize, multiple: multiple, className: classes.dropZone }, options, { inputProps: __assign({ id: id }, options.inputProps) }), this.label()),
-                children && (React.createElement("div", { className: "previews" }, this.state.files.map(function (file, index) { return (React.createElement(FileInputPreview, { key: index, file: file, onRemove: _this.onRemove(file), className: classes.removeButton }, React.cloneElement(children, {
+                children && (React.createElement("div", { className: "previews" }, this.state.files.map(function (file, index) { return (React.createElement(FileInputPreview, { key: index, file: file, onRemove: _this.onRemove(file), className: classes.removeButton }, cloneElement(Children.only(children), {
                     record: file,
                     className: classes.preview,
                 }))); }))),

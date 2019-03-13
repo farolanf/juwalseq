@@ -90,7 +90,7 @@ export default {
         component: function (props) { return React.createElement(TextField, __assign({ source: "id" }, props)); },
         representation: function () { return "<TextField source=\"id\" />"; },
     },
-    richText: false,
+    richText: undefined,
     string: {
         component: TextField,
         representation: function (props) { return "<TextField source=\"" + props.source + "\" />"; },

@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,7 +31,7 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import { Component, cloneElement } from 'react';
+import { Component, cloneElement, Children } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import pure from 'recompose/pure';
@@ -131,7 +131,7 @@ var ArrayField = /** @class */ (function (_super) {
     ArrayField.prototype.render = function () {
         var _a = this.props, addLabel = _a.addLabel, basePath = _a.basePath, children = _a.children, record = _a.record, source = _a.source, rest = __rest(_a, ["addLabel", "basePath", "children", "record", "source"]);
         var _b = this.state, ids = _b.ids, data = _b.data;
-        return cloneElement(children, __assign({ ids: ids,
+        return cloneElement(Children.only(children), __assign({ ids: ids,
             data: data, isLoading: false, basePath: basePath, currentSort: {} }, rest));
     };
     return ArrayField;

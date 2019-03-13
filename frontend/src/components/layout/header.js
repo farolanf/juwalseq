@@ -9,6 +9,7 @@ import { observer } from 'mobx-react-lite'
 import { Layout, Menu, Dropdown } from 'antd'
 import Spacer from '$comp/spacer'
 import LoginBox from '$comp/login'
+import CategoryMenu from '$comp/category-menu'
 
 const { Header } = Layout
 
@@ -49,18 +50,13 @@ const PageHeader = ({
   location,
   classes,
 }) => {
-  const { user, department } = useStore()
+  const { user } = useStore()
   const [query, setQuery] = useState('')
   const [loginOpen, setLoginOpen] = useState(false)
 
   const lastSegment = location.pathname
     .substring(location.pathname.lastIndexOf('/') + 1)
     .toLowerCase()
-
-  useEffect(() => {
-    department.fetchDepartments()
-    // fetchCart()
-  }, [])
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -83,13 +79,11 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
-        {department.departments.map(department => (
-          <Menu.Item key={department.name.toLowerCase()}>
-            <Link to={'/browse/' + department.name.toLowerCase()}>
-              {department.name}
-            </Link>
-          </Menu.Item>
-        ))}
+        <Menu.Item>
+          <Dropdown overlay={<CategoryMenu />}>
+            <div>Kategori</div>
+          </Dropdown>
+        </Menu.Item>
       </Menu>
       <Spacer />
       <Menu 
@@ -98,6 +92,7 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
+        <Menu.Item><Link to='/pasang-iklan'>Pasang iklan</Link></Menu.Item>
         {user.loggedIn ? [
           user.user.admin && (
             <Menu.Item key='admin'><Link to='/admin'>Admin</Link></Menu.Item>

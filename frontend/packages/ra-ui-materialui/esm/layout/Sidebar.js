@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,12 +31,12 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import Drawer from '@material-ui/core/Drawer';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import { setSidebarVisibility } from 'ra-core';
 import Responsive from './Responsive';
@@ -44,7 +44,7 @@ export var DRAWER_WIDTH = 240;
 export var CLOSED_DRAWER_WIDTH = 55;
 var styles = function (theme) {
     var _a;
-    return ({
+    return createStyles({
         drawerPaper: (_a = {
                 position: 'relative',
                 height: 'auto',
@@ -91,14 +91,14 @@ var Sidebar = /** @class */ (function (_super) {
         return (React.createElement(Responsive, { xsmall: React.createElement(Drawer, __assign({ variant: "temporary", open: open, PaperProps: {
                     className: classes.drawerPaper,
                     style: { width: size },
-                }, onClose: this.toggleSidebar }, rest), React.cloneElement(children, {
+                }, onClose: this.toggleSidebar }, rest), cloneElement(Children.only(children), {
                 onMenuClick: this.handleClose,
             })), small: React.createElement(Drawer, __assign({ variant: "permanent", open: open, PaperProps: {
                     className: classes.drawerPaper,
                     style: {
                         width: open ? size : closedSize,
                     },
-                }, onClose: this.toggleSidebar }, rest), React.cloneElement(children, {
+                }, onClose: this.toggleSidebar }, rest), cloneElement(Children.only(children), {
                 dense: true,
                 onMenuClick: this.handleClose,
             })), medium: React.createElement(Drawer, __assign({ variant: "permanent", open: open, PaperProps: {
@@ -106,7 +106,7 @@ var Sidebar = /** @class */ (function (_super) {
                     style: {
                         width: open ? size : closedSize,
                     },
-                }, onClose: this.toggleSidebar }, rest), React.cloneElement(children, { dense: true })) }));
+                }, onClose: this.toggleSidebar }, rest), cloneElement(Children.only(children), { dense: true })) }));
     };
     return Sidebar;
 }(PureComponent));

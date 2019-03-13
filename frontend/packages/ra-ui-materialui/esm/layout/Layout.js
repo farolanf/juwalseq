@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -36,7 +36,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { withRouter } from 'react-router';
-import { MuiThemeProvider, createMuiTheme, withStyles, } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme, withStyles, createStyles, } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import AppBar from './AppBar';
 import Sidebar from './Sidebar';
@@ -46,7 +46,7 @@ import Error from './Error';
 import defaultTheme from '../defaultTheme';
 var styles = function (theme) {
     var _a;
-    return ({
+    return createStyles({
         root: {
             display: 'flex',
             flexDirection: 'column',
@@ -69,6 +69,7 @@ var styles = function (theme) {
                 display: 'flex',
                 flexDirection: 'column',
                 flexGrow: 1,
+                flexBasis: 0,
                 padding: theme.spacing.unit * 3
             },
             _a[theme.breakpoints.up('xs')] = {

@@ -21,9 +21,9 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import Progress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-var styles = function (theme) { return ({
+var styles = function (theme) { return createStyles({
     root: {
         margin: theme.spacing.unit + "px 0",
         width: theme.spacing.unit * 20 + "px",

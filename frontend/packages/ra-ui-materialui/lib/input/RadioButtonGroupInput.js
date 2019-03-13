@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -56,11 +56,11 @@ var styles_1 = require("@material-ui/core/styles");
 var compose_1 = __importDefault(require("recompose/compose"));
 var ra_core_1 = require("ra-core");
 var sanitizeRestProps_1 = __importDefault(require("./sanitizeRestProps"));
-var styles = {
+var styles = styles_1.createStyles({
     label: {
         position: 'relative',
     },
-};
+});
 /**
  * An Input component for a radio button group, using an array of objects for the options
  *

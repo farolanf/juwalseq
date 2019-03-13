@@ -35,13 +35,13 @@ var ListItemText_1 = __importDefault(require("@material-ui/core/ListItemText"));
 var styles_1 = require("@material-ui/core/styles");
 var react_router_dom_1 = require("react-router-dom");
 var ra_core_1 = require("ra-core");
-var styles = {
+var styles = styles_1.createStyles({
     link: {
         textDecoration: 'none',
         color: 'inherit',
     },
     tertiary: { float: 'right', opacity: 0.541176 },
-};
+});
 var LinkOrNot = styles_1.withStyles(styles)(function (_a) {
     var classes = _a.classes, linkType = _a.linkType, basePath = _a.basePath, id = _a.id, children = _a.children;
     return linkType === 'edit' || linkType === true ? (react_1.default.createElement(react_router_dom_1.Link, { to: ra_core_1.linkToRecord(basePath, id), className: classes.link }, children)) : linkType === 'show' ? (react_1.default.createElement(react_router_dom_1.Link, { to: ra_core_1.linkToRecord(basePath, id) + "/show", className: classes.link }, children)) : (react_1.default.createElement("span", null, children));

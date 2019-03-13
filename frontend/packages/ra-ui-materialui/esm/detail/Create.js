@@ -18,22 +18,22 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import React from 'react';
+import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import { CreateController } from 'ra-core';
 import TitleForRecord from '../layout/TitleForRecord';
 import CardContentInner from '../layout/CardContentInner';
-var styles = {
+var styles = createStyles({
     root: {
         display: 'flex',
     },
     card: {
         flex: '1 1 auto',
     },
-};
+});
 var sanitizeRestProps = function (_a) {
     var actions = _a.actions, children = _a.children, className = _a.className, crudCreate = _a.crudCreate, isLoading = _a.isLoading, resource = _a.resource, title = _a.title, hasCreate = _a.hasCreate, hasEdit = _a.hasEdit, hasList = _a.hasList, hasShow = _a.hasShow, match = _a.match, location = _a.location, history = _a.history, options = _a.options, locale = _a.locale, permissions = _a.permissions, translate = _a.translate, rest = __rest(_a, ["actions", "children", "className", "crudCreate", "isLoading", "resource", "title", "hasCreate", "hasEdit", "hasList", "hasShow", "match", "location", "history", "options", "locale", "permissions", "translate"]);
     return rest;
@@ -43,12 +43,12 @@ export var CreateView = function (_a) {
     return (React.createElement("div", __assign({ className: classnames('create-page', classes.root, className) }, sanitizeRestProps(rest)),
         React.createElement(TitleForRecord, { title: title, record: record, defaultTitle: defaultTitle }),
         React.createElement(Card, { className: classes.card },
-            actions && (React.createElement(CardContentInner, null, React.cloneElement(actions, {
+            actions && (React.createElement(CardContentInner, null, cloneElement(actions, {
                 basePath: basePath,
                 resource: resource,
                 hasList: hasList,
             }))),
-            React.cloneElement(children, {
+            cloneElement(Children.only(children), {
                 basePath: basePath,
                 record: record,
                 redirect: typeof children.props.redirect === 'undefined'
@@ -58,7 +58,7 @@ export var CreateView = function (_a) {
                 save: save,
             })),
         aside &&
-            React.cloneElement(aside, {
+            cloneElement(aside, {
                 basePath: basePath,
                 record: record,
                 resource: resource,
