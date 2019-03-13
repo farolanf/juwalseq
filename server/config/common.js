@@ -57,9 +57,11 @@ module.exports = {
           // public resources
           { path: '/Departments(/.*)?', method: 'GET' },
           { path: '/Categories(/.*)?', method: 'GET' },
-          { path: '/Products(/.*)?', method: 'GET' },
           { path: '/Attributes(/.*)?', method: 'GET' },
           { path: '/AttributeValues(/.*)?', method: 'GET' },
+          { path: '/Products(/.*)?', method: 'GET' },
+          { path: '/ProductTypes(/.*)?', method: 'GET' },
+          { path: '/ProductTypeCategories(/.*)?', method: 'GET' },
           { path: '/Comments(/.*)?', method: 'GET' },
         ]
       },

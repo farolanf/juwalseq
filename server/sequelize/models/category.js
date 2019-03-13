@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Category.associate = function(models) {
     Category.belongsTo(models.Department)
     Category.belongsToMany(models.Product, { through: 'ProductCategory' })
+    Category.belongsToMany(models.ProductType, { through: 'ProductTypeCategory' })
   };
   return Category;
 };
