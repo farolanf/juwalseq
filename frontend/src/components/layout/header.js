@@ -92,6 +92,7 @@ const PageHeader = ({
         className={classes.menu}
         selectedKeys={[lastSegment]}
       >
+        <Menu.Item><Link to='/pasang-iklan'>Pasang iklan</Link></Menu.Item>
         {user.loggedIn ? [
           user.user.admin && (
             <Menu.Item key='admin'><Link to='/admin'>Admin</Link></Menu.Item>
