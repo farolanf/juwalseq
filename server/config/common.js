@@ -17,6 +17,7 @@ module.exports = {
     'finale',
     'email',
     'elasticsearch',
+    'uploadfs',
     // 'order',
     // 'customer',
     // 'checkout',
@@ -81,5 +82,5 @@ module.exports = {
   elasticsearch: {
     index: 'juwal',
     maxCount: 100
-  }
+  },
 }

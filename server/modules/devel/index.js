@@ -1,5 +1,8 @@
+const path = require('path')
+const async = require('async')
 const { sendMail } = require('../../lib/mail')
 const { createFormatCurrency } = require('../../lib/format')
+const { handleError } = require('../../lib/helpers')
 
 module.exports = function (app, config) {
   app.use((req, res, next) => {
@@ -58,5 +61,15 @@ module.exports = function (app, config) {
       }
     )
     res.sendStatus(200)
+  })
+
+  app.get('/devel/testupload', (req, res) => {
+    const filePath = path.resolve(__dirname, '../../../challenge-files/designs/Mobile Login.png')
+    async.parallel([
+      cb => app.modules.uploadfs.copyIn(filePath, '/assets/tshirtshop.png', cb),
+      cb => app.modules.uploadfs.copyImageIn(filePath, '/img/tshirtshop.png', cb),
+    ], err => {
+      err ? handleError(err, res) : res.sendStatus(200)
+    })
   })
 }

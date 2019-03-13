@@ -25,6 +25,7 @@
   "homepage": "https://github.com/farolanf/turing-fullstack-farolan#readme",
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.0",
+    "async": "^2.6.2",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "change-case": "^3.1.0",
@@ -52,6 +53,7 @@
     "sequelize-cli": "^5.4.0",
     "serve-static": "^1.13.2",
     "short-uuid": "^3.1.0",
+    "uploadfs": "^1.13.0",
     "yup": "^0.26.10"
   },
   "devDependencies": {
