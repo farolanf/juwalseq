@@ -13,10 +13,10 @@ import {
   DisabledInput,
   ReferenceInput
 } from 'react-admin'
-
+import OrderSelect from './OrderSelect'
 
 export const CategoryList = props => (
-  <List {...props}>
+  <List {...props} sort={{ field: 'DepartmentId', order: 'ASC' }}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <ReferenceField source="DepartmentId" reference="Departments">
@@ -24,6 +24,7 @@ export const CategoryList = props => (
       </ReferenceField>
       <TextField source="name" />
       <TextField source="description" />
+      <OrderSelect source='order' />
     </Datagrid>
   </List>
 )

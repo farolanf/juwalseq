@@ -13,11 +13,6 @@ import {
 } from 'react-admin'
 import queryString from 'query-string'
 
-const noPagination = [
-  'Departments',
-  'Categories',
-]
-
 // eslint-disable-next-line
 function convertResponse (response, type, resource, params) {
   let total
@@ -40,6 +35,10 @@ function convertResponse (response, type, resource, params) {
   }
 }
 
+const SORTS = {
+  'Categories': 'order',
+}
+
 export default (type, resource, params) => {
   const listUrl = `${API_BASE}/${resource}`
   const detailUrl = `${API_BASE}/${resource}/${params.id}`
@@ -50,10 +49,10 @@ export default (type, resource, params) => {
       url = listUrl
       query = {
         sort: (params.sort.order === 'ASC' ? '' : '-') + params.sort.field,
+        count: params.pagination.perPage,
+        ...(params.query || {}),
       }
-      if (!noPagination.includes(resource)) {
-        query.count = 100
-      }
+      query.sort = [query.sort].concat(SORTS[resource] ? SORTS[resource] : []).join(',')
       if (params.pagination.page - 1) {
         query.page = params.pagination.page - 1
       }

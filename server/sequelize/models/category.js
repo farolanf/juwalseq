@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
     name: { type: DataTypes.STRING(100), allowNull: false },
-    description: { type: DataTypes.STRING(1000) }
+    description: { type: DataTypes.STRING(1000) },
+    order: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   }, {
     timestamps: false,
   });

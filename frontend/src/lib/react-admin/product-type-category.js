@@ -11,16 +11,13 @@ import {
   ReferenceInput,
   EditButton,
 } from 'react-admin'
-import ImageField from './image-field'
+import CategorySelectInput from './category-select-input'
 
 export const ProductTypeCategoryList = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
-      <ReferenceField source="ProductId" reference="Products" label='Product name'>
+      <ReferenceField source="ProductTypeId" reference="ProductTypes" label='Product Type'>
         <TextField source="name" />
-      </ReferenceField>
-      <ReferenceField source="ProductId" reference="Products" label='Thumbnail' sortable={false}>
-        <ImageField source="thumbnail" style={tw`w-16`} />
       </ReferenceField>
       <ReferenceField source="CategoryId" reference="Categories">
         <TextField source="name" />
@@ -37,7 +34,7 @@ export const ProductTypeCategoryEdit = props => (
         <SelectInput optionText="name" disabled />
       </ReferenceInput>
       <ReferenceInput source="CategoryId" reference="Categories">
-        <SelectInput optionText="name" />
+        <CategorySelectInput />
       </ReferenceInput>
     </SimpleForm>
   </Edit>
@@ -50,7 +47,7 @@ export const ProductTypeCategoryCreate = props => (
         <SelectInput optionText="name" />
       </ReferenceInput>
       <ReferenceInput source="CategoryId" reference="Categories">
-        <SelectInput optionText="name" />
+        <CategorySelectInput />
       </ReferenceInput>
     </SimpleForm>
   </Create>
