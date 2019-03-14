@@ -167,11 +167,10 @@ module.exports = {
   */
 
   screens: {
-    'xs': '0px',
-    'sm': '600px',
+    'sm': '640px',
     'md': '960px',
-    'lg': '1280px',
-    'xl': '1920px',
+    'lg': '1200px',
+    'xl': '1600px',
   },
 
 

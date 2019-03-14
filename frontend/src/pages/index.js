@@ -1,10 +1,10 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
-import Layout from "$comp/layout"
-import SEO from "$comp/seo"
-import Session from '$comp/pages/session'
-import Admin from '$comp/pages/admin'
+import Layout from "$comp/Layout"
+import SEO from "$comp/SEO"
+import Session from '$comp/pages/Session'
+import Admin from '$comp/pages/Admin'
 import PasangIklan from '$comp/pages/PasangIklan'
 
 const Page = ({ 

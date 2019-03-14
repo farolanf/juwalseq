@@ -5,32 +5,11 @@ import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
-import { withStyles } from '@material-ui/core/styles'
-import { Layout, Menu, Dropdown, Icon } from 'antd'
-import { NavBar, Menu as MMenu } from 'antd-mobile'
-import Spacer from '$comp/spacer'
-import LoginBox from '$comp/login'
-import CategoryMenu from '$comp/category-menu'
-import Login from '$comp/login'
-
-const { Header } = Layout
-
 import { API_HOST, PREFIX } from '$const'
 import { logout } from "$lib/auth";
 import useStore from '$useStore'
 import withLocation from '$lib/location'
 import withMobile from '$lib/mobile'
-
-const styles = {
-  root: tw`flex`,
-  imgContainer: tw`h-full float-left mr-8`,
-  img: tw`h-full`,
-  menu: {
-    display: 'inline-block',
-    lineHeight: '64px',
-  },
-  icon: tw`text-lg ml-2`,
-}
 
 class Mobile extends React.Component {
   constructor (props) {
@@ -182,11 +161,9 @@ const PageHeader = props => {
 
   props = { ...props, user, query, setQuery, handleSubmitQuery }
 
-  if (props.mobile) {
-    return <Mobile {...props} /> 
-  } else {
-    return <Desktop {...props} />
-  }
+  return (
+    <div></div>
+  )
 }
 
 PageHeader.propTypes = {
@@ -198,7 +175,6 @@ PageHeader.defaultProps = {
 }
 
 export default compose(
-  withStyles(styles),
   withLocation,
   withMobile,
   observer,
