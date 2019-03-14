@@ -147,7 +147,10 @@ class Desktop extends React.Component {
   }
 }
 
-const PageHeader = props => {
+const PageHeader = ({
+  mobile,
+  siteTitle,
+}) => {
   const { user } = useStore()
   const [query, setQuery] = useState('')
 
@@ -159,10 +162,34 @@ const PageHeader = props => {
     navigate(PREFIX + '/browse?q=' + query)
   }
 
-  props = { ...props, user, query, setQuery, handleSubmitQuery }
-
   return (
-    <div></div>
+    <nav className='uk-navbar-container' data-uk-navbar>
+      <div className="uk-navbar-left">
+        <Link to='/' className="uk-navbar-item uk-logo">{siteTitle}</Link>
+        <ul className="uk-navbar-nav">
+          <li><a href="#">Kategori</a></li>
+        </ul>
+      </div>
+      <div className="uk-navbar-right">
+        <ul className="uk-navbar-nav">
+          {user.loggedIn ? (
+            <li>
+              <a href="#">
+                <span data-uk-icon='user' />
+                {!mobile && <span className='ml-1'>Hai {user.user.username}!</span>}
+              </a>
+            </li>
+          ) : (
+            <li>
+              <a href="#">
+                <span data-uk-icon='sign-in' />
+                {!mobile && <span className='ml-1'>Masuk</span>}
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
+    </nav>
   )
 }
 

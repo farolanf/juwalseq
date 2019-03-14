@@ -1,7 +1,8 @@
 import 'uikit/dist/css/uikit.min.css'
-import 'uikit/dist/js/uikit.min.js'
-import 'uikit/dist/js/uikit-icons.min.js'
+import 'uikit/dist/js/uikit.js'
+import 'uikit/dist/js/uikit-icons.js'
 import '$assets/css/tailwind.css'
+import '$assets/css/global.css'
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
@@ -21,7 +22,7 @@ const PageLayout = ({ children }) => (
       }
     `}
     render={data => (
-      <div>
+      <div className='uk-container px-0'>
         <Header siteTitle={data.site.siteMetadata.title} />
       </div>
     )}

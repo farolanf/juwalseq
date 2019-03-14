@@ -10,7 +10,7 @@ export default element => {
   }
   return compose(
     devTools,
-    script,
+    // script,
     mui,
     location,
   )(element)
