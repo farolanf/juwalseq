@@ -25,13 +25,5 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $const: path.resolve(__dirname, 'src/const'),
       },
     },
-    module: {
-      rules: [
-        {
-          test: /uikit\/.*\.js$/,
-          use: 'imports-loader?exports=>undefined,define=>undefined,this=>window',
-        }
-      ]
-    }
   })
 }
