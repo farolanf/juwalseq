@@ -18,14 +18,21 @@ const CategoryDropdown = ({ mobile }) => {
     pos: mobile ? 'bottom-justify' : 'bottom-left',
     boundary: mobile ? '#topbar' : '#category-button',
     boundaryAlign: true,
+    delayHide: 50,
   })
-  
-  function handleDepartmentClick (department) {
-    navigate(`/?department[]=${department.name}`)
+
+  function close () {
+    UIkit.dropdown(ref).hide()
   }
 
-  function handleCategoryClick ({ key }) {
-    navigate(key)
+  function handleDepartmentClick (department) {
+    navigate(`/?department[]=${department.name}`)
+    close()
+  }
+
+  function handleCategoryClick (category) {
+    navigate(`/?category[]=${category.name}`)
+    close()
   }
 
   return (
@@ -35,9 +42,14 @@ const CategoryDropdown = ({ mobile }) => {
           <li key={department.id} className='uk-parent'>
             <a>{department.name}</a>
             <ul className='uk-nav-sub'>
+              <li>
+                <a onClick={() => handleDepartmentClick(department)}>
+                  Semua
+                </a>
+              </li>
               {department.Categories.map(category => (
                 <li key={category.id}>
-                  <a>{category.name}</a>
+                  <a onClick={() => handleCategoryClick(category)}>{category.name}</a>
                 </li>
               ))}
             </ul>
