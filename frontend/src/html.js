@@ -11,9 +11,11 @@ export default function HTML(props) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <link href="/uikit/uikit.min.css" rel="stylesheet" />
+        <link href="/tailwind.css" rel="stylesheet" />
         {props.headComponents}
-        <script src='/uikit/uikit.min.js'></script>
-        <script src='/uikit/uikit-icons.min.js'></script>
+        <script src="/uikit/uikit.min.js"></script>
+        <script src="/uikit/uikit-icons.min.js"></script>
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
