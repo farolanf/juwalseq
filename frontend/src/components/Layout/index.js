@@ -19,6 +19,7 @@ const PageLayout = ({ children }) => (
     render={data => (
       <div className='uk-container px-0'>
         <Header siteTitle={data.site.siteMetadata.title} />
+        <main>{children}</main>
       </div>
     )}
   />

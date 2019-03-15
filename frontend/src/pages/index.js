@@ -2,8 +2,9 @@ import React, { } from "react"
 import { Router } from '@reach/router'
 
 import SEO from "$comp/SEO"
-import Session from '$comp/pages/Session'
+import NotFound from './404'
 import Admin from '$comp/pages/Admin'
+import Session from '$comp/pages/Session'
 import PasangIklan from '$comp/pages/PasangIklan'
 
 const Page = ({ 
@@ -27,6 +28,7 @@ const App = () => (
   <Router>
     <Session path='/session' />
     <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+    <NotFound path='/*' />
   </Router>
 )
 
