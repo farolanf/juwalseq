@@ -3,6 +3,7 @@ import devTools from './devtools'
 import script from './script'
 import location from './location'
 import mui from './mui'
+import layout from './layout'
 
 export default element => {
   if (element.props['*'].startsWith('admin')) {
@@ -13,5 +14,6 @@ export default element => {
     // script,
     mui,
     location,
+    layout,
   )(element)
 }

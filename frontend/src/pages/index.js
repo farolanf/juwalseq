@@ -1,7 +1,6 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
-import Layout from "$comp/Layout"
 import SEO from "$comp/SEO"
 import Session from '$comp/pages/Session'
 import Admin from '$comp/pages/Admin'
@@ -25,12 +24,10 @@ const Page = ({
 }
 
 const App = () => (
-  <Layout>
-    <Router>
-      <Session path='/session' />
-      <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
-    </Router>
-  </Layout>
+  <Router>
+    <Session path='/session' />
+    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+  </Router>
 )
 
 const IndexPage = () => (

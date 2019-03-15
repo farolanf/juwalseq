@@ -1,8 +1,3 @@
-import 'uikit/dist/css/uikit.min.css'
-import 'uikit/dist/js/uikit.js'
-import 'uikit/dist/js/uikit-icons.js'
-import '$assets/css/tailwind.css'
-import '$assets/css/global.css'
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
