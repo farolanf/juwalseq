@@ -49,8 +49,12 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "tailwind": "tailwind build tailwind.css -c tailwind.js -o static/tailwind.css",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "tailwind": "tailwind build tailwind.css -c tailwind.js -o static/tailwind.css; cp static/tailwind.css public/tailwind.css",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "tailwind": "tailwind.css"
   },
   "repository": {
     "type": "git",
@@ -59,5 +63,7 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "npm-watch": "^0.6.0"
+  }
 }
