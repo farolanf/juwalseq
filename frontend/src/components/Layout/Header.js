@@ -5,28 +5,13 @@ import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
+import AccountDropdown from '$comp/AccountDropdown'
 import LoginModal from '$comp/LoginModal'
 
-import { API_HOST, PREFIX } from '$const'
-import { logout } from "$lib/auth";
+import { PREFIX } from '$const'
 import useStore from '$useStore'
 import withLocation from '$lib/location'
 import withMobile from '$lib/mobile'
-
-const AccountDropdown = () => {
-  const [ref, setRef] = useState()
-  function close () {
-    ref && UIkit.dropdown(ref).hide()
-  }
-  return (
-    <div data-uk-dropdown='pos: bottom-right' ref={setRef}>
-      <ul className='uk-nav uk-dropdown-nav'>
-        <li onClick={close}><Link to='/profile'>Profil</Link></li>
-        <li onClick={close}><a onClick={logout}>Logout</a></li>
-      </ul>
-    </div>
-  )
-}
 
 const PageHeader = ({
   mobile,
