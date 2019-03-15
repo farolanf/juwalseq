@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import { navigate } from '@reach/router'
+import _ from 'lodash'
+
+import FormikInput from '$comp/FormikInput'
 
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
@@ -8,23 +11,30 @@ import loginSchema from '$src/schemas/login'
 import registerSchema from '$src/schemas/register'
 import withMobile from '$lib/mobile'
 import { toggleClass } from '$lib/dom'
+import { bindVisible } from '$lib/uikit'
+
+const ResetForm = ({ visible, mode, resetForm }) => {
+  useEffect(() => {
+    visible && resetForm()
+  }, [mode, visible])
+  return null
+}
 
 const LoginModal = ({ mobile }) => {
   const [ref, setRef] = useState()
   const [closeRef, setCloseRef] = useState()
   const [mode, setMode] = useState('login')
+  
   const otherMode = mode === 'login' ? 'register' : 'login'
 
-  function toggleMode() {
-    setMode(otherMode)
-  }
+  const [visible] = bindVisible(ref, useState())
 
   useEffect(() => {
-    if (open) {
+    ref && UIkit.util.on(ref, 'show', () => {
       storeReferer(location.pathname + location.search)
       setMode('login')
-    }
-  }, [open])
+    })
+  }, [ref])
 
   toggleClass(ref, { 'uk-modal-full': mobile })
   toggleClass(closeRef, {
@@ -33,14 +43,22 @@ const LoginModal = ({ mobile }) => {
     'uk-modal-close-default': !mobile,
   })
 
-  function onSubmit({ email, password }, { setSubmitting, setErrors }) {
+  function toggleMode () {
+    setMode(otherMode)
+  }
+
+  function close () {
+    UIkit.modal(ref).hide()
+  }
+
+  function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
       login(email, password)
         .then(() => {
-          onClose()
+          close()
         })
         .catch(err => {
-          [401, 403].includes(err.response.status) && setErrors({
+          err.response && [401, 403].includes(err.response.status) && setErrors({
             email: 'invalid email / password',
             password: 'invalid email / password',
           })
@@ -49,7 +67,7 @@ const LoginModal = ({ mobile }) => {
     } else if (mode === 'register') {
       register(email, password)
         .then(() => {
-          onClose()
+          close()
           navigate(PREFIX + '/welcome/unconfirmed')
         })
         .finally(() => setSubmitting(false))
@@ -58,8 +76,8 @@ const LoginModal = ({ mobile }) => {
 
   return (
     <div id="login-modal" data-uk-modal ref={setRef}>
-      <div className='uk-modal-dialog uk-modal-body'>
-        <h2 className='uk-modal-title'>Login</h2>
+      <div className='uk-modal-dialog uk-modal-body uk-width-large'>
+        <h2 className='uk-modal-title'>{_.upperFirst(mode)}</h2>
         <button className='uk-modal-close-default' type='button' data-uk-close 
         ref={setCloseRef} />
         <Formik
@@ -71,12 +89,54 @@ const LoginModal = ({ mobile }) => {
           validationSchema={mode === 'login' ? loginSchema : registerSchema}
           onSubmit={onSubmit}
         >
-          {({ handleSubmit, isSubmitting }) => (
-            <form onSubmit={handleSubmit} className='uk-form-stacked'>
-              <div className='uk-margin'>
-                <div className='uk-inline'>
-                  <span className='uk-form-icon' uk-icon='user'></span>
-                  <input type='text' className='uk-input' placeholder='Email / usernamex' />
+          {({ handleSubmit, isSubmitting, resetForm }) => (
+            <form onSubmit={handleSubmit}>
+              <ResetForm {...{ visible, mode, resetForm }} />
+              <div className='uk-flex uk-flex-column'>
+                {mode === 'login' ? (
+                  <>
+                    <div className='uk-margin-small'>
+                      <FormikInput key='email' name='email' placeholder='Email / username' leftIcon='user' autoComplete='email' />
+                    </div>
+                    <div className='uk-margin-small'>
+                      <FormikInput key='password' name='password' type='password' placeholder='Password' leftIcon='lock' autoComplete='password' />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className='uk-margin-small'>
+                      <FormikInput key='newEmail' name='email' placeholder='Email / username' leftIcon='user' />
+                    </div>
+                    <div className='uk-margin-small'>
+                      <FormikInput key='newPassword' name='password' type='password' placeholder='Password' leftIcon='lock' />
+                    </div>
+                    <div className='uk-margin-small'>
+                      <FormikInput name='passwordConfirm' type='password' 
+                    placeholder='Confirm password' leftIcon='lock' />
+                    </div>
+                  </>
+                )}
+                <div className='mt-6 -mb-4 uk-text-muted'>Or login with</div>
+                <div className='flex flex-col md:flex-row uk-margin' data-uk-margin>
+                  <button className='uk-button uk-button-primary'>
+                    <span data-uk-icon='facebook' />
+                    Facebook
+                  </button>
+                  <button className='uk-button uk-button-primary md:ml-2'>
+                    <span data-uk-icon='google' />
+                    Google
+                  </button>
+                </div>
+                <div className='flex flex-col md:flex-row md:justify-between md:items-center uk-margin' data-uk-margin>
+                  <button className='uk-button uk-button-primary md:flex-last' type='submit' disabled={isSubmitting}>
+                    {mode}
+                  </button>
+                  <button className='uk-button uk-button-default' type='button' onClick={toggleMode}>
+                    {otherMode}
+                  </button>
+                  <button className='uk-button uk-button-default uk-modal-close md:flex-first'>
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>
