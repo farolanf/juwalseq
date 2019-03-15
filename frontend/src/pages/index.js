@@ -1,6 +1,7 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
+import Layout from '$comp/Layout'
 import SEO from "$comp/SEO"
 import NotFound from './404'
 import Admin from '$comp/pages/Admin'
@@ -26,12 +27,14 @@ const Page = ({
 }
 
 const App = () => (
-  <Router>
-    <Session path='/session' />
-    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
-    <FrontPage path='/' />
-    <NotFound path='/*' />
-  </Router>
+  <Layout>
+    <Router>
+      <Session path='/session' />
+      <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+      <FrontPage path='/' />
+      <NotFound path='/*' />
+    </Router>
+  </Layout>
 )
 
 const IndexPage = () => (
