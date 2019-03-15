@@ -13,6 +13,7 @@ module.exports = {
   globals: {
     tw: true,
     paypal: true,
+    UIkit: true,
   },
   env: {
     browser: true
