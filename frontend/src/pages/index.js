@@ -31,7 +31,7 @@ const App = () => (
     <Router>
       <Session path='/session' />
       <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
-      <FrontPage path='/' />
+      <Page path='/' component={FrontPage} title='Depan' />
       <NotFound path='/*' />
     </Router>
   </Layout>
