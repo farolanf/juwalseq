@@ -118,14 +118,16 @@ const LoginModal = ({ mobile }) => {
                 )}
                 <div className='mt-6 -mb-4 uk-text-muted'>Or login with</div>
                 <div className='flex flex-col md:flex-row uk-margin' data-uk-margin>
-                  <button className='uk-button uk-button-primary'>
+                  <a className='uk-button uk-button-primary' 
+                  href={API_HOST + '/auth/facebook'}>
                     <span data-uk-icon='facebook' />
                     Facebook
-                  </button>
-                  <button className='uk-button uk-button-primary md:ml-2'>
+                  </a>
+                  <a className='uk-button uk-button-primary md:ml-2' 
+                  href={API_HOST + '/auth/google'}>
                     <span data-uk-icon='google' />
                     Google
-                  </button>
+                  </a>
                 </div>
                 <div className='flex flex-col md:flex-row md:justify-between md:items-center uk-margin' data-uk-margin>
                   <button className='uk-button uk-button-primary md:flex-last' type='submit' disabled={isSubmitting}>
