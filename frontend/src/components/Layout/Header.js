@@ -5,6 +5,7 @@ import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
+import CategoryDropdown from '$comp/CategoryDropdown'
 import AccountDropdown from '$comp/AccountDropdown'
 import LoginModal from '$comp/LoginModal'
 
@@ -29,11 +30,14 @@ const PageHeader = ({
   }
 
   return (
-    <nav className='uk-navbar-container' data-uk-navbar>
+    <nav id='topbar' className='uk-navbar-container' data-uk-navbar>
       <div className="uk-navbar-left">
         <Link to='/' className="uk-navbar-item uk-logo">{siteTitle}</Link>
         <ul className="uk-navbar-nav">
-          <li><a href="#">Kategori</a></li>
+          <li>
+            <a id='category-button'>Kategori</a>
+            <CategoryDropdown />
+          </li>
         </ul>
       </div>
       <div className="uk-navbar-right">
