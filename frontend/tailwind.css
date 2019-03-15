@@ -1,0 +1,11 @@
+@tailwind components;
+@tailwind utilities;
+
+@responsive {
+  .flex-first {
+    order: -9999;
+  }
+  .flex-last {
+    order: 9999;
+  }
+}

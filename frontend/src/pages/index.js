@@ -1,10 +1,12 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
-import Layout from "$comp/layout"
-import SEO from "$comp/seo"
-import Session from '$comp/pages/session'
-import Admin from '$comp/pages/admin'
+import Layout from '$comp/Layout'
+import SEO from "$comp/SEO"
+import NotFound from './404'
+import Admin from '$comp/pages/Admin'
+import Session from '$comp/pages/Session'
+import FrontPage from '$comp/pages/FrontPage'
 import PasangIklan from '$comp/pages/PasangIklan'
 
 const Page = ({ 
@@ -29,6 +31,8 @@ const App = () => (
     <Router>
       <Session path='/session' />
       <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+      <FrontPage path='/' />
+      <NotFound path='/*' />
     </Router>
   </Layout>
 )

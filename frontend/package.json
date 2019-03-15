@@ -6,13 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-brands-svg-icons": "^5.7.2",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "@material-ui/core": "^3.9.2",
-    "antd": "^3.15.0",
-    "antd-mobile": "^2.2.9",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
     "change-case": "^3.1.0",
@@ -23,13 +17,12 @@
     "gatsby-cli": "^2.4.11",
     "gatsby-image": "^2.0.29",
     "gatsby-plugin-manifest": "^2.0.18",
-    "gatsby-plugin-material-ui": "^1.2.4",
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-react-helmet": "^3.0.6",
     "gatsby-plugin-sharp": "^2.0.21",
-    "gatsby-plugin-tailwindcss": "^1.0.3",
     "gatsby-source-filesystem": "^2.0.21",
     "gatsby-transformer-sharp": "^2.1.14",
+    "imports-loader": "^0.8.0",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "mobx-react-devtools": "^6.1.1",
@@ -42,11 +35,9 @@
     "react-admin": "^2.8.0",
     "react-dom": "^16.8.1",
     "react-helmet": "^5.2.0",
-    "react-jss-hmr": "^1.0.0",
-    "react-redux": "^5.0.7",
-    "react-swipeable-views": "^0.13.1",
-    "styled-components": "^4.1.3",
+    "react-redux": "^5.1.1",
     "tailwindcss": "^0.7.4",
+    "uikit": "^3.0.3",
     "yup": "^0.26.10"
   },
   "keywords": [
@@ -58,7 +49,12 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "tailwind": "tailwind build tailwind.css -c tailwind.js -o static/tailwind.css; cp static/tailwind.css public/tailwind.css",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "watch": "npm-watch"
+  },
+  "watch": {
+    "tailwind": "tailwind.css"
   },
   "repository": {
     "type": "git",
@@ -67,5 +63,7 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "npm-watch": "^0.6.0"
+  }
 }

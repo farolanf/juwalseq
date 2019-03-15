@@ -11,14 +11,6 @@
       "legacy": true,
     }],
     ["babel-plugin-import", {
-      "libraryName": "antd",
-      "style": "css",
-    }, "antd"],
-    ["babel-plugin-import", {
-      "libraryName": "antd-mobile",
-      "style": "css",
-    }, "antd-mobile"],
-    ["babel-plugin-import", {
       "libraryName": "@material-ui/core",
       "libraryDirectory": "/",
       "camel2DashComponentName": false,
