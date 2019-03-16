@@ -14,6 +14,16 @@ import useStore from '$useStore'
 import withLocation from '$lib/location'
 import withMobile from '$lib/mobile'
 
+const MenuDropdown = () => {
+  return (
+    <div data-uk-dropdown='offset: 0; pos: bottom-justify; boundary: #topbar; boundary-align: true'>
+      <ul className='uk-nav uk-dropdown-nav'>
+        <li><a>Pasang iklan</a></li>
+      </ul>
+    </div>
+  )
+}
+
 const PageHeader = ({
   mobile,
   siteTitle,
@@ -30,9 +40,9 @@ const PageHeader = ({
   }
 
   return (
-    <nav id='topbar' className='uk-navbar-container' data-uk-navbar>
+    <nav id='topbar' className='uk-navbar-container uk-navbar-transparent' data-uk-navbar>
       <div className="uk-navbar-left">
-        <Link to='/' className="uk-navbar-item uk-logo">{siteTitle}</Link>
+        <Link to='/' className="uk-navbar-item uk-logo logo text-3xl">{siteTitle}</Link>
         <ul className="uk-navbar-nav">
           <li>
             <a id='category-button'>Kategori</a>
@@ -42,6 +52,13 @@ const PageHeader = ({
       </div>
       <div className="uk-navbar-right">
         <ul className="uk-navbar-nav">
+          <li hidden={!mobile}>
+            <a data-uk-icon='menu'></a>
+            <MenuDropdown />
+          </li>
+          <li hidden={mobile}>
+            <Link to='/pasang-iklan'>Pasang iklan</Link>
+          </li>
           <li hidden={!user.loggedIn}>
             <a>
               <span data-uk-icon='user' />

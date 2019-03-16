@@ -1,3 +1,4 @@
+import '$assets/css/global.css'
 import { setLocale } from 'yup'
 import { configure } from 'mobx'
 import { verify } from '$src/lib/auth'
