@@ -16,7 +16,7 @@ const frontendUrl = url.parse(process.env.FRONTEND_HOST)
 const origin = `${frontendUrl.protocol}//${frontendUrl.host}`
 
 app.use(cors({
-  origin,
+  origin: process.env.NODE_ENV === 'production' ? origin : '*',
   exposedHeaders: ['Content-Range']
 }))
 
