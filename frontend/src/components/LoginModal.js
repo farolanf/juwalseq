@@ -30,10 +30,12 @@ const LoginModal = ({ mobile }) => {
   const [visible] = bindVisible(ref, useState())
 
   useEffect(() => {
-    ref && UIkit.util.on(ref, 'show', () => {
-      storeReferer(location.pathname + location.search)
-      setMode('login')
-    })
+    if (ref) {
+      return UIkit.util.on(ref, 'show', () => {
+        storeReferer(location.pathname + location.search)
+        setMode('login')
+      })
+    }
   }, [ref])
 
   toggleClass(ref, { 'uk-modal-full': mobile })
