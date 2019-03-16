@@ -26,12 +26,12 @@ const CategoryDropdown = ({ mobile }) => {
   }
 
   function handleDepartmentClick (department) {
-    navigate(`/?department[]=${department.name}`)
+    navigate(`/search?department[]=${department.name}`)
     close()
   }
 
   function handleCategoryClick (category) {
-    navigate(`/?category[]=${category.name}`)
+    navigate(`/search?category[]=${category.name}`)
     close()
   }
 
