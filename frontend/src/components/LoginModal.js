@@ -10,7 +10,6 @@ import { login, register, storeReferer } from '$lib/auth';
 import loginSchema from '$src/schemas/login'
 import registerSchema from '$src/schemas/register'
 import withMobile from '$lib/mobile'
-import { toggleClass } from '$lib/dom'
 import { bindVisible } from '$lib/uikit'
 
 const ResetForm = ({ visible, mode, resetForm }) => {
@@ -38,12 +37,9 @@ const LoginModal = ({ mobile }) => {
     }
   }, [ref])
 
-  toggleClass(ref, { 'uk-modal-full': mobile })
-  toggleClass(closeRef, {
-    'uk-modal-close-full': mobile,
-    'uk-close-large': mobile,
-    'uk-modal-close-default': !mobile,
-  })
+  UIkit.util.toggleClass(ref, 'uk-modal-full', mobile)
+  UIkit.util.toggleClass(closeRef, 'uk-modal-close-full uk-close-large', mobile)
+  UIkit.util.toggleClass(closeRef, 'uk-modal-close-default', !mobile)
 
   function toggleMode () {
     setMode(otherMode)
