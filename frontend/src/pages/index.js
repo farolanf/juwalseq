@@ -9,6 +9,7 @@ import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
 import Search from '$comp/pages/Search'
 import PasangIklan from '$comp/pages/PasangIklan'
+import Test from '$comp/pages/Test'
 
 const Page = ({ 
   component, 
@@ -34,6 +35,7 @@ const App = () => (
       <Page path='/search' component={Search} title='Cari' />
       <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
       <Page path='/' component={FrontPage} title='Depan' />
+      <Test path='/test' />
       <NotFound path='/*' />
     </Router>
   </Layout>
