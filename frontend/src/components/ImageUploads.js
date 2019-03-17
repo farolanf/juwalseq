@@ -97,7 +97,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   async function loadFile (file) {
     if (!file.type.startsWith('image/') || file.size > maxSize) return
-    file.dataURL = await loadDataUrl(file)
+    file.dataURL = file.originalDataURL = await loadDataUrl(file)
     return file
   }
 
@@ -140,6 +140,11 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     UIkit.modal('#image-upload-modal').show()
   }
 
+  const handleSave = () => {
+    editItem.file.dataURL = cropper.getCroppedCanvas().toDataURL()
+    setImages(images.slice())
+  }
+
   const handleRotate = () => {
     cropper.rotate(90)
   }
@@ -150,6 +155,10 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   const handleFlipX = () => {
     setFlipX(flipX * -1)
+  }
+
+  const handleReset = () => {
+    cropper.replace(editItem.file.originalDataURL)
   }
 
   const renderImage = item => (
@@ -202,19 +211,14 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
               <Cropper src={editItem.file.dataURL} minContainerHeight={400} ref={setCropper} />
               <div className='flex flex-col md:flex-row md:justify-between mt-4'>
                 <ul className='uk-iconnav justify-center md:justify-start'>
-                  <li>
-                    <a data-uk-icon='refresh' data-uk-tooltip='Putar' onClick={handleRotate} />
-                  </li>
-                  <li data-uk-tooltip='Flip vertikal'>
-                    <a data-uk-icon='arrow-up' onClick={handleFlipY} />
-                  </li>
-                  <li data-uk-tooltip='Flip horizontal'>
-                    <a data-uk-icon='arrow-right' onClick={handleFlipX} />
-                  </li>
+                  <li><a data-uk-icon='refresh' onClick={handleRotate} /></li>
+                  <li><a data-uk-icon='arrow-up' onClick={handleFlipY} /></li>
+                  <li><a data-uk-icon='arrow-right' onClick={handleFlipX} /></li>
+                  <li><a data-uk-icon='image' onClick={handleReset} /></li>
                 </ul>
                 <div className='mt-6 md:mt-0 flex justify-end'>
                   <button className='uk-button uk-button-default uk-modal-close mr-1'>Batal</button>
-                  <button className='uk-button uk-button-primary'>Simpan</button>
+                  <button className='uk-button uk-button-primary uk-modal-close' onClick={handleSave}>Simpan</button>
                 </div>
               </div>
             </>
