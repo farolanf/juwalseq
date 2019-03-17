@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import cn from 'classnames'
 import withMobile from '$lib/mobile'
 
-const ResponsiveModal = ({ mobile, width, dialogClass, children, modalRef, ...props }) => {
+const ResponsiveModal = ({ mobile, width, largeFullClose = true, dialogClass, dialogStyle, children, modalRef, ...props }) => {
   const [ref, setRef] = useState()
   const [closeRef, setCloseRef] = useState()
   const [show, setShow] = useState()
@@ -10,8 +10,10 @@ const ResponsiveModal = ({ mobile, width, dialogClass, children, modalRef, ...pr
 
   useEffect(() => {
     UIkit.util.toggleClass(ref, 'uk-modal-full', mobile)
-    UIkit.util.toggleClass(closeRef, 'uk-modal-close-full uk-close-large', mobile)
-    UIkit.util.toggleClass(closeRef, 'uk-modal-close-default', !mobile)
+    if (largeFullClose) {
+      UIkit.util.toggleClass(closeRef, 'uk-modal-close-full uk-close-large', mobile)
+      UIkit.util.toggleClass(closeRef, 'uk-modal-close-default', !mobile)
+    }
   })
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const ResponsiveModal = ({ mobile, width, dialogClass, children, modalRef, ...pr
 
   return (
     <div data-uk-modal ref={_setRef} {...props}>
-      <div className={cn('uk-modal-dialog uk-modal-body', dialogClass)} >
+      <div className={cn('uk-modal-dialog uk-modal-body', dialogClass)} style={dialogStyle}>
         <button className='uk-modal-close-default' type='button' data-uk-close ref={setCloseRef} />
         {typeof children === 'function' ? children({ show, shown }) : children}
       </div>
