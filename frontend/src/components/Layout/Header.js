@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { navigate } from '@reach/router'
 import { compose } from 'lodash/fp'
@@ -15,10 +15,24 @@ import withLocation from '$lib/location'
 import withMobile from '$lib/mobile'
 
 const MenuDropdown = () => {
+  const [ref, setRef] = useState()
+
+  useEffect(() => {
+    ref && UIkit.dropdown(ref, {
+      delayHide: 150,
+    })
+  }, [ref])
+
+  function close () {
+    UIkit.dropdown(ref).hide()  
+  }
+
   return (
-    <div data-uk-dropdown='offset: 0; pos: bottom-justify; boundary: #topbar; boundary-align: true'>
+    <div data-uk-dropdown='offset: 0; pos: bottom-justify; boundary: #topbar; boundary-align: true' ref={setRef}>
       <ul className='uk-nav uk-dropdown-nav'>
-        <li><a>Pasang iklan</a></li>
+        <li>
+          <Link to='/pasang-iklan' onClick={close}>Pasang iklan</Link>
+        </li>
       </ul>
     </div>
   )
