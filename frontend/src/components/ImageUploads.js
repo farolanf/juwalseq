@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
+import withMobile from '$lib/mobile'
 
 import dragula from 'react-dragula'
 import 'react-dragula/dist/dragula.min.css'
@@ -20,7 +21,7 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, className, onChange }) => {
+const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, className, onChange, mobile }) => {
   const prefix = `image-uploads-${name}-`
   const sortableId = prefix + 'sortable'
 
@@ -50,7 +51,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   useEffect(() => {
     const sortable = document.querySelector(`#${sortableId}`)
     const drake = dragula([sortable], {
-      direction: 'horizontal',
+      direction: mobile ? 'vertical' : 'horizontal',
       invalid (el) {
         // prevent dragging empty slot
         el = el.closest('[data-imageupload-item]')
@@ -162,7 +163,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   }
 
   const renderImage = item => (
-    <div hidden={!item.file} className='h-full uk-background-contain uk-card uk-card-default cursor-move' style={{ backgroundImage: item.file && `url(${item.file.dataURL})` }}>
+    <div hidden={!item.file} className='h-full uk-background-contain uk-card uk-card-default cursor-move' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
       <a className='uk-position-top-left p-1' data-uk-icon='close' onClick={handleRemove(item)} />
       <a className='uk-position-top-right p-1' data-uk-icon='settings' onClick={handleEdit(item)} />
     </div>
@@ -170,7 +171,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   const renderPlaceholder = item => (
     <div hidden={!item.open || item.file}>
-      <FileDrop onDrop={handleDrop(item)} className='uk-height-small' targetClassName='uk-placeholder mb-0 uk-height-small flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
+      <FileDrop onDrop={handleDrop(item)} className='' targetClassName='uk-placeholder uk-position-cover mb-0 flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
         <div>
           <span data-uk-icon='cloud-upload' />
           <span className='uk-text-middle'> {text} </span>
@@ -183,9 +184,12 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   )
 
   const renderItem = item => (
-    <div className='uk-height-small uk-inline w-full'>
-      {renderImage(item)}
-      {renderPlaceholder(item)}
+    <div className='uk-cover-container'>
+      <canvas width='400' height='300' />
+      <div className='uk-position-cover'>
+        {renderImage(item)}
+        {renderPlaceholder(item)}
+      </div>
     </div>
   )
 
@@ -229,4 +233,4 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   )
 }
 
-export default ImageUploads
+export default withMobile(ImageUploads)
