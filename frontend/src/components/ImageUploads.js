@@ -26,18 +26,25 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   const [images, setImages] = useState([])
   const [editItem, setEditItem] = useState()
+  const [cropper, setCropper] = useState()
+  const [flipX, setFlipX] = useState(1)
+  const [flipY, setFlipY] = useState(1)
 
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
   useEffect(() => {
     if (images.length !== max) {
-      const items = []
-      for (let i = 0; i < max; i++) {
+      const items = images.slice()
+      for (let i = images.length; i < max; i++) {
         items.push({ key: i })
       }
       setImages(items)
     }
-  }, [])
+  })
+
+  useEffect(() => {
+    cropper && cropper.scale(flipX, flipY)
+  }, [flipX, flipY])
 
   // init dragula on each render so events work with current images
   useEffect(() => {
@@ -79,6 +86,8 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   images.forEach(x => {
     if (!open && !x.file) {
       x.open = open = true
+    } else {
+      x.open = false
     }
   })
 
@@ -96,8 +105,9 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     if (files.length) {
       item = _.find(images, { key: item.key })
       item.file = await loadFile(files[0])
-      setImages(images)
-      onChange(images)
+      const _images = images.slice()
+      setImages(_images)
+      onChange(_images)
     }
   }
 
@@ -117,8 +127,12 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     })
   }
 
-  const handleRemove = item => e => {
-
+  const handleRemove = item => () => {
+    item = images.find(x => x.key === item.key)
+    item.file = null
+    setImages(images
+      .sort((a, b) => (a.file ? 0 : 1) - (b.file ? 0 : 1))
+      .slice())
   }
 
   const handleEdit = item => () => {
@@ -126,24 +140,43 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     UIkit.modal('#image-upload-modal').show()
   }
 
+  const handleRotate = () => {
+    cropper.rotate(90)
+  }
+
+  const handleFlipY = () => {
+    setFlipY(flipY * -1)
+  }
+
+  const handleFlipX = () => {
+    setFlipX(flipX * -1)
+  }
+
+  const renderImage = item => (
+    <div hidden={!item.file} className='h-full uk-background-contain uk-card uk-card-default cursor-move' style={{ backgroundImage: item.file && `url(${item.file.dataURL})` }}>
+      <a className='uk-position-top-left p-1' data-uk-icon='close' onClick={handleRemove(item)} />
+      <a className='uk-position-top-right p-1' data-uk-icon='settings' onClick={handleEdit(item)} />
+    </div>
+  )
+
+  const renderPlaceholder = item => (
+    <div hidden={!item.open || item.file}>
+      <FileDrop onDrop={handleDrop(item)} className='uk-height-small' targetClassName='uk-placeholder mb-0 uk-height-small flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
+        <div>
+          <span data-uk-icon='cloud-upload' />
+          <span className='uk-text-middle'> {text} </span>
+          <span className='uk-link hover:no-underline' 
+          onClick={handleClickBrowse}>{linkText}</span>
+          <input type='file' accept='image/*' hidden onChange={handleChangeFile(item)} />
+        </div>
+      </FileDrop>
+    </div>
+  )
+
   const renderItem = item => (
     <div className='uk-height-small uk-inline w-full'>
-      <div hidden={!item.file} className='h-full uk-background-contain uk-card uk-card-default cursor-move' style={{ backgroundImage: item.file && `url(${item.file.dataURL})` }}>
-        <a className='uk-position-top-left p-1' data-uk-icon='close' onClick={handleRemove(item)} />
-        <a className='uk-position-top-right p-1' data-uk-icon='settings' onClick={handleEdit(item)} />
-      </div>
-      <div hidden={!item.open || !!item.file}>
-        <FileDrop onDrop={handleDrop(item)} className='uk-height-small' targetClassName='uk-placeholder mb-0 uk-height-small flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
-          <div>
-            <span data-uk-icon='cloud-upload' />
-            <span className='uk-text-middle'> {text} </span>
-            <span className='uk-link hover:no-underline' 
-            onClick={handleClickBrowse}>{linkText}</span>
-            <input type='file' accept='image/*' hidden onChange={handleChangeFile(item)} />
-          </div>
-        </FileDrop>
-      </div>
-      <div hidden={item.open} className='uk-placeholder mt-0 mb-0 uk-height-small' />
+      {renderImage(item)}
+      {renderPlaceholder(item)}
     </div>
   )
 
@@ -162,9 +195,30 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
         </div>
         <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
       </div>
-      <ResponsiveModal id='image-upload-modal'>
+      <ResponsiveModal id='image-upload-modal' largeFullClose={false} dialogStyle={{ height: 502 }}>
         {({ shown }) => (
-          editItem && shown && <Cropper src={editItem.file.dataURL} minContainerHeight={400} />
+          editItem && shown && (
+            <>
+              <Cropper src={editItem.file.dataURL} minContainerHeight={400} ref={setCropper} />
+              <div className='flex flex-col md:flex-row md:justify-between mt-4'>
+                <ul className='uk-iconnav justify-center md:justify-start'>
+                  <li>
+                    <a data-uk-icon='refresh' data-uk-tooltip='Putar' onClick={handleRotate} />
+                  </li>
+                  <li data-uk-tooltip='Flip vertikal'>
+                    <a data-uk-icon='arrow-up' onClick={handleFlipY} />
+                  </li>
+                  <li data-uk-tooltip='Flip horizontal'>
+                    <a data-uk-icon='arrow-right' onClick={handleFlipX} />
+                  </li>
+                </ul>
+                <div className='mt-6 md:mt-0 flex justify-end'>
+                  <button className='uk-button uk-button-default uk-modal-close mr-1'>Batal</button>
+                  <button className='uk-button uk-button-primary'>Simpan</button>
+                </div>
+              </div>
+            </>
+          )
         )}
       </ResponsiveModal>
     </div>
