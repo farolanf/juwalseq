@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
+
 import dragula from 'react-dragula'
 import 'react-dragula/dist/dragula.min.css'
+
+import Cropper from 'react-cropper'
+import 'cropperjs/dist/cropper.min.css'
 
 import FileDrop from 'react-file-drop'
 import ResponsiveModal from '$comp/ResponsiveModal'
@@ -21,6 +25,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   const sortableId = prefix + 'sortable'
 
   const [images, setImages] = useState([])
+  const [editItem, setEditItem] = useState()
 
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
@@ -112,12 +117,13 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     })
   }
 
-  const handleRemove = item => {
+  const handleRemove = item => e => {
 
   }
 
-  const handleEdit = item => {
-
+  const handleEdit = item => () => {
+    setEditItem(item)
+    UIkit.modal('#image-upload-modal').show()
   }
 
   const renderItem = item => (
@@ -148,15 +154,19 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
         <div id={sortableId} className='uk-grid-small uk-child-width-1-4@s' data-uk-grid>
           {images.map(item => (
             (item.file || item.open) && (
-            <div key={item.key} data-key={item.key} data-imageupload-item>
-              {renderItem(item)}
-            </div>
+              <div key={item.key} data-key={item.key} data-imageupload-item>
+                {renderItem(item)}
+              </div>
             )
           ))}
         </div>
         <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
       </div>
-      <ResponsiveModal id='image-upload-modal' />
+      <ResponsiveModal id='image-upload-modal'>
+        {({ shown }) => (
+          editItem && shown && <Cropper src={editItem.file.dataURL} minContainerHeight={400} />
+        )}
+      </ResponsiveModal>
     </div>
   )
 }
