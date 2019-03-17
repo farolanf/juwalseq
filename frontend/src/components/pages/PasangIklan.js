@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik'
 import autosize from 'autosize'
 
 import FormikInput from '$comp/FormikInput'
-import FormikImageUploads from '$comp/FormikImageUploads'
+import ImageUploads from '$comp/ImageUploads'
 
 const PasangIklan = () => {
   const [descRef, setDescRef] = useState()
@@ -27,7 +27,7 @@ const PasangIklan = () => {
           images: [],
         }}
       >
-        {({ values, isSubmitting }) => (
+        {({ values, setFieldValue, isSubmitting }) => (
           <Form className='uk-form-horizontal'>
             <div className='flex flex-col uk-width-1-1@s uk-width-xxlarge@m'>
               <FormikInput name='title' label='Judul' placeholder='Judul iklan' 
@@ -40,8 +40,7 @@ const PasangIklan = () => {
                 <span className='text-xs'>{(values.description || '').length}/4000</span>
               )} />
               <FormikInput name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' className='uk-margin' />
-              <FormikImageUploads name='images' max={8} label='Foto' 
-              text='' linkText='Pilih' className='uk-margin' />
+              <ImageUploads max={8} label='Foto' text='' linkText='Pilih' className='uk-margin' onChange={images => setFieldValue('images', images)} />
             </div>
           </Form>
         )}
