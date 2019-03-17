@@ -22,6 +22,8 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   const [images, setImages] = useState([])
 
+  const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
+
   useEffect(() => {
     if (images.length !== max) {
       const items = []
@@ -125,7 +127,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
         <a className='uk-position-top-right p-1' data-uk-icon='settings' onClick={handleEdit(item)} />
       </div>
       <div hidden={!item.open || !!item.file}>
-        <FileDrop onDrop={handleDrop(item)} className='uk-height-small' targetClassName='uk-placeholder mb-0 uk-height-small flex items-center' draggingOverTargetClassName='border-green-light'>
+        <FileDrop onDrop={handleDrop(item)} className='uk-height-small' targetClassName='uk-placeholder mb-0 uk-height-small flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
           <div>
             <span data-uk-icon='cloud-upload' />
             <span className='uk-text-middle'> {text} </span>
@@ -145,11 +147,14 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
       <div className='uk-form-controls'>
         <div id={sortableId} className='uk-grid-small uk-child-width-1-4@s' data-uk-grid>
           {images.map(item => (
+            (item.file || item.open) && (
             <div key={item.key} data-key={item.key} data-imageupload-item>
               {renderItem(item)}
             </div>
+            )
           ))}
         </div>
+        <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
       </div>
       <ResponsiveModal id='image-upload-modal' />
     </div>
