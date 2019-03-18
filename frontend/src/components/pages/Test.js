@@ -1,9 +1,15 @@
 import React from 'react'
 import Cropper from 'react-cropper'
+import Uk from '$comp/UIkit'
 
 const Test = () => (
-  <div data-uk-lightbox>
-    <a className='uk-button uk-button-default' href='https://via.placeholder.com/150'>View</a>
+  <div>
+    <a>View</a>
+    <Uk.drop events={{ show: () => console.log('show'), hidden: () => console.log('hidden') }}>
+      <div className='uk-card uk-card-default uk-card-body'>
+        Hey  
+      </div>
+    </Uk.drop>    
   </div>
 )
 
