@@ -1,7 +1,13 @@
 import React from 'react'
 import Cropper from 'react-cropper'
 
-const Test = () => {
+const Test = () => (
+  <div data-uk-lightbox>
+    <a className='uk-button uk-button-default' href='https://via.placeholder.com/150'>View</a>
+  </div>
+)
+
+const Test1 = () => {
   return (
     <div className='test-cropper border-1 border-blue border-solid'>
       <Cropper src={dataURL} viewMode={0} preview='.test-cropper-preview' minContainerHeight={400} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import cn from 'classnames'
 import _ from 'lodash'
 import withMobile from '$lib/mobile'
 
@@ -21,17 +22,24 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, className, onChange, mobile }) => {
-  const prefix = `image-uploads-${name}-`
-  const sortableId = prefix + 'sortable'
-
+const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, className, onChange, mobile }) => {
+  const [viewRef, setViewRef] = useState([])
+  const [sortableRef, setSortableRef] = useState([])
+  const [editRef, setEditRef] = useState()
+  const [cropperRef, setCropperRef] = useState()
   const [images, setImages] = useState([])
   const [editItem, setEditItem] = useState()
-  const [cropper, setCropper] = useState()
+  const [viewItem, setViewItem] = useState()
   const [flipX, setFlipX] = useState(1)
   const [flipY, setFlipY] = useState(1)
 
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
+
+  useEffect(() => {
+    if (viewRef) {
+      return UIkit.util.on(viewRef, 'hidden', () => setViewItem(null))
+    }
+  }, [viewRef])
 
   useEffect(() => {
     if (images.length !== max) {
@@ -44,13 +52,13 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   })
 
   useEffect(() => {
-    cropper && cropper.scale(flipX, flipY)
+    cropperRef && cropperRef.scale(flipX, flipY)
   }, [flipX, flipY])
 
   // init dragula on each render so events work with current images
   useEffect(() => {
-    const sortable = document.querySelector(`#${sortableId}`)
-    const drake = dragula([sortable], {
+    if (!sortableRef) return
+    const drake = dragula([sortableRef], {
       direction: mobile ? 'vertical' : 'horizontal',
       invalid (el) {
         // prevent dragging empty slot
@@ -80,7 +88,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
       }
     })
     return () => drake.destroy()
-  })
+  }, [sortableRef])
 
   // open first empty slot
   let open = false
@@ -138,16 +146,21 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
 
   const handleEdit = item => () => {
     setEditItem(item)
-    UIkit.modal('#image-upload-modal').show()
+    UIkit.modal(editRef).show()
+  }
+
+  const handleView = item => () => {
+    setViewItem(item)
+    UIkit.modal(viewRef).show()
   }
 
   const handleSave = () => {
-    editItem.file.dataURL = cropper.getCroppedCanvas().toDataURL()
+    editItem.file.dataURL = cropperRef.getCroppedCanvas().toDataURL()
     setImages(images.slice())
   }
 
   const handleRotate = () => {
-    cropper.rotate(90)
+    cropperRef.rotate(90)
   }
 
   const handleFlipY = () => {
@@ -159,13 +172,21 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   }
 
   const handleReset = () => {
-    cropper.replace(editItem.file.originalDataURL)
+    cropperRef.replace(editItem.file.originalDataURL)
   }
 
+  const renderImgControl = (className, icon, onClick) => (
+    <a className={cn('p-2 md:p-1', className)} onClick={onClick}>
+      <div className='uk-position-cover bg-white opacity-0 hover:opacity-75 z-0' />
+      <span className='pointer-events-none text-black' data-uk-icon={icon} />
+    </a>
+  )
+
   const renderImage = item => (
-    <div hidden={!item.file} className='h-full uk-background-contain uk-card uk-card-default cursor-move' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
-      <a className='uk-position-top-left p-1' data-uk-icon='close' onClick={handleRemove(item)} />
-      <a className='uk-position-top-right p-1' data-uk-icon='settings' onClick={handleEdit(item)} />
+    <div hidden={!item.file} className='h-full uk-background-contain cursor-move border border-solid border-grey-lighter' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
+      {renderImgControl('uk-position-top-left', 'close', handleRemove(item))}
+      {renderImgControl('uk-position-top-right', 'settings', handleEdit(item))}
+      {renderImgControl('uk-position-bottom-right', 'image', handleView(item))}
     </div>
   )
 
@@ -184,7 +205,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
   )
 
   const renderItem = item => (
-    <div className='uk-cover-container'>
+    <div className='uk-cover-container overflow-visible'>
       <canvas width='400' height='300' />
       <div className='uk-position-cover'>
         {renderImage(item)}
@@ -197,7 +218,7 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
     <div className={className}>
       {label && <label className='uk-form-label'>{label}</label>}
       <div className='uk-form-controls'>
-        <div id={sortableId} className='uk-grid-small uk-child-width-1-4@s' data-uk-grid>
+        <div className='uk-grid-small uk-child-width-1-4@s' ref={setSortableRef} data-uk-grid>
           {images.map(item => (
             (item.file || item.open) && (
               <div key={item.key} data-key={item.key} data-imageupload-item>
@@ -208,11 +229,14 @@ const ImageUploads = ({ name, max, maxSize = 500 * 1024, label, text, linkText, 
         </div>
         <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
       </div>
-      <ResponsiveModal id='image-upload-modal' largeFullClose={false} dialogStyle={{ height: 502 }}>
+      <ResponsiveModal modalRef={setViewRef}>
+        {viewItem && <img src={viewItem.file.dataURL} />}
+      </ResponsiveModal>
+      <ResponsiveModal largeFullClose={false} dialogStyle={{ height: 502 }} modalRef={setEditRef}>
         {({ shown }) => (
           editItem && shown && (
             <>
-              <Cropper src={editItem.file.dataURL} minContainerHeight={400} ref={setCropper} />
+              <Cropper src={editItem.file.dataURL} minContainerHeight={400} autoCropArea={1} ref={setCropperRef} />
               <div className='flex flex-col md:flex-row md:justify-between mt-4'>
                 <ul className='uk-iconnav justify-center md:justify-start'>
                   <li><a data-uk-icon='refresh' onClick={handleRotate} /></li>
