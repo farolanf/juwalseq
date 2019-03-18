@@ -58,7 +58,12 @@
     "watch": "npm-watch"
   },
   "watch": {
-    "tailwind": "tailwind.css"
+    "tailwind": {
+      "patterns": [
+        "tailwind.css",
+        "tailwind.js"
+      ]
+    }
   },
   "repository": {
     "type": "git",
