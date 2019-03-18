@@ -1,14 +1,14 @@
 const messages = {
   mixed: {
-    required: 'required',
+    required: 'harus diisi',
   },
   string: {
-    min: 'must be at least ${min} characters',
-    max: 'must be at most ${max} characters',
+    min: 'minimal ${min} karakter',
+    max: 'maximal ${max} karakter',
   },
   test: {
-    uniqueEmail: 'email is taken',
-    passwordConfirm: 'both passwords must be equal',
+    uniqueEmail: 'email sudah terdaftar',
+    passwordConfirm: 'kedua password harus sama',
   }
 }
 
