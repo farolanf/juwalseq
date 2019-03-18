@@ -7,7 +7,6 @@ import FormikInput from '$comp/FormikInput'
 
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
-import loginSchema from '$src/schemas/login'
 import registerSchema from '$src/schemas/register'
 import withMobile from '$lib/mobile'
 import { bindVisible } from '$lib/uikit'
@@ -84,7 +83,7 @@ const LoginModal = ({ mobile }) => {
             password: '',
             passwordConfirm: '',
           }}
-          validationSchema={mode === 'login' ? loginSchema : registerSchema}
+          validationSchema={mode === 'register' ? registerSchema : undefined}
           onSubmit={onSubmit}
         >
           {({ handleSubmit, isSubmitting, resetForm }) => (
