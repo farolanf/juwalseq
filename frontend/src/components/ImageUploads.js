@@ -35,6 +35,10 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
   useEffect(() => {
+    onChange(images)
+  }, [images])
+
+  useEffect(() => {
     if (images.length !== max) {
       const items = images.slice()
       for (let i = images.length; i < max; i++) {
@@ -55,7 +59,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
       direction: mobile ? 'vertical' : 'horizontal',
       invalid (el) {
         // prevent dragging empty slot
-        el = el.closest('[data-imageupload-item]')
+        el = el.closest('[data-image-uploads-item]')
         if (el) {
           const item = getItem(el.getAttribute('data-key'))
           return !item || !item.file
@@ -80,6 +84,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
         return false
       }
     })
+    drake.on('dragend', syncOrder)
     return () => drake.destroy()
   }, [sortableRef])
 
@@ -93,6 +98,15 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
     }
   })
 
+  function syncOrder () {
+    const ordered = []
+    const items = sortableRef.querySelectorAll('[data-image-uploads-item]')
+    items.forEach(item => {
+      ordered.push(getItem(item.getAttribute('data-key')))
+    })
+    setImages(ordered)
+  }
+
   function getItem (key) {
     return images.find(item => item.key == key)
   }
@@ -105,11 +119,8 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
 
   const handleDrop = item => async files => {
     if (files.length) {
-      item = _.find(images, { key: item.key })
       item.file = await loadFile(files[0])
-      const _images = images.slice()
-      setImages(_images)
-      onChange(_images)
+      setImages(images.slice())
     }
   }
 
@@ -119,7 +130,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
 
   const handleClickBrowse = () => {
     // use first empty slot
-    const els = document.querySelectorAll('[data-imageupload-item]')
+    const els = document.querySelectorAll('[data-image-uploads-item]')
     Array.from(els).find(el => {
       const item = getItem(el.getAttribute('data-key'))
       if (!item.file) {
@@ -241,11 +252,9 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
       <div className='uk-form-controls'>
         <div className='uk-grid-small uk-child-width-1-4@s' ref={setSortableRef} data-uk-grid>
           {images.map(item => (
-            (item.file || item.open) && (
-              <div key={item.key} data-key={item.key} data-imageupload-item>
-                {renderItem(item)}
-              </div>
-            )
+            <div key={item.key} data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
+              {renderItem(item)}
+            </div>
           ))}
         </div>
         <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
