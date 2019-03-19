@@ -130,7 +130,8 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   }
 
   const handleRemove = item => () => {
-    item = images.find(x => x.key === item.key)
+    const input = sortableRef.querySelector(`[data-image-uploads-item][data-key="${item.key}"] input[type="file"]`)
+    input.value = ''
     item.file = null
     setImages(images
       .sort((a, b) => (a.file ? 0 : 1) - (b.file ? 0 : 1))
