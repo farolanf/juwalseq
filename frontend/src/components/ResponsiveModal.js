@@ -37,7 +37,7 @@ const ResponsiveModal = ({ mobile, width, largeFullClose = true, dialogClass, di
 
   return (
     <Uk.modal ref={setRef} {...props}>
-      <div className={cn('uk-modal-dialog uk-modal-body', dialogClass)} style={dialogStyle}>
+      <div className={cn('uk-modal-dialog uk-modal-body', mobile && 'h-full' ,dialogClass)} style={dialogStyle}>
         <button className='uk-modal-close-default' type='button' data-uk-close ref={setCloseRef} />
         {typeof children === 'function' ? children({ show, shown }) : children}
       </div>

@@ -166,7 +166,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   )
 
   const renderEditModal = item => (
-    <ResponsiveModal largeFullClose={false} dialogStyle={{ height: 502 }} id={`${prefix}edit${item.key}`}>
+    <ResponsiveModal largeFullClose={false} id={`${prefix}edit${item.key}`}>
       {({ shown }) => (
         shown && (
           <>
@@ -198,9 +198,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
       
       {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}view${item.key}` }, hidden: !mobile })}
       <ResponsiveModal id={`${prefix}view${item.key}`}>
-        <Uk.heightViewport className='flex justify-center items-center'>
-          <img src={_.get(item, 'file.dataURL')} />
-        </Uk.heightViewport>
+        <div style={{ backgroundImage: `url(${_.get(item, 'file.dataURL')})` }} className='h-full uk-background-contain' />
       </ResponsiveModal>
       
       {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}drop${item.key}` }, hidden: mobile })}
