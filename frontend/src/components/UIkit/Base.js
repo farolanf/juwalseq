@@ -5,12 +5,11 @@ function optionsString (options) {
   return Object.keys(options).map(key => `${key}: ${options[key]}`).join('; ')
 }
 
-const Base = ({ ukComponent, options, events, className, children, ...props }, ref) => {
+const Base = ({ ukComponent, baseOptions, options, events, className, children, ...props }, ref) => {
   const [elRef, setElRef] = useState()
-
   const optionsStr = optionsString(options || {})
-
   const htmlName = _.kebabCase(ukComponent)
+  const Component = baseOptions.Component
 
   useEffect(() => {
     if (elRef) {
@@ -34,9 +33,9 @@ const Base = ({ ukComponent, options, events, className, children, ...props }, r
   }
 
   return (
-    <div className={className} ref={setRef} {...props} {...{[`data-uk-${htmlName}`]: optionsStr}}>
+    <Component className={className} ref={setRef} {...props} {...{[`data-uk-${htmlName}`]: optionsStr}}>
       {children}
-    </div>
+    </Component>
   )
 }
 
