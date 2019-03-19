@@ -25,6 +25,7 @@ function loadDataUrl (file) {
 }
 
 const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, className, onChange, mobile }) => {
+  const prefix = 'image-uploads-'
   const [sortableRef, setSortableRef] = useState()
   const [cropperRef, setCropperRef] = useState()
   const [images, setImages] = useState([])
@@ -157,15 +158,15 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
     setImages(images.slice())
   }
 
-  const renderImgControl = ({ className, icon, ...props }) => (
-    <a className={cn('p-2 md:p-1', className)} {...props}>
+  const renderImgControl = ({ Component = 'a', className, icon, ...props }) => (
+    <Component className={cn('p-2 md:p-1', className)} {...props}>
       <div className='uk-position-cover bg-white opacity-0 hover:opacity-75 z-0' />
       <span className='pointer-events-none text-black' data-uk-icon={icon} />
-    </a>
+    </Component>
   )
 
   const renderEditModal = item => (
-    <ResponsiveModal largeFullClose={false} dialogStyle={{ height: 502 }}>
+    <ResponsiveModal largeFullClose={false} dialogStyle={{ height: 502 }} id={`${prefix}edit${item.key}`}>
       {({ shown }) => (
         shown && (
           <>
@@ -192,18 +193,18 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
     <div hidden={!item.file} className='h-full uk-background-contain cursor-move border border-solid border-grey-lighter' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
       {renderImgControl({ className: 'uk-position-top-left', icon: 'close', onClick: handleRemove(item) })}
 
-      {renderImgControl({ className: 'uk-position-top-right', icon: 'settings' })}
+      {renderImgControl({ className: 'uk-position-top-right', icon: 'settings', Component: Uk.toggle, options: { target: `#${prefix}edit${item.key}` } })}
       {renderEditModal(item)}
       
-      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', hidden: !mobile })}
-      <ResponsiveModal>
+      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}view${item.key}` }, hidden: !mobile })}
+      <ResponsiveModal id={`${prefix}view${item.key}`}>
         <Uk.heightViewport className='flex justify-center items-center'>
           <img src={_.get(item, 'file.dataURL')} />
         </Uk.heightViewport>
       </ResponsiveModal>
       
-      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', hidden: mobile })}
-      <Uk.drop className='uk-width-xlarge' options={{ pos: 'top-left', mode: 'click' }}>
+      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}drop${item.key}` }, hidden: mobile })}
+      <Uk.drop className='uk-width-xlarge' options={{ pos: 'top-left', mode: 'click' }} id={`${prefix}drop${item.key}`}>
         <div className='uk-card uk-card-default uk-card-body'>
           <img src={_.get(item, 'file.dataURL')} />
         </div>
