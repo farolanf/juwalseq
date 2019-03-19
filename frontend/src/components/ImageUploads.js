@@ -202,7 +202,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
       </ResponsiveModal>
       
       {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}drop${item.key}` }, hidden: mobile })}
-      <Uk.drop className='uk-width-large uk-height-large max-w-none' options={{ pos: 'top-left', mode: 'click' }} id={`${prefix}drop${item.key}`}>
+      <Uk.drop className='uk-width-large uk-height-large max-w-none' options={{ pos: 'top-center', mode: 'click' }} id={`${prefix}drop${item.key}`}>
         <div className='uk-card uk-card-default uk-card-body h-full'>
           <div style={{ backgroundImage: `url(${_.get(item, 'file.dataURL')})` }} className='h-full uk-background-contain' />
         </div>
