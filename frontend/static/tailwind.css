@@ -3143,6 +3143,10 @@
   max-width: 100%;
 }
 
+.max-w-none {
+  max-width: unset;
+}
+
 .min-h-0 {
   min-height: 0;
 }
@@ -8760,6 +8764,10 @@
     max-width: 100%;
   }
 
+  .sm\:max-w-none {
+    max-width: unset;
+  }
+
   .sm\:min-h-0 {
     min-height: 0;
   }
@@ -14360,6 +14368,10 @@
 
   .md\:max-w-full {
     max-width: 100%;
+  }
+
+  .md\:max-w-none {
+    max-width: unset;
   }
 
   .md\:min-h-0 {
@@ -19964,6 +19976,10 @@
     max-width: 100%;
   }
 
+  .lg\:max-w-none {
+    max-width: unset;
+  }
+
   .lg\:min-h-0 {
     min-height: 0;
   }
@@ -25564,6 +25580,10 @@
 
   .xl\:max-w-full {
     max-width: 100%;
+  }
+
+  .xl\:max-w-none {
+    max-width: unset;
   }
 
   .xl\:min-h-0 {
