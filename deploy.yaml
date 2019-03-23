@@ -22,6 +22,11 @@ spec:
         - containerPort: 3000
         - containerPort: 8000
         env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: DB_URL
         - name: FRONTEND_HOST
           valueFrom:
             secretKeyRef:
