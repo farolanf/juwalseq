@@ -1,32 +1,21 @@
 {
   "development": {
-    "username": "juwal",
-    "password": "juwal",
-    "database": "juwal_dev",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "use_env_variable": "DB_URL",
     "logging": false,
     "dialectOptions": {
       "decimalNumbers": true
     }
   },
   "test": {
-    "username": "juwal",
-    "password": "juwal",
-    "database": "juwal_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "dialect": "sqlite",
+    "storage": ":memory:",
     "logging": false,
     "dialectOptions": {
       "decimalNumbers": true
     }
   },
   "production": {
-    "username": "juwal",
-    "password": "juwal",
-    "database": "juwal",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+    "use_env_variable": "DB_URL",
     "logging": false,
     "dialectOptions": {
       "decimalNumbers": true

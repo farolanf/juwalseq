@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon -w server server",
     "start:prod": "NODE_ENV=production nodemon -w server server",
+    "container": "nodemon -w server server \\& && cd frontend && npm start",
     "lint": "eslint server/**",
     "reset:dev": "node cmd data:initdb; sequelize db:migrate; sequelize db:seed:all; node cmd data:create-admin admin admin@foo.com",
     "reset:prod": "NODE_ENV=production node cmd data:initdb; NODE_ENV=production sequelize db:migrate;",

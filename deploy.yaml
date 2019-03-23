@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: juwal
+  labels:
+    app: juwal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: juwal
+  template:
+    metadata:
+      labels:
+        app: juwal
+    spec:
+      containers:
+      - name: juwal
+        image: juwal
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        - containerPort: 8000
+        env:
+        - name: FRONTEND_HOST
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: FRONTEND_HOST
+        - name: FRONTEND_AUTH_REDIRECT
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: FRONTEND_AUTH_REDIRECT
+        - name: FACEBOOK_ID
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: FACEBOOK_ID
+        - name: FACEBOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: FACEBOOK_SECRET
+        - name: FACEBOOK_CALLBACK_URL
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: FACEBOOK_CALLBACK_URL
+        - name: GOOGLE_ID
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GOOGLE_ID
+        - name: GOOGLE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GOOGLE_SECRET
+        - name: GOOGLE_CALLBACK_URL
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GOOGLE_CALLBACK_URL
+        - name: PAYPAL_ID
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: PAYPAL_ID
+        - name: PAYPAL_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: PAYPAL_SECRET
+        - name: EMAIL_FROM
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: EMAIL_FROM
+        - name: EMAIL_HOST
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: EMAIL_HOST
+        - name: EMAIL_PORT
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: EMAIL_PORT
+        - name: EMAIL_USER
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: EMAIL_USER
+        - name: EMAIL_PASS
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: EMAIL_PASS
