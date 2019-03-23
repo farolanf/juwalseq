@@ -97,3 +97,23 @@ spec:
             secretKeyRef:
               name: juwal
               key: EMAIL_PASS
+        - name: ELASTICSEARCH_HOST
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: ELASTICSEARCH_HOST
+        - name: ELASTICSEARCH_USER
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: ELASTICSEARCH_USER
+        - name: ELASTICSEARCH_PASS
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: ELASTICSEARCH_PASS
+        - name: ELASTICSEARCH_MAX_SOCKETS
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: ELASTICSEARCH_MAX_SOCKETS
