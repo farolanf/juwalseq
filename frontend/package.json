@@ -50,7 +50,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build --prefix-paths",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "tailwind": "tailwind build tailwind.css -c tailwind.js -o static/tailwind.css; cp static/tailwind.css public/tailwind.css",
