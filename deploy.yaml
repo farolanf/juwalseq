@@ -122,3 +122,28 @@ spec:
             secretKeyRef:
               name: juwal
               key: ELASTICSEARCH_MAX_SOCKETS
+        - name: GATSBY_API_HOST
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GATSBY_API_HOST
+        - name: GATSBY_PATH_PREFIX
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GATSBY_PATH_PREFIX
+        - name: GATSBY_API_BASE
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GATSBY_API_BASE
+        - name: GATSBY_HOME
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GATSBY_HOME
+        - name: GATSBY_PAYPAL_ID
+          valueFrom:
+            secretKeyRef:
+              name: juwal
+              key: GATSBY_PAYPAL_ID
