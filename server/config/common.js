@@ -12,6 +12,7 @@ module.exports = {
 
   // specify modules to load and their order
   modules: [
+    'sequelize',
     'data',
     'auth',
     'finale',

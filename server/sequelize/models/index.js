@@ -3,6 +3,11 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+
+// use cls to avoid manually passing transaction object
+const cls = require('continuation-local-storage')
+Sequelize.useCLS(cls.createNamespace('juwal'))
+
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
