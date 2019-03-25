@@ -1,6 +1,7 @@
 node_modules/
 ghpages/
 server/uploads/**
+tmp/**
 
 .env*
 !.env.example
