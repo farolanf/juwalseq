@@ -26,6 +26,8 @@ app.use(bodyParser.json({
 }))
 
 app.use(
+  express.static('public'),
+  express.static('frontend/public'),
   express.static('server/uploads', {
     index: false,
     maxAge: '1d'

@@ -46,6 +46,8 @@ module.exports = {
         //
         // path can be a RegExp or pattern
         routes: [
+          { path: '/(?:\\.html)?', method: 'GET' },
+
           { path: '/auth/local', method: 'POST' },
           { path: '/auth/google', method: 'GET' },
           { path: '/auth/facebook', method: 'GET' },
