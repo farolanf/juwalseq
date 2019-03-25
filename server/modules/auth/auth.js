@@ -4,7 +4,6 @@ const yup = require('yup')
 
 const { User, UserGroup } = require('../../sequelize')
 const { publicUser, internalUser, userInclude } = require('../../lib/user')
-const { handleError } = require('../../lib/helpers')
 
 const events = require('../../lib/events')
 
@@ -34,92 +33,68 @@ function verifyToken (token, secret) {
 
 module.exports = function (app, config) {
   // decode token and set req.user
-  app.use((req, res, next) => {
-    try {
-      const token = tokenFromRequest(req)
-      if (token) {
-        const payload = verifyToken(token, config.auth.jwtSecret)
-        if (!payload) {
-          return res.sendStatus(401)
-        }
-        User.findOne({
-          where: { id: payload.userId },
-          include: userInclude()
-        })
-        .then(user => {
-          if (user) {
-            req.user = internalUser(user)
-          } else {
-            return res.sendStatus(401)
-          }
-          next()
-        })
-      } else {
-        next()
-      }
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  })
-
-  app.post(config.app.apiBase + '/auth/register', async (req, res) => {
-    try {
-      if (!await registerSchema.isValid(req.body)) {
-        return res.sendStatus(400)
-      }
-      const { email, password } = req.body
-      const count = await User.count()
-      const username = 'user' + (count + 1)
-      const user = await User.create({ username, email, password })
-      await events.emit('userCreated', user)
-      await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
-        UserId: user.id,
-        group
-      })))
-      const _user = await User.findOne({
-        where: { id: user.id },
-        include: userInclude()
-      })
-      sendUser(_user, res)
-    }
-    catch (err) {
-      handleError(err, res)
-    }
-  })
-
-  app.get(config.app.apiBase + '/auth/verify', (req, res) => {
-    try {
-      const token = tokenFromRequest(req)
+  app.use(async (req, res, next) => {
+    const token = tokenFromRequest(req)
+    if (token) {
       const payload = verifyToken(token, config.auth.jwtSecret)
       if (!payload) {
         return res.sendStatus(401)
       }
-      User.findOne({
+      const user = await User.findOne({
         where: { id: payload.userId },
         include: userInclude()
       })
-      .then(user => {
-        user ? sendUser(user, res) : res.sendStatus(401)
-      })
-    }
-    catch (err) {
-      handleError(err, res)
+      if (user) {
+        req.user = internalUser(user)
+      } else {
+        return res.sendStatus(401)
+      }
+      next()
+    } else {
+      next()
     }
   })
 
+  app.post(config.app.apiBase + '/auth/register', async (req, res) => {
+    if (!await registerSchema.isValid(req.body)) {
+      return res.sendStatus(400)
+    }
+    const { email, password } = req.body
+    const count = await User.count()
+    const username = 'user' + (count + 1)
+    const user = await User.create({ username, email, password })
+    await events.emit('userCreated', user)
+    await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
+      UserId: user.id,
+      group
+    })))
+    const _user = await User.findOne({
+      where: { id: user.id },
+      include: userInclude()
+    })
+    sendUser(_user, res)
+  })
+
+  app.get(config.app.apiBase + '/auth/verify', async (req, res) => {
+    const token = tokenFromRequest(req)
+    const payload = verifyToken(token, config.auth.jwtSecret)
+    if (!payload) {
+      return res.sendStatus(401)
+    }
+    const user = await User.findOne({
+      where: { id: payload.userId },
+      include: userInclude()
+    })
+    user ? sendUser(user, res) : res.sendStatus(401)
+  })
+
   app.get(config.app.apiBase + '/auth/unique-email', async (req, res) => {
-    try {
-      const user = await User.findOne({
-        where: {
-          email: req.query.email
-        }
-      })
-      res.send({ unique: !user })
-    }
-    catch (err) {
-      handleError(err, res)
-    }
+    const user = await User.findOne({
+      where: {
+        email: req.query.email
+      }
+    })
+    res.send({ unique: !user })
   })
 
   app.get('/auth/facebook', passport.authenticate('facebook', {
