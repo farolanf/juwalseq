@@ -30,7 +30,7 @@ function initHooks (Doc) {
 }
 
 function createFullRecord (Doc) {
-  return record => getFullRecord(record, Doc).then(createRecord(Doc))
+  return record => getFullRecord(record, Doc).then(createOrUpdate(Doc))
 }
 
 function updateFullRecord (Doc) {
@@ -45,6 +45,21 @@ function getFullRecord (record, Doc) {
     },
     include: Doc.associations.include
   })
+}
+
+async function createOrUpdate (Doc) {
+  return async record => {
+    const doc = Doc.getDoc(record)
+    const pk = Doc.model.primaryKeyAttributes[0]
+    if (await client.exists({
+      index: Doc.index,
+      type: Doc.type,
+      id: doc[pk]
+    })) {
+      return updateRecord(Doc)(record)
+    } 
+    return createRecord(Doc)(record)
+  }
 }
 
 function createRecord (Doc) {
