@@ -11,8 +11,8 @@ exports.onCreatePage = ({ page }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  const config = {
     resolve: {
       alias: {
         $prj: path.resolve(__dirname),
@@ -25,5 +25,16 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         $const: path.resolve(__dirname, 'src/const'),
       },
     },
-  })
+  }
+  if (stage === 'build-html') {
+    config.module = {
+      rules: [
+        {
+          test: /react-dragula|react-file-drop/,
+          use: loaders.null(),
+        }
+      ]
+    } 
+  }
+  actions.setWebpackConfig(config)
 }
