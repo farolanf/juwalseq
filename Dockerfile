@@ -4,8 +4,12 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm i && cd frontend && npm i
+RUN npm i 
 
-EXPOSE 3000 8000
+RUN cd frontend && npm i
 
-CMD ["npm", "run", "container"]
+RUN cd frontend && npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:prod"]
