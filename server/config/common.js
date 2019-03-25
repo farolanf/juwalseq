@@ -92,19 +92,24 @@ module.exports = {
     tempPath: path.resolve(__dirname, '../tmp'),
     imageSizes: [
       {
-        name: 'small',
+        name: 'xs',
+        width: 128,
+        height: 128,
+      },
+      {
+        name: 'sm',
         width: 320,
         height: 320,
       },
       {
-        name: 'medium',
+        name: 'md',
         width: 640,
         height: 640,
       },
       {
-        name: 'large',
-        width: 1140,
-        height: 1140,
+        name: 'lg',
+        width: 1280,
+        height: 1280,
       }
     ],
     parallel: 4,
