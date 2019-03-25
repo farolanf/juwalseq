@@ -54,6 +54,7 @@
     "sequelize-cli": "^5.4.0",
     "serve-static": "^1.13.2",
     "short-uuid": "^3.1.0",
+    "sqlite3": "^4.0.6",
     "uploadfs": "^1.13.0",
     "yup": "^0.26.10"
   },
