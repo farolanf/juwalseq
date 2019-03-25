@@ -64,12 +64,15 @@ module.exports = function (app, config) {
   })
 
   app.get('/devel/testupload', (req, res) => {
-    const filePath = path.resolve(__dirname, '../../../challenge-files/designs/Mobile Login.png')
+    const filePath = path.resolve(__dirname, 'test.jpg')
     async.parallel([
-      cb => app.modules.uploadfs.copyIn(filePath, '/assets/tshirtshop.png', cb),
-      cb => app.modules.uploadfs.copyImageIn(filePath, '/img/tshirtshop.png', cb),
-    ], err => {
-      err ? handleError(err, res) : res.sendStatus(200)
+      cb => app.modules.uploadfs.copyIn(filePath, '/assets/test.jpg', cb),
+      cb => app.modules.uploadfs.copyImageIn(filePath, '/img/test.jpg', cb),
+    ], (err, results) => {
+      err ? handleError(err, res) : res.send({
+        url: app.modules.uploadfs.getUrl(),
+        results,
+      })
     })
   })
 }
