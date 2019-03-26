@@ -31,7 +31,16 @@ app.use(
   express.static('server/uploads', {
     index: false,
     maxAge: '1d'
-  })
+  }),
+  (req, res, next) => {
+    if (req.path.startsWith(config.app.apiBase)) {
+      return next()
+    }
+    const dir = process.env.NODE_ENV === 'production' ? 'public' : 'frontend/public'
+    res.sendFile(dir + '/index.html', {
+      root: '.'
+    })
+  }
 )
 
 require('./modules')(app, config)
