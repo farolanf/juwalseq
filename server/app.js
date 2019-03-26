@@ -1,9 +1,11 @@
 require('module-alias/register')
 const url = require('url')
 const path = require('path')
-require('dotenv').config({
-  path: path.resolve(__dirname, '../.env.' + (process.env.NODE_ENV || 'development'))
-})
+if (process.env.LOAD_ENV || process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({
+    path: path.resolve(__dirname, '../.env.' + (process.env.NODE_ENV || 'development'))
+  })
+}
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
