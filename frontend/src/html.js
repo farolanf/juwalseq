@@ -15,7 +15,6 @@ export default function HTML(props) {
         <link href="/uikit/uikit.min.css" rel="stylesheet" />
         <link href="/tailwind.css" rel="stylesheet" />
         {props.headComponents}
-        <link href="/global.css" rel="stylesheet" />
         <script src="/uikit/uikit.min.js"></script>
         <script src="/uikit/uikit-icons.min.js"></script>
       </head>
