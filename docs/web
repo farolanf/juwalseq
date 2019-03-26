@@ -1,0 +1,16 @@
+S3
+  store versioned files
+  upload website with:
+    aws s3 sync <localdir> <s3uri> --acl public-read
+    aws cloudfront create-invalidation --distribution-id <id> --paths '/index.html'
+
+Cloudfront 
+  caches all objects for 1 year
+  / points to index.html on S3
+  403 and 404 respond with /index.html on S3 with status 200
+
+API Host
+  in containers on ECS
+
+Domain
+  points to cloudfront distribution domain
