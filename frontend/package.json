@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@material-ui/core": "^3.9.2",
     "autosize": "^4.0.2",
     "axios": "^0.18.0",
@@ -55,7 +56,8 @@
     "serve": "gatsby serve",
     "tailwind": "tailwind build tailwind.css -c tailwind.js -o static/tailwind.css; cp static/tailwind.css public/tailwind.css",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "deploy": "npm run build && aws s3 sync public s3://juwal-web --acl public-read && aws cloudfront create-invalidation --distribution-id E2YSGE4LW1C9FA --paths '/index.html'"
   },
   "watch": {
     "tailwind": {
