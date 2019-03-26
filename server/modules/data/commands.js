@@ -1,16 +1,14 @@
 /* eslint-disable no-console */
-const path = require('path')
-const { exec } = require('child_process')
 const prompts = require('prompts')
 
 const db = require('../../sequelize')
 const cmd = require('../../lib/cmd')
 
-const env = process.env.NODE_ENV || 'development'
-const sqlConfig = require('../../sequelize/config/config.json')[env]
+const seed = require('@db/seeders/init')
 
 cmd.add('data', 'initdb', 'Initialize database', initDb)
 cmd.add('data', 'populate', 'Populate database', populateDb)
+cmd.add('data', 'reset', 'Init and populate database', resetDb)
 cmd.add('data', 'create-admin', 'Create admin user', createAdmin)
 cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 
@@ -19,17 +17,15 @@ async function initDb(program, argv) {
   await db.sequelize.sync({ force: true })
 }
 
-function populateDb(program, argv) {
+async function populateDb(program, argv) {
   program.parse(argv)
-  return importSql(path.resolve(__dirname, 'seeds/juwal_dev.sql'))
+  await seed.up(db.sequelize.getQueryInterface(), db.Sequelize)
 }
 
-function importSql(sqlPath) {
-  const { username, password, database } = sqlConfig
-  const cmd = `cat ${sqlPath} | mysql -s -u${username} -p${password} ${database}`
-  return new Promise(resolve => {
-    exec(cmd, () => resolve())
-  })
+async function resetDb(program, argv) {
+  program.parse(argv)
+  await db.sequelize.sync({ force: true })
+  await seed.up(db.sequelize.getQueryInterface(), db.Sequelize)
 }
 
 async function createAdmin(program, argv) {
