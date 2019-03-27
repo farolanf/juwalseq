@@ -3,18 +3,19 @@ import { compose } from 'lodash/fp'
 // import script from './script'
 import location from './location'
 // import mui from './mui'
-// import layout from './layout'
 
-export default element => {
-  if (element.props['*'].startsWith('admin')) {
-    return element
-  }
-  return compose(
-    // devTools,
-    // script,
-    // mui,
-    location,
-    // disable layout while in dev, as it needed full reload on change
-    // layout,
-  )(element)
+// disable layout in development to avoid full reload on change
+let layout
+if (process.env.NODE_ENV === 'production') {
+  layout = require('./layout').default
 }
+
+const wrappers = [
+  // devTools,
+  // script,
+  // mui,
+  location,
+  layout,
+].filter(x => x)
+
+export default compose(wrappers)

@@ -29,18 +29,25 @@ const Page = ({
   )
 }
 
-const App = () => (
-  <Layout>
-    <Router>
-      <Session path='/session' />
-      <Page path='/search' component={Search} title='Cari' />
-      <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
-      <Page path='/' component={FrontPage} title='Depan' />
-      <Test path='/test' />
-      <NotFound path='/*' />
-    </Router>
-  </Layout>
+const AppRoutes = () => (
+  <Router>
+    <Test path='/test' />
+    <Page path='/' component={FrontPage} title='Depan' />
+    <Page path='/search' component={Search} title='Cari' />
+    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+    <Session path='/session' />
+    <NotFound path='/*' />
+  </Router>
 )
+
+// put Layout in page component on development for hot reload to work on Layout changes
+const App = () => process.env.NODE_ENV === 'production' 
+  ? <AppRoutes />
+  : (
+    <Layout>
+      <AppRoutes />
+    </Layout>
+  )
 
 export const Routes = () => (
   <Router>
