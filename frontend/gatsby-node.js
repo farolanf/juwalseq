@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 const path = require('path')
+const webpack = require('webpack')
 
 exports.onCreatePage = ({ page }) => {
   if (page.jsonName === 'index') {
@@ -11,7 +12,7 @@ exports.onCreatePage = ({ page }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
   const config = {
     resolve: {
       alias: {
@@ -32,9 +33,22 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
         {
           test: /react-dragula|react-file-drop/,
           use: loaders.null(),
+        },
+        {
+          test: /uikit\//,
+          use: 'imports-loader?window,MutationObserver=>window.MutationObserver,Element=>window.Element'
         }
       ]
-    } 
+    }
+    config.plugins = [
+      new webpack.ProvidePlugin({
+        UIkit: 'uikit-ssr',
+      })
+    ]
   }
+  getConfig().module.rules.unshift({
+    test: /\.node$/,
+    use: 'node-loader',
+  })
   actions.setWebpackConfig(config)
 }
