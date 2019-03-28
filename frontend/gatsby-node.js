@@ -26,6 +26,11 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
         $const: path.resolve(__dirname, 'src/const'),
       },
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        UIkit: 'uikit/dist/js/uikit.min'
+      })
+    ]
   }
   if (stage === 'build-html') {
     config.module = {

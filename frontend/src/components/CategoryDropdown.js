@@ -36,7 +36,7 @@ const CategoryDropdown = ({ mobile }) => {
   }
 
   return (
-    <div data-uk-dropdown='offset: 0' ref={setRef}>
+    <div className='uk-dropdown' data-uk-dropdown='offset: 0' ref={setRef}>
       <ul className='uk-nav uk-dropdown-nav uk-nav-default uk-nav-parent-icon' data-uk-nav>
         {department.departments.map(department => (
           <li key={department.id} className='uk-parent'>

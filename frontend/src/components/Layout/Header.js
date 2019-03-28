@@ -54,7 +54,7 @@ const PageHeader = ({
   }
 
   return (
-    <nav id='topbar' className='uk-navbar-container uk-navbar-transparent' data-uk-navbar>
+    <nav id='topbar' className='uk-navbar uk-navbar-container uk-navbar-transparent' data-uk-navbar>
       <div className="uk-navbar-left">
         <Link to='/' className="uk-navbar-item uk-logo logo text-3xl">{siteTitle}</Link>
         <ul className="uk-navbar-nav">

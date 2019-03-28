@@ -250,7 +250,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
     <div className={className}>
       {label && <label className='uk-form-label'>{label}</label>}
       <div className='uk-form-controls'>
-        <div className='uk-grid-small uk-child-width-1-4@s' ref={setSortableRef} data-uk-grid>
+        <div className='uk-grid uk-grid-small uk-child-width-1-4@s' ref={setSortableRef} data-uk-grid>
           {images.map(item => (
             <div key={item.key} data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
               {renderItem(item)}

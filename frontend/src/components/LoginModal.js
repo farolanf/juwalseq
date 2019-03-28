@@ -72,7 +72,7 @@ const LoginModal = ({ mobile }) => {
   }
 
   return (
-    <div id="login-modal" data-uk-modal ref={setRef}>
+    <div id="login-modal" className='uk-modal' data-uk-modal ref={setRef}>
       <div className='uk-modal-dialog uk-modal-body uk-width-large'>
         <h2 className='uk-modal-title'>{_.upperFirst(mode)}</h2>
         <button className='uk-modal-close-default' type='button' data-uk-close 
