@@ -28,21 +28,15 @@ app.use(bodyParser.json({
 }))
 
 app.use(
-  express.static('public'),
-  express.static('frontend/public'),
   express.static('server/uploads', {
     index: false,
     maxAge: '1d'
   })
 )
 
-require('./modules')(app, config)
+// for health check
+app.get('/_health', (req, res) => res.sendStatus(204))
 
-app.get('*', (req, res) => {
-  const dir = process.env.NODE_ENV === 'production' ? 'public' : 'frontend/public'
-  res.sendFile(dir + '/index.html', {
-    root: '.'
-  })
-})
+require('./modules')(app, config)
 
 module.exports = app
