@@ -5,6 +5,7 @@
  */
 const path = require('path')
 const webpack = require('webpack')
+const _ = require('lodash')
 
 exports.onCreatePage = ({ page }) => {
   if (page.jsonName === 'index') {
@@ -28,7 +29,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
     },
     plugins: [
       new webpack.ProvidePlugin({
-        UIkit: 'uikit/dist/js/uikit.min'
+        UIkit: 'uikit-ssr'
       })
     ]
   }
@@ -39,17 +40,26 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
           test: /react-dragula|react-file-drop/,
           use: loaders.null(),
         },
-        {
-          test: /uikit\//,
-          use: 'imports-loader?window,MutationObserver=>window.MutationObserver,Element=>window.Element'
-        }
       ]
     }
-    config.plugins = [
-      new webpack.ProvidePlugin({
-        UIkit: 'uikit-ssr',
-      })
-    ]
+  }
+  if (stage === 'build-html' || stage === 'develop-html') {
+    _.merge(config, {
+      module: {
+        rules: []
+      }
+    })
+    config.module.rules.push(
+      {
+        // use sync Promise to get UIkit modifications immediately
+        test: require.resolve('jsdom/lib/jsdom/living/helpers/mutation-observers'),
+        use: 'imports-loader?Promise=>require("synchronous-promise").SynchronousPromise'
+      },
+      {
+        test: /uikit\/.*\.js$/,
+        use: 'imports-loader?window,MutationObserver=>window.MutationObserver,Element=>window.Element,requestAnimationFrame=>function(fn){fn()},window.Promise=>require("synchronous-promise").SynchronousPromise'
+      }
+    )
   }
   getConfig().module.rules.unshift({
     test: /\.node$/,

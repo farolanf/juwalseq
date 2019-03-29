@@ -45,6 +45,7 @@
     "react-file-drop": "^0.2.7",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.1.1",
+    "synchronous-promise": "^2.0.6",
     "tailwindcss": "^0.7.4",
     "uikit": "^3.0.3",
     "uikit-ssr": "file:./packages/uikit-ssr",

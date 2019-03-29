@@ -1,4 +1,5 @@
 import React from 'react'
+import { renderToString } from 'react-dom/server'
 
 import './init'
 import _wrapRootElement from './wrapRootElement'
@@ -28,4 +29,16 @@ export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) =>
     <link key='preconnectFonts' href="http://fonts.gstatic.com" rel="preconnect" />
   )
   replaceHeadComponents(components)
+}
+
+export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  const body = renderToString(bodyComponent)
+
+  const window = require('window')
+
+  // this will trigger UIkit's observers
+  window.document.body.outerHTML = body
+
+  const result = window.document.body.outerHTML
+  replaceBodyHTMLString(result)
 }
