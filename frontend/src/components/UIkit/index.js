@@ -1,8 +1,15 @@
 import React from 'react'
 import Base from './Base'
 
-const component = (name, options = { Component: 'div' }) => React.forwardRef(
-  (props, ref) => <Base ukComponent={name} baseOptions={options} ref={ref} {...props} />
+const createProxyComponent = (name, baseOptions = { Component: 'div' }) => React.forwardRef(
+  ({ freezeHTML, icon, options, ...props }, ref) => {
+    if (typeof freezeHTML === 'undefined') {
+      freezeHTML = name === 'icon'
+    }
+    baseOptions = { ...baseOptions, freezeHTML }
+    options = { ...options, icon }
+    return <Base ukComponent={name} baseOptions={baseOptions} options={options} ref={ref} {...props} />
+  }
 )
 
 const components = [
@@ -12,15 +19,18 @@ const components = [
   ['toggle', {
     Component: 'a'
   }],
+  ['icon', {
+    Component: 'span'
+  }],
 ]
 
 export default components.reduce(
   (obj, name) => {
-    const options = Array.isArray(name) ? name[1] : undefined
+    const baseOptions = Array.isArray(name) ? name[1] : undefined
     name = Array.isArray(name) ? name[0] : name
     return { 
       ...obj, 
-      [name]: component(name, options)
+      [name]: createProxyComponent(name, baseOptions)
     }
   },
   {}

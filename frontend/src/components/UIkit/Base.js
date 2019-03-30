@@ -14,6 +14,8 @@ const Base = ({ ukComponent, baseOptions, options, events, className, children, 
 
   const _className = `uk-${htmlName}`
 
+  const dangerouslySetInnerHTML = baseOptions.freezeHTML ? { __html: '' } : undefined
+
   if (!className) {
     className = _className
   } else if (!className.includes(_className)) {
@@ -42,7 +44,7 @@ const Base = ({ ukComponent, baseOptions, options, events, className, children, 
   }
 
   return (
-    <Component className={className} ref={setRef} {...props} {...{[`data-uk-${htmlName}`]: optionsStr}}>
+    <Component className={className} ref={setRef} {...props} {...{[`data-uk-${htmlName}`]: optionsStr}} dangerouslySetInnerHTML={dangerouslySetInnerHTML}>
       {children}
     </Component>
   )
