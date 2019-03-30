@@ -21,6 +21,12 @@ export const wrapPageElement = ({ element }) => {
   return _wrapPageElement(element)
 }
 
+export const onRenderBody = ({ setBodyAttributes }) => {
+  setBodyAttributes({
+    className: 'screen-size'
+  })
+}
+
 export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
   const components = getHeadComponents()
   components.unshift(
