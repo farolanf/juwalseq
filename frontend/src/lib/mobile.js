@@ -1,34 +1,29 @@
-import React from 'react'
-import { observable, action } from 'mobx'
-import { observer } from 'mobx-react-lite'
+import React, { useState, useEffect } from 'react'
 
 import { isWidthDown } from '@material-ui/core/withWidth'
 export { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
 
 import tailwind from '$prj/tailwind'
 
+const screens = Object.keys(tailwind.screens).reverse()
+
 function getWidth () {
   const w = document.body.clientWidth
-  return Object.keys(tailwind.screens).reverse().find(key => {
-    return parseInt(tailwind.screens[key]) <= w
-  })
+  return screens.find(key => parseInt(tailwind.screens[key]) <= w)
 }
 
-const data = observable({
-  width: getWidth()
-})
-
-const updateWidth = action('mobile: update width', () => {
-  data.width = getWidth()
-})
-
-window.addEventListener('load', updateWidth)
-window.addEventListener('resize', updateWidth)
-
-const withMobile = component => observer(props => {
-  const width = data.width
+const withMobile = Component => props => {
+  const [width, setWidth] = useState(getWidth())
+  const [updateWidth] = useState(() => () => setWidth(getWidth()))
   const mobile = isWidthDown('sm', width)
-  return React.createElement(component, { ...props, width, mobile })
-})
+
+  useEffect(() => {
+    updateWidth()
+    window.addEventListener('resize', updateWidth)
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [])
+
+  return <Component width={width} mobile={mobile} {...props} />
+}
 
 export default withMobile
