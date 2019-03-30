@@ -5,26 +5,28 @@ import { observer } from 'mobx-react-lite'
 import { isWidthDown } from '@material-ui/core/withWidth'
 export { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
 
-const data = observable({
-  order: 0
-})
+import tailwind from '$prj/tailwind'
 
-const updateOrder = action('mobile: update order', () => {
-  data.order = getComputedStyle(document.body).order
-})
-
-window.addEventListener('resize', updateOrder)
-
-const widthMap = {
-  0: 'xs',
-  1: 'sm',
-  2: 'md',
-  3: 'lg',
-  4: 'xl',
+function getWidth () {
+  const w = document.body.clientWidth
+  return Object.keys(tailwind.screens).reverse().find(key => {
+    return parseInt(tailwind.screens[key]) <= w
+  })
 }
 
+const data = observable({
+  width: getWidth()
+})
+
+const updateWidth = action('mobile: update width', () => {
+  data.width = getWidth()
+})
+
+window.addEventListener('load', updateWidth)
+window.addEventListener('resize', updateWidth)
+
 const withMobile = component => observer(props => {
-  const width = widthMap[data.order]
+  const width = data.width
   const mobile = isWidthDown('sm', width)
   return React.createElement(component, { ...props, width, mobile })
 })
