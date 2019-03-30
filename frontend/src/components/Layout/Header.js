@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite'
 import CategoryDropdown from '$comp/CategoryDropdown'
 import AccountDropdown from '$comp/AccountDropdown'
 import LoginModal from '$comp/LoginModal'
+import Uk from '$comp/UIkit'
 
 import { PREFIX } from '$const'
 import useStore from '$useStore'
@@ -82,7 +83,7 @@ const PageHeader = ({
           </li>
           <li hidden={user.loggedIn}>
             <a data-uk-toggle='#login-modal'>
-              <span data-uk-icon='sign-in' />
+              <Uk.icon icon='sign-in' />
               {!mobile && <span className='ml-1'>Masuk</span>}
             </a>
             <LoginModal />

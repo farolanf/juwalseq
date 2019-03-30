@@ -1,8 +1,3 @@
-import UIkit from 'uikit/dist/js/uikit.min'
-import UIkitIcons from 'uikit/dist/js/uikit-icons.min'
-
-UIkit.use(UIkitIcons)
-
 import React, { } from "react"
 import { Router } from '@reach/router'
 

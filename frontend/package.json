@@ -57,7 +57,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build --prefix-paths",
+    "build": "gatsby build",
+    "build:dev": "gatsby build --verbose --no-uglify",
     "develop": "gatsby develop -H 0.0.0.0",
     "start": "npm run develop",
     "serve": "gatsby serve",
@@ -65,7 +66,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "watch": "npm-watch",
     "deploy": "rm public -rf && npm run build && npm run deploy:push && npm run deploy:invalidate",
-    "deploy:push": "aws s3 sync public s3://juwal-web --acl public-read",
+    "deploy:push": "aws s3 sync public s3://juwal-web --acl public-read --delete",
     "deploy:invalidate": "aws cloudfront create-invalidation --distribution-id E2YSGE4LW1C9FA --paths '/*'"
   },
   "watch": {
