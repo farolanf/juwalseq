@@ -1,21 +1,28 @@
 .btn {
-  @apply border-0 outline-none rounded shadow-md px-2 py-1 cursor-pointer;
+  @apply border-0 rounded px-4 py-1 cursor-pointer bg-transparent text-black;
+  &:hover {
+    @apply bg-grey-light;
+  }
+  @mixin margin-auto-x 1;
 }
 
 .btn:focus {
   @apply outline-none;
 }
 
-.btn-blue {
-  @apply dark bg-blue;
+.btn-dark {
+  @apply text-white;
+  &:hover {
+    @apply bg-grey-darker;
+  }
 }
 
-.btn-blue:hover {
-  @apply bg-blue-dark;
+.btn-primary {
+  @apply bg-$(primary) text-$(text-primary);
 }
 
-.btn-blue:active {
-  @apply bg-blue;
+.btn-primary:hover {
+  @apply bg-$(primary)-dark;
 }
 
 .navbar-btn {
