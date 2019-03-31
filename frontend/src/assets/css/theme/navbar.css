@@ -1,8 +1,8 @@
 .navbar {
   max-width: config('screens.lg');
   @apply flex flex-wrap items-center justify-between mx-4 py-4;
-  @screen lg {
-    @apply mx-auto px-4;
+  @screen md {
+    @apply justify-start mx-auto px-4;
   }
 }
 
@@ -16,18 +16,32 @@
   @mixin margin-auto-x;
 }
 
+.navbar-right {
+  @apply ml-auto;
+}
+
 .navbar-collapse {
-  @apply hidden w-full;
-  @screen md {
-    @apply block;
-  }
+  @apply w-full flex-col flex-grow hidden;
   .navbar.active & {
-    @apply block;
+    @apply flex;
   }
-  .navbar.active & > * {
-    @apply block mt-4;
+  @media (max-width: config('screens.md')) {
+    & .navbar-link, & .navbar-btn {
+      @apply block w-full py-2 px-0 mx-0;
+      &:first-child {
+        @apply mt-2;
+      }
+    }
+    & .navbar-right {
+      @apply ml-0;
+      & .navbar-link, & .navbar-btn {
+        &:first-child {
+          @apply mt-0;
+        }
+      }
+    }
   }
-  @screen lg {
-    @apply w-auto;
+  @screen md {
+    @apply flex flex-row items-center w-auto;
   }
 }

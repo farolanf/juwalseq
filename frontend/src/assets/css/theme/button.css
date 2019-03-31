@@ -19,10 +19,7 @@
 }
 
 .navbar-btn {
-  @apply btn bg-transparent shadow-none;
+  @apply btn bg-transparent shadow-none px-2 py-1 text-left;
   @mixin theme navbar;
-  @mixin margin-auto-x;
-  .navbar.active .navbar-collapse & {
-    @apply -ml-2;
-  }
+  @mixin margin-auto-x 2;
 }

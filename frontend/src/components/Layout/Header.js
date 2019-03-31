@@ -12,7 +12,6 @@ import { observer } from 'mobx-react-lite'
 import { PREFIX } from '$const'
 import useStore from '$useStore'
 import withLocation from '$lib/location'
-import withMobile from '$lib/mobile'
 
 const MenuDropdown = () => {
   const [ref, setRef] = useState()
@@ -32,14 +31,13 @@ const MenuDropdown = () => {
 }
 
 const PageHeader = ({
-  mobile,
   siteTitle,
 }) => {
-  const [expand, setExpand] = useState(false)
+  const [open, setOpen] = useState(false)
   const { user } = useStore()
   const [query, setQuery] = useState('')
 
-  const toggleNavbar = () => setExpand(!expand)
+  const toggleNavbar = () => setOpen(!open)
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -51,7 +49,7 @@ const PageHeader = ({
 
   return (
     <nav className='bg-orange'>
-      <div className={cn('navbar navbar-dark', expand && 'active')}>
+      <div className={cn('navbar navbar-dark', open && 'active')}>
         <div className='mr-6'>
           <Link to='/' className='navbar-logo'>{siteTitle}</Link>
         </div>
@@ -63,17 +61,17 @@ const PageHeader = ({
         <div className='navbar-collapse'>
           <a className='navbar-link'>Kategori</a>
           <a className='navbar-link'>Diskon</a>
-        </div>
-        <div className='navbar-collapse navbar-right'>
-          <Link to='/pasang-iklan' className='navbar-link m-ax-4'>Pasang iklan</Link>
-          <button className={cn('navbar-btn', user.loggedIn && 'hidden')}>
-            <i className='fa fa-sign-in hidden lg:inline' />
-            <span className='lg:hidden'>Masuk</span>
-          </button>
-          <button className={cn('navbar-btn', !user.loggedIn && 'hidden')}>
-            <i className='fa fa-user hidden lg:inline' />
-            <span className='lg:hidden'>Akun</span>
-          </button>
+          <div className='navbar-right'>
+            <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
+            <button className={cn('navbar-btn', user.loggedIn && 'hidden')}>
+              <i className='fa fa-sign-in hidden md:inline' />
+              <span className='md:hidden'>Masuk</span>
+            </button>
+            <button className={cn('navbar-btn', !user.loggedIn && 'hidden')}>
+              <i className='fa fa-user hidden md:inline' />
+              <span className='md:hidden'>Akun</span>
+            </button>
+          </div>
         </div>
       </div>
     </nav>
@@ -90,6 +88,5 @@ PageHeader.defaultProps = {
 
 export default compose(
   withLocation,
-  withMobile,
   observer,
 )(PageHeader)
