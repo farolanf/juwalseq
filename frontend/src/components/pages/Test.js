@@ -1,15 +1,8 @@
 import React from 'react'
 import Cropper from 'react-cropper'
-import Uk from '$comp/UIkit'
 
 const Test = () => (
   <div>
-    <a>View</a>
-    <Uk.drop events={{ show: () => console.log('show'), hidden: () => console.log('hidden') }}>
-      <div className='uk-card uk-card-default uk-card-body'>
-        Hey  
-      </div>
-    </Uk.drop>    
   </div>
 )
 

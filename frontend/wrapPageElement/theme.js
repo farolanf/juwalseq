@@ -1,11 +1,12 @@
 import React from 'react'
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeContext } from '$lib/theme'
+
 import theme from '$src/theme'
 
 const wrapRootElement = element => (
-  <MuiThemeProvider theme={theme}>
+  <ThemeContext.Provider value={theme}>
     {element}
-  </MuiThemeProvider>
+  </ThemeContext.Provider>
 )
 
 export default wrapRootElement

@@ -4,8 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 const path = require('path')
-const webpack = require('webpack')
-const _ = require('lodash')
 
 exports.onCreatePage = ({ page }) => {
   if (page.jsonName === 'index') {
@@ -13,7 +11,7 @@ exports.onCreatePage = ({ page }) => {
   }
 }
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   const config = {
     resolve: {
       alias: {
@@ -27,11 +25,6 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
         $const: path.resolve(__dirname, 'src/const'),
       },
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        UIkit: 'uikit-ssr'
-      })
-    ]
   }
   if (stage === 'build-html') {
     config.module = {
@@ -43,27 +36,5 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions, getConfig }) => {
       ]
     }
   }
-  if (stage === 'build-html' || stage === 'develop-html') {
-    _.merge(config, {
-      module: {
-        rules: []
-      }
-    })
-    config.module.rules.push(
-      {
-        // use sync Promise to get UIkit modifications immediately
-        test: require.resolve('jsdom/lib/jsdom/living/helpers/mutation-observers'),
-        use: 'imports-loader?Promise=>require("synchronous-promise").SynchronousPromise'
-      },
-      {
-        test: /uikit\/.*\.js$/,
-        use: 'imports-loader?window,MutationObserver=>window.MutationObserver,Element=>window.Element,requestAnimationFrame=>function(fn){fn()},window.Promise=>require("synchronous-promise").SynchronousPromise'
-      }
-    )
-  }
-  getConfig().module.rules.unshift({
-    test: /\.node$/,
-    use: 'node-loader',
-  })
   actions.setWebpackConfig(config)
 }

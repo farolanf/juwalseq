@@ -8,9 +8,9 @@ import NotFound from '$comp/pages/NotFound'
 import Admin from '$comp/pages/Admin'
 import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
-import Search from '$comp/pages/Search'
-import PasangIklan from '$comp/pages/PasangIklan'
-import Test from '$comp/pages/Test'
+// import Search from '$comp/pages/Search'
+// import PasangIklan from '$comp/pages/PasangIklan'
+// import Test from '$comp/pages/Test'
 
 const Page = ({ 
   component, 
@@ -31,10 +31,10 @@ const Page = ({
 
 const AppRoutes = () => (
   <Router>
-    <Test path='/test' />
+    {/* <Test path='/test' /> */}
     <Page path='/' component={FrontPage} title='Depan' />
-    <Page path='/search' component={Search} title='Cari' />
-    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+    {/* <Page path='/search' component={Search} title='Cari' /> */}
+    {/* <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' /> */}
     <Session path='/session' />
     <NotFound path='/*' />
   </Router>

@@ -1,5 +1,4 @@
 import React from 'react'
-import { renderToString } from 'react-dom/server'
 
 import './init'
 import _wrapRootElement from './wrapRootElement'
@@ -23,22 +22,12 @@ export const wrapPageElement = ({ element }) => {
 
 export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
   const components = getHeadComponents()
+  
   components.unshift(
     <title key='siteTitle'>{config.siteMetadata.title}</title>,
     <link key='preconnectApi' href={process.env.GATSBY_API_HOST} rel="preconnect" />,
     <link key='preconnectFonts' href="http://fonts.gstatic.com" rel="preconnect" />
   )
+
   replaceHeadComponents(components)
-}
-
-export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-  const body = renderToString(bodyComponent)
-
-  const window = require('window')
-
-  // this will trigger UIkit's observers
-  window.document.body.outerHTML = body
-
-  const result = window.document.body.outerHTML
-  replaceBodyHTMLString(result)
 }
