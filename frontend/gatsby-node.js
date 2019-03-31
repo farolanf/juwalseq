@@ -4,6 +4,7 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 const path = require('path')
+const webpack = require('webpack')
 
 exports.onCreatePage = ({ page }) => {
   if (page.jsonName === 'index') {
@@ -25,6 +26,11 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
         $const: path.resolve(__dirname, 'src/const'),
       },
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        cn: 'classnames',
+      })
+    ]
   }
   if (stage === 'build-html') {
     config.module = {

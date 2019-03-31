@@ -20,6 +20,20 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [
+          require('postcss-import'),
+          require('postcss-mixins'),
+          require('postcss-simple-vars'),
+          require('tailwindcss')('./tailwind.js'),
+          require('postcss-nested')({
+            bubble: ['screen'],
+          }),
+        ]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

@@ -1,0 +1,21 @@
+@define-mixin margin-auto-x $default: 2 {
+  @apply mr-$(default);
+  &.m-ax-1 {
+    @apply mr-1;
+  }
+  &.m-ax-4 {
+    @apply mr-4;
+  }
+  &.m-ax-6 {
+    @apply mr-6;
+  }
+  &.m-ax-8 {
+    @apply mr-8;
+  }
+  &.m-ax-16 {
+    @apply mr-16;
+  }
+  &:last-child {
+    @apply mr-0;
+  }
+}

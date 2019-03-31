@@ -6,6 +6,7 @@ const screens = Object.keys(tailwind.screens)
 const screensReverse = screens.reverse()
 
 const isWidthDown = (breakpoint, width) => {
+  if (!screens.includes(width)) return true
   return screens.indexOf(width) <= screens.indexOf(breakpoint)
 }
 

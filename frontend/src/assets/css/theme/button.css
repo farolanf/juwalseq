@@ -1,0 +1,28 @@
+.btn {
+  @apply border-0 outline-none rounded shadow-md px-2 py-1 cursor-pointer;
+}
+
+.btn:focus {
+  @apply outline-none;
+}
+
+.btn-blue {
+  @apply dark bg-blue;
+}
+
+.btn-blue:hover {
+  @apply bg-blue-dark;
+}
+
+.btn-blue:active {
+  @apply bg-blue;
+}
+
+.navbar-btn {
+  @apply btn bg-transparent shadow-none;
+  @mixin theme navbar;
+  @mixin margin-auto-x;
+  .navbar.active .navbar-collapse & {
+    @apply -ml-2;
+  }
+}

@@ -45,6 +45,7 @@ let defaultConfig = require('tailwindcss/defaultConfig')()
 
 let colors = {
   'transparent': 'transparent',
+  'inherit': 'inherit',
 
   'black': '#22292f',
   'grey-darkest': '#3d4852',
@@ -167,7 +168,6 @@ module.exports = {
   */
 
   screens: {
-    'xs': '0px',
     'sm': '640px',
     'md': '960px',
     'lg': '1200px',

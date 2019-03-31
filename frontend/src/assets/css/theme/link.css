@@ -1,0 +1,8 @@
+.link {
+}
+
+.navbar-link {
+  @apply no-underline cursor-pointer;
+  @mixin theme navbar;
+  @mixin margin-auto-x 4;
+}

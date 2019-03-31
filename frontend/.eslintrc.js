@@ -11,9 +11,9 @@ module.exports = {
     ecmaVersion: 8, // optional, recommended 6+
   },
   globals: {
+    cn: true,
     tw: true,
     paypal: true,
-    UIkit: true,
   },
   env: {
     browser: true

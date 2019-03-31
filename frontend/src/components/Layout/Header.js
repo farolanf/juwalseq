@@ -31,18 +31,15 @@ const MenuDropdown = () => {
   )
 }
 
-const NavBar = () => (
-  <nav className='flex items-center'>
-
-  </nav>
-)
-
 const PageHeader = ({
   mobile,
   siteTitle,
 }) => {
+  const [expand, setExpand] = useState(false)
   const { user } = useStore()
   const [query, setQuery] = useState('')
+
+  const toggleNavbar = () => setExpand(!expand)
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -53,43 +50,33 @@ const PageHeader = ({
   }
 
   return (
-    <NavBar title={siteTitle} />
-    // <nav id='topbar' className='uk-navbar uk-navbar-container uk-navbar-transparent' data-uk-navbar>
-    //   <div className="uk-navbar-left">
-    //     <Link to='/' className="uk-navbar-item uk-logo logo text-3xl">{siteTitle}</Link>
-    //     <ul className="uk-navbar-nav">
-    //       <li>
-    //         <a id='category-button'>Kategori</a>
-    //         {/* <CategoryDropdown /> */}
-    //       </li>
-    //     </ul>
-    //   </div>
-    //   <div className="uk-navbar-right">
-    //     <ul className="uk-navbar-nav">
-    //       <li hidden={!mobile}>
-    //         <a data-uk-icon='menu'></a>
-    //         {/* <MenuDropdown /> */}
-    //       </li>
-    //       <li hidden={mobile}>
-    //         <Link to='/pasang-iklan'>Pasang iklan</Link>
-    //       </li>
-    //       <li hidden={!user.loggedIn}>
-    //         <a>
-    //           <span data-uk-icon='user' />
-    //           {!mobile && user.user && <span className='ml-1'>Hai {user.user.username}!</span>}
-    //         </a>
-    //         {/* <AccountDropdown /> */}
-    //       </li>
-    //       <li hidden={user.loggedIn}>
-    //         <a data-uk-toggle='#login-modal'>
-    //           {/* <Uk.icon icon='sign-in' /> */}
-    //           {!mobile && <span className='ml-1'>Masuk</span>}
-    //         </a>
-    //         {/* <LoginModal /> */}
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </nav>
+    <nav className='bg-orange'>
+      <div className={cn('navbar navbar-dark', expand && 'active')}>
+        <div className='mr-6'>
+          <Link to='/' className='navbar-logo'>{siteTitle}</Link>
+        </div>
+        <div className='md:hidden'>
+          <button className='navbar-btn' onClick={toggleNavbar}>
+            <i className='fa fa-bars' />
+          </button>
+        </div>
+        <div className='navbar-collapse'>
+          <a className='navbar-link'>Kategori</a>
+          <a className='navbar-link'>Diskon</a>
+        </div>
+        <div className='navbar-collapse navbar-right'>
+          <Link to='/pasang-iklan' className='navbar-link m-ax-4'>Pasang iklan</Link>
+          <button className={cn('navbar-btn', user.loggedIn && 'hidden')}>
+            <i className='fa fa-sign-in hidden lg:inline' />
+            <span className='lg:hidden'>Masuk</span>
+          </button>
+          <button className={cn('navbar-btn', !user.loggedIn && 'hidden')}>
+            <i className='fa fa-user hidden lg:inline' />
+            <span className='lg:hidden'>Akun</span>
+          </button>
+        </div>
+      </div>
+    </nav>
   )
 }
 
