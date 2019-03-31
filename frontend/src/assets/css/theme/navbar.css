@@ -1,3 +1,7 @@
+.navbar-container {
+  @apply bg-$(primary);
+}
+
 .navbar {
   max-width: config('screens.lg');
   @apply flex flex-wrap items-center justify-between mx-4 py-4;
@@ -7,13 +11,16 @@
 }
 
 .navbar-right {
-  @apply ml-auto;
+  @apply flex items-center ml-auto;
 }
 
 .navbar-logo {
-  @apply no-underline text-2xl;
-  @mixin theme navbar;
+  @apply no-underline text-2xl text-white;
   @mixin margin-auto-x;
+  &:hover {
+    @apply text-white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
 }
 
 .navbar-right {
@@ -23,17 +30,17 @@
 .navbar-collapse {
   @apply w-full flex-col flex-grow hidden;
   .navbar.active & {
-    @apply flex;
+    @apply flex -mx-4;
   }
   @media (max-width: config('screens.md')) {
     & .navbar-link, & .navbar-btn {
-      @apply block w-full py-2 px-0 mx-0;
+      @apply block w-full py-2 px-4 mx-0;
       &:first-child {
         @apply mt-2;
       }
     }
     & .navbar-right {
-      @apply ml-0;
+      @apply ml-0 flex flex-col;
       & .navbar-link, & .navbar-btn {
         &:first-child {
           @apply mt-0;

@@ -7,11 +7,12 @@ import { observer } from 'mobx-react-lite'
 
 // import CategoryDropdown from '$comp/CategoryDropdown'
 // import AccountDropdown from '$comp/AccountDropdown'
-// import LoginModal from '$comp/LoginModal'
+import LoginModal from '$comp/LoginModal'
 
 import { PREFIX } from '$const'
 import useStore from '$useStore'
 import withLocation from '$lib/location'
+import { logout } from '$lib/auth'
 
 const MenuDropdown = () => {
   const [ref, setRef] = useState()
@@ -34,10 +35,23 @@ const PageHeader = ({
   siteTitle,
 }) => {
   const [open, setOpen] = useState(false)
+  const [accountOpen, setAccountOpen] = useState(false)
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
   const { user } = useStore()
   const [query, setQuery] = useState('')
 
   const toggleNavbar = () => setOpen(!open)
+
+  const showAccount = () => setAccountOpen(true)
+
+  const showLoginModal = () => setLoginModalOpen(true)
+
+  const hideLoginModal = () => setLoginModalOpen(false)
+
+  const doLogout = () => {
+    setAccountOpen(false)
+    logout()
+  }
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -48,8 +62,8 @@ const PageHeader = ({
   }
 
   return (
-    <nav className='bg-orange'>
-      <div className={cn('navbar navbar-dark', open && 'active')}>
+    <nav className='navbar-container'>
+      <div className={cn('navbar navbar-dark relative', open && 'active')}>
         <div className='mr-6'>
           <Link to='/' className='navbar-logo'>{siteTitle}</Link>
         </div>
@@ -62,18 +76,23 @@ const PageHeader = ({
           <a className='navbar-link'>Kategori</a>
           <a className='navbar-link'>Diskon</a>
           <div className='navbar-right'>
-            <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
-            <button className={cn('navbar-btn', user.loggedIn && 'hidden')}>
+            <a className='navbar-link'>Pasang iklan</a>
+            <a className={cn('navbar-link', user.loggedIn && 'hidden')} onClick={showLoginModal}>
               <i className='fa fa-sign-in hidden md:inline' />
               <span className='md:hidden'>Masuk</span>
-            </button>
-            <button className={cn('navbar-btn', !user.loggedIn && 'hidden')}>
+            </a>
+            <a className={cn('navbar-link', !user.loggedIn && 'hidden')} onClick={showAccount}>
               <i className='fa fa-user hidden md:inline' />
               <span className='md:hidden'>Akun</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
+      <div className='navbar-dropdown' hidden={!accountOpen}>
+        <a>Profil</a>
+        <a onClick={doLogout}>Keluar</a>
+      </div>
+      <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
   )
 }

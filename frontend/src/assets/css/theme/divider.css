@@ -1,0 +1,3 @@
+.divider {
+  @apply border-0 border-t-2 border-solid border-grey-light;
+}

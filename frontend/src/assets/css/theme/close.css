@@ -1,0 +1,16 @@
+.close {
+  @apply block absolute pin-t pin-r m-1 px-2 py-1 cursor-pointer text-lg text-grey rounded;
+  font-size: 2.2rem;
+  line-height: 0.4;
+  height: 24px;
+  box-sizing: content-box;
+  &::before {
+    content: "\000D7";
+  }
+  &:hover {
+    @apply bg-grey-darker text-white;
+  }
+  &:active {
+    @apply bg-grey-dark text-white;
+  }
+}

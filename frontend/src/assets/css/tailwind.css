@@ -3657,6 +3657,18 @@
   opacity: .75;
 }
 
+.opacity-85 {
+  opacity: .85;
+}
+
+.opacity-90 {
+  opacity: .9;
+}
+
+.opacity-95 {
+  opacity: .95;
+}
+
 .opacity-100 {
   opacity: 1;
 }
@@ -3675,6 +3687,18 @@
 
 .hover\:opacity-75:hover {
   opacity: .75;
+}
+
+.hover\:opacity-85:hover {
+  opacity: .85;
+}
+
+.hover\:opacity-90:hover {
+  opacity: .9;
+}
+
+.hover\:opacity-95:hover {
+  opacity: .95;
 }
 
 .hover\:opacity-100:hover {
@@ -5688,6 +5712,10 @@
 
 .flex-last {
   order: 9999;
+}
+
+.pin-tb {
+  top: 100%;
 }
 
 @media (min-width: 640px) {
@@ -9314,6 +9342,18 @@
     opacity: .75;
   }
 
+  .sm\:opacity-85 {
+    opacity: .85;
+  }
+
+  .sm\:opacity-90 {
+    opacity: .9;
+  }
+
+  .sm\:opacity-95 {
+    opacity: .95;
+  }
+
   .sm\:opacity-100 {
     opacity: 1;
   }
@@ -9332,6 +9372,18 @@
 
   .sm\:hover\:opacity-75:hover {
     opacity: .75;
+  }
+
+  .sm\:hover\:opacity-85:hover {
+    opacity: .85;
+  }
+
+  .sm\:hover\:opacity-90:hover {
+    opacity: .9;
+  }
+
+  .sm\:hover\:opacity-95:hover {
+    opacity: .95;
   }
 
   .sm\:hover\:opacity-100:hover {
@@ -11329,6 +11381,10 @@
 
   .sm\:flex-last {
     order: 9999;
+  }
+
+  .sm\:pin-tb {
+    top: 100%;
   }
 }
 
@@ -14956,6 +15012,18 @@
     opacity: .75;
   }
 
+  .md\:opacity-85 {
+    opacity: .85;
+  }
+
+  .md\:opacity-90 {
+    opacity: .9;
+  }
+
+  .md\:opacity-95 {
+    opacity: .95;
+  }
+
   .md\:opacity-100 {
     opacity: 1;
   }
@@ -14974,6 +15042,18 @@
 
   .md\:hover\:opacity-75:hover {
     opacity: .75;
+  }
+
+  .md\:hover\:opacity-85:hover {
+    opacity: .85;
+  }
+
+  .md\:hover\:opacity-90:hover {
+    opacity: .9;
+  }
+
+  .md\:hover\:opacity-95:hover {
+    opacity: .95;
   }
 
   .md\:hover\:opacity-100:hover {
@@ -16971,6 +17051,10 @@
 
   .md\:flex-last {
     order: 9999;
+  }
+
+  .md\:pin-tb {
+    top: 100%;
   }
 }
 
@@ -20598,6 +20682,18 @@
     opacity: .75;
   }
 
+  .lg\:opacity-85 {
+    opacity: .85;
+  }
+
+  .lg\:opacity-90 {
+    opacity: .9;
+  }
+
+  .lg\:opacity-95 {
+    opacity: .95;
+  }
+
   .lg\:opacity-100 {
     opacity: 1;
   }
@@ -20616,6 +20712,18 @@
 
   .lg\:hover\:opacity-75:hover {
     opacity: .75;
+  }
+
+  .lg\:hover\:opacity-85:hover {
+    opacity: .85;
+  }
+
+  .lg\:hover\:opacity-90:hover {
+    opacity: .9;
+  }
+
+  .lg\:hover\:opacity-95:hover {
+    opacity: .95;
   }
 
   .lg\:hover\:opacity-100:hover {
@@ -22613,6 +22721,10 @@
 
   .lg\:flex-last {
     order: 9999;
+  }
+
+  .lg\:pin-tb {
+    top: 100%;
   }
 }
 
@@ -26240,6 +26352,18 @@
     opacity: .75;
   }
 
+  .xl\:opacity-85 {
+    opacity: .85;
+  }
+
+  .xl\:opacity-90 {
+    opacity: .9;
+  }
+
+  .xl\:opacity-95 {
+    opacity: .95;
+  }
+
   .xl\:opacity-100 {
     opacity: 1;
   }
@@ -26258,6 +26382,18 @@
 
   .xl\:hover\:opacity-75:hover {
     opacity: .75;
+  }
+
+  .xl\:hover\:opacity-85:hover {
+    opacity: .85;
+  }
+
+  .xl\:hover\:opacity-90:hover {
+    opacity: .9;
+  }
+
+  .xl\:hover\:opacity-95:hover {
+    opacity: .95;
   }
 
   .xl\:hover\:opacity-100:hover {
@@ -28255,5 +28391,9 @@
 
   .xl\:flex-last {
     order: 9999;
+  }
+
+  .xl\:pin-tb {
+    top: 100%;
   }
 }

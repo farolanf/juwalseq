@@ -8,4 +8,7 @@
   .flex-last {
     order: 9999;
   }
+  .pin-tb {
+    top: 100%;
+  }
 }

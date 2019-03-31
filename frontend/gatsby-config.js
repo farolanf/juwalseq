@@ -25,6 +25,7 @@ module.exports = {
         postCssPlugins: [
           require('postcss-import'),
           require('postcss-mixins'),
+          require('postcss-for'),
           require('postcss-simple-vars'),
           require('tailwindcss')('./tailwind.js'),
           require('postcss-nested')({

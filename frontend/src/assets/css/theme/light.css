@@ -17,8 +17,8 @@
       @apply text-grey-light;
     }
     &:active {
-      text-shadow: 0 0 1px white;
-      @apply text-grey-lightest;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+      @apply text-white;
     }
   }
 }
