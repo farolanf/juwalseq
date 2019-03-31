@@ -1,4 +1,5 @@
 .modal {
+  @apply fixed pin;
   &.active {
     @apply block;
   }
@@ -9,12 +10,9 @@
 }
 
 .modal-dialog {
-  @apply max-w-xs bg-white opacity-100 shadow-lg fixed p-8 rounded;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  @media (max-width: config('screens.md')) {
-    @apply pin rounded-none;
-    transform: translate(0, 0);
+  @apply fixed pin bg-white shadow-lg p-8;
+  @screen md {
+    @apply relative w-full max-w-xs mx-auto rounded;
+    margin-top: 20vh;
   }
 }

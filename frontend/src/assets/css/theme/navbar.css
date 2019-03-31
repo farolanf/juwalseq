@@ -29,21 +29,21 @@
 
 .navbar-collapse {
   @apply w-full flex-col flex-grow hidden;
-  .navbar.active & {
-    @apply flex -mx-4;
-  }
   @media (max-width: config('screens.md')) {
-    & .navbar-link, & .navbar-btn {
-      @apply block w-full py-2 px-4 mx-0;
-      &:first-child {
-        @apply mt-2;
-      }
-    }
-    & .navbar-right {
-      @apply ml-0 flex flex-col;
+    .navbar.active & {
+      @apply flex -mx-4;
       & .navbar-link, & .navbar-btn {
+        @apply block w-full py-2 px-4 mx-0;
         &:first-child {
-          @apply mt-0;
+          @apply mt-2;
+        }
+      }
+      & .navbar-right {
+        @apply ml-0 flex flex-col;
+        & .navbar-link, & .navbar-btn {
+          &:first-child {
+            @apply mt-0;
+          }
         }
       }
     }

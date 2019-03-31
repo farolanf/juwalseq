@@ -24,7 +24,10 @@ const LoginModal = ({ open, onClose }) => {
     setMode(otherMode)
   }
 
-  const onDialogClick = e => e.stopPropagation()
+  const onDialogClick = e => {
+    e.stopPropagation()
+    onClose()
+  }
 
   function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
@@ -51,9 +54,9 @@ const LoginModal = ({ open, onClose }) => {
 
   return (
     <div className='modal' hidden={!open}>
-      <div className='modal-bg' />
-      <div className='modal-dialog' onClick={onDialogClick}>
-        <h2 className='text-grey capitalize'>{mode}</h2>
+      <div className='modal-bg' onClick={onDialogClick} />
+      <div className='modal-dialog'>
+        <h3 className='text-grey capitalize'>{mode}</h3>
         <div className='divider' />
         <span className='close' onClick={onClose} />
       </div>
