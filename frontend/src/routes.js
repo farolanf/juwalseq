@@ -8,6 +8,7 @@ import NotFound from '$comp/pages/NotFound'
 import Admin from '$comp/pages/Admin'
 import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
+import FormDemo from '$comp/pages/demo/FormDemo'
 // import Search from '$comp/pages/Search'
 // import PasangIklan from '$comp/pages/PasangIklan'
 // import Test from '$comp/pages/Test'
@@ -35,6 +36,7 @@ const AppRoutes = () => (
     <Page path='/' component={FrontPage} title='Depan' />
     {/* <Page path='/search' component={Search} title='Cari' /> */}
     {/* <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' /> */}
+    <FormDemo path='/demo/form' />
     <Session path='/session' />
     <NotFound path='/*' />
   </Router>

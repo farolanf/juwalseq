@@ -1,0 +1,44 @@
+.form-field {
+  @mixin margin-auto-y 4;
+  height: 108px;
+}
+
+.field-help {
+  @apply h-4 text-grey-dark text-sm mt-1;
+}
+
+.field-error {
+  @apply h-4 text-red text-sm mt-1;
+}
+
+.form-control {
+  @apply flex items-center relative;
+}
+
+.input-label {
+  @apply inline-block text-black mb-1;
+}
+
+.input {
+  @apply px-2 h-8 border rounded;
+  .input-addon + & {
+    @apply rounded-l-none;
+  }
+  &.has-suffix {
+    @apply rounded-r-none;
+  }
+  &.has-error {
+    @apply border-2 border-red-dark;
+  }
+}
+
+.input-addon {
+  @apply bg-grey-lighter text-grey-darker px-2 h-8 rounded;
+  line-height: 1.8;
+  .form-control > &:first-child {
+    @apply rounded-r-none;
+  }
+  .input + & {
+    @apply rounded-l-none;
+  }
+}

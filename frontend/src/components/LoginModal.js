@@ -53,31 +53,29 @@ const LoginModal = ({ open, onClose }) => {
   }
 
   return (
-    <div className='modal' hidden={!open}>
-      <div className='modal-bg' onClick={onDialogClick} />
-      <div className='modal-dialog'>
-        <h3 className='text-grey capitalize'>{mode}</h3>
-        <div className='divider' />
-        <span className='close' onClick={onClose} />
-      </div>
-    </div>
-    // <div id="login-modal" className='uk-modal' data-uk-modal ref={setRef}>
-    //   <div className='uk-modal-dialog uk-modal-body uk-width-large'>
-    //     <h2 className='uk-modal-title'>{_.upperFirst(mode)}</h2>
-    //     <button className='uk-modal-close-default' type='button' data-uk-close 
-    //     ref={setCloseRef} />
-    //     <Formik
-    //       initialValues={{
-    //         email: '',
-    //         password: '',
-    //         passwordConfirm: '',
-    //       }}
-    //       validationSchema={mode === 'register' ? registerSchema : undefined}
-    //       onSubmit={onSubmit}
-    //     >
-    //       {({ handleSubmit, isSubmitting, resetForm }) => (
-    //         <form onSubmit={handleSubmit}>
-    //           <ResetForm {...{ visible, mode, resetForm }} />
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+        passwordConfirm: '',
+      }}
+      validationSchema={mode === 'register' ? registerSchema : undefined}
+      onSubmit={onSubmit}
+    >
+      {({ handleSubmit, isSubmitting, resetForm }) => (
+        <div className='modal' hidden={!open}>
+          <div className='modal-bg' onClick={onDialogClick} />
+          <div className='modal-dialog'>
+            <span className='close' onClick={onClose} />
+            <h3 className='text-grey capitalize'>{mode}</h3>
+            <div className='divider' />
+            <form onSubmit={handleSubmit}>
+              <ResetForm {...{ open, mode, resetForm }} />
+            </form>
+          </div>
+        </div>
+      )}
+    </Formik>
     //           <div className='uk-flex uk-flex-column'>
     //             {mode === 'login' ? (
     //               <>
@@ -128,8 +126,6 @@ const LoginModal = ({ open, onClose }) => {
     //             </div>
     //           </div>
     //         </form>
-    //       )}
-    //     </Formik>
     //   </div>
     // </div>
   )
