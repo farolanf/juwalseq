@@ -50,7 +50,6 @@ const LoginModal = ({ open, onClose }) => {
 
   function onSubmit ({ email, password, newEmail, newPassword }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
-      setTimeout(() => {
       login(email, password)
         .then(() => {
           onClose()
@@ -62,7 +61,6 @@ const LoginModal = ({ open, onClose }) => {
           })
         })
         .finally(() => setSubmitting(false))
-      }, 2000)
     } else if (mode === 'register') {
       register(newEmail, newPassword)
         .then(() => {
