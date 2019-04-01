@@ -39,7 +39,10 @@ const LoginModal = ({ open, onClose }) => {
   const otherMode = mode === 'login' ? 'register' : 'login'
 
   useEffect(() => {
-    open && setMode('login')
+    if (open) {
+      storeReferer()
+      setMode('login')
+    }
   }, [open])
 
   function toggleMode () {
