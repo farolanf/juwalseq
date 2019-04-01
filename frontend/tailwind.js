@@ -902,6 +902,7 @@ module.exports = {
     borderRadius: ['responsive'],
     borderStyle: ['responsive'],
     borderWidths: ['responsive'],
+    column: ['responsive'],
     cursor: ['responsive'],
     display: ['responsive'],
     flexbox: ['responsive'],
@@ -921,6 +922,7 @@ module.exports = {
     objectPosition: false,
     opacity: ['responsive', 'hover'],
     outline: ['focus'],
+    order: ['responsive'],
     overflow: ['responsive'],
     padding: ['responsive'],
     pointerEvents: ['responsive'],
@@ -963,6 +965,7 @@ module.exports = {
       // center: true,
       // padding: '1rem',
     }),
+    require('tailwindcss-ext'),
   ],
 
 
