@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { navigate } from '@reach/router'
 import _ from 'lodash'
 
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, connect } from 'formik'
 
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
@@ -12,6 +12,20 @@ const messages = {
   login: 'Masuk',
   register: 'Daftar',
 }
+
+const InputField = connect(({ name, icon, className, formik: { touched, errors }, ...props }) => (
+  <div className={cn('form-field', className)}>
+    <div className='form-control'>
+      <span className='input-prefix pl-3'><i className={'fa fa-' + icon} /></span>
+      <Field key={name} className={cn('input pl-8', touched[name] && errors[name] && 'has-error')} name={name} {...props} />
+    </div>
+    {touched[name] && errors[name] && (
+      <div className='field-error'>
+        {_.upperFirst(errors[name])}
+      </div>
+    )}
+  </div>
+))
 
 const ResetForm = ({ open, mode, resetForm }) => {
   useEffect(() => {
@@ -34,7 +48,7 @@ const LoginModal = ({ open, onClose }) => {
 
   const onDialogClick = e => e.stopPropagation()
 
-  function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
+  function onSubmit ({ email, password, newEmail, newPassword }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
       setTimeout(() => {
       login(email, password)
@@ -50,7 +64,7 @@ const LoginModal = ({ open, onClose }) => {
         .finally(() => setSubmitting(false))
       }, 2000)
     } else if (mode === 'register') {
-      register(email, password)
+      register(newEmail, newPassword)
         .then(() => {
           onClose()
           navigate(PREFIX + '/welcome/unconfirmed')
@@ -71,48 +85,24 @@ const LoginModal = ({ open, onClose }) => {
       validationSchema={mode === 'register' ? registerSchema : undefined}
       onSubmit={onSubmit}
     >
-      {({ errors, touched, handleSubmit, isSubmitting, resetForm }) => (
+      {({ handleSubmit, isSubmitting, resetForm }) => (
         open && (
           <div className='modal' onClick={onClose}>
             <div className='modal-dialog' onClick={onDialogClick}>
               <span className='close' onClick={onClose} />
               <h3 className='text-grey'>{messages[mode]}</h3>
               <div className='divider w-16' />
-              <Form onSubmit={handleSubmit} className='mb-0'>
+              {/* set form key to force remount on mode change for autofill to work */}
+              <Form key={mode} onSubmit={handleSubmit} className='mb-0'>
                 <ResetForm {...{ open, mode, resetForm }} />
-                <div className='form-field mt-4'>
-                  <div className='form-control'>
-                    <span className='input-prefix pl-3'><i className='fa fa-user' /></span>
-                    <Field key='email' className={cn('input pl-8', touched.email && errors.email && 'has-error')} name='email' placeholder={mode === 'login' ? 'Username atau email...' : 'Alamat email...'} />
-                  </div>
-                  {touched.email && errors.email && (
-                    <div className='field-error'>
-                      {_.upperFirst(errors.email)}
-                    </div>
-                  )}
-                </div>
-                <div className='form-field'>
-                  <div className='form-control has-prefix'>
-                    <span className='input-prefix pl-3'><i className='fa fa-lock' /></span>
-                    <Field key='password' className='input pl-8' name='password' type='password' placeholder='Password...' />
-                  </div>
-                  {touched.password && errors.password && (
-                    <div className='field-error'>
-                      {_.upperFirst(errors.password)}
-                    </div>
-                  )}
-                </div>
-                <div className='form-field' hidden={mode !== 'register'}>
-                  <div className='form-control has-prefix'>
-                    <span className='input-prefix pl-3'><i className='fa fa-lock' /></span>
-                    <Field className='input pl-8' name='passwordConfirm' type='password' placeholder='Ulangi password...' />
-                  </div>
-                  {touched.passwordConfirm && errors.passwordConfirm && (
-                    <div className='field-error'>
-                      {_.upperFirst(errors.passwordConfirm)}
-                    </div>
-                  )}
-                </div>
+                {mode === 'login' ? (<>
+                  <InputField key='email' name='email' placeholder='Username atau email...' icon='user' className='mt-4' />
+                  <InputField key='password' name='password' type='password' placeholder='Password...' icon='lock' />
+                </>) : (<>
+                  <InputField key='newEmail' name='newEmail' placeholder='Alamat email...' icon='user' className='mt-4' />
+                  <InputField key='newPassword' name='newPassword' type='password' placeholder='Password...' icon='lock' />
+                  <InputField name='passwordConfirm' type='password' placeholder='Ulangi password...' icon='lock' />
+                </>)}
                 <div className='list-y-2 mb-4'>
                   <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
                     <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Masuk
