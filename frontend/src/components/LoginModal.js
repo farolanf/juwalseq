@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { Formik } from 'formik'
 import { navigate } from '@reach/router'
 import _ from 'lodash'
 
-import FormikInput from '$comp/FormikInput'
+import { Formik, Form, Field } from 'formik'
 
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
 import registerSchema from '$src/schemas/register'
 
-const ResetForm = ({ visible, mode, resetForm }) => {
+const messages = {
+  login: 'Masuk',
+  register: 'Daftar',
+}
+
+const ResetForm = ({ open, mode, resetForm }) => {
   useEffect(() => {
-    visible && resetForm()
-  }, [mode, visible])
+    open && resetForm()
+  }, [mode, open])
   return null
 }
 
@@ -20,20 +24,22 @@ const LoginModal = ({ open, onClose }) => {
   const [mode, setMode] = useState('login')
   const otherMode = mode === 'login' ? 'register' : 'login'
 
+  useEffect(() => {
+    open && setMode('login')
+  }, [open])
+
   function toggleMode () {
     setMode(otherMode)
   }
 
-  const onDialogClick = e => {
-    e.stopPropagation()
-    onClose()
-  }
+  const onDialogClick = e => e.stopPropagation()
 
   function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
     if (mode === 'login') {
+      setTimeout(() => {
       login(email, password)
         .then(() => {
-          close()
+          onClose()
         })
         .catch(err => {
           err.response && [401, 403].includes(err.response.status) && setErrors({
@@ -42,10 +48,11 @@ const LoginModal = ({ open, onClose }) => {
           })
         })
         .finally(() => setSubmitting(false))
+      }, 2000)
     } else if (mode === 'register') {
       register(email, password)
         .then(() => {
-          close()
+          onClose()
           navigate(PREFIX + '/welcome/unconfirmed')
         })
         .finally(() => setSubmitting(false))
@@ -57,77 +64,79 @@ const LoginModal = ({ open, onClose }) => {
       initialValues={{
         email: '',
         password: '',
+        newEmail: '',
+        newPassword: '',
         passwordConfirm: '',
       }}
       validationSchema={mode === 'register' ? registerSchema : undefined}
       onSubmit={onSubmit}
     >
-      {({ handleSubmit, isSubmitting, resetForm }) => (
-        <div className='modal' hidden={!open}>
-          <div className='modal-bg' onClick={onDialogClick} />
-          <div className='modal-dialog'>
-            <span className='close' onClick={onClose} />
-            <h3 className='text-grey capitalize'>{mode}</h3>
-            <div className='divider' />
-            <form onSubmit={handleSubmit}>
-              <ResetForm {...{ open, mode, resetForm }} />
-            </form>
+      {({ errors, touched, handleSubmit, isSubmitting, resetForm }) => (
+        open && (
+          <div className='modal' onClick={onClose}>
+            <div className='modal-dialog' onClick={onDialogClick}>
+              <span className='close' onClick={onClose} />
+              <h3 className='text-grey'>{messages[mode]}</h3>
+              <div className='divider w-16' />
+              <Form onSubmit={handleSubmit} className='mb-0'>
+                <ResetForm {...{ open, mode, resetForm }} />
+                <div className='form-field mt-4'>
+                  <div className='form-control'>
+                    <span className='input-prefix pl-3'><i className='fa fa-user' /></span>
+                    <Field key='email' className={cn('input pl-8', touched.email && errors.email && 'has-error')} name='email' placeholder={mode === 'login' ? 'Username atau email...' : 'Alamat email...'} />
+                  </div>
+                  {touched.email && errors.email && (
+                    <div className='field-error'>
+                      {_.upperFirst(errors.email)}
+                    </div>
+                  )}
+                </div>
+                <div className='form-field'>
+                  <div className='form-control has-prefix'>
+                    <span className='input-prefix pl-3'><i className='fa fa-lock' /></span>
+                    <Field key='password' className='input pl-8' name='password' type='password' placeholder='Password...' />
+                  </div>
+                  {touched.password && errors.password && (
+                    <div className='field-error'>
+                      {_.upperFirst(errors.password)}
+                    </div>
+                  )}
+                </div>
+                <div className='form-field' hidden={mode !== 'register'}>
+                  <div className='form-control has-prefix'>
+                    <span className='input-prefix pl-3'><i className='fa fa-lock' /></span>
+                    <Field className='input pl-8' name='passwordConfirm' type='password' placeholder='Ulangi password...' />
+                  </div>
+                  {touched.passwordConfirm && errors.passwordConfirm && (
+                    <div className='field-error'>
+                      {_.upperFirst(errors.passwordConfirm)}
+                    </div>
+                  )}
+                </div>
+                <div className='list-y-2 mb-4'>
+                  <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
+                    <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Masuk
+                  </button>
+                  <p className='text-center text-grey'>Atau masuk dengan</p>
+                  <a href={API_HOST + '/auth/facebook'} className='btn btn-primary'>
+                    <i className='fa fa-facebook' /> Facebook
+                  </a>
+                  <a href={API_HOST + '/auth/google'} className='btn btn-primary'>
+                  <i className='fa fa-google' /> Google
+                  </a>
+                </div>
+                <div className='list-x-1 justify-end'>
+                  <button type='button' className='btn' onClick={toggleMode}>
+                    {messages[otherMode]}
+                  </button>
+                  <button type='button' className='btn' onClick={onClose}>Batal</button>
+                </div>
+              </Form>
+            </div>
           </div>
-        </div>
+        )
       )}
     </Formik>
-    //           <div className='uk-flex uk-flex-column'>
-    //             {mode === 'login' ? (
-    //               <>
-    //                 <div className='uk-margin-small'>
-    //                   <FormikInput key='email' name='email' placeholder='Email / username' leftIcon='user' autoComplete='email' />
-    //                 </div>
-    //                 <div className='uk-margin-small'>
-    //                   <FormikInput key='password' name='password' type='password' placeholder='Password' leftIcon='lock' autoComplete='password' />
-    //                 </div>
-    //               </>
-    //             ) : (
-    //               <>
-    //                 <div className='uk-margin-small'>
-    //                   <FormikInput key='newEmail' name='email' placeholder='Email / username' leftIcon='user' />
-    //                 </div>
-    //                 <div className='uk-margin-small'>
-    //                   <FormikInput key='newPassword' name='password' type='password' placeholder='Password' leftIcon='lock' />
-    //                 </div>
-    //                 <div className='uk-margin-small'>
-    //                   <FormikInput name='passwordConfirm' type='password' 
-    //                 placeholder='Confirm password' leftIcon='lock' />
-    //                 </div>
-    //               </>
-    //             )}
-    //             <div className='mt-6 -mb-4 uk-text-muted'>Or login with</div>
-    //             <div className='flex flex-col md:flex-row uk-margin' data-uk-margin>
-    //               <a className='uk-button uk-button-primary' 
-    //               href={API_HOST + '/auth/facebook'}>
-    //                 <span data-uk-icon='facebook' />
-    //                 Facebook
-    //               </a>
-    //               <a className='uk-button uk-button-primary md:ml-2' 
-    //               href={API_HOST + '/auth/google'}>
-    //                 <span data-uk-icon='google' />
-    //                 Google
-    //               </a>
-    //             </div>
-    //             <div className='flex flex-col md:flex-row md:justify-between md:items-center uk-margin' data-uk-margin>
-    //               <button className='uk-button uk-button-primary md:flex-last' type='submit' disabled={isSubmitting}>
-    //                 {mode}
-    //               </button>
-    //               <button className='uk-button uk-button-default' type='button' onClick={toggleMode}>
-    //                 {otherMode}
-    //               </button>
-    //               <button className='uk-button uk-button-default uk-modal-close md:flex-first'>
-    //                 Cancel
-    //               </button>
-    //             </div>
-    //           </div>
-    //         </form>
-    //   </div>
-    // </div>
   )
 }
 

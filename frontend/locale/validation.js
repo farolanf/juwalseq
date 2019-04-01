@@ -5,6 +5,7 @@ const messages = {
   string: {
     min: 'minimal ${min} karakter',
     max: 'maximal ${max} karakter',
+    email: 'harus berupa alamat email',
   },
   test: {
     uniqueEmail: 'email sudah terdaftar',

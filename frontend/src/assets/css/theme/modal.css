@@ -1,17 +1,16 @@
 .modal {
   z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.85);
+  overflow: auto;
+  overflow: overlay;
   @apply fixed pin;
   &.active {
     @apply block;
   }
 }
 
-.modal-bg {
-  @apply fixed pin bg-black opacity-90;
-}
-
 .modal-dialog {
-  @apply fixed pin bg-white shadow-lg p-8;
+  @apply fixed pin bg-white shadow-lg p-8 overflow-auto;
   @screen md {
     @apply relative w-full max-w-xs mx-auto rounded;
     margin-top: 20vh;

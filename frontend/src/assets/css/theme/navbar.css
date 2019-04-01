@@ -1,5 +1,5 @@
 .navbar-container {
-  @apply bg-$(primary);
+  @apply bg-$(primary) relative;
 }
 
 .navbar {

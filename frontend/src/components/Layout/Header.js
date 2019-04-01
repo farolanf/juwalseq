@@ -75,6 +75,7 @@ const PageHeader = ({
         <div className='navbar-collapse'>
           <a className='navbar-link'>Kategori</a>
           <a className='navbar-link'>Diskon</a>
+          <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
           <div className='navbar-right'>
             <a className='navbar-link'>Pasang iklan</a>
             <a className={cn('navbar-link', user.loggedIn && 'hidden')} onClick={showLoginModal}>

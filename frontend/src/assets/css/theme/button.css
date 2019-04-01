@@ -1,13 +1,11 @@
 .btn {
-  @apply border-0 rounded px-4 py-1 cursor-pointer bg-transparent text-black;
+  @apply border-0 rounded px-4 py-1 cursor-pointer bg-transparent text-black text-center no-underline;
   &:hover {
     @apply bg-grey-light;
   }
-  @mixin margin-auto-x 1;
-}
-
-.btn:focus {
-  @apply outline-none;
+  &:focus {
+    @apply outline-none;
+  }
 }
 
 .btn-dark {
@@ -22,11 +20,18 @@
 }
 
 .btn-primary:hover {
-  @apply bg-$(primary)-dark;
+  @apply bg-$(primary)-dark text-$(text-primary);
+}
+
+.btn-secondary {
+  @apply bg-$(secondary) text-$(text-primary);
+}
+
+.btn-secondary:hover {
+  @apply bg-$(secondary)-dark text-$(text-primary);
 }
 
 .navbar-btn {
   @apply btn bg-transparent shadow-none px-2 py-1 text-left;
   @mixin theme navbar;
-  @mixin margin-auto-x 2;
 }

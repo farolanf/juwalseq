@@ -3,7 +3,6 @@
 
 .navbar-link {
   @apply no-underline cursor-pointer text-white px-3 py-1 border-0 border-b-2 border-solid border-transparent;
-  @mixin margin-auto-x 2;
   &:hover {
     @apply bg-$(primary)-dark text-white border-b-2 border-$(accent) rounded-t;
   }

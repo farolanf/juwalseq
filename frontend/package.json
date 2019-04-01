@@ -71,7 +71,8 @@
     "tailwind": {
       "patterns": [
         "tailwind.css",
-        "tailwind.js"
+        "tailwind.js",
+        "packages/tailwindcss-ext"
       ]
     }
   },

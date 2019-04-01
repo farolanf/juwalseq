@@ -1,11 +1,21 @@
 import React from 'react'
 
 const FormDemo = () => (
-  <div className='md:column-3'>
+  <div className='md:column-2'>
     <h2>Input</h2>
     <h4>Default</h4>
     <div className='form-field'>
+      <input className='input' placeholder='Username or email...' />
+    </div>
+    <h4 className='mt-4'>Label</h4>
+    <div className='form-field'>
       <label className='input-label'>Username</label>
+      <div className='form-control'>
+        <input className='input' placeholder='Username or email...' />
+      </div>
+    </div>
+    <h4>Help</h4>
+    <div className='form-field'>
       <div className='form-control'>
         <input className='input' placeholder='Username or email...' />
       </div>
@@ -22,20 +32,20 @@ const FormDemo = () => (
     <h4>Addons</h4>
     <div className='form-field'>
       <label className='input-label'>Price</label>
-      <div className='form-control has-prefix has-suffix'>
-        <span className='input-addon'>Rp</span>
-        <input className='input' type='number' />
-        <span className='input-addon'>,-</span>
+      <div className='form-control'>
+        <span className='input-prefix'>Rp</span>
+        <input className='input pl-8 pr-6' type='number' />
+        <span className='input-suffix'>,-</span>
       </div>
     </div>
     <h4>Horizontal</h4>
     <form className='form-horizontal'>
       <div className='form-field'>
         <label className='input-label'>Price</label>
-        <div className='form-control has-prefix has-suffix'>
-          <span className='input-addon'>Rp</span>
-          <input className='input' type='number' />
-          <span className='input-addon'>,-</span>
+        <div className='form-control'>
+          <span className='input-prefix'>Rp</span>
+          <input className='input pl-8 pr-6' type='number' value='2500' />
+          <span className='input-suffix'>,-</span>
         </div>
       </div>
     </form>
@@ -43,10 +53,10 @@ const FormDemo = () => (
     <form className='form-horizontal form-label-right'>
       <div className='form-field'>
         <label className='input-label'>Price</label>
-        <div className='form-control has-prefix has-suffix'>
-          <span className='input-addon'>Rp</span>
-          <input className='input' type='number' />
-          <span className='input-addon'>,-</span>
+        <div className='form-control'>
+          <span className='input-prefix'>Rp</span>
+          <input className='input px-8 pr-6' type='number' />
+          <span className='input-suffix'>,-</span>
         </div>
       </div>
     </form>
