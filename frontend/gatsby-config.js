@@ -31,6 +31,7 @@ module.exports = {
           require('postcss-nested')({
             bubble: ['screen'],
           }),
+          require('autoprefixer'),
         ]
       }
     },
