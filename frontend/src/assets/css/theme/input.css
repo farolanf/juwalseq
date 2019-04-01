@@ -1,6 +1,5 @@
 .form-field {
   @mixin margin-auto-y 4;
-  height: 108px;
   .form-horizontal & {
     @apply flex items-center;
   }
@@ -30,13 +29,7 @@
 }
 
 .input {
-  @apply px-2 h-8 border border-solid border-grey rounded;
-  .has-prefix & {
-    @apply rounded-l-none;
-  }
-  .has-suffix & {
-    @apply rounded-r-none;
-  }
+  @apply w-full px-2 h-8 border border-solid border-grey rounded;
   &.has-error {
     @apply border-2 border-red-dark;
   }
@@ -46,13 +39,10 @@
   }
 }
 
-.input-addon {
-  @apply bg-grey-light text-grey-darker px-2 h-8 rounded;
-  line-height: 1.8;
-  .form-control > &:first-child {
-    @apply rounded-r-none;
-  }
-  .input + & {
-    @apply rounded-l-none;
-  }
+.input-prefix {
+  @apply text-grey px-2 absolute pin-l;
+}
+
+.input-suffix {
+  @apply text-grey px-2 absolute pin-r;
 }
