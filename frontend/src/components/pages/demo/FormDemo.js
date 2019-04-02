@@ -60,15 +60,37 @@ const FormDemo = () => (
         </div>
       </div>
     </form>
-
     <h2>Button</h2>
-    <button className='btn'>Default</button>
-    <button className='btn btn-primary'>Primary</button>
-    <button className='btn btn-secondary'>Secondary</button>
-    <div className='bg-grey-dark p-8 mt-4'>
+    <div className='list-x-1'>
+      <button className='btn'>Default</button>
+      <button className='btn btn-primary'>Primary</button>
+      <button className='btn btn-secondary'>Secondary</button>
+    </div>
+    <div className='bg-grey-dark p-8 my-4 list-x-1'>
       <button className='btn btn-dark'>Dark</button>
       <button className='btn btn-primary'>Primary</button>
       <button className='btn btn-secondary'>Secondary</button>
+    </div>
+    <h2>Alert</h2>
+    <h4>Info</h4>
+    <div className='alert'>
+      <span className='close' />
+      Developing an organized, consistent and beautiful color palette is critical to the design success of a project. Tailwind provides a fantastic color system that makes this very easy to accomplish.
+    </div>
+    <h4>Success</h4>
+    <div className='alert alert-success'>
+      <span className='close' />
+      Developing an organized, consistent and beautiful color palette is critical to the design success of a project. Tailwind provides a fantastic color system that makes this very easy to accomplish.
+    </div>
+    <h4>Warning</h4>
+    <div className='alert alert-warning'>
+      <span className='close' />
+      Developing an organized, consistent and beautiful color palette is critical to the design success of a project. Tailwind provides a fantastic color system that makes this very easy to accomplish.
+    </div>
+    <h4>Danger</h4>
+    <div className='alert alert-danger'>
+      <span className='close' />
+      Developing an organized, consistent and beautiful color palette is critical to the design success of a project. Tailwind provides a fantastic color system that makes this very easy to accomplish.
     </div>
   </div>
 )
