@@ -1,4 +1,8 @@
 .link {
+  @apply no-underline cursor-pointer text-blue;
+  &:hover {
+    @apply text-blue-light;
+  }
 }
 
 .navbar-link {
