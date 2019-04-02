@@ -6,9 +6,9 @@ import messages from '$prj/locale/validation'
 const uniqueEmailDebounced = _.debounce(uniqueEmail, 350)
 
 export default yup.object().shape({
-  email: yup.string().email().required()
+  newEmail: yup.string().email().required()
     .test('uniqueEmail', messages.test.uniqueEmail, uniqueEmailDebounced),
-  password: yup.string().min(5).max(100).required(),
+  newPassword: yup.string().min(5).max(100).required(),
   passwordConfirm: yup.string().required()
     .test('passwordConfirm', messages.test.passwordConfirm, function (value) {
       return value === this.parent.password
