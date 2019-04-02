@@ -10,9 +10,12 @@
 }
 
 .modal-dialog {
-  @apply fixed pin bg-white shadow-lg p-8 overflow-auto;
+  @apply fixed pin bg-white shadow-lg px-2 py-8 overflow-auto;
+  @screen sm {
+    @apply px-4;
+  }
   @screen md {
-    @apply relative w-full max-w-xs mx-auto rounded;
+    @apply relative w-full max-w-xs mx-auto px-8 rounded;
     margin-top: 20vh;
   }
 }
