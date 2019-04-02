@@ -68,7 +68,7 @@ const PageHeader = ({
           <Link to='/' className='navbar-logo'>{siteTitle}</Link>
         </div>
         <div className='md:hidden'>
-          <button className='navbar-btn' onClick={toggleNavbar}>
+          <button className='navbar-menu' onClick={toggleNavbar}>
             <i className='fa fa-bars' />
           </button>
         </div>

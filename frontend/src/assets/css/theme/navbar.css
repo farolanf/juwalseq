@@ -23,6 +23,16 @@
   }
 }
 
+.navbar-menu {
+  @apply btn bg-transparent shadow-none px-2 py-1 text-left text-$(text-primary);
+  &:hover {
+    @apply bg-transparent;
+  }
+  &:hover {
+    @apply bg-$(primary)-light;
+  }
+}
+
 .navbar-right {
   @apply ml-auto;
 }

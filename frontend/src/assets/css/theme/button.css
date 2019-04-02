@@ -20,7 +20,7 @@
 }
 
 .btn-primary:hover {
-  @apply bg-$(primary)-dark text-$(text-primary);
+  @apply bg-$(primary)-light text-$(text-primary);
 }
 
 .btn-secondary {
@@ -28,10 +28,5 @@
 }
 
 .btn-secondary:hover {
-  @apply bg-$(secondary)-dark text-$(text-primary);
-}
-
-.navbar-btn {
-  @apply btn bg-transparent shadow-none px-2 py-1 text-left;
-  @mixin theme navbar;
+  @apply bg-$(secondary)-light text-$(text-primary);
 }
