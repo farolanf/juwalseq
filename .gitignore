@@ -2,6 +2,7 @@ node_modules/
 ghpages/
 server/uploads/**
 tmp/**
+server/templates/lib/src/build.js
 
 .env*
 !.env.example
