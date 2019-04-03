@@ -1,4 +1,6 @@
 const path = require('path')
+const { exec } = require('child_process')
+const HooksWebpackPlugin = require('webpack-plugin-hooks')
 
 module.exports = {
   mode: 'development',
@@ -44,4 +46,13 @@ module.exports = {
   externals: [
     require('webpack-node-externals')(),
   ],
+  plugins: [
+    new HooksWebpackPlugin({
+      done (stats) {
+        if (!stats.errors || !stats.errors.length) {
+          exec('node ' + path.resolve(__dirname, './src/build.js'))
+        }
+      }
+    })
+  ]
 }
