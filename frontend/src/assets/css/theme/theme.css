@@ -1,10 +1,9 @@
 @import 'variables.css';
-@import 'utils.css';
+
 @import 'light.css';
 @import 'colors.css';
 
 @import 'margin.css';
-
 @import 'container.css';
 @import 'divider.css';
 @import 'close.css';
@@ -18,3 +17,5 @@
 @import 'alert.css';
 
 @import 'input.css';
+
+@import 'utils.css';

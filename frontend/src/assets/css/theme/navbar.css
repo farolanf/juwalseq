@@ -25,10 +25,7 @@
 
 .navbar-menu {
   @apply btn bg-transparent shadow-none px-2 py-1 text-left text-$(text-primary);
-  &:hover {
-    @apply bg-transparent;
-  }
-  &:hover {
+  &:hover:not(:disabled) {
     @apply bg-$(primary)-light;
   }
 }
