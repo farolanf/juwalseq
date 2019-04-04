@@ -3,7 +3,7 @@ import tailwind from '$prj/tailwind'
 import theme from '$src/theme'
 
 const screens = Object.keys(tailwind.screens)
-const screensReverse = screens.reverse()
+const screensReverse = screens.slice().reverse()
 
 const isWidthDown = (breakpoint, width) => {
   if (!screens.includes(width)) return true
@@ -16,6 +16,7 @@ function getWidth () {
   return screensReverse.find(key => parseInt(tailwind.screens[key]) <= w)
 }
 
+// eslint-disable-next-line
 const withMobile = Component => props => {
   const [width, setWidth] = useState(getWidth())
   const [updateWidth] = useState(() => () => setWidth(getWidth()))
