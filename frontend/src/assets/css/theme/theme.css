@@ -1,6 +1,7 @@
 @import 'variables.css';
 @import 'utils.css';
 @import 'light.css';
+@import 'colors.css';
 
 @import 'margin.css';
 
@@ -12,7 +13,7 @@
 @import 'button.css';
 
 @import 'navbar.css';
-@import 'popup.css';
+@import 'menu.css';
 @import 'modal.css';
 @import 'alert.css';
 
