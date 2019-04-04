@@ -4,7 +4,7 @@ import Popper from 'popper.js'
 /**
  * Show popup based on show param or hover/click events.  
  */
-const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 300, className, children }) => {
+const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 250, className, children }) => {
   const [ref, setRef] = useState()
   const [popper, setPopper] = useState()
   const [visible, setVisible] = useState()
