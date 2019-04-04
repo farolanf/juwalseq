@@ -11,9 +11,11 @@ const Modal = ({ target, noCloseButton, closeOnClick, className, dialogClass, ch
   const handleClose = () => setVisible(false)
 
   useEffect(() => {
+    const _target = target
     if (typeof target === 'string') {
       target = document.querySelector(target)
     }
+    if (!target) throw new Error('Invalid target ' + _target)
     const toggleModal = () => setVisible(val => !val)
     target.addEventListener('click', toggleModal)
     return () => target.removeEventListener('click', toggleModal)
