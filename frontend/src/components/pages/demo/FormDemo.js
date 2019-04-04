@@ -1,4 +1,5 @@
 import React from 'react'
+import Popup from '$comp/Popup'
 
 const FormDemo = () => (
   <div className='md:column-2'>
@@ -9,7 +10,7 @@ const FormDemo = () => (
     </div>
     <h4 className='mt-4'>Label</h4>
     <div className='form-field'>
-      <label className='input-label'>Username</label>
+      <label className='field-label'>Username</label>
       <div className='form-control'>
         <input className='input' placeholder='Username or email...' />
       </div>
@@ -23,7 +24,7 @@ const FormDemo = () => (
     </div>
     <h4>Error</h4>
     <div className='form-field'>
-      <label className='input-label'>Username</label>
+      <label className='field-label'>Username</label>
       <div className='form-control'>
         <input className='input has-error' placeholder='Username or email...' value='user3455' onChange={() => null} />
       </div>
@@ -31,7 +32,7 @@ const FormDemo = () => (
     </div>
     <h4>Addons</h4>
     <div className='form-field'>
-      <label className='input-label'>Price</label>
+      <label className='field-label'>Price</label>
       <div className='form-control'>
         <span className='input-prefix'>Rp</span>
         <input className='input pl-8 pr-6' type='number' />
@@ -41,7 +42,7 @@ const FormDemo = () => (
     <h4>Horizontal</h4>
     <form className='form-horizontal'>
       <div className='form-field'>
-        <label className='input-label'>Price</label>
+        <label className='field-label'>Price</label>
         <div className='form-control'>
           <span className='input-prefix'>Rp</span>
           <input className='input pl-8 pr-6' type='number' value='2500' />
@@ -52,7 +53,7 @@ const FormDemo = () => (
     <h4>Horizontal - Right align label</h4>
     <form className='form-horizontal form-label-right'>
       <div className='form-field'>
-        <label className='input-label'>Price</label>
+        <label className='field-label'>Price</label>
         <div className='form-control'>
           <span className='input-prefix'>Rp</span>
           <input className='input px-8 pr-6' type='number' />
@@ -77,6 +78,17 @@ const FormDemo = () => (
       <button className='btn btn-dark' disabled>Dark</button>
       <button className='btn btn-primary' disabled>Disabled</button>
       <button className='btn btn-secondary' disabled>Secondary</button>
+    </div>
+    <h2>Popup</h2>
+    <div className='list-x-1'>
+      <button className='btn btn-primary' id='popup-top'>Top</button>
+      <button className='btn btn-primary' id='popup-right'>Right</button>
+      <button className='btn btn-primary' id='popup-bottom'>Bottom</button>
+      <button className='btn btn-primary' id='popup-left'>Left</button>
+      <Popup target='#popup-top' pos='top' hover>Top</Popup>
+      <Popup target='#popup-right' pos='right' hover>Right</Popup>
+      <Popup target='#popup-bottom' pos='bottom' hover>Bottom</Popup>
+      <Popup target='#popup-left' pos='left' hover>Left</Popup>
     </div>
     <h2>Alert</h2>
     <h4>Info</h4>

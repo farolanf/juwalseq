@@ -1,0 +1,41 @@
+$arrowSize: 7px;
+$arrowMargin: 8px;
+
+.popper {
+  @apply z-popup;
+  [x-arrow] {
+    @apply z-popup absolute border-solid;
+  }
+  &[x-placement^="top"] {
+    margin-bottom: $arrowMargin;
+    & [x-arrow] {
+      top: 100%;
+      border-width: $arrowSize $arrowSize 0 $arrowSize;
+      border-color: white transparent transparent transparent;
+    }
+  }
+  &[x-placement^="bottom"] {
+    margin-top: $arrowMargin;
+    & [x-arrow] {
+      bottom: 100%;
+      border-width: 0 $arrowSize $arrowSize $arrowSize;
+      border-color: transparent transparent white transparent;
+    }
+  }
+  &[x-placement^="right"] {
+    margin-left: $arrowMargin;
+    & [x-arrow] {
+      right: 100%;
+      border-width: $arrowSize $arrowSize $arrowSize 0;
+      border-color: transparent white transparent transparent;
+    }
+  }
+  &[x-placement^="left"] {
+    margin-right: $arrowMargin;
+    & [x-arrow] {
+      left: 100%;
+      border-width: $arrowSize 0 $arrowSize $arrowSize;
+      border-color: transparent transparent transparent white;
+    }
+  }
+}

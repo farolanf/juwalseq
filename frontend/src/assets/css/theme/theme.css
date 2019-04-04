@@ -13,9 +13,11 @@
 
 @import 'navbar.css';
 @import 'menu.css';
-@import 'modal.css';
 @import 'alert.css';
-
 @import 'input.css';
+
+@import 'modal.css';
+@import 'popper.css';
+@import 'popup.css';
 
 @import 'utils.css';

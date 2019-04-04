@@ -4,7 +4,7 @@ import Popper from 'popper.js'
 /**
  * Show popup based on show param or hover/click events.  
  */
-const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', children }) => {
+const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, className, children }) => {
   const [ref, setRef] = useState()
   const [popper, setPopper] = useState()
   const [visible, setVisible] = useState()
@@ -24,11 +24,15 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', child
       }
       const popper = new Popper(target, ref, {
         placement: pos,
+        positionFixed: true,
+        modifiers: {
+          offset: { offset },
+        }
       })
       setPopper(popper)
       return () => popper.destroy()
     }
-  }, [ref, target])
+  }, [ref, target, pos, offset])
 
   useEffect(() => {
     if (typeof target === 'string') {
@@ -68,7 +72,8 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', child
 
   return hover || click 
     ? (
-      <div className='fixed' ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup} onClick={handleClickPopup}>
+      <div className={cn('fixed popper popup', className)} ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup} onClick={handleClickPopup}>
+        <span x-arrow='' />
         {children}
       </div>
     ) : (
