@@ -1,9 +1,8 @@
 .modal {
-  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.85);
   overflow: auto;
   overflow: overlay;
-  @apply fixed pin;
+  @apply fixed pin z-modal;
   &.active {
     @apply block;
   }

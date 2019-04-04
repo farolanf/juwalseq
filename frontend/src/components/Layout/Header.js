@@ -8,28 +8,12 @@ import { observer } from 'mobx-react-lite'
 // import CategoryDropdown from '$comp/CategoryDropdown'
 // import AccountDropdown from '$comp/AccountDropdown'
 import LoginModal from '$comp/LoginModal'
+import Popup from '$comp/Popup'
 
 import { PREFIX } from '$const'
 import useStore from '$useStore'
 import withLocation from '$lib/location'
 import { logout } from '$lib/auth'
-
-const MenuDropdown = () => {
-  const [ref, setRef] = useState()
-
-  function close () {
-  }
-
-  return (
-    <div data-uk-dropdown='offset: 0; pos: bottom-justify; boundary: #topbar; boundary-align: true' ref={setRef}>
-      <ul className='uk-nav uk-dropdown-nav'>
-        <li>
-          <Link to='/pasang-iklan' onClick={close}>Pasang iklan</Link>
-        </li>
-      </ul>
-    </div>
-  )
-}
 
 const PageHeader = ({
   siteTitle,
@@ -43,6 +27,8 @@ const PageHeader = ({
   const toggleNavbar = () => setOpen(!open)
 
   const showAccount = () => setAccountOpen(true)
+
+  const hideAccount = () => setAccountOpen(false)
 
   const showLoginModal = () => setLoginModalOpen(true)
 
@@ -89,10 +75,10 @@ const PageHeader = ({
           </div>
         </div>
       </div>
-      <div className='navbar-dropdown' hidden={!accountOpen}>
+      <Popup open={accountOpen} onClose={hideAccount}>
         <a>Profil</a>
         <a onClick={doLogout}>Keluar</a>
-      </div>
+      </Popup>
       <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
   )
