@@ -10,13 +10,12 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', child
   const [visible, setVisible] = useState()
   const [overPopup, setOverPopup] = useState()
   const [overTarget, setOverTarget] = useState()
-  const [handleMouseEnter] = useState(() => () => setOverTarget(true))
-  const [handleMouseLeave] = useState(() => () => setOverTarget(false))
-  const [handleMouseUp] = useState(() => () => setVisible(val => !val))
 
   const handleMouseEnterPopup = () => setOverPopup(true)
-  
+
   const handleMouseLeavePopup = () => setOverPopup(false)
+  
+  const handleClickPopup = () => setVisible(false)
 
   useEffect(() => {
     if (ref && target) {
@@ -27,33 +26,49 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', child
         placement: pos,
       })
       setPopper(popper)
-      if (hover) {
-        target.addEventListener('mouseenter', handleMouseEnter)
-        target.addEventListener('mouseleave', handleMouseLeave)
-      }
-      click && target.addEventListener('mouseup', handleMouseUp)
-      return () => {
-        popper.destroy()
-        if (hover) {
-          target.removeEventListener('mouseenter', handleMouseEnter)
-          target.removeEventListener('mouseleave', handleMouseLeave)
-        }
-        click && target.removeEventListener('mouseup', handleMouseUp)
-      }
+      return () => popper.destroy()
     }
   }, [ref, target])
 
   useEffect(() => {
-    popper && (show || visible) && popper.scheduleUpdate()
-  }, [show, visible])
+    if (typeof target === 'string') {
+      target = document.querySelector(target)
+    }
+    // check enter time to avoid negating the visible state
+    let enterTime = 0
+    const handleMouseUp = () => {
+      (Date.now() - enterTime > 50) && setVisible(val => !val)
+    }
+    const handleMouseEnter = () => {
+      enterTime = Date.now()
+      setOverTarget(true)
+    }
+    const handleMouseLeave = () => setOverTarget(false)
+    click && target.addEventListener('mouseup', handleMouseUp)
+    if (hover) {
+      target.addEventListener('mouseenter', handleMouseEnter)
+      target.addEventListener('mouseleave', handleMouseLeave)
+    }
+    return () => {
+      click && target.removeEventListener('mouseup', handleMouseUp)
+      if (hover) {
+        target.removeEventListener('mouseenter', handleMouseEnter)
+        target.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+  }, [target, hover, click])
 
   useEffect(() => {
     setVisible(overTarget || overPopup)
   }, [overTarget, overPopup])
 
+  useEffect(() => {
+    popper && (show || visible) && popper.scheduleUpdate()
+  }, [show, visible])
+
   return hover || click 
     ? (
-      <div className='fixed' ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup}>
+      <div className='fixed' ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup} onClick={handleClickPopup}>
         {children}
       </div>
     ) : (
