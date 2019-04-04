@@ -1,6 +1,6 @@
 .container {
   max-width: config('screens.lg');
-  @apply mx-4;
+  @apply mx-2;
   @screen md {
     @apply mx-auto px-4;
   }

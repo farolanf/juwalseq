@@ -19,6 +19,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
         $prj: path.resolve(__dirname),
         $src: path.resolve(__dirname, 'src'),
         $lib: path.resolve(__dirname, 'src/lib'),
+        $api: path.resolve(__dirname, 'src/api'),
         $assets: path.resolve(__dirname, 'src/assets'),
         $comp: path.resolve(__dirname, 'src/components'),
         $store: path.resolve(__dirname, 'src/store'),

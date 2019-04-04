@@ -1,17 +1,23 @@
 .btn {
   @apply border-0 rounded px-4 py-1 cursor-pointer bg-transparent text-black text-center no-underline;
-  &:hover {
+  &:hover:not(:disabled) {
     @apply bg-grey-light;
   }
   &:focus {
     @apply outline-none;
   }
+  &:disabled {
+    @apply bg-white text-grey cursor-not-allowed;
+  }
 }
 
 .btn-dark {
   @apply text-white;
-  &:hover {
+  &:hover:not(:disabled) {
     @apply bg-grey-darker;
+  }
+  &:disabled {
+    @apply bg-grey-light text-white cursor-not-allowed;
   }
 }
 
@@ -19,14 +25,22 @@
   @apply bg-$(primary) text-$(text-primary);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   @apply bg-$(primary)-light text-$(text-primary);
+}
+
+.btn-primary:disabled {
+  @apply bg-$(primary)-lighter text-white cursor-not-allowed;
 }
 
 .btn-secondary {
   @apply bg-$(secondary) text-$(text-primary);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   @apply bg-$(secondary)-light text-$(text-primary);
+}
+
+.btn-secondary:disabled {
+  @apply bg-$(secondary)-lighter text-white cursor-not-allowed;
 }

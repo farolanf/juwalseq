@@ -12,7 +12,6 @@ module.exports = {
 
   // specify modules to load and their order
   modules: [
-    'sequelize',
     'data',
     'auth',
     'finale',
@@ -31,6 +30,9 @@ module.exports = {
 
     // new customers will be assigned to these groups
     defaultGroups: ['public', 'member'],
+
+    // how long the password reset token should be valid (in seconds)
+    passwordResetTokenLife: 60 * 60 * 48,
 
     groups: {
       public: {
@@ -53,6 +55,8 @@ module.exports = {
           { path: '/auth/logout', method: 'GET' },
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
+          { path: '/auth/forgot-password', method: 'POST' },
+          { path: '/auth/reset-password', method: 'POST' },
 
           { path: '/search/.*', method: 'GET' },
 

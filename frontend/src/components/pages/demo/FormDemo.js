@@ -71,6 +71,13 @@ const FormDemo = () => (
       <button className='btn btn-primary'>Primary</button>
       <button className='btn btn-secondary'>Secondary</button>
     </div>
+    <h2>Button - disabled</h2>
+    <div className='list-x-1'>
+      <button className='btn' disabled>Default</button>
+      <button className='btn btn-dark' disabled>Dark</button>
+      <button className='btn btn-primary' disabled>Disabled</button>
+      <button className='btn btn-secondary' disabled>Secondary</button>
+    </div>
     <h2>Alert</h2>
     <h4>Info</h4>
     <div className='alert'>

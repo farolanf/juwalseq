@@ -1,11 +1,17 @@
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const yup = require('yup')
+const { Op } = require('sequelize')
 
-const { User, UserGroup } = require('../../sequelize')
+const { User, UserGroup, Token } = require('../../sequelize')
 const { publicUser, internalUser, userInclude } = require('../../lib/user')
 
 const events = require('../../lib/events')
+
+const generatePassword = require('generate-password')
+const { passwordResetToken } = require('@server/const')
+
+const { sendMail } = require('@lib/mail')
 
 // TODO: implement jwtId. It invalidates existing token on change as user
 // with the old jwtId will not be found.
@@ -13,6 +19,15 @@ const events = require('../../lib/events')
 const registerSchema = yup.object().shape({
   email: yup.string().email().max(100).required(),
   password: yup.string().min(8).max(100).required(),
+})
+
+const forgotPasswordSchema = yup.object().shape({
+  email: yup.string().email().required(),
+})
+
+const resetPasswordSchema = yup.object().shape({
+  token: yup.string().required(),
+  password: yup.string().min(5).required(),
 })
 
 function tokenFromRequest (req) {
@@ -53,6 +68,65 @@ module.exports = function (app, config) {
     } else {
       next()
     }
+  })
+
+  app.post(config.app.apiBase + '/auth/forgot-password', async (req, res, next) => {
+    if (!forgotPasswordSchema.isValidSync(req.body)) {
+      return next(new Error('invalid_email'))
+    }
+    const email = req.body.email
+    const user = await User.findOne({ where: { email } })
+    if (!user) return next(new Error('email_not_found'))
+
+    const tokenId = generatePassword.generate({
+      length: 80,
+      numbers: true,
+      uppercase: true,
+      strict: true,
+    })
+    await Token.upsert({
+      UserId: user.id, 
+      name: passwordResetToken,
+      token: tokenId,
+    }, {
+      where: {
+        UserId: user.id,
+        name: passwordResetToken,
+      },
+    })
+
+    await sendMail({
+      from: config.email,
+      to: user.email,
+      subject: 'Reset password'
+    }, 'ForgotPassword', {
+      url: process.env.FRONTEND_HOST + '/reset-password?token=' + tokenId
+    })
+
+    res.send({ message: 'check_email' })
+  })
+
+  app.post(config.app.apiBase + '/auth/reset-password', async (req, res, next) => {
+    if (!resetPasswordSchema.isValidSync(req.body)) {
+      return next(new Error('invalid_data'))
+    }
+    const token = await Token.findOne({ 
+      where: { 
+        token: req.body.token,
+        updatedAt: {
+          [Op.gt]: Date.now() - config.auth.passwordResetTokenLife * 1000,
+        }
+      } 
+    })
+    if (!token) return next(new Error('invalid_token'))
+
+    await User.update({
+      password: req.body.password,
+    }, { 
+      where: { id: token.UserId } 
+    })
+    await token.destroy()
+    res.sendStatus(200)
   })
 
   app.post(config.app.apiBase + '/auth/register', async (req, res) => {

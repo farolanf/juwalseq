@@ -963,10 +963,10 @@ module.exports = {
   */
 
   plugins: [
-    require('tailwindcss/plugins/container')({
+    // require('tailwindcss/plugins/container')({
       // center: true,
       // padding: '1rem',
-    }),
+    // }),
     require('tailwindcss-ext'),
   ],
 

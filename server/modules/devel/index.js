@@ -2,7 +2,6 @@ const path = require('path')
 const async = require('async')
 const { sendMail } = require('../../lib/mail')
 const { createFormatCurrency } = require('../../lib/format')
-const { handleError } = require('../../lib/helpers')
 
 module.exports = function (app, config) {
   app.use((req, res, next) => {
@@ -13,6 +12,24 @@ module.exports = function (app, config) {
       : '\x1b[31m'
     output += ` ${res.statusCode}`
     console.log(color + output + '\x1b[0m')
+  })
+
+  app.get('/devel/testmail-forgotpassword', async (req, res) => {
+    if (!req.query.to) {
+      return res.status(400).send('Missing query param: to (destination address)')
+    } 
+    await sendMail(
+      {
+        from: config.email,
+        to: req.query.to,
+        subject: 'Reset password',
+      },
+      'ForgotPassword',
+      {
+        url: 'http://localhost:8000/reset-password?token=123456789'
+      }
+    )
+    res.sendStatus(200)
   })
 
   app.get('/devel/testmail', async (req, res) => {
@@ -63,13 +80,13 @@ module.exports = function (app, config) {
     res.sendStatus(200)
   })
 
-  app.get('/devel/testupload', (req, res) => {
+  app.get('/devel/testupload', (req, res, next) => {
     const filePath = path.resolve(__dirname, 'test.jpg')
     async.parallel([
       cb => app.modules.uploadfs.copyIn(filePath, '/assets/test.jpg', cb),
       cb => app.modules.uploadfs.copyImageIn(filePath, '/img/test.jpg', cb),
     ], (err, results) => {
-      err ? handleError(err, res) : res.send({
+      err ? next(err) : res.send({
         url: app.modules.uploadfs.getUrl(),
         results,
       })

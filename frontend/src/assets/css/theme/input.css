@@ -6,11 +6,11 @@
 }
 
 .field-help {
-  @apply h-4 text-grey-dark text-sm mt-1;
+  @apply h-4 text-grey-dark text-sm;
 }
 
 .field-error {
-  @apply h-4 text-red text-sm mt-1;
+  @apply h-4 text-red text-sm;
 }
 
 .form-control {
