@@ -29,6 +29,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     },
     plugins: [
       new webpack.ProvidePlugin({
+        _: 'lodash',
         cn: 'classnames',
       })
     ]

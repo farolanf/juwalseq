@@ -14,6 +14,7 @@ module.exports = {
     cn: true,
     tw: true,
     paypal: true,
+    _: true,
   },
   env: {
     browser: true
