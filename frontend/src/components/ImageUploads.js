@@ -224,7 +224,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChan
   )
 
   const renderItem = item => (
-    <div className='overflow-hidden ratio-1:1 relative w-24'>
+    <div className='ratio-1:1 relative'>
       <div className='absolute pin'>
         {renderImage(item)}
         {renderPlaceholder(item)}
@@ -236,9 +236,9 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChan
     <div className='form-field'>
       {label && <label className='field-label'>{label}</label>}
       <div className='field-control field-control-full'>
-        <div className='list-x-1 flex-wrap' ref={setSortableRef}>
+        <div className='list-y-1 md:list-x-1 flex-wrap' ref={setSortableRef}>
           {images.map(item => (
-            <div key={item.key} className='mb-1' data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
+            <div key={item.key} className='mb-1 w-full md:w-24' data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
               {renderItem(item)}
             </div>
           ))}
