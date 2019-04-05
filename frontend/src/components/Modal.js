@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react'
 
 const Modal = ({ target, noCloseButton, closeOnClick, className, dialogClass, children }) => {
+  const [ref, setRef] = useState()
   const [visible, setVisible] = useState()
 
-  const handleModalClick = e => {
+  const handleModalClick = () => setVisible(false)
+
+  const handleDialogClick = e => {
     e.stopPropagation()
     closeOnClick && setVisible(false)
   }
 
   const handleClose = () => setVisible(false)
+
+  useEffect(() => {
+    if (ref) {
+      const handleCloseDelayed = () => {
+        setTimeout(() => setVisible(false), 0)
+      }
+      const buttons = ref.querySelectorAll('.close-btn')
+      buttons.forEach(btn => btn.addEventListener('click', handleCloseDelayed))
+      return () => buttons.forEach(btn => btn.removeEventListener('click', handleCloseDelayed))
+    }
+  })
 
   useEffect(() => {
     const _target = target
@@ -22,10 +36,10 @@ const Modal = ({ target, noCloseButton, closeOnClick, className, dialogClass, ch
   }, [target])
 
   return (
-    <div className={cn('modal', className)} onClick={handleModalClick} hidden={!visible}>
-      <div className={cn('modal-dialog', dialogClass)}>
+    <div className={cn('modal', className)} onClick={handleModalClick} hidden={!visible} ref={setRef}>
+      <div className={cn('modal-dialog', dialogClass)} onClick={handleDialogClick}>
         {!noCloseButton && <span className='close' onClick={handleClose} />}
-        {children}
+        {typeof children === 'function' ? children({ shown: visible }) : children}
       </div>
     </div>
   )
