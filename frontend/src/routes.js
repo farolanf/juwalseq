@@ -10,6 +10,7 @@ import Admin from '$comp/pages/Admin'
 import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
 import PasangIklan from '$comp/pages/PasangIklan'
+import Search from '$comp/pages/Search'
 import ResetPassword from '$comp/pages/ResetPassword'
 import FormDemo from '$comp/pages/demo/FormDemo'
 
@@ -38,6 +39,7 @@ const AppRoutes = () => (
     <Page path='/' component={FrontPage} title='Depan' />
     <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' role='member' />
     <Page path='/reset-password' component={ResetPassword} title='Reset password' />
+    <Page path='/search' component={Search} title='Cari' />
     <FormDemo path='/demo/form' />
     <Session path='/session' />
     <NotFound path='/*' />

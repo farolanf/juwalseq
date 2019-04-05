@@ -55,6 +55,7 @@ const PageHeader = ({
         <div className='navbar-collapse'>
           <a className='navbar-link'>Kategori</a>
           <a className='navbar-link'>Diskon</a>
+          <Link to='/search' className='navbar-link'>Cari</Link>
           <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
           <div className='navbar-right'>
             <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
