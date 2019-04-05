@@ -3,6 +3,7 @@ module.exports = function (args) {
   list(args)
   order(args)
   position(args)
+  border(args)
 }
 
 function column ({ addUtilities, config }) {
@@ -56,5 +57,21 @@ function position ({ addUtilities, config }) {
   }
   addUtilities(style, {
     variants: config('modules.position'),
+  })
+}
+
+function border ({ addUtilities, config }) {
+  const colors = config('colors')
+  const sides = ['top', 'right', 'bottom', 'left']
+  const style = {}
+  sides.forEach(side => {
+    Object.keys(colors).forEach(color => {
+      style[`.border-${side.substring(0, 1)}-${color}`] = { 
+        [`border-${side}-color`]: colors[color]
+      }
+    })
+  })
+  addUtilities(style, {
+    variants: config('modules.borderColors'),
   })
 }
