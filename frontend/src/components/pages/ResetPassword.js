@@ -8,7 +8,8 @@ import { resetPassword } from '$api/auth'
 
 const messages = {
   invalid_data: 'Kesalahan pada data',
-  invalid_token: 'Formulir ini sudah kadaluarsa. Silahkan lakukan permintaan reset password lagi.'
+  invalid_token: 'Formulir ini sudah kadaluarsa. Silahkan lakukan permintaan reset password lagi.',
+  password_changed: 'Password telah diganti, silahkan masuk dengan password baru anda.'
 }
 
 const ResetPassword = ({ location }) => {
