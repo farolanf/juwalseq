@@ -1,6 +1,7 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
+import Guard from '$comp/Guard'
 import Layout from '$comp/Layout'
 import SEO from "$comp/SEO"
 
@@ -12,27 +13,30 @@ import PasangIklan from '$comp/pages/PasangIklan'
 import ResetPassword from '$comp/pages/ResetPassword'
 import FormDemo from '$comp/pages/demo/FormDemo'
 
+
 const Page = ({ 
   component, 
   title,
   description,
   keywords, 
+  role,
+  message,
   children, 
   ...props 
 }) => {
   delete props.path
   return (
-    <div>
+    <Guard role={role} message={message}>
       <SEO title={title} description={description} keywords={keywords} />
       {React.createElement(component, props, children)}
-    </div>
+    </Guard>
   )
 }
 
 const AppRoutes = () => (
   <Router>
     <Page path='/' component={FrontPage} title='Depan' />
-    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' role='member' />
     <Page path='/reset-password' component={ResetPassword} title='Reset password' />
     <FormDemo path='/demo/form' />
     <Session path='/session' />
