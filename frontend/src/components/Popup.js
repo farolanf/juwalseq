@@ -4,7 +4,7 @@ import Popper from 'popper.js'
 /**
  * Show popup based on show param or hover/click events.  
  */
-const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 250, className, children }) => {
+const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 250, className = 'popup', children }) => {
   const [ref, setRef] = useState()
   const [popper, setPopper] = useState()
   const [visible, setVisible] = useState()
@@ -42,19 +42,28 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
     let enterTime = 0
     let leaveTime = 0
     let timerId
-
     const handleMouseUp = () => {
       (Date.now() - enterTime > 50) && setVisible(val => !val)
     }
     const handleMouseEnter = () => {
+      let delayed = true
       enterTime = Date.now()
+      // no delay on consecutive popups
+      if (enterTime - global.__juwal_popup_leaveTime < 300) {
+        delayed = false
+      }
       clearTimeout(timerId)
-      timerId = setTimeout(() => {
-        leaveTime < enterTime && setOverTarget(true)
-      }, delay)
+      if (delayed) {
+        timerId = setTimeout(() => {
+          leaveTime < enterTime && setOverTarget(true)
+        }, delay)
+      } else {
+        setOverTarget(true)
+      }
     }
     const handleMouseLeave = () => {
       leaveTime = Date.now()
+      global.__juwal_popup_leaveTime = leaveTime
       setOverTarget(false)
     }
 
@@ -82,7 +91,7 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
 
   return hover || click 
     ? (
-      <div className={cn('fixed popper popup', className)} ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup} onClick={handleClickPopup}>
+      <div className={cn('fixed popper', className)} ref={setRef} hidden={!visible} onMouseEnter={handleMouseEnterPopup} onMouseLeave={handleMouseLeavePopup} onClick={handleClickPopup}>
         <span x-arrow='' />
         {children}
       </div>
