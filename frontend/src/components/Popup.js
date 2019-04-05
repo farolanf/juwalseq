@@ -49,7 +49,7 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
       let delayed = true
       enterTime = Date.now()
       // no delay on consecutive popups
-      if (enterTime - global.__juwal_popup_leaveTime < 300) {
+      if ((enterTime - global.__popup_hide_time) < 1000) {
         delayed = false
       }
       clearTimeout(timerId)
@@ -63,7 +63,6 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
     }
     const handleMouseLeave = () => {
       leaveTime = Date.now()
-      global.__juwal_popup_leaveTime = leaveTime
       setOverTarget(false)
     }
 
@@ -87,6 +86,9 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
 
   useEffect(() => {
     popper && (show || visible) && popper.scheduleUpdate()
+    if (!show && !visible) {
+      global.__popup_hide_time = Date.now()
+    }
   }, [show, visible])
 
   return hover || click 
