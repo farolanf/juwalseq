@@ -19,23 +19,17 @@ const PageHeader = ({
   siteTitle,
 }) => {
   const [open, setOpen] = useState(false)
-  const [accountOpen, setAccountOpen] = useState(false)
   const [loginModalOpen, setLoginModalOpen] = useState(false)
   const { user } = useStore()
   const [query, setQuery] = useState('')
 
   const toggleNavbar = () => setOpen(!open)
 
-  const showAccount = () => setAccountOpen(true)
-
-  const hideAccount = () => setAccountOpen(false)
-
   const showLoginModal = () => setLoginModalOpen(true)
 
   const hideLoginModal = () => setLoginModalOpen(false)
 
   const doLogout = () => {
-    setAccountOpen(false)
     logout()
   }
 
@@ -64,20 +58,22 @@ const PageHeader = ({
           <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
           <div className='navbar-right'>
             <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
-            <a className={cn('navbar-link', user.loggedIn && 'hidden')} onClick={showLoginModal}>
+            <a className='navbar-link' onClick={showLoginModal} hidden={user.loggedIn}>
               <i className='fa fa-sign-in hidden md:inline' />
               <span className='md:hidden'>Masuk</span>
             </a>
-            <a className={cn('navbar-link', !user.loggedIn && 'hidden')} onClick={showAccount}>
+            <a className='navbar-link' id='account-menu' hidden={!user.loggedIn}>
               <i className='fa fa-user hidden md:inline' />
               <span className='md:hidden'>Akun</span>
             </a>
           </div>
         </div>
       </div>
-      <Popup open={accountOpen} onClose={hideAccount}>
-        <a>Profil</a>
-        <a onClick={doLogout}>Keluar</a>
+      <Popup target='#account-menu' hover click>
+        <div className='menu'>
+          <a>Profil</a>
+          <a onClick={doLogout}>Keluar</a>
+        </div>
       </Popup>
       <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
