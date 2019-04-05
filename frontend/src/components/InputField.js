@@ -16,10 +16,12 @@ const InputField = ({ name, label, icon, leftPrefix, className, inputClass, help
           </div>
         )}
         {help ? (
+          !(touched[name] && errors[name]) && (
           <div className='flex justify-between'>
             <div className='field-help'>{help}</div>
             {extra}
           </div>
+          )
         ) : extra}
       </div>
     </div>
