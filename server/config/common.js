@@ -18,6 +18,7 @@ module.exports = {
     'email',
     'elasticsearch',
     'uploadfs',
+    'product',
     // 'order',
     // 'customer',
     // 'checkout',
@@ -73,7 +74,7 @@ module.exports = {
       },
       member: {
         routes: [
-          // { path: '/paypal/.*', method: ['GET', 'POST']},
+          { path: '/products/add', method: ['POST']},
         ]
       },
       // admin passed all checks

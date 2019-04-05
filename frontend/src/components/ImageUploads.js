@@ -12,6 +12,13 @@ import Modal from '$comp/Modal'
 
 import withMobile from '$lib/mobile'
 
+const messages = {
+  sizeTooBig: max => {
+    const sizeStr = Intl.NumberFormat().format(max / 1024)
+    return `File terlalu besar, maksimal ${sizeStr}KB.`
+  }
+}
+
 function loadDataUrl (file) {
   return new Promise(resolve => {
     const reader = new FileReader()
@@ -22,13 +29,14 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChange, mobile }) => {
+const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onChange, mobile }) => {
   const prefix = 'image-uploads-'
   const [sortableRef, setSortableRef] = useState()
   const [cropperRef, setCropperRef] = useState()
   const [images, setImages] = useState([])
   const [flipX, setFlipX] = useState(1)
   const [flipY, setFlipY] = useState(1)
+  const [error, setError] = useState()
 
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
@@ -110,7 +118,10 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChan
   }
 
   async function loadFile (file) {
-    if (!file.type.startsWith('image/') || file.size > maxSize) return
+    if (!file.type.startsWith('image/') || file.size > maxSize) {
+      return setError(messages.sizeTooBig(maxSize))
+    }
+    setError()
     file.dataURL = file.originalDataURL = await loadDataUrl(file)
     return file
   }
@@ -243,7 +254,8 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChan
             </div>
           ))}
         </div>
-        <div className='text-xs text-grey text-right'>{`${imageCount}/${max}`}</div>
+        {error && <div className='text-xs text-red'>{error}</div>}
+        {!error && <div className='text-xs text-grey text-right'>{`${imageCount}/${max}`}</div>}
       </div>
     </div>
   )
