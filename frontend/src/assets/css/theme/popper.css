@@ -1,11 +1,14 @@
 .popper {
   @apply z-popup;
   [x-arrow] {
-    @apply z-popup absolute border-solid;
+    @apply hidden;
   }
 }
 
 @define-mixin popper-arrow $color: white, $arrowSize: 7px, $arrowMargin: 8px {
+  & [x-arrow] {
+    @apply block z-popup absolute border-solid;
+  }
   &[x-placement^="top"] {
     margin-bottom: $arrowMargin;
     & [x-arrow] {
