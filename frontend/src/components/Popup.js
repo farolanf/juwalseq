@@ -31,6 +31,7 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
         positionFixed: true,
         modifiers: {
           offset: { offset },
+          flip: { behavior: ['top', 'right', 'left', 'bottom'] },
         }
       })
       setPopper(popper)
