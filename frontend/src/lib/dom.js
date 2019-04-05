@@ -28,12 +28,11 @@ export function toggleClass(el, cls, force) {
 
 export const createBlob = dataURL => {
   const mimeType = dataURL.split(',')[0].split(':')[1].split(';')[0]
-  const byteString = dataURL.split(',')[1]
+  const byteString = atob(dataURL.split(',')[1])
   const ab = new ArrayBuffer(byteString.length)
   const ui8 = new Uint8Array(ab)
   for (let i = 0; i < byteString.length; i++) {
     ui8[i] = byteString.charCodeAt(i)
   }
-  const blob = new Blob([ab], { type: mimeType })
-  return blob
+  return new Blob([ab], { type: mimeType })
 }
