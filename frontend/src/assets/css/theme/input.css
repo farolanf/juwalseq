@@ -1,12 +1,26 @@
 .form-field {
   @mixin margin-auto-y 4;
-  .form-horizontal & {
-    @apply flex items-center;
+  @screen md {
+    .form-horizontal & {
+      @apply flex;
+      & .field-label {
+        min-width: 180px;
+        @apply mr-4 h-8 mb-0 flex items-center;
+      }
+    }
+  }
+}
+
+.field-control {
+  @screen md {
+    &.field-control-full {
+      @apply flex-grow;
+    }
   }
 }
 
 .field-help {
-  @apply h-4 text-grey-dark text-sm;
+  @apply text-grey-dark text-sm;
 }
 
 .field-error {
@@ -17,25 +31,24 @@
   @apply flex items-center relative;
 }
 
-.input-label {
+.field-label {
   @apply inline-block text-black mb-1;
-  .form-horizontal & {
-    width: 180px;
-    @apply mr-4;
-  }
-  .form-label-right & {
-    @apply text-right;
+  .field-label-right & {
+    @apply justify-end;
   }
 }
 
 .input {
-  @apply w-full px-2 h-8 border border-solid border-grey rounded;
+  @apply w-full px-2 border border-solid border-grey rounded;
   &.has-error {
     @apply border-2 border-red-dark;
   }
   &::placeholder {
     @apply text-grey;
     opacity: 1;
+  }
+  input& {
+    @apply h-8;
   }
 }
 

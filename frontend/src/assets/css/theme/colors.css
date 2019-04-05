@@ -1,0 +1,37 @@
+@variants responsive, hover {
+  .text-primary {
+    @apply text-$(primary);
+  }
+
+  .text-secondary {
+    @apply text-$(secondary);
+  }
+
+  .text-accent {
+    @apply text-$(accent);
+  }
+
+  .bg-primary {
+    @apply bg-$(primary);
+  }
+
+  .bg-secondary {
+    @apply bg-$(secondary);
+  }
+
+  .bg-accent {
+    @apply bg-$(accent);
+  }
+
+  .border-primary {
+    @apply border-$(primary);
+  }
+
+  .border-secondary {
+    @apply border-$(secondary);
+  }
+
+  .border-accent {
+    @apply border-$(accent);
+  }
+}
