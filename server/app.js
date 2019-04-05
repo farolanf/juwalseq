@@ -27,12 +27,10 @@ app.use(bodyParser.json({
   strict: false
 }))
 
-app.use(
-  express.static('server/uploads', {
-    index: false,
-    maxAge: '1d'
-  })
-)
+app.use('/static', express.static(path.join(__dirname, 'static'), {
+  index: false,
+  maxAge: '1d'
+}))
 
 // for health check
 app.get('/_health', (req, res) => res.sendStatus(204))

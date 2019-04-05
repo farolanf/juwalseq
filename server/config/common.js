@@ -91,24 +91,19 @@ module.exports = {
   
   uploadfs: {
     storage: 'local',
-    uploadsPath: path.resolve(__dirname, '../uploads'),
-    uploadsUrl: 'http://localhost:3000',
+    uploadsPath: path.resolve(__dirname, '../static'),
+    uploadsUrl: 'http://localhost:3000/static',
     tempPath: path.resolve(__dirname, '../tmp'),
     imageSizes: [
       {
         name: 'xs',
-        width: 128,
-        height: 128,
+        width: 180,
+        height: 180,
       },
       {
         name: 'sm',
         width: 320,
         height: 320,
-      },
-      {
-        name: 'md',
-        width: 640,
-        height: 640,
       },
       {
         name: 'lg',
