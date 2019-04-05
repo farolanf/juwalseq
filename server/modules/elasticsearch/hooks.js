@@ -47,7 +47,7 @@ function getFullRecord (record, Doc) {
   })
 }
 
-async function createOrUpdate (Doc) {
+function createOrUpdate (Doc) {
   return async record => {
     const doc = Doc.getDoc(record)
     const pk = Doc.model.primaryKeyAttributes[0]
