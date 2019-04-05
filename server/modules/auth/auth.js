@@ -126,7 +126,7 @@ module.exports = function (app, config) {
       where: { id: token.UserId } 
     })
     await token.destroy()
-    res.sendStatus(200)
+    res.send({ message: 'password_changed' })
   })
 
   app.post(config.app.apiBase + '/auth/register', async (req, res) => {
