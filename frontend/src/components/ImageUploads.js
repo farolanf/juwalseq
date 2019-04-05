@@ -202,8 +202,8 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChan
           <div className='absolute pin bg-contain bg-no-repeat bg-center cursor-default' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }} />
         </Modal>
       ) : (
-        <Popup target={`#${prefix}view-full-${item.key}`} pos='top' offset='15%p' hover click>
-          <div className='w-64 ratio-1:1 bg-contain bg-no-repeat bg-center cursor-default' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }} />
+        <Popup target={`#${prefix}view-full-${item.key}`} pos='top' offset='15%p' hover click className='popup md:w-1/3 xl:w-1/5'>
+          <div className='ratio-1:1 bg-contain bg-no-repeat bg-center cursor-default' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }} />
         </Popup>
       )}
       {renderEditModal(item)}
