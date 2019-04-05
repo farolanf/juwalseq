@@ -69,11 +69,9 @@ const PageHeader = ({
           </div>
         </div>
       </div>
-      <Popup target='#account-menu' hover click>
-        <div className='menu'>
+      <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
           <a>Profil</a>
           <a onClick={doLogout}>Keluar</a>
-        </div>
       </Popup>
       <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
