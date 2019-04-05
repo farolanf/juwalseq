@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import cn from 'classnames'
-import _ from 'lodash'
-import withMobile from '$lib/mobile'
 
 import dragula from 'react-dragula'
 import 'react-dragula/dist/dragula.min.css'
@@ -10,9 +7,10 @@ import Cropper from 'react-cropper'
 import 'cropperjs/dist/cropper.min.css'
 
 import FileDrop from 'react-file-drop'
-import ResponsiveModal from '$comp/ResponsiveModal'
+import Popup from '$comp/Popup'
+import Modal from '$comp/Modal'
 
-import Uk from '$comp/UIkit'
+import withMobile from '$lib/mobile'
 
 function loadDataUrl (file) {
   return new Promise(resolve => {
@@ -24,7 +22,7 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, className, onChange, mobile }) => {
+const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, onChange, mobile }) => {
   const prefix = 'image-uploads-'
   const [sortableRef, setSortableRef] = useState()
   const [cropperRef, setCropperRef] = useState()
@@ -150,7 +148,7 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   }
 
   const handleRotate = () => {
-    cropperRef.rotate(90)
+    cropperRef.rotate(-90)
   }
 
   const handleFlipY = () => {
@@ -170,66 +168,55 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
     setImages(images.slice())
   }
 
-  const renderImgControl = ({ Component = 'a', className, icon, ...props }) => (
-    <Component className={cn('p-2 md:p-1', className)} {...props}>
-      <div className='uk-position-cover bg-white opacity-0 hover:opacity-75 z-0' />
-      <span className='pointer-events-none text-black' data-uk-icon={icon} />
-    </Component>
-  )
-
   const renderEditModal = item => (
-    <ResponsiveModal largeFullClose={false} id={`${prefix}edit${item.key}`}>
+    <Modal target={`#${prefix}crop-${item.key}`} dialogClass='md:max-w-sm'>
       {({ shown }) => (
-        shown && (
-          <>
-            <Cropper src={_.get(item, 'file.dataURL')} minContainerHeight={400} autoCropArea={1} ref={setCropperRef} />
-            <div className='flex flex-col md:flex-row md:justify-between mt-4'>
-              <ul className='uk-iconnav justify-center md:justify-start'>
-                <li><a data-uk-icon='refresh' onClick={handleRotate} /></li>
-                <li><a data-uk-icon='arrow-up' onClick={handleFlipY} /></li>
-                <li><a data-uk-icon='arrow-right' onClick={handleFlipX} /></li>
-                <li><a data-uk-icon='image' onClick={handleReset(item)} /></li>
-              </ul>
-              <div className='mt-6 md:mt-0 flex justify-end'>
-                <button className='uk-button uk-button-default uk-modal-close mr-1'>Batal</button>
-                <button className='uk-button uk-button-primary uk-modal-close' onClick={handleSave(item)}>Simpan</button>
-              </div>
+        shown && (<>
+          <Cropper src={_.get(item, 'file.dataURL')} minContainerHeight={400} autoCropArea={1} ref={setCropperRef} />
+          <div className='flex flex-col md:flex-row md:justify-between md:items-start mt-4'>
+            <div className='list-x-1 icon-nav justify-center md:justify-start'>
+              <i className='fa fa-rotate-left' onClick={handleRotate} />
+              <i className='fa fa-arrows-v' onClick={handleFlipY} />
+              <i className='fa fa-arrows-h' onClick={handleFlipX} />
+              <i className='fa fa-image' onClick={handleReset(item)} />
             </div>
-          </>
-        )
+            <div className='mt-6 md:mt-0 flex justify-end'>
+              <a className='btn mr-1 close-btn'>Batal</a>
+              <a className='btn btn-primary close-btn' onClick={handleSave(item)}>Simpan</a>
+            </div>
+          </div>
+        </>)
       )}
-    </ResponsiveModal>
+    </Modal>
   )
 
   const renderImage = item => (
-    <div hidden={!item.file} className='h-full uk-background-contain cursor-move border border-solid border-grey-lighter' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
-      {renderImgControl({ className: 'uk-position-top-left', icon: 'close', onClick: handleRemove(item) })}
-
-      {renderImgControl({ className: 'uk-position-top-right', icon: 'settings', Component: Uk.toggle, options: { target: `#${prefix}edit${item.key}` } })}
+    <div hidden={!item.file} className='h-full border border-solid border-grey-lighter relative bg-contain bg-no-repeat bg-center' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }}>
+      <div className='absolute pin opacity-100 md:opacity-0 hover:opacity-100 cursor-move'>
+        <span className='fa fa-remove p-1 link absolute pin-t pin-r' onClick={handleRemove(item)}></span>
+        <span className='fa fa-crop p-1 link absolute pin-t pin-l' id={`${prefix}crop-${item.key}`}></span>
+        <span className='fa fa-image p-1 link absolute pin-b pin-r hover-trigger' id={`${prefix}view-full-${item.key}`}></span>
+      </div>
+      {mobile ? (
+        <Modal target={`#${prefix}view-full-${item.key}`} closeOnClick>
+          <div className='absolute pin bg-contain bg-no-repeat bg-center cursor-default' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }} />
+        </Modal>
+      ) : (
+        <Popup target={`#${prefix}view-full-${item.key}`} pos='top' offset='15%p' hover click>
+          <div className='w-64 ratio-1:1 bg-contain bg-no-repeat bg-center cursor-default' style={{ backgroundImage: item.file && `url(${item.file.dataURL})`, touchAction: 'none' }} />
+        </Popup>
+      )}
       {renderEditModal(item)}
-      
-      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}view${item.key}` }, hidden: !mobile })}
-      <ResponsiveModal id={`${prefix}view${item.key}`}>
-        <div style={{ backgroundImage: `url(${_.get(item, 'file.dataURL')})` }} className='h-full uk-background-contain' />
-      </ResponsiveModal>
-      
-      {renderImgControl({ className: 'uk-position-bottom-right', icon: 'image', Component: Uk.toggle, options: { target: `#${prefix}drop${item.key}` }, hidden: mobile })}
-      <Uk.drop className='uk-width-large uk-height-large max-w-none' options={{ pos: 'top-center', mode: 'click' }} id={`${prefix}drop${item.key}`}>
-        <div className='uk-card uk-card-default uk-card-body h-full'>
-          <div style={{ backgroundImage: `url(${_.get(item, 'file.dataURL')})` }} className='h-full uk-background-contain' />
-        </div>
-      </Uk.drop>
     </div>
   )
 
   const renderPlaceholder = item => (
-    <div hidden={!item.open || item.file}>
-      <FileDrop onDrop={handleDrop(item)} className='' targetClassName='uk-placeholder uk-position-cover mb-0 flex justify-center items-center' draggingOverTargetClassName='border-green-light'>
+    <div className='h-full flex justify-center items-center' onClick={handleClickBrowse} hidden={!item.open || item.file}>
+      <FileDrop onDrop={handleDrop(item)} className='' targetClassName='mb-0 absolute pin flex justify-center items-center border border-dashed border-grey hover:border-green-light hover:text-green cursor-pointer text-grey-dark' draggingOverTargetClassName='border-green-light text-green'>
         <div>
-          <span data-uk-icon='cloud-upload' />
-          <span className='uk-text-middle'> {text} </span>
-          <span className='uk-link hover:no-underline' 
-          onClick={handleClickBrowse}>{linkText}</span>
+          <i className='fa fa-cloud-upload' />
+          <span className='text-grey'>{text}</span>
+          <span>{linkText}</span>
           <input type='file' accept='image/*' hidden onChange={handleChangeFile(item)} />
         </div>
       </FileDrop>
@@ -237,9 +224,8 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   )
 
   const renderItem = item => (
-    <div className='uk-cover-container overflow-visible'>
-      <canvas width='400' height='300' />
-      <div className='uk-position-cover'>
+    <div className='overflow-hidden ratio-1:1 relative w-24'>
+      <div className='absolute pin'>
         {renderImage(item)}
         {renderPlaceholder(item)}
       </div>
@@ -247,17 +233,17 @@ const ImageUploads = ({ max, maxSize = 500 * 1024, label, text, linkText, classN
   )
 
   return (
-    <div className={className}>
-      {label && <label className='uk-form-label'>{label}</label>}
-      <div className='uk-form-controls'>
-        <div className='uk-grid uk-grid-small uk-child-width-1-4@s' ref={setSortableRef} data-uk-grid>
+    <div className='form-field'>
+      {label && <label className='field-label'>{label}</label>}
+      <div className='field-control field-control-full'>
+        <div className='list-x-1 flex-wrap' ref={setSortableRef}>
           {images.map(item => (
-            <div key={item.key} data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
+            <div key={item.key} className='mb-1' data-key={item.key} data-image-uploads-item hidden={!item.file && !item.open}>
               {renderItem(item)}
             </div>
           ))}
         </div>
-        <div className='uk-text-muted mt-1 text-right text-xs'>{`${imageCount}/${max}`}</div>
+        <div className='text-xs text-grey text-right'>{`${imageCount}/${max}`}</div>
       </div>
     </div>
   )

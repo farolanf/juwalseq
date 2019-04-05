@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import autosize from 'autosize'
 
-import FormikInput from '$comp/FormikInput'
+import InputField from '$comp/InputField'
 import ImageUploads from '$comp/ImageUploads'
 
 const PasangIklan = () => {
@@ -16,36 +16,32 @@ const PasangIklan = () => {
   }, [descRef])
 
   return (
-    <div className='uk-section px-2'>
-      <h3 className='uk-heading-bullet uk-text-muted'><span>Pasang iklan</span></h3>
-      <Formik
-        initialValues={{
-          title: '',
-          description: '',
-          price: '',
-          nego: true,
-          images: [],
-        }}
-      >
-        {({ values, setFieldValue, isSubmitting }) => (
-          <Form className='uk-form-horizontal'>
-            <div className='flex flex-col uk-width-1-1@s uk-width-xxlarge@m'>
-              <FormikInput name='title' label='Judul' placeholder='Judul iklan' 
-              help='Pilih judul yang singkat dan jelas' className='uk-margin' 
-              width='1-1' />
-              <FormikInput name='description' component='textarea' maxLength='4000' rows='4' label='Deskripsi' placeholder='Deskripsi iklan' 
-              help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada' className='uk-margin' inputClass='uk-textarea' width='1-1' 
-              inputRef={setDescRef}
-              extra={(
-                <span className='text-xs'>{(values.description || '').length}/4000</span>
-              )} />
-              <FormikInput name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' className='uk-margin' />
-              <ImageUploads max={8} label='Foto' text='' linkText='Pilih' className='uk-margin' onChange={images => setFieldValue('images', images)} />
-            </div>
+    <Formik
+      initialValues={{
+        title: '',
+        description: '',
+        price: '',
+        nego: true,
+        images: [],
+      }}
+    >
+      {({ values, setFieldValue, isSubmitting }) => (
+        <div className='md:max-w-sm'>
+          <h2>Pasang iklan</h2>
+          <Form className='form-horizontal field-label-right'>
+            <InputField name='title' label='Judul' placeholder='Judul iklan' 
+            help='Pilih judul yang singkat dan jelas.' full maxLength='70' extra={(
+              <span className='text-xs text-grey'>{(values.title || '').length}/70</span>
+            )} />
+            <InputField name='description' component='textarea' maxLength='4000' rows='4' label='Deskripsi' placeholder='Deskripsi iklan' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' inputRef={setDescRef} extra={(
+              <span className='text-xs text-grey'>{(values.description || '').length}/4000</span>
+            )} />
+            <InputField name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
+            <ImageUploads max={8} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
           </Form>
-        )}
-      </Formik>
-    </div>
+        </div>
+      )}
+    </Formik>
   )
 }
 

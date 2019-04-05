@@ -8,8 +8,9 @@ import NotFound from '$comp/pages/NotFound'
 import Admin from '$comp/pages/Admin'
 import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
-import FormDemo from '$comp/pages/demo/FormDemo'
+import PasangIklan from '$comp/pages/PasangIklan'
 import ResetPassword from '$comp/pages/ResetPassword'
+import FormDemo from '$comp/pages/demo/FormDemo'
 
 const Page = ({ 
   component, 
@@ -31,6 +32,7 @@ const Page = ({
 const AppRoutes = () => (
   <Router>
     <Page path='/' component={FrontPage} title='Depan' />
+    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
     <Page path='/reset-password' component={ResetPassword} title='Reset password' />
     <FormDemo path='/demo/form' />
     <Session path='/session' />
