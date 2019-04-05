@@ -7,6 +7,10 @@ const messages = {
     max: 'maximal ${max} karakter',
     email: 'harus berupa alamat email',
   },
+  number: {
+    min: ({ min }) => 'minimal ' + Intl.NumberFormat().format(min),
+    max: ({ max }) => 'maximal ' + Intl.NumberFormat().format(max),
+  },
   test: {
     uniqueEmail: 'email sudah terdaftar',
     passwordConfirm: 'kedua password harus sama',
