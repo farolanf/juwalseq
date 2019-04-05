@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon -w server server",
-    "start:prod": "NODE_ENV=production node server",
+    "start:prod": "LOAD_ENV=1 NODE_ENV=production nodemon -w server server",
     "start:docker": "docker run --rm -p 3000:3000 --dns 172.17.0.1 --env-file .env.docker juwal",
     "dev:prod": "LOAD_ENV=1 NODE_ENV=production node server",
     "container": "nodemon -w server server & cd frontend && npm start",
