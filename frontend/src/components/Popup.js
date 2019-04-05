@@ -4,7 +4,7 @@ import Popper from 'popper.js'
 /**
  * Show popup based on show param or hover/click events.  
  */
-const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 250, className = 'popup', children }) => {
+const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offset = 0, delay = 250, hideDelay, className = 'popup', children }) => {
   const [ref, setRef] = useState()
   const [popper, setPopper] = useState()
   const [visible, setVisible] = useState()
@@ -13,7 +13,11 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
 
   const handleMouseEnterPopup = () => setOverPopup(true)
 
-  const handleMouseLeavePopup = () => setOverPopup(false)
+  const handleMouseLeavePopup = () => {
+    isNaN(hideDelay) 
+      ? setOverPopup(false)
+      : setTimeout(() => setOverPopup(false), hideDelay)
+  }
   
   const handleClickPopup = () => setVisible(false)
 
@@ -63,7 +67,9 @@ const Popup = ({ show, onHide, hover, click, target, pos = 'bottom-start', offse
     }
     const handleMouseLeave = () => {
       leaveTime = Date.now()
-      setOverTarget(false)
+      isNaN(hideDelay) 
+        ? setOverTarget(false)
+        : setTimeout(() => setOverTarget(false), hideDelay)
     }
 
     click && target.addEventListener('mouseup', handleMouseUp)
