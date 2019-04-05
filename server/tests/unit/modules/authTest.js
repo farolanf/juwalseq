@@ -3,6 +3,9 @@ const app = require('../../../app')
 const { reset } = require('../../helpers/db')
 const { register } = require('../../helpers/auth')
 
+const { User, Token } = require('@db')
+const { passwordResetToken } = require('@server/const')
+
 const email = 'user@foo.com'
 const password = 'hellopw123'
 
@@ -98,6 +101,48 @@ describe('auth', () => {
         assert.equal(response.status, 200)
         assert.property(response.body, 'unique')
         assert.equal(response.body.unique, false)
+      })
+  })
+
+  it('process forgot password', async () => {
+    const user = await register(email, password).then(res => res.body.user)
+    return request(app)
+      .post(apiBase + '/auth/forgot-password')
+      .send({ email })
+      .then(async response => {
+        assert.equal(response.status, 200)
+        assert.property(response.body, 'message')
+        assert.equal(await Token.count({ 
+          where: {
+            UserId: user.id,
+            name: passwordResetToken,
+          }
+        }), 1)
+      })
+  })
+
+  it('reset password', async () => {
+    const password = 'newPassword123'
+    const user = await register(email, password).then(res => res.body.user)
+    const token = await request(app)
+      .post(apiBase + '/auth/forgot-password')
+      .send({ email })
+      .then(() => {
+        return Token.findOne({ 
+          where: { 
+            UserId: user.id, 
+            name: passwordResetToken 
+          } 
+        })
+        .then(data => data.token)
+      })
+    return request(app)
+      .post(apiBase + '/auth/reset-password')
+      .send({ token, email, password })
+      .then(async res => {
+        assert.equal(res.status, 200)
+        const user = await User.findOne({ where: { email } })
+        assert.isTrue(user.verifyPassword(password))
       })
   })
 })

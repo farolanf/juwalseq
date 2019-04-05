@@ -1,5 +1,9 @@
 import React from 'react'
 
-const FrontPage = () => <h1 className='p-8'>Welcome to Juwal!</h1>
+const FrontPage = () => (
+  <div>
+    <h1>Welcome to Juwal!</h1>
+  </div>
+)
 
 export default FrontPage

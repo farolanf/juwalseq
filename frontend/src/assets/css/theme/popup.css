@@ -1,0 +1,13 @@
+.popup {
+  @apply p-2 bg-white shadow-md rounded;
+  @mixin popper-arrow;
+}
+
+.popup-dark {
+  @apply p-2 bg-blue-darker text-white shadow-md rounded;
+  @mixin popper-arrow blue-darker;
+}
+
+.popup-arrow {
+  @mixin popper-arrow white;
+}

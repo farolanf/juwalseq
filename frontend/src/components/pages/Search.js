@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { navigate } from '@reach/router'
-import changeCase from 'change-case'
-import _ from 'lodash'
-
-import { setItem } from '$lib/helpers'
+import React from 'react'
+import useStore from '$useStore'
 
 const Search = () => {
+  const { product } = useStore()
+  product.searchProducts({})
   return (
     <div>
-
+      {product.results && product.results.hits.hits.map(hit => (
+        <h1 key={hit._id}>{hit._id} - {hit._source.name}</h1>
+      ))}
     </div>
   )
 }

@@ -1,8 +1,8 @@
-import 'uikit/dist/css/uikit.min.css'
-import '$assets/css/tailwind.css'
-import '$assets/css/global.css'
-import '$assets/css/alegreya.css'
+import { compose } from 'lodash/fp'
+import style from './style'
 
-const wrapRootElement = element => element
+const wrapRootElement = element => compose(
+  style,
+)(element)
 
 export default wrapRootElement

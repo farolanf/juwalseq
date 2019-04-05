@@ -1,6 +1,7 @@
 import React, { } from "react"
 import { Router } from '@reach/router'
 
+import Guard from '$comp/Guard'
 import Layout from '$comp/Layout'
 import SEO from "$comp/SEO"
 
@@ -8,33 +9,38 @@ import NotFound from '$comp/pages/NotFound'
 import Admin from '$comp/pages/Admin'
 import Session from '$comp/pages/Session'
 import FrontPage from '$comp/pages/FrontPage'
-import Search from '$comp/pages/Search'
 import PasangIklan from '$comp/pages/PasangIklan'
-import Test from '$comp/pages/Test'
+import Search from '$comp/pages/Search'
+import ResetPassword from '$comp/pages/ResetPassword'
+import FormDemo from '$comp/pages/demo/FormDemo'
+
 
 const Page = ({ 
   component, 
   title,
   description,
   keywords, 
+  role,
+  message,
   children, 
   ...props 
 }) => {
   delete props.path
   return (
-    <div>
+    <Guard role={role} message={message}>
       <SEO title={title} description={description} keywords={keywords} />
       {React.createElement(component, props, children)}
-    </div>
+    </Guard>
   )
 }
 
 const AppRoutes = () => (
   <Router>
-    <Test path='/test' />
     <Page path='/' component={FrontPage} title='Depan' />
+    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' role='member' />
+    <Page path='/reset-password' component={ResetPassword} title='Reset password' />
     <Page path='/search' component={Search} title='Cari' />
-    <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' />
+    <FormDemo path='/demo/form' />
     <Session path='/session' />
     <NotFound path='/*' />
   </Router>

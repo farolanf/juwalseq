@@ -5,46 +5,33 @@ import { compose } from 'lodash/fp'
 import { Link } from "gatsby"
 import { observer } from 'mobx-react-lite'
 
-import CategoryDropdown from '$comp/CategoryDropdown'
-import AccountDropdown from '$comp/AccountDropdown'
+// import CategoryDropdown from '$comp/CategoryDropdown'
+// import AccountDropdown from '$comp/AccountDropdown'
 import LoginModal from '$comp/LoginModal'
-import Uk from '$comp/UIkit'
+import Popup from '$comp/Popup'
 
 import { PREFIX } from '$const'
 import useStore from '$useStore'
 import withLocation from '$lib/location'
-import withMobile from '$lib/mobile'
-
-const MenuDropdown = () => {
-  const [ref, setRef] = useState()
-
-  useEffect(() => {
-    ref && UIkit.dropdown(ref, {
-      delayHide: 150,
-    })
-  }, [ref])
-
-  function close () {
-    UIkit.dropdown(ref).hide()  
-  }
-
-  return (
-    <div data-uk-dropdown='offset: 0; pos: bottom-justify; boundary: #topbar; boundary-align: true' ref={setRef}>
-      <ul className='uk-nav uk-dropdown-nav'>
-        <li>
-          <Link to='/pasang-iklan' onClick={close}>Pasang iklan</Link>
-        </li>
-      </ul>
-    </div>
-  )
-}
+import { logout } from '$lib/auth'
 
 const PageHeader = ({
-  mobile,
   siteTitle,
 }) => {
+  const [open, setOpen] = useState(false)
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
   const { user } = useStore()
   const [query, setQuery] = useState('')
+
+  const toggleNavbar = () => setOpen(!open)
+
+  const showLoginModal = () => setLoginModalOpen(true)
+
+  const hideLoginModal = () => setLoginModalOpen(false)
+
+  const doLogout = () => {
+    logout()
+  }
 
   function handleSubmitQuery (e) {
     e.preventDefault()
@@ -55,41 +42,39 @@ const PageHeader = ({
   }
 
   return (
-    <nav id='topbar' className='uk-navbar uk-navbar-container uk-navbar-transparent' data-uk-navbar>
-      <div className="uk-navbar-left">
-        <Link to='/' className="uk-navbar-item uk-logo logo text-3xl">{siteTitle}</Link>
-        <ul className="uk-navbar-nav">
-          <li>
-            <a id='category-button'>Kategori</a>
-            <CategoryDropdown />
-          </li>
-        </ul>
-      </div>
-      <div className="uk-navbar-right">
-        <ul className="uk-navbar-nav">
-          <li hidden={!mobile}>
-            <a data-uk-icon='menu'></a>
-            <MenuDropdown />
-          </li>
-          <li hidden={mobile}>
-            <Link to='/pasang-iklan'>Pasang iklan</Link>
-          </li>
-          <li hidden={!user.loggedIn}>
-            <a>
-              <span data-uk-icon='user' />
-              {!mobile && user.user && <span className='ml-1'>Hai {user.user.username}!</span>}
+    <nav className='navbar-container'>
+      <div className={cn('navbar navbar-dark relative', open && 'active')}>
+        <div className='mr-6'>
+          <Link to='/' className='navbar-logo'>{siteTitle}</Link>
+        </div>
+        <div className='md:hidden'>
+          <button className='navbar-menu' onClick={toggleNavbar}>
+            <i className='fa fa-bars' />
+          </button>
+        </div>
+        <div className='navbar-collapse'>
+          <a className='navbar-link'>Kategori</a>
+          <a className='navbar-link'>Diskon</a>
+          <Link to='/search' className='navbar-link'>Cari</Link>
+          <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
+          <div className='navbar-right'>
+            <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
+            <a className='navbar-link' onClick={showLoginModal} hidden={user.loggedIn}>
+              <i className='fa fa-sign-in hidden md:inline' />
+              <span className='md:hidden'>Masuk</span>
             </a>
-            <AccountDropdown />
-          </li>
-          <li hidden={user.loggedIn}>
-            <a data-uk-toggle='#login-modal'>
-              <Uk.icon icon='sign-in' />
-              {!mobile && <span className='ml-1'>Masuk</span>}
+            <a className='navbar-link' id='account-menu' hidden={!user.loggedIn}>
+              <i className='fa fa-user hidden md:inline' />
+              <span className='md:hidden'>Akun</span>
             </a>
-            <LoginModal />
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
+      <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
+          <a>Profil</a>
+          <a onClick={doLogout}>Keluar</a>
+      </Popup>
+      <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
   )
 }
@@ -104,6 +89,5 @@ PageHeader.defaultProps = {
 
 export default compose(
   withLocation,
-  withMobile,
   observer,
 )(PageHeader)

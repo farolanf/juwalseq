@@ -1,0 +1,1 @@
+exports.passwordResetToken = 'password_reset_token'

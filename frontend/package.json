@@ -7,13 +7,12 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
-    "@material-ui/core": "^3.9.2",
+    "@material-ui/core": "^3.9.3",
     "autosize": "^4.0.2",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.11.0",
-    "canvas": "^2.4.1",
     "change-case": "^3.1.0",
-    "core-js": "^2.6.5",
+    "font-awesome": "^4.7.0",
     "formik": "^1.5.1",
     "ganalytics": "^3.1.1",
     "gatsby": "^2.1.13",
@@ -21,19 +20,20 @@
     "gatsby-image": "^2.0.29",
     "gatsby-plugin-manifest": "^2.0.18",
     "gatsby-plugin-offline": "^2.0.24",
+    "gatsby-plugin-postcss": "^2.0.7",
     "gatsby-plugin-react-helmet": "^3.0.6",
     "gatsby-plugin-sharp": "^2.0.21",
+    "gatsby-plugin-typography": "^2.2.10",
     "gatsby-source-filesystem": "^2.0.21",
     "gatsby-transformer-sharp": "^2.1.14",
-    "imports-loader": "^0.8.0",
-    "jsdom": "^14.0.0",
-    "jsdom-global": "^3.0.2",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
-    "mobx-react-devtools": "^6.1.1",
     "mobx-react-lite": "^1.1.0",
-    "node-loader": "^0.6.0",
     "pluralize": "^7.0.0",
+    "popper.js": "^1.14.7",
+    "postcss-for": "^2.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-mixins": "^6.2.1",
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
     "ra-ui-materialui": "file:./packages/ra-ui-materialui",
@@ -45,11 +45,10 @@
     "react-file-drop": "^0.2.7",
     "react-helmet": "^5.2.0",
     "react-redux": "^5.1.1",
-    "synchronous-promise": "^2.0.6",
+    "react-typography": "^0.16.19",
     "tailwindcss": "^0.7.4",
-    "uikit": "^3.0.3",
-    "uikit-ssr": "file:./packages/uikit-ssr",
-    "window": "file:./packages/window",
+    "typography": "^0.16.19",
+    "typography-theme-funston": "^0.16.19",
     "yup": "^0.26.10"
   },
   "keywords": [
@@ -62,7 +61,7 @@
     "develop": "gatsby develop -H 0.0.0.0",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "tailwind": "tailwind build tailwind.css -c tailwind.js -o src/assets/css/tailwind.css; cp src/assets/css/tailwind.css public/tailwind.css",
+    "tailwind": "tailwind build tailwind.css -c tailwind.js -o src/assets/css/tailwind.css",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "watch": "npm-watch",
     "deploy": "rm public -rf && npm run build && npm run deploy:push && npm run deploy:invalidate",
@@ -73,7 +72,8 @@
     "tailwind": {
       "patterns": [
         "tailwind.css",
-        "tailwind.js"
+        "tailwind.js",
+        "packages/tailwindcss-ext"
       ]
     }
   },
@@ -85,6 +85,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "devDependencies": {
+    "mobx-react-devtools": "^6.1.1",
     "npm-watch": "^0.6.0"
   }
 }

@@ -1,149 +1,171 @@
 import React, { useState, useEffect } from 'react'
-import { Formik } from 'formik'
 import { navigate } from '@reach/router'
 import _ from 'lodash'
 
-import FormikInput from '$comp/FormikInput'
+import { Formik, Form } from 'formik'
+import InputField from '$comp/InputField'
 
 import { API_HOST, PREFIX } from '$src/const'
 import { login, register, storeReferer } from '$lib/auth';
-import registerSchema from '$src/schemas/register'
-import withMobile from '$lib/mobile'
-import { bindVisible } from '$lib/uikit'
+import { forgotPassword } from '$api/auth'
 
-const ResetForm = ({ visible, mode, resetForm }) => {
+import registerSchema from '$src/schemas/register'
+import forgotPasswordSchema from '$src/schemas/forgot-password'
+
+const schemas = {
+  register: registerSchema,
+  forgot: forgotPasswordSchema,
+}
+
+const messages = {
+  login: 'Masuk',
+  register: 'Daftar',
+  forgot: 'Lupa password',
+  forgotNotice: 'Lupa password',
+  invalid_email: 'Bukan alamat email',
+  email_not_found: 'Email tidak terdaftar',
+  check_email: 'Silahkan periksa email anda beberapa saat lagi dan ikuti petunjuk di dalamnya untuk mengganti password.',
+}
+
+const ResetForm = ({ open, mode, resetForm }) => {
   useEffect(() => {
-    visible && resetForm()
-  }, [mode, visible])
+    open && resetForm()
+  }, [mode, open])
   return null
 }
 
-const LoginModal = ({ mobile }) => {
-  const [ref, setRef] = useState()
-  const [closeRef, setCloseRef] = useState()
-  const [mode, setMode] = useState('login')
-  
+const LoginModal = ({ open, onClose }) => {
+  const [mode, setMode] = useState('forgot')
   const otherMode = mode === 'login' ? 'register' : 'login'
-
-  const [visible] = bindVisible(ref, useState())
+  const [message, setMessage] = useState()
+  const [error, setError] = useState()
 
   useEffect(() => {
-    if (ref) {
-      return UIkit.util.on(ref, 'show', () => {
-        storeReferer(location.pathname + location.search)
-        setMode('login')
-      })
+    if (open) {
+      storeReferer()
+      setMode('login')
     }
-  }, [ref])
+  }, [open])
 
-  UIkit.util.toggleClass(ref, 'uk-modal-full', mobile)
-  UIkit.util.toggleClass(closeRef, 'uk-modal-close-full uk-close-large', mobile)
-  UIkit.util.toggleClass(closeRef, 'uk-modal-close-default', !mobile)
-
+ 
   function toggleMode () {
     setMode(otherMode)
   }
 
-  function close () {
-    UIkit.modal(ref).hide()
-  }
+  const modeForgot = () => setMode('forgot')
 
-  function onSubmit ({ email, password }, { setSubmitting, setErrors }) {
+  const onDialogClick = e => e.stopPropagation()
+
+  function onSubmit ({ email, password, newEmail, newPassword, registeredEmail }, { setSubmitting, setErrors, resetForm }) {
     if (mode === 'login') {
       login(email, password)
         .then(() => {
-          close()
+          onClose()
         })
         .catch(err => {
           err.response && [401, 403].includes(err.response.status) && setErrors({
-            email: 'invalid email / password',
-            password: 'invalid email / password',
+            email: 'Email atau password salah',
+            password: 'Email atau password salah',
           })
         })
         .finally(() => setSubmitting(false))
     } else if (mode === 'register') {
-      register(email, password)
+      register(newEmail, newPassword)
         .then(() => {
-          close()
+          onClose()
           navigate(PREFIX + '/welcome/unconfirmed')
         })
         .finally(() => setSubmitting(false))
+    } else if (mode === 'forgot') {
+      forgotPassword(registeredEmail).then(res => {
+        setMessage(messages[res.data.message])
+        setMode('forgotNotice')
+      }).catch(err => {
+        setError(messages[err.response.data.error])
+      }).finally(() => {
+        setSubmitting(false)
+        resetForm()
+      })
     }
   }
 
   return (
-    <div id="login-modal" className='uk-modal' data-uk-modal ref={setRef}>
-      <div className='uk-modal-dialog uk-modal-body uk-width-large'>
-        <h2 className='uk-modal-title'>{_.upperFirst(mode)}</h2>
-        <button className='uk-modal-close-default' type='button' data-uk-close 
-        ref={setCloseRef} />
-        <Formik
-          initialValues={{
-            email: '',
-            password: '',
-            passwordConfirm: '',
-          }}
-          validationSchema={mode === 'register' ? registerSchema : undefined}
-          onSubmit={onSubmit}
-        >
-          {({ handleSubmit, isSubmitting, resetForm }) => (
-            <form onSubmit={handleSubmit}>
-              <ResetForm {...{ visible, mode, resetForm }} />
-              <div className='uk-flex uk-flex-column'>
-                {mode === 'login' ? (
-                  <>
-                    <div className='uk-margin-small'>
-                      <FormikInput key='email' name='email' placeholder='Email / username' leftIcon='user' autoComplete='email' />
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+        newEmail: '',
+        newPassword: '',
+        passwordConfirm: '',
+        registeredEmail: '',
+      }}
+      validationSchema={schemas[mode]}
+      onSubmit={onSubmit}
+    >
+      {({ handleSubmit, isSubmitting, resetForm }) => (
+        open && (
+          <div className='modal' onClick={onClose}>
+            <div className='modal-dialog' onClick={onDialogClick}>
+              <span className='close' onClick={onClose} />
+              <h3 className='text-grey'>{messages[mode]}</h3>
+              <div className='divider w-16 mb-4' />
+              {/* set form key to force remount on mode change for autofill to work */}
+              <Form key={mode} onSubmit={handleSubmit} className='mb-0'>
+                <ResetForm {...{ open, mode, resetForm }} />
+                {mode === 'login' ? (<>
+                  <InputField key='email' name='email' placeholder='Username atau email...' icon='user' />
+                  <InputField key='password' name='password' type='password' placeholder='Password...' icon='lock' extra={
+                    <div className='flex justify-end'>
+                      <a className='link text-sm' onClick={modeForgot}>Lupa password?</a>
                     </div>
-                    <div className='uk-margin-small'>
-                      <FormikInput key='password' name='password' type='password' placeholder='Password' leftIcon='lock' autoComplete='password' />
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className='uk-margin-small'>
-                      <FormikInput key='newEmail' name='email' placeholder='Email / username' leftIcon='user' />
-                    </div>
-                    <div className='uk-margin-small'>
-                      <FormikInput key='newPassword' name='password' type='password' placeholder='Password' leftIcon='lock' />
-                    </div>
-                    <div className='uk-margin-small'>
-                      <FormikInput name='passwordConfirm' type='password' 
-                    placeholder='Confirm password' leftIcon='lock' />
-                    </div>
-                  </>
+                  } />
+                </>) : mode === 'register' && (<>
+                  <InputField key='newEmail' name='newEmail' placeholder='Alamat email...' icon='user' />
+                  <InputField key='newPassword' name='newPassword' type='password' placeholder='Password...' icon='lock' />
+                  <InputField name='passwordConfirm' type='password' placeholder='Ulangi password...' icon='lock' />
+                </>)}
+                {['login', 'register'].includes(mode) && (
+                  <div className='list-y-2'>
+                    <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
+                      <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Masuk
+                    </button>
+                    <p className='text-center text-grey'>Atau masuk dengan</p>
+                    <a href={API_HOST + '/auth/facebook'} className='btn btn-primary'>
+                      <i className='fa fa-facebook' /> Facebook
+                    </a>
+                    <a href={API_HOST + '/auth/google'} className='btn btn-primary'>
+                    <i className='fa fa-google' /> Google
+                    </a>
+                  </div>
                 )}
-                <div className='mt-6 -mb-4 uk-text-muted'>Or login with</div>
-                <div className='flex flex-col md:flex-row uk-margin' data-uk-margin>
-                  <a className='uk-button uk-button-primary' 
-                  href={API_HOST + '/auth/facebook'}>
-                    <span data-uk-icon='facebook' />
-                    Facebook
-                  </a>
-                  <a className='uk-button uk-button-primary md:ml-2' 
-                  href={API_HOST + '/auth/google'}>
-                    <span data-uk-icon='google' />
-                    Google
-                  </a>
+                {mode === 'forgot' && (<>
+                  {error && <div className='alert alert-danger'>{error}</div>}
+                  <div className='alert'>
+                    Masukkan email yang terdaftar untuk mengganti password.
+                  </div>
+                  <InputField name='registeredEmail' placeholder='Email terdaftar...' />
+                  <div className='list-y-2'>
+                    <button type='submit' className='btn btn-primary w-full' disabled={isSubmitting}>
+                      <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Reset password
+                    </button>
+                  </div>
+                </>)}
+                {mode === 'forgotNotice' && (
+                  <div className='alert alert-success'>{message}</div>
+                )}
+                <div className='list-x-1 justify-end mt-4'>
+                  <button type='button' className='btn' onClick={toggleMode}>
+                    {messages[otherMode]}
+                  </button>
+                  <button type='button' className='btn' onClick={onClose}>Batal</button>
                 </div>
-                <div className='flex flex-col md:flex-row md:justify-between md:items-center uk-margin' data-uk-margin>
-                  <button className='uk-button uk-button-primary md:flex-last' type='submit' disabled={isSubmitting}>
-                    {mode}
-                  </button>
-                  <button className='uk-button uk-button-default' type='button' onClick={toggleMode}>
-                    {otherMode}
-                  </button>
-                  <button className='uk-button uk-button-default uk-modal-close md:flex-first'>
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </form>
-          )}
-        </Formik>
-      </div>
-    </div>
+              </Form>
+            </div>
+          </div>
+        )
+      )}
+    </Formik>
   )
 }
 
-export default withMobile(LoginModal)
+export default LoginModal

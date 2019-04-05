@@ -14,11 +14,26 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-plugin-typography`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/assets/img`,
-      },
+        pathToConfigModule: path.resolve(__dirname, './src/typography')
+      }
+    },
+    {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [
+          require('postcss-import'),
+          require('postcss-mixins'),
+          require('postcss-for'),
+          require('postcss-simple-vars'),
+          require('tailwindcss')('./tailwind.js'),
+          require('postcss-nested')({
+            bubble: ['screen'],
+          }),
+          require('autoprefixer'),
+        ]
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

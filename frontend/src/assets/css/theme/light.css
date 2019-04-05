@@ -1,0 +1,54 @@
+@define-mixin light $parent {
+  .$(parent) & {
+    @apply text-black;
+    &:hover {
+      @apply text-grey-darkest;
+    }
+    &:active {
+      @apply text-grey-darker;
+    }
+  }
+}
+
+@define-mixin dark $parent {
+  .$(parent) & {
+    @apply text-white;
+    &:hover {
+      @apply text-grey-light;
+    }
+    &:active {
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+      @apply text-white;
+    }
+  }
+}
+
+@define-mixin theme $parent {
+  @mixin light $(parent);
+  @mixin dark $(parent)-dark;
+}
+
+.light {
+  @apply text-black;
+}
+
+.light:hover {
+  @apply text-grey-darkest;
+}
+
+.light:active {
+  @apply text-grey-darker;
+}
+
+.dark {
+  @apply text-white;
+}
+
+.dark:hover {
+  @apply text-grey-light;
+}
+
+.dark:active {
+  text-shadow: 0 0 1px white;
+  @apply text-grey-lightest;
+}

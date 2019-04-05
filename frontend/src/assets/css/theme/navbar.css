@@ -1,0 +1,61 @@
+.navbar-container {
+  @apply bg-$(primary) relative;
+}
+
+.navbar {
+  max-width: config('screens.lg');
+  @apply flex flex-wrap items-center justify-between mx-4 py-4;
+  @screen md {
+    @apply justify-start mx-auto px-4;
+  }
+}
+
+.navbar-right {
+  @apply flex items-center ml-auto;
+}
+
+.navbar-logo {
+  @apply no-underline text-2xl text-white;
+  @mixin margin-auto-x;
+  &:hover {
+    @apply text-white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.navbar-menu {
+  @apply btn bg-transparent shadow-none px-2 py-1 text-left text-$(text-primary);
+  &:hover:not(:disabled) {
+    @apply bg-$(primary)-light;
+  }
+}
+
+.navbar-right {
+  @apply ml-auto;
+}
+
+.navbar-collapse {
+  @apply w-full flex-col flex-grow hidden;
+  @media (max-width: config('screens.md')) {
+    .navbar.active & {
+      @apply flex -mx-4;
+      & .navbar-link, & .navbar-btn {
+        @apply block w-full py-2 px-4 mx-0;
+        &:first-child {
+          @apply mt-2;
+        }
+      }
+      & .navbar-right {
+        @apply ml-0 flex flex-col;
+        & .navbar-link, & .navbar-btn {
+          &:first-child {
+            @apply mt-0;
+          }
+        }
+      }
+    }
+  }
+  @screen md {
+    @apply flex flex-row items-center w-auto;
+  }
+}

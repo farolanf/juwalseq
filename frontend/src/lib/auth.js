@@ -65,7 +65,7 @@ export const login = (username, password) => {
 export const logout = () => {
   clearToken()
   setUser(null)
-  navigate(PREFIX)
+  navigate('/')
 }
 
 export const verify = () => {

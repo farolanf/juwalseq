@@ -18,10 +18,12 @@ const PageLayout = ({ children }) => (
       }
     `}
     render={data => (
-      <div className='uk-container px-0'>
+      <div>
         <SEO title={data.site.siteMetadata.title} />
         <Header siteTitle={data.site.siteMetadata.title} />
-        <main>{children}</main>
+        <div className='container'>
+          <main className='py-8'>{children}</main>
+        </div>
       </div>
     )}
   />

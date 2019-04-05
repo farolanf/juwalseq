@@ -1,0 +1,92 @@
+======== develop-html
+[
+  {
+    "use": [
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/css-loader/locals.js",
+        "options": {
+          "sourceMap": true,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "modules": true,
+          "importLoaders": 1
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/postcss-loader/lib/index.js",
+        "options": {
+          "ident": "postcss-1",
+          "sourceMap": true
+        }
+      }
+    ],
+    "test": {}
+  },
+  {
+    "use": [
+      {
+        "options": {},
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/null-loader/index.js"
+      }
+    ],
+    "test": {}
+  }
+]
+======== develop
+[
+  {
+    "use": [
+      {
+        "options": {
+          "hmr": false
+        },
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/style-loader/index.js"
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/css-loader/index.js",
+        "options": {
+          "sourceMap": true,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "modules": true,
+          "importLoaders": 1
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/postcss-loader/lib/index.js",
+        "options": {
+          "ident": "postcss-1",
+          "sourceMap": true
+        }
+      }
+    ],
+    "test": {}
+  },
+  {
+    "use": [
+      {
+        "options": {
+          "hmr": true
+        },
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/style-loader/index.js"
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/css-loader/index.js",
+        "options": {
+          "sourceMap": true,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "importLoaders": 1
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/postcss-loader/lib/index.js",
+        "options": {
+          "ident": "postcss-2",
+          "sourceMap": true
+        }
+      }
+    ],
+    "test": {}
+  }
+]

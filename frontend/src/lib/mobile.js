@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react'
-
-import { isWidthDown } from '@material-ui/core/withWidth'
-export { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
-
 import tailwind from '$prj/tailwind'
+import theme from '$src/theme'
 
-const screens = Object.keys(tailwind.screens).reverse()
+const screens = Object.keys(tailwind.screens)
+const screensReverse = screens.slice().reverse()
 
-function getWidth () {
-  const w = document.body.clientWidth
-  return screens.find(key => parseInt(tailwind.screens[key]) <= w)
+const isWidthDown = (breakpoint, width) => {
+  if (!screens.includes(width)) return true
+  return screens.indexOf(width) <= screens.indexOf(breakpoint)
 }
 
+function getWidth () {
+  if (typeof document === 'undefined') return theme.initialWidth || 'md'
+  const w = document.body.clientWidth
+  return screensReverse.find(key => parseInt(tailwind.screens[key]) <= w)
+}
+
+// eslint-disable-next-line
 const withMobile = Component => props => {
   const [width, setWidth] = useState(getWidth())
   const [updateWidth] = useState(() => () => setWidth(getWidth()))

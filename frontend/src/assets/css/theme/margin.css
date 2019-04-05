@@ -1,0 +1,43 @@
+@define-mixin margin-auto-x $default: 2 {
+  @apply mr-$(default);
+  &.m-ax-1 {
+    @apply mr-1;
+  }
+  &.m-ax-4 {
+    @apply mr-4;
+  }
+  &.m-ax-6 {
+    @apply mr-6;
+  }
+  &.m-ax-8 {
+    @apply mr-8;
+  }
+  &.m-ax-16 {
+    @apply mr-16;
+  }
+  &:last-child {
+    @apply mr-0;
+  }
+}
+
+@define-mixin margin-auto-y $default: 2 {
+  @apply mb-$(default);
+  &.m-ay-1 {
+    @apply mb-1;
+  }
+  &.m-ay-4 {
+    @apply mb-4;
+  }
+  &.m-ay-6 {
+    @apply mb-6;
+  }
+  &.m-ay-8 {
+    @apply mb-8;
+  }
+  &.m-ay-16 {
+    @apply mb-16;
+  }
+  &:last-child {
+    @apply mb-0;
+  }
+}

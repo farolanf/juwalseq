@@ -12,13 +12,13 @@ module.exports = {
 
   // specify modules to load and their order
   modules: [
-    'sequelize',
     'data',
     'auth',
     'finale',
     'email',
     'elasticsearch',
     'uploadfs',
+    'product',
     // 'order',
     // 'customer',
     // 'checkout',
@@ -31,6 +31,9 @@ module.exports = {
 
     // new customers will be assigned to these groups
     defaultGroups: ['public', 'member'],
+
+    // how long the password reset token should be valid (in seconds)
+    passwordResetTokenLife: 60 * 60 * 48,
 
     groups: {
       public: {
@@ -53,6 +56,8 @@ module.exports = {
           { path: '/auth/logout', method: 'GET' },
           { path: '/auth/verify', method: 'GET' },
           { path: '/auth/unique-email', method: 'GET' },
+          { path: '/auth/forgot-password', method: 'POST' },
+          { path: '/auth/reset-password', method: 'POST' },
 
           { path: '/search/.*', method: 'GET' },
 
@@ -69,7 +74,7 @@ module.exports = {
       },
       member: {
         routes: [
-          // { path: '/paypal/.*', method: ['GET', 'POST']},
+          { path: '/products/add', method: ['POST']},
         ]
       },
       // admin passed all checks
@@ -87,24 +92,19 @@ module.exports = {
   
   uploadfs: {
     storage: 'local',
-    uploadsPath: path.resolve(__dirname, '../uploads'),
-    uploadsUrl: 'http://localhost:3000',
+    uploadsPath: path.resolve(__dirname, '../static'),
+    uploadsUrl: 'http://localhost:3000/static',
     tempPath: path.resolve(__dirname, '../tmp'),
     imageSizes: [
       {
         name: 'xs',
-        width: 128,
-        height: 128,
+        width: 180,
+        height: 180,
       },
       {
         name: 'sm',
         width: 320,
         height: 320,
-      },
-      {
-        name: 'md',
-        width: 640,
-        height: 640,
       },
       {
         name: 'lg',

@@ -45,6 +45,7 @@ let defaultConfig = require('tailwindcss/defaultConfig')()
 
 let colors = {
   'transparent': 'transparent',
+  'inherit': 'inherit',
 
   'black': '#22292f',
   'grey-darkest': '#3d4852',
@@ -167,7 +168,6 @@ module.exports = {
   */
 
   screens: {
-    'xs': '0px',
     'sm': '640px',
     'md': '960px',
     'lg': '1200px',
@@ -641,6 +641,15 @@ module.exports = {
   */
 
   maxHeight: {
+    'xs': '20rem',
+    'sm': '30rem',
+    'md': '40rem',
+    'lg': '50rem',
+    'xl': '60rem',
+    '2xl': '70rem',
+    '3xl': '80rem',
+    '4xl': '90rem',
+    '5xl': '100rem',
     'full': '100%',
     'screen': '100vh',
   },
@@ -671,6 +680,7 @@ module.exports = {
     '4': '1rem',
     '5': '1.25rem',
     '6': '1.5rem',
+    '7': '1.75rem',
     '8': '2rem',
     '10': '2.5rem',
     '12': '3rem',
@@ -823,6 +833,9 @@ module.exports = {
     '25': '.25',
     '50': '.5',
     '75': '.75',
+    '85': '.85',
+    '90': '.9',
+    '95': '.95',
     '100': '1',
   },
 
@@ -899,6 +912,7 @@ module.exports = {
     borderRadius: ['responsive'],
     borderStyle: ['responsive'],
     borderWidths: ['responsive'],
+    column: ['responsive'],
     cursor: ['responsive'],
     display: ['responsive'],
     flexbox: ['responsive'],
@@ -908,6 +922,7 @@ module.exports = {
     height: ['responsive'],
     leading: ['responsive'],
     lists: ['responsive'],
+    list: ['responsive'],
     margin: ['responsive'],
     maxHeight: ['responsive'],
     maxWidth: ['responsive'],
@@ -918,6 +933,7 @@ module.exports = {
     objectPosition: false,
     opacity: ['responsive', 'hover'],
     outline: ['focus'],
+    order: ['responsive'],
     overflow: ['responsive'],
     padding: ['responsive'],
     pointerEvents: ['responsive'],
@@ -956,10 +972,11 @@ module.exports = {
   */
 
   plugins: [
-    require('tailwindcss/plugins/container')({
+    // require('tailwindcss/plugins/container')({
       // center: true,
       // padding: '1rem',
-    }),
+    // }),
+    require('tailwindcss-ext'),
   ],
 
 
