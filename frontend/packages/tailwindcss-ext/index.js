@@ -22,6 +22,7 @@ function list ({ addUtilities, config }) {
   for (let i = 1; i <= 8; i++) {
     style[`.list-x-${i}`] = {
       display: 'flex',
+      'flex-direction': 'row',
       '& > *:not(:last-child)': {
         'margin-right': margin[i],
       }

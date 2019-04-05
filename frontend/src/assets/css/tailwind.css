@@ -5806,6 +5806,7 @@
 
 .list-x-1 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-1 > *:not(:last-child) {
@@ -5814,6 +5815,7 @@
 
 .list-x-2 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-2 > *:not(:last-child) {
@@ -5822,6 +5824,7 @@
 
 .list-x-3 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-3 > *:not(:last-child) {
@@ -5830,6 +5833,7 @@
 
 .list-x-4 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-4 > *:not(:last-child) {
@@ -5838,6 +5842,7 @@
 
 .list-x-5 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-5 > *:not(:last-child) {
@@ -5846,6 +5851,7 @@
 
 .list-x-6 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-6 > *:not(:last-child) {
@@ -5854,6 +5860,7 @@
 
 .list-x-7 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-7 > *:not(:last-child) {
@@ -5861,6 +5868,7 @@
 
 .list-x-8 {
   display: flex;
+  flex-direction: row;
 }
 
 .list-x-8 > *:not(:last-child) {
@@ -15287,6 +15295,7 @@
 
   .sm\:list-x-1 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-1 > *:not(:last-child) {
@@ -15295,6 +15304,7 @@
 
   .sm\:list-x-2 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-2 > *:not(:last-child) {
@@ -15303,6 +15313,7 @@
 
   .sm\:list-x-3 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-3 > *:not(:last-child) {
@@ -15311,6 +15322,7 @@
 
   .sm\:list-x-4 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-4 > *:not(:last-child) {
@@ -15319,6 +15331,7 @@
 
   .sm\:list-x-5 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-5 > *:not(:last-child) {
@@ -15327,6 +15340,7 @@
 
   .sm\:list-x-6 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-6 > *:not(:last-child) {
@@ -15335,6 +15349,7 @@
 
   .sm\:list-x-7 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-7 > *:not(:last-child) {
@@ -15342,6 +15357,7 @@
 
   .sm\:list-x-8 {
     display: flex;
+    flex-direction: row;
   }
 
   .sm\:list-x-8 > *:not(:last-child) {
@@ -24769,6 +24785,7 @@
 
   .md\:list-x-1 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-1 > *:not(:last-child) {
@@ -24777,6 +24794,7 @@
 
   .md\:list-x-2 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-2 > *:not(:last-child) {
@@ -24785,6 +24803,7 @@
 
   .md\:list-x-3 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-3 > *:not(:last-child) {
@@ -24793,6 +24812,7 @@
 
   .md\:list-x-4 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-4 > *:not(:last-child) {
@@ -24801,6 +24821,7 @@
 
   .md\:list-x-5 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-5 > *:not(:last-child) {
@@ -24809,6 +24830,7 @@
 
   .md\:list-x-6 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-6 > *:not(:last-child) {
@@ -24817,6 +24839,7 @@
 
   .md\:list-x-7 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-7 > *:not(:last-child) {
@@ -24824,6 +24847,7 @@
 
   .md\:list-x-8 {
     display: flex;
+    flex-direction: row;
   }
 
   .md\:list-x-8 > *:not(:last-child) {
@@ -34251,6 +34275,7 @@
 
   .lg\:list-x-1 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-1 > *:not(:last-child) {
@@ -34259,6 +34284,7 @@
 
   .lg\:list-x-2 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-2 > *:not(:last-child) {
@@ -34267,6 +34293,7 @@
 
   .lg\:list-x-3 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-3 > *:not(:last-child) {
@@ -34275,6 +34302,7 @@
 
   .lg\:list-x-4 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-4 > *:not(:last-child) {
@@ -34283,6 +34311,7 @@
 
   .lg\:list-x-5 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-5 > *:not(:last-child) {
@@ -34291,6 +34320,7 @@
 
   .lg\:list-x-6 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-6 > *:not(:last-child) {
@@ -34299,6 +34329,7 @@
 
   .lg\:list-x-7 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-7 > *:not(:last-child) {
@@ -34306,6 +34337,7 @@
 
   .lg\:list-x-8 {
     display: flex;
+    flex-direction: row;
   }
 
   .lg\:list-x-8 > *:not(:last-child) {
@@ -43733,6 +43765,7 @@
 
   .xl\:list-x-1 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-1 > *:not(:last-child) {
@@ -43741,6 +43774,7 @@
 
   .xl\:list-x-2 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-2 > *:not(:last-child) {
@@ -43749,6 +43783,7 @@
 
   .xl\:list-x-3 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-3 > *:not(:last-child) {
@@ -43757,6 +43792,7 @@
 
   .xl\:list-x-4 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-4 > *:not(:last-child) {
@@ -43765,6 +43801,7 @@
 
   .xl\:list-x-5 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-5 > *:not(:last-child) {
@@ -43773,6 +43810,7 @@
 
   .xl\:list-x-6 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-6 > *:not(:last-child) {
@@ -43781,6 +43819,7 @@
 
   .xl\:list-x-7 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-7 > *:not(:last-child) {
@@ -43788,6 +43827,7 @@
 
   .xl\:list-x-8 {
     display: flex;
+    flex-direction: row;
   }
 
   .xl\:list-x-8 > *:not(:last-child) {
