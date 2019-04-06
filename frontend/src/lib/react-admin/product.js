@@ -24,7 +24,7 @@ export const ProductList = props => (
       <TextField source="price" />
       <TextField source="discounted_price" />
       <NumberField source="display" />
-      <ImageField source="thumbnail" title="Thumbnail" style={tw`w-16`} sortable={false} />
+      <ImageField source="thumbnail" title="Thumbnail"  sortable={false} />
     </Datagrid>
   </List>
 )
@@ -38,11 +38,11 @@ export const ProductEdit = props => (
       <TextInput source="price" />
       <TextInput source="discounted_price" />
       <NumberInput source="display" />
-      <ImageField source="image" title="Image" style={tw`w-48`} />
+      <ImageField source="image" title="Image"  />
       <ImageInput source="image" />
-      <ImageField source="image_2" title="Image 2" style={tw`w-48`} />
+      <ImageField source="image_2" title="Image 2"  />
       <ImageInput source="image_2" />
-      <ImageField source="thumbnail" title="Thumbnail 2" style={tw`w-16`} />
+      <ImageField source="thumbnail" title="Thumbnail 2"  />
       <ImageInput source="thumbnail" />
     </SimpleForm>
   </Edit>
@@ -56,11 +56,11 @@ export const ProductCreate = props => (
       <TextInput source="price" />
       <TextInput source="discounted_price" />
       <NumberInput source="display" />
-      <ImageField source="image" title="Image" style={tw`w-48`} />
+      <ImageField source="image" title="Image"  />
       <ImageInput source="image" />
-      <ImageField source="image_2" title="Image 2" style={tw`w-48`} />
+      <ImageField source="image_2" title="Image 2"  />
       <ImageInput source="image_2" />
-      <ImageField source="thumbnail" title="Thumbnail 2" style={tw`w-16`} />
+      <ImageField source="thumbnail" title="Thumbnail 2"  />
       <ImageInput source="thumbnail" />
     </SimpleForm>
   </Create>

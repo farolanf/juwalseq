@@ -1,12 +1,10 @@
 import './init'
+
 // import GAnalytics from 'ganalytics'
 import _wrapRootElement from './wrapRootElement'
 import _wrapPageElement from './wrapPageElement'
-import { verify } from '$src/lib/auth'
 
 // const ga = GAnalytics('UA-49818631-2')
-
-verify()
 
 export const wrapRootElement = ({ element }) => {
   return _wrapRootElement(element)

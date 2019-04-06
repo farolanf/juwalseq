@@ -20,7 +20,7 @@ export const ProductCategoryList = props => (
         <TextField source="name" />
       </ReferenceField>
       <ReferenceField source="ProductId" reference="Products" label='Thumbnail' sortable={false}>
-        <ImageField source="thumbnail" style={tw`w-16`} />
+        <ImageField source="thumbnail"  />
       </ReferenceField>
       <ReferenceField source="CategoryId" reference="Categories">
         <TextField source="name" />

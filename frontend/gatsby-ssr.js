@@ -1,6 +1,7 @@
+import './init'
+
 import React from 'react'
 
-import './init'
 import _wrapRootElement from './wrapRootElement'
 import _wrapPageElement from './wrapPageElement'
 

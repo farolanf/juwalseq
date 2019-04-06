@@ -59,6 +59,7 @@ const PageHeader = ({
           <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
           <div className='navbar-right'>
             <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
+            <Link to='/admin' className='navbar-link'>Admin</Link>
             <a className='navbar-link' onClick={showLoginModal} hidden={user.loggedIn}>
               <i className='fa fa-sign-in hidden md:inline' />
               <span className='md:hidden'>Masuk</span>

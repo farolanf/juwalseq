@@ -1,4 +1,4 @@
-import React, { } from "react"
+import React, { useState } from "react"
 import { Router } from '@reach/router'
 
 import Guard from '$comp/Guard'
@@ -55,9 +55,26 @@ const App = () => process.env.NODE_ENV === 'production'
     </Layout>
   )
 
+const AdminWrapper = () => {
+  const [init, setInit] = useState()
+
+  if (!init) {
+    const els = document.head.querySelectorAll('style,link')
+    els && els.forEach(el => el.parentNode && el.parentNode.removeChild(el))
+    setInit(true)
+  }
+
+  return (
+    <div>
+      <SEO title='Admin' />
+      <Admin />
+    </div>
+  )
+}
+
 export const Routes = () => (
   <Router>
-    <Admin path='/admin' />
+    <AdminWrapper path='/admin' />
     <App path='/*' />
   </Router>
 )
