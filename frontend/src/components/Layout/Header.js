@@ -72,6 +72,7 @@ const PageHeader = ({
         </div>
       </div>
       <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
+          <span>Hai {user.user.username}!</span>
           <a>Profil</a>
           <a onClick={doLogout}>Keluar</a>
       </Popup>
