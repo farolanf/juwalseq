@@ -2,22 +2,18 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+    const numProducts = 100
+    const products = []
+    const brands = ['Xiaomi', 'LG', 'ASUS', 'Samsung']
+    
+    for (let i = 0; i < numProducts; i++) {
+      const brand = brands[Math.floor(Math.random() * brands.length)]
+      let price = Math.random() * 2500000 + 350000
+      price = Math.round(price / 10000) * 10000
+      products.push({ name: 'Jual HP ' + brand, description: 'Seperti judul...', price, UserId: 1 })
+    }
 
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-    await queryInterface.bulkInsert('Products', [
-      { id: 1, name: 'Jual HP Xiaomi', description: 'Seperti judul...', price: 450000, UserId: 1 },
-      { id: 2, name: 'Jual HP LG', description: 'Seperti judul...', price: 1250000, UserId: 1 },
-      { id: 3, name: 'Jual HP Samsung', description: 'Seperti judul...', price: 1150000, UserId: 1 },
-      { id: 4, name: 'Jual HP ASUS', description: 'Seperti judul...', price: 1850000, UserId: 1 },
-    ])
+    await queryInterface.bulkInsert('Products', products)
 
     await queryInterface.bulkInsert('Files', [
       { id: 1, url: 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.xs.jpg', UserId: 1},
@@ -29,16 +25,15 @@ module.exports = {
     ])
 
     const entityFiles = []
-    let id = 1
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= numProducts; i++) {
       entityFiles.push(
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 1 },
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 2 },
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 3 },
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 4 },
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 5 },
-        { id: id++, entity: 'Product', meta: 'image', EntityId: i, FileId: 6 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 1 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 2 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 3 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 4 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 5 },
+        { entity: 'Product', meta: 'image', EntityId: i, FileId: 6 },
       )
     }
 
@@ -46,13 +41,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+    await queryInterface.bulkDelete('EntityFile', null)
+    await queryInterface.bulkDelete('Files', null)
     await queryInterface.bulkDelete('Products', null)
   }
 };
