@@ -1,3 +1,9 @@
+.main {
+  @screen md {
+    width: 920px;
+  }
+}
+
 .content {
   @screen md {
     width: 660px;

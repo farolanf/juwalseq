@@ -3,11 +3,23 @@ import { observer } from 'mobx-react-lite'
 import useStore from '$useStore'
 
 import Pagination from '$comp/Pagination'
+import Checkbox from '$comp/Checkbox'
 
-const Filter = () => {
+const FilterGroup = ({ bucket }) => (
+  <div className='mb-1'>
+    <div className='text-sm text-grey-dark'>{bucket.key}</div>
+    {bucket.value.buckets.map(value => (
+      <Checkbox key={bucket.key + value.key} label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} />
+    ))}
+  </div>
+)
+
+const Filter = ({ results }) => {
   return (
-    <div className='sidebar bg-white border border-solid border-grey mb-2 md:mb-0 md:sticky md:pin-t md:float-left'>
-      Filters
+    <div className='sidebar bg-white mb-2 pr-2 md:mb-0 md:sticky md:float-left' style={{ top: 8 }}>
+      {results && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
+        <FilterGroup key={bucket.key} bucket={bucket} />
+      ))}
     </div>
   )
 }
@@ -31,7 +43,7 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   const from = (currentPage - 1) * pageSize + 1
   const to = Math.min((currentPage - 1) * pageSize + pageSize + 1, total)
   return (
-    <div className='flex flex-col content mx-auto'>
+    <div className='flex flex-col content'>
       <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
         {results && results.hits.hits.map((hit, i) => (
           <Product hit={hit} key={i} />
@@ -65,8 +77,8 @@ const Search = () => {
   const totalPages = product.results ? Math.ceil(product.results.hits.total / pageSize) : 0
 
   return (
-    <div>
-      <Filter />
+    <div className='main mx-auto'>
+      <Filter results={product.results} />
       <ProductList results={product.results} pageSize={pageSize} currentPage={page} totalPages={totalPages} onChangePage={handleChangePage} />
     </div>
   )
