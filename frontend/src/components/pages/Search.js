@@ -26,7 +26,10 @@ const Product = ({ hit }) => {
   )
 }
 
-const ProductList = ({ results, currentPage, totalPages, onChangePage }) => {
+const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage }) => {
+  const total = results && results.hits && results.hits.total || 0
+  const from = (currentPage - 1) * pageSize + 1
+  const to = Math.min((currentPage - 1) * pageSize + pageSize + 1, total)
   return (
     <div className='flex flex-col content mx-auto'>
       <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
@@ -34,7 +37,10 @@ const ProductList = ({ results, currentPage, totalPages, onChangePage }) => {
           <Product hit={hit} key={i} />
         ))}
       </div>
-      <Pagination currentPage={currentPage} totalPages={totalPages} onChange={onChangePage} />
+      <div className='flex flex-col md:flex-row md:justify-between'>
+        <Pagination currentPage={currentPage} totalPages={totalPages} onChange={onChangePage} />
+        <div className='text-grey text-xs md:pr-2 text-right'>{from} - {to} / {total}</div>
+      </div>
     </div>
   )
 }
@@ -61,7 +67,7 @@ const Search = () => {
   return (
     <div>
       <Filter />
-      <ProductList results={product.results} currentPage={page} totalPages={totalPages} onChangePage={handleChangePage} />
+      <ProductList results={product.results} pageSize={pageSize} currentPage={page} totalPages={totalPages} onChangePage={handleChangePage} />
     </div>
   )
 }
