@@ -10,7 +10,7 @@ module.exports = {
       const brand = brands[Math.floor(Math.random() * brands.length)]
       let price = Math.random() * 2500000 + 350000
       price = Math.round(price / 10000) * 10000
-      products.push({ name: 'Jual HP ' + brand, description: 'Seperti judul...', price, UserId: 1 })
+      products.push({ name: `HP ${brand} - ${Date()}`, description: 'Seperti judul...', price, UserId: 1 })
     }
 
     await queryInterface.bulkInsert('Products', products)
@@ -38,6 +38,23 @@ module.exports = {
     }
 
     await queryInterface.bulkInsert('EntityFile', entityFiles)
+
+    const attributes = []
+
+    for (let i = 1; i <= numProducts; i++) {
+      const attrs = {
+        1: [1, 2, 3, 4],
+        2: [5, 6, 7],
+        4: [10, 11, 12, 13, 14]
+      }
+      Object.keys(attrs).forEach(attrId => {
+        const j = Math.floor(Math.random() * attrs[attrId].length)
+        const id = attrs[attrId][j]
+        attributes.push({ AttributeValueId: id, ProductId: i })
+      })
+    }
+
+    await queryInterface.bulkInsert('ProductAttribute', attributes)
   },
 
   down: async (queryInterface, Sequelize) => {
