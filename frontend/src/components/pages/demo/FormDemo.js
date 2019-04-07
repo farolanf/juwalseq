@@ -62,17 +62,25 @@ const FormDemo = () => (
       </div>
     </form>
     <h2>Button</h2>
+    <h4>Button - light</h4>
     <div className='list-x-1'>
       <button className='btn'>Default</button>
       <button className='btn btn-primary'>Primary</button>
       <button className='btn btn-secondary'>Secondary</button>
     </div>
+    <h4 className='mt-4'>Button - dark</h4>
     <div className='bg-grey-dark p-8 my-4 list-x-1'>
       <button className='btn btn-dark'>Dark</button>
       <button className='btn btn-primary'>Primary</button>
       <button className='btn btn-secondary'>Secondary</button>
     </div>
-    <h2>Button - disabled</h2>
+    <h2>Button - active</h2>
+    <div className='list-x-1'>
+      <button className='btn btn-active'>Default</button>
+      <button className='btn btn-primary btn-active'>Primary</button>
+      <button className='btn btn-secondary btn-active'>Secondary</button>
+    </div>
+    <h2 className='mt-4'>Button - disabled</h2>
     <div className='list-x-1'>
       <button className='btn' disabled>Default</button>
       <button className='btn btn-dark' disabled>Dark</button>
