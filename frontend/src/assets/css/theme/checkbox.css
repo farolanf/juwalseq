@@ -1,0 +1,6 @@
+.checkbox {
+  @apply cursor-pointer;
+  &:hover label {
+    @apply text-grey-darker;
+  }
+}
