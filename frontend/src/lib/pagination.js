@@ -7,8 +7,13 @@ export const contentRange = header => {
   }
 }
 
-export const createPages = ({ currentPage, last, prev, next, leadCount }) => {
+export const createPages = ({ currentPage, totalPages, leadCount }) => {
+  const last = totalPages
+  const prev = currentPage > 1 && currentPage - 1
+  const next = currentPage < last && currentPage + 1
+  
   const pages = []
+  
   pages.push({ title: 'prev', num: prev, disabled: currentPage === 1 })
   pages.push({ title: 'next', num: next, disabled: currentPage === last })
 
@@ -22,7 +27,7 @@ export const createPages = ({ currentPage, last, prev, next, leadCount }) => {
     pages.push({ title: i, num: i })
   }
 
-  pages.push({ title: currentPage, num: currentPage, disabled: true })
+  pages.push({ title: currentPage, num: currentPage, disabled: true, active: true })
 
   for (let i = currentPage + 1; i <= Math.min(currentPage + leadCount, last - 1); i++) {
     pages.push({ title: i, num: i })

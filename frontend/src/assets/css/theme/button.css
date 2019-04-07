@@ -6,6 +6,9 @@
   &:hover:not(:disabled) {
     @apply bg-grey-light;
   }
+  &.btn-active {
+    @apply bg-grey-lighter;
+  }
   &:focus {
     @apply outline-none;
   }
@@ -26,24 +29,26 @@
 
 .btn-primary {
   @apply bg-$(primary) text-$(text-primary);
-}
-
-.btn-primary:hover:not(:disabled) {
-  @apply bg-$(primary)-light text-$(text-primary);
-}
-
-.btn-primary:disabled {
-  @apply bg-$(primary)-lighter text-white cursor-not-allowed;
+  &:hover:not(:disabled) {
+    @apply bg-$(primary)-light text-$(text-primary);
+  }
+  &.btn-active {
+    @apply bg-$(primary)-lighter;
+  }
+  &:disabled {
+    @apply bg-$(primary)-lighter text-white cursor-not-allowed;
+  }
 }
 
 .btn-secondary {
   @apply bg-$(secondary) text-$(text-primary);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  @apply bg-$(secondary)-light text-$(text-primary);
-}
-
-.btn-secondary:disabled {
-  @apply bg-$(secondary)-lighter text-white cursor-not-allowed;
+  &:hover:not(:disabled) {
+    @apply bg-$(secondary)-light text-$(text-primary);
+  }
+  &.btn-active {
+    @apply bg-$(secondary)-dark;
+  }
+  &:disabled {
+    @apply bg-$(secondary)-lighter text-white cursor-not-allowed;
+  }
 }
