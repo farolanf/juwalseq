@@ -17,11 +17,10 @@ const Product = ({ hit }) => {
   const price = Intl.NumberFormat().format(hit._source.price)
   return (
     <a className='product-card h-64 pb-2 md:pr-2 cursor-pointer link-reset'>
-      <div className='h-full flex flex-col items-center border border-solid border-grey-lighter shadow'>
+      <div className='h-full flex flex-col items-center border border-solid border-grey-lighter shadow hover:shadow-md p-1'>
         <div style={{ backgroundImage: thumbnail && `url(${thumbnail.url})`, height: '60%' }} className={cn('w-full bg-contain bg-center bg-no-repeat mb-2', !thumbnail && 'border border-solid border-grey-lighter bg-grey-lightest')} />
-        <h5 className='md:hidden text-center'>{hit._source.name}</h5>
-        <h6 className='hidden md:block text-center'>{hit._source.name}</h6>
-        <div className='flex-grow w-full flex justify-end items-end pr-3 pb-2'>Rp {price}</div>
+        <div className='text-center md:text-sm px-1'>{hit._source.name}</div>
+        <div className='flex-grow w-full flex justify-end items-end pr-2 pb-1 text-green md:text-sm'>Rp {price}</div>
       </div>
     </a>
   )
