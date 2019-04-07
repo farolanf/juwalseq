@@ -27,36 +27,42 @@ const Product = ({ hit }) => {
   )
 }
 
-const ProductList = ({ results }) => {
+const ProductList = ({ results, currentPage, totalPages, onChangePage }) => {
+  return (
+    <div className='flex flex-col content mx-auto'>
+      <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
+        {results && results.hits.hits.map((hit, i) => (
+          <Product hit={hit} key={i} />
+        ))}
+      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onChange={onChangePage} />
+    </div>
+  )
+}
+
+const Search = () => {
+  const pageSize = 15
+
+  const { product } = useStore()
   const [page, setPage] = useState(1)
 
   const handleChangePage = num => {
     setPage(num)
   }
 
-  return (
-    <div className='flex flex-col content mx-auto'>
-      <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
-        {results && results.hits.hits.map(hit => (
-          <Product hit={hit} key={hit._id} />
-        ))}
-      </div>
-      <Pagination currentPage={page} totalPages={20} onChange={handleChangePage} />
-    </div>
-  )
-}
-
-const Search = () => {
-  const { product } = useStore()
-
   useEffect(() => {
-    product.searchProducts({})
-  }, [])
+    product.searchProducts({
+      count: pageSize,
+      offset: (page - 1) * pageSize,
+    })
+  }, [page])
+
+  const totalPages = product.results ? Math.ceil(product.results.hits.total / pageSize) : 0
 
   return (
     <div>
       <Filter />
-      <ProductList results={product.results} />
+      <ProductList results={product.results} currentPage={page} totalPages={totalPages} onChangePage={handleChangePage} />
     </div>
   )
 }
