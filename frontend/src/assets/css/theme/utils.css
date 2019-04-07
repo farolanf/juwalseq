@@ -36,6 +36,9 @@
   .ratio-16\:9 {
     padding-top: 56.25%;
   }
+  .ratio-7\:5 {
+    padding-top: 140%;
+  }
 }
 
 @responsive {
@@ -51,4 +54,8 @@
   .icon-nav-primary > * {
     @apply text-$(primary);
   }
+}
+
+.break-inside-avoid {
+  break-inside: avoid;
 }

@@ -1,5 +1,8 @@
 .btn {
   @apply border-0 rounded px-4 py-1 cursor-pointer bg-transparent text-black text-center no-underline;
+  &.btn-sm {
+    @apply px-3 py-1 text-xs;
+  }
   &:hover:not(:disabled) {
     @apply bg-grey-light;
   }

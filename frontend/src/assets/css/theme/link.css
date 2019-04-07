@@ -1,3 +1,10 @@
+.link-reset {
+  @apply text-inherit;
+  &:hover {
+    @apply text-inherit;
+  }
+}
+
 .link {
   @apply no-underline cursor-pointer text-blue;
   &:hover {

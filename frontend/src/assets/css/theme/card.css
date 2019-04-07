@@ -1,0 +1,3 @@
+.card {
+  @apply border border-solid border-grey-lighter shadow flex flex-col items-center;
+}

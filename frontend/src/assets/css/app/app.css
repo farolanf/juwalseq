@@ -1,0 +1,17 @@
+.content {
+  @screen md {
+    width: 660px;
+  }
+}
+
+.sidebar {
+  @screen md {
+    width: 240px;
+  }
+}
+
+.product-card {
+  @screen md {
+    width: 220px;
+  }
+}

@@ -22,7 +22,7 @@ const PageLayout = ({ children }) => (
         <SEO title={data.site.siteMetadata.title} />
         <Header siteTitle={data.site.siteMetadata.title} />
         <div className='container'>
-          <main className='py-8'>{children}</main>
+          <main className='py-2 md:py-4'>{children}</main>
         </div>
       </div>
     )}

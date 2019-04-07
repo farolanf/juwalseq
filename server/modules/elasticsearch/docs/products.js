@@ -41,6 +41,10 @@ const ProductDoc = {
       {
         model: db.AttributeValue,
         include: db.Attribute
+      },
+      {
+        model: db.File,
+        as: 'Images',
       }
     ],
   },
@@ -116,6 +120,9 @@ function getDoc (record) {
   doc.attributes = (record.AttributeValues || []).map(av => ({
     name: av.Attribute.name,
     value: av.value
+  }))
+  doc.images = (record.Images || []).map(c => ({
+    url: c.url
   }))
   return doc
 }
