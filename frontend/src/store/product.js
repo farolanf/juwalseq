@@ -12,8 +12,8 @@ class ProductStore {
   }), 300)
 
   @action
-  searchProducts = _.debounce(flow(function* searchProducts (filters) {
-    this.results = yield _searchProducts(filters).then(res => res.data)
+  searchProducts = _.debounce(flow(function* searchProducts (params) {
+    this.results = yield _searchProducts(params).then(res => res.data)
     console.log(this.results)
   }), 300)
 }

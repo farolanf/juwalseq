@@ -6,8 +6,6 @@ export const addProduct = formData => {
   return axios.post(API_BASE + '/products/add', formData)
 }
 
-export const searchProducts = filters => {
-  return axios.get(API_BASE + '/search/products', {
-    params: qs.stringify(filters)
-  })
+export const searchProducts = params => {
+  return axios.get(API_BASE + '/search/products', { params })
 }
