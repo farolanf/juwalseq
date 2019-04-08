@@ -36,6 +36,17 @@ class ProductStore {
   }
 
   @action
+  clearFilters () {
+    this.q = ''
+    this.filters = {
+      departments: [],
+      categories: [],
+      attributes: [],
+    }
+    this.results = null
+  }
+
+  @action
   setQuery (q) {
     this.q = q
   }

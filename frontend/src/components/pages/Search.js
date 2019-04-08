@@ -5,6 +5,9 @@ import useStore from '$useStore'
 import Pagination from '$comp/Pagination'
 import Checkbox from '$comp/Checkbox'
 import Collapse from '$comp/Collapse'
+import Placeholder from '$comp/Placeholder';
+
+import { createArray } from '$lib/helpers'
 
 const FilterGroup = ({ title, count, expand = true, children }) => {
   const [show, setShow] = useState(expand)
@@ -66,6 +69,8 @@ const AttributeFilter = ({ bucket, onChange }) => (
 const Filter = ({ results }) => {
   const { product } = useStore()
 
+  const hits = results && results.hits && !!results.hits.total && results.hits.hits
+
   const handleChangeCategory = (department, category, enable) => {
     if (enable) {
       product.addCategory(category)
@@ -80,12 +85,13 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {results && results.aggregations.all.search.departments.name.buckets.map(bucket => (
+      {hits && results.aggregations.all.search.departments.name.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
-      {results && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
+      {hits && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
+      {!hits && <Placeholder numLines={20} />}
     </div>
   )
 }
@@ -106,15 +112,17 @@ const Product = ({ hit }) => {
 
 const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage }) => {
   const total = results && results.hits && results.hits.total || 0
-  const from = (currentPage - 1) * pageSize + 1
+  const from = Math.min((currentPage - 1) * pageSize + 1, total)
   const to = Math.min((currentPage - 1) * pageSize + pageSize + 1, total)
+  const hits = results && results.hits && !!results.hits.total && results.hits.hits
   return (
     <div className='flex flex-col content'>
       <div className='text-grey text-xs mb-1'>{from} - {to} / {total}</div>
       <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
-        {results && results.hits.hits.map((hit, i) => (
+        {hits && hits.map((hit, i) => (
           <Product hit={hit} key={i} />
         ))}
+        {!hits && createArray(15).map((v, i) => <Placeholder key={i} card className='product-card h-64' />)}
       </div>
       <div className='flex flex-col md:flex-row md:justify-between'>
         <Pagination currentPage={currentPage} totalPages={totalPages} onChange={onChangePage} />
@@ -157,6 +165,10 @@ const Search = () => {
   const { product } = useStore()
 
   product.doSearchProducts
+
+  useEffect(() => {
+    product.clearFilters()
+  }, [])
 
   const handleChangePage = num => {
     product.setPage(num)
