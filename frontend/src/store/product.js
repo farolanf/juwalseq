@@ -18,7 +18,6 @@ class ProductStore {
     this.page = num
   }
 
-  @action
   searchProducts = _.debounce(flow(function* searchProducts (params) {
     this.results = yield _searchProducts(params).then(res => res.data)
   }), 300)
