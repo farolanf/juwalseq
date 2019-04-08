@@ -55,6 +55,14 @@ module.exports = {
     }
 
     await queryInterface.bulkInsert('ProductAttribute', attributes)
+
+    const categories = []
+    for (let i = 1; i <= numProducts; i++) {
+      const id = Math.ceil(Math.random() * 65)
+      categories.push({ CategoryId: id, ProductId: i })
+    }
+
+    await queryInterface.bulkInsert('ProductCategory', categories)
   },
 
   down: async (queryInterface, Sequelize) => {
