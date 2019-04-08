@@ -1,24 +1,38 @@
 import React, { useState, useEffect } from 'react'
-import { observer } from 'mobx-react-lite'
+import { observer, Observer } from 'mobx-react-lite'
 import useStore from '$useStore'
 
 import Pagination from '$comp/Pagination'
 import Checkbox from '$comp/Checkbox'
 
-const FilterGroup = ({ bucket }) => (
+const FilterGroup = ({ bucket, onChange }) => (
   <div className='mb-1'>
     <div className='text-sm text-grey-dark'>{bucket.key}</div>
     {bucket.value.buckets.map(value => (
-      <Checkbox key={bucket.key + value.key} label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} />
+      <Observer key={bucket.key + value.key}>
+        {() => {
+          const { product } = useStore()
+          const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
+          return (
+            <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
+          )
+        }}
+      </Observer>
     ))}
   </div>
 )
 
 const Filter = ({ results }) => {
+  const { product } = useStore()
+
+  const onChange = (attr, val, enable) => {
+    enable ? product.addAttribute(attr, val) : product.removeAttribute(attr, val)
+  }
+
   return (
     <div className='sidebar bg-white mb-2 pr-2 md:mb-0 md:sticky md:float-left' style={{ top: 8 }}>
       {results && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
-        <FilterGroup key={bucket.key} bucket={bucket} />
+        <FilterGroup key={bucket.key} bucket={bucket} onChange={onChange} />
       ))}
     </div>
   )
@@ -58,28 +72,20 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
 }
 
 const Search = () => {
-  const pageSize = 15
-
   const { product } = useStore()
-  const [page, setPage] = useState(1)
+
+  product.doSearchProducts
 
   const handleChangePage = num => {
-    setPage(num)
+    product.setPage(num)
   }
 
-  useEffect(() => {
-    product.searchProducts({
-      count: pageSize,
-      offset: (page - 1) * pageSize,
-    })
-  }, [page])
-
-  const totalPages = product.results ? Math.ceil(product.results.hits.total / pageSize) : 0
+  const totalPages = product.results ? Math.ceil(product.results.hits.total / product.pageSize) : 0
 
   return (
     <div className='main mx-auto'>
       <Filter results={product.results} />
-      <ProductList results={product.results} pageSize={pageSize} currentPage={page} totalPages={totalPages} onChangePage={handleChangePage} />
+      <ProductList results={product.results} pageSize={product.pageSize} currentPage={product.page} totalPages={totalPages} onChangePage={handleChangePage} />
     </div>
   )
 }
