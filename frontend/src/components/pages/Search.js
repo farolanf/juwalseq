@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { observer, Observer } from 'mobx-react-lite'
 import useStore from '$useStore'
 
@@ -6,44 +6,85 @@ import Pagination from '$comp/Pagination'
 import Checkbox from '$comp/Checkbox'
 import Collapse from '$comp/Collapse'
 
-const FilterGroup = ({ bucket, onChange }) => {
-  const [show, setShow] = useState(true)
+const FilterGroup = ({ title, count, expand = true, children }) => {
+  const [show, setShow] = useState(expand)
 
   const handleClickTitle = () => setShow(!show)
+
+  useEffect(() => {
+    setShow(expand)
+  }, [expand])
 
   return (
     <div className='mb-1'>
       <div className='text-sm text-grey-dark hover:text-grey-darker cursor-pointer' onClick={handleClickTitle}>
-        <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {bucket.key}
+        <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {title} ({count})
       </div>
       <Collapse show={show}>
-        {bucket.value.buckets.map(value => (
-          <Observer key={bucket.key + value.key}>
-            {() => {
-              const { product } = useStore()
-              const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
-              return (
-                <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
-              )
-            }}
-          </Observer>
-        ))}
+        {children}
       </Collapse>
     </div>
   )
 }
 
+const CategoryFilter = ({ bucket, onChange }) => {
+  const [expand, setExpand] = useState(false)
+  return (
+    <FilterGroup title={bucket.key} count={bucket.doc_count} expand={expand}>
+      {bucket.category.name.buckets.map(category => (
+        <Observer key={bucket.key + category.key}>
+          {() => {
+            const { product } = useStore()
+            const item = product.filters.categories.find(val => val === category.key)
+            if (item) setExpand(true)
+            return (
+              <Checkbox label={`${category.key} (${category.doc_count})`} id={bucket.key + category.key} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
+            )
+          }}
+        </Observer>
+      ))}
+    </FilterGroup>
+  )
+}
+
+const AttributeFilter = ({ bucket, onChange }) => (
+  <FilterGroup title={bucket.key} count={bucket.doc_count}>
+    {bucket.value.buckets.map(value => (
+      <Observer key={bucket.key + value.key}>
+        {() => {
+          const { product } = useStore()
+          const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
+          return (
+            <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
+          )
+        }}
+      </Observer>
+    ))}
+  </FilterGroup>
+)
+
 const Filter = ({ results }) => {
   const { product } = useStore()
 
-  const onChange = (attr, val, enable) => {
+  const handleChangeCategory = (department, category, enable) => {
+    if (enable) {
+      product.addCategory(category)
+    } else {
+      product.removeCategory(category)
+    }
+  }
+
+  const handleChangeAttribute = (attr, val, enable) => {
     enable ? product.addAttribute(attr, val) : product.removeAttribute(attr, val)
   }
 
   return (
-    <div className='sidebar mb-2 pr-2 md:mb-0 md:sticky md:float-left' style={{ top: 8 }}>
+    <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
+      {results && results.aggregations.all.search.departments.name.buckets.map(bucket => (
+        <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
+      ))}
       {results && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
-        <FilterGroup key={bucket.key} bucket={bucket} onChange={onChange} />
+        <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
     </div>
   )
