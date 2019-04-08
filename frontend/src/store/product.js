@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { observable, action, flow, computed } from 'mobx'
+import { observable, action, flow, computed, reaction } from 'mobx'
 import { searchProducts as _searchProducts } from '$api/product'
 
 class ProductStore {
@@ -11,20 +11,41 @@ class ProductStore {
     categories: [],
     attributes: [],
   }
+  @observable loading = false
   @observable.ref results = null
+  @observable ticks = 0
 
+  constructor () {
+    reaction(
+      () => [this.q, this.ticks],
+      () => this.resetFilters() 
+    )
+  }
+
+  // force changes
   @action
-  setPage (num) {
-    this.page = num
+  tick () {
+    this.ticks++
+  }
+
+  resetFilters () {
+    this.filters = {
+      departments: [],
+      categories: [],
+      attributes: [],
+    }
   }
 
   searchProducts = _.debounce(flow(function* searchProducts (params) {
+    this.loading = true
     this.results = yield _searchProducts(params).then(res => res.data)
+    this.loading = false
   }), 300)
 
   // we use computed instead of autorun/reaction so it will not run when not observed
   @computed
   get doSearchProducts () {
+    this.ticks
     return this.searchProducts({
       count: this.pageSize,
       offset: (this.page - 1) * this.pageSize,
@@ -35,14 +56,16 @@ class ProductStore {
     })
   }
 
+  
+  @action
+  setPage (num) {
+    this.page = num
+  }
+
   @action
   clearFilters () {
     this.q = ''
-    this.filters = {
-      departments: [],
-      categories: [],
-      attributes: [],
-    }
+    this.resetFilters()
     this.results = null
   }
 

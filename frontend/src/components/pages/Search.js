@@ -131,7 +131,7 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   )
 }
 
-const SearchBox = () => {
+const SearchBox = observer(() => {
   const [query, setQuery] = useState('')
   const { product } = useStore()
 
@@ -140,26 +140,50 @@ const SearchBox = () => {
   const handleSubmitQuery = e => {
     e.preventDefault()
     product.setQuery(query)
+    product.tick()
     setQuery('')
   }
 
   return (
-    <div className='list-y-2 md:list-x-1 mb-2 md:items-center'>
-      <div className='form-control flex-grow'>
-        <input className='input input-sm' placeholder='Kota' />
-      </div>
-      <div className='form-control flex-grow'>
-        <input className='input input-sm' placeholder='Kategori' />
-      </div>
-      <form className='flex-grow' onSubmit={handleSubmitQuery}>
-        <div className='form-control'>
-          <span className='fa fa-search input-prefix px-3' />
-          <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} />
+    <div className='mb-2'>
+      <div className='list-y-2 md:list-x-1 md:items-center'>
+        <div className='form-control flex-grow'>
+          <input className='input input-sm' placeholder='Kota' />
         </div>
-      </form>
+        <div className='form-control flex-grow'>
+          <input className='input input-sm' placeholder='Kategori' />
+        </div>
+        <form className='flex-grow' onSubmit={handleSubmitQuery}>
+          <div className='form-control'>
+            <span className='fa fa-search input-prefix px-3' />
+            <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} />
+          </div>
+        </form>
+      </div>
+      {product.q && (
+        <div className='text-xs text-grey-dark'>
+          <div>
+            {product.loading ? (
+              <div>
+                Mencari <b className='text-grey-darkest'>{product.q}</b>... <i className='fa fa-spinner fa-pulse text-sm' />
+              </div>
+            ) : (
+              !product.results || !product.results.hits.total ? (
+                <div>
+                  <b className='text-grey-darkest'>{product.q}</b> <span className='text-red'>tidak ditemukan</span>
+                </div>
+              ) : (
+                <div>
+                  <b className='text-grey-darkest'>{product.q}</b> ditemukan dalam {product.results.took} ms
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
-}
+})
 
 const Search = () => {
   const { product } = useStore()
