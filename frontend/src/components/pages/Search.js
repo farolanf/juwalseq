@@ -41,7 +41,7 @@ const Filter = ({ results }) => {
   }
 
   return (
-    <div className='sidebar bg-white mb-2 pr-2 md:mb-0 md:sticky md:float-left' style={{ top: 8 }}>
+    <div className='sidebar mb-2 pr-2 md:mb-0 md:sticky md:float-left' style={{ top: 8 }}>
       {results && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
         <FilterGroup key={bucket.key} bucket={bucket} onChange={onChange} />
       ))}
