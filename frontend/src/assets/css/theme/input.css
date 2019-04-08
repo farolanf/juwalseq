@@ -40,6 +40,9 @@
 
 .input {
   @apply w-full px-2 border border-solid border-grey rounded;
+  &.input-sm {
+    height: 1.75rem;
+  }
   &.has-error {
     @apply border-2 border-red-dark;
   }
