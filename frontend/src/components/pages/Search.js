@@ -1,26 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer, Observer } from 'mobx-react-lite'
 import useStore from '$useStore'
 
 import Pagination from '$comp/Pagination'
 import Checkbox from '$comp/Checkbox'
+import Collapse from '$comp/Collapse'
 
-const FilterGroup = ({ bucket, onChange }) => (
-  <div className='mb-1'>
-    <div className='text-sm text-grey-dark'>{bucket.key}</div>
-    {bucket.value.buckets.map(value => (
-      <Observer key={bucket.key + value.key}>
-        {() => {
-          const { product } = useStore()
-          const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
-          return (
-            <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
-          )
-        }}
-      </Observer>
-    ))}
-  </div>
-)
+const FilterGroup = ({ bucket, onChange }) => {
+  const [show, setShow] = useState(true)
+
+  const handleClickTitle = () => setShow(!show)
+
+  return (
+    <div className='mb-1'>
+      <div className='text-sm text-grey-dark hover:text-grey-darker cursor-pointer' onClick={handleClickTitle}>
+        <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {bucket.key}
+      </div>
+      <Collapse show={show}>
+        {bucket.value.buckets.map(value => (
+          <Observer key={bucket.key + value.key}>
+            {() => {
+              const { product } = useStore()
+              const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
+              return (
+                <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
+              )
+            }}
+          </Observer>
+        ))}
+      </Collapse>
+    </div>
+  )
+}
 
 const Filter = ({ results }) => {
   const { product } = useStore()
@@ -58,6 +69,7 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   const to = Math.min((currentPage - 1) * pageSize + pageSize + 1, total)
   return (
     <div className='flex flex-col content'>
+      <div className='text-grey text-xs mb-1'>{from} - {to} / {total}</div>
       <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
         {results && results.hits.hits.map((hit, i) => (
           <Product hit={hit} key={i} />
@@ -65,7 +77,6 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
       </div>
       <div className='flex flex-col md:flex-row md:justify-between'>
         <Pagination currentPage={currentPage} totalPages={totalPages} onChange={onChangePage} />
-        <div className='text-grey text-xs md:pr-2 text-right'>{from} - {to} / {total}</div>
       </div>
     </div>
   )
