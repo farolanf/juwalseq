@@ -14,7 +14,13 @@ const ProductDoc = {
       departments: {
         type: 'nested',
         properties: {
-          name: { type: 'keyword' }
+          name: { type: 'keyword' },
+          categories: { 
+            type: 'nested',
+            properties: {
+              name: { type: 'keyword' }
+            }
+          }
         }
       },
       categories: {
@@ -112,7 +118,10 @@ function getDoc (record) {
     'price',
   ])
   doc.departments = (record.Categories || []).map(c => ({
-    name: c.Department.name
+    name: c.Department.name,
+    categories: record.Categories.filter(cat => cat.Department.name === c.Department.name).map(c => ({
+      name: c.name
+    }))
   }))
   doc.categories = (record.Categories || []).map(c => ({
     name: c.name
@@ -228,7 +237,17 @@ function aggs () {
       nested: { path: 'departments' },
       aggs: {
         name: {
-          terms: { field: 'departments.name' }
+          terms: { field: 'departments.name' },
+          aggs: {
+            category: {
+              nested: { path: 'departments.categories' },
+              aggs: {
+                name: {
+                  terms: { field: 'departments.categories.name' }
+                }
+              }
+            }
+          }
         }
       }
     },
