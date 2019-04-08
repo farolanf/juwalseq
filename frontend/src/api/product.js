@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 import { API_BASE } from '$src/const'
 
 export const addProduct = formData => {
