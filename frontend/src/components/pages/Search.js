@@ -123,6 +123,36 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   )
 }
 
+const SearchBox = () => {
+  const [query, setQuery] = useState('')
+  const { product } = useStore()
+
+  const handleChangeQuery = e => setQuery(e.target.value)
+
+  const handleSubmitQuery = e => {
+    e.preventDefault()
+    product.setQuery(query)
+    setQuery('')
+  }
+
+  return (
+    <div className='list-y-2 md:list-x-1 mb-2 md:items-center'>
+      <div className='form-control flex-grow'>
+        <input className='input input-sm' placeholder='Kota' />
+      </div>
+      <div className='form-control flex-grow'>
+        <input className='input input-sm' placeholder='Kategori' />
+      </div>
+      <form className='flex-grow' onSubmit={handleSubmitQuery}>
+        <div className='form-control'>
+          <span className='fa fa-search input-prefix px-3' />
+          <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} />
+        </div>
+      </form>
+    </div>
+  )
+}
+
 const Search = () => {
   const { product } = useStore()
 
@@ -136,6 +166,7 @@ const Search = () => {
 
   return (
     <div className='main mx-auto'>
+      <SearchBox />
       <Filter results={product.results} />
       <ProductList results={product.results} pageSize={product.pageSize} currentPage={product.page} totalPages={totalPages} onChangePage={handleChangePage} />
     </div>

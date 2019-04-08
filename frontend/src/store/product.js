@@ -36,6 +36,11 @@ class ProductStore {
   }
 
   @action
+  setQuery (q) {
+    this.q = q
+  }
+
+  @action
   addCategory (name) {
     const i = this.filters.categories.findIndex(val => val === name)
     i === -1 && this.filters.categories.push(name)
