@@ -36,6 +36,18 @@ class ProductStore {
   }
 
   @action
+  addCategory (name) {
+    const i = this.filters.categories.findIndex(val => val === name)
+    i === -1 && this.filters.categories.push(name)
+  }
+
+  @action
+  removeCategory (name) {
+    const i = this.filters.categories.findIndex(val => val === name)
+    i >= 0 && this.filters.categories.splice(i, 1)
+  }
+
+  @action
   addAttribute (name, value) {
     const i = this.filters.attributes.findIndex(attr => attr.name === name && attr.value === value)
     i === -1 && this.filters.attributes.push({ name, value })
