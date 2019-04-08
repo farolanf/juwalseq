@@ -21,3 +21,26 @@
     width: 220px;
   }
 }
+
+.placeholder-text {
+  @apply h-3 bg-grey-lightest mb-4;
+  &:nth-child(3n+1) {
+    @apply w-1/2;
+  }
+  &:nth-child(3n+2) {
+    @apply w-full;
+  }
+  &:nth-child(3n+3) {
+    @apply w-3/4;
+  }
+}
+
+.placeholder-card {
+  @apply p-1;
+  width: 220px;
+  height: 280px;
+}
+
+.placeholder-image {
+  @apply bg-grey-lightest border border-solid border-grey-lighter;
+}

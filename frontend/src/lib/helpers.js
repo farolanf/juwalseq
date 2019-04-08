@@ -1,3 +1,11 @@
+export function createArray (count) {
+  const items = []
+  for (let i = 0; i < count; i++) {
+    items.push(i)
+  }
+  return items
+}
+
 export function setItem (name, val) {
   if (typeof localStorage === 'undefined') return
   localStorage.setItem(name, val)
