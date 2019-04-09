@@ -1,4 +1,25 @@
 import React from 'react'
+import { navigate } from '@reach/router'
+import qs from 'qs'
+
+export const queryString = {
+  allowUpdate: true,
+  parseQuery () {
+    return qs.parse(location.search, { ignoreQueryPrefix: true })
+  },
+  withoutUpdate (fn) {
+    this.allowUpdate = false
+    fn(this.parseQuery())
+    this.allowUpdate = true
+  },
+  update (fn) {
+    if (!this.allowUpdate) return
+    const query = this.parseQuery()
+    fn(query)
+    const queryStr = qs.stringify(query)
+    navigate(location.pathname + (queryStr ? '?' + queryStr : ''))
+  },
+}
 
 export const LocationContext = React.createContext()
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { reaction } from 'mobx'
 import { observer, Observer } from 'mobx-react-lite'
-import { navigate } from '@reach/router'
-import qs from 'qs'
 
 import useStore from '$useStore'
 
@@ -12,6 +10,7 @@ import Collapse from '$comp/Collapse'
 import Placeholder from '$comp/Placeholder';
 
 import { createArray } from '$lib/helpers'
+import { queryString } from '$lib/location'
 
 const FilterGroup = ({ title, count, expand = true, children }) => {
   const [show, setShow] = useState(expand)
@@ -201,14 +200,9 @@ const Search = () => {
     product.fetchCategories()
     product.clearFilters()
 
-    let noReaction = false
-
     const handleRouteChange = () => {
       // init filters from query string
-      const query = qs.parse(location.search, { ignoreQueryPrefix: true })
-      noReaction = true
-      product.initFromQuery(query)
-      noReaction = false
+      queryString.withoutUpdate(query => product.initFromQuery(query))
     }
     handleRouteChange()
 
@@ -216,12 +210,12 @@ const Search = () => {
     const dispose = reaction(
       () => [product.q, JSON.stringify(product.filters)],
       () => {
-        if (noReaction) return
-        const query = qs.stringify({ 
-          q: product.q ? product.q : undefined, 
-          ...product.filters 
+        queryString.update(query => {
+          query.q = product.q ? product.q : undefined
+          query.departments = product.filters.departments
+          query.categories = product.filters.categories
+          query.attributes = product.filters.attributes
         })
-        navigate(location.pathname + (query ? '?' + query : ''))
       })
     
     window.addEventListener('popstate', handleRouteChange)
