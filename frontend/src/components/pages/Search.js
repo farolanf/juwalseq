@@ -40,13 +40,13 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
   return (
     <FilterGroup title={departmentName} count={bucket.doc_count} expand={expand}>
       {bucket.categories.id.buckets.map(category => (
-        <Observer key={`${bucket.key}/${category.key}`}>
+        <Observer key={`category-${bucket.key}-${category.key}`}>
           {() => {
             const categoryName = product.categories ? _.find(product.categories, { id: category.key }).name : category.key
             const item = product.filters.categories.find(val => val == category.key)
             if (item) setExpand(true)
             return (
-              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`${bucket.key}/${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
+              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
             )
           }}
         </Observer>
@@ -55,21 +55,26 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
   )
 })
 
-const AttributeFilter = ({ bucket, onChange }) => (
-  <FilterGroup title={bucket.key} count={bucket.doc_count}>
-    {bucket.value.buckets.map(value => (
-      <Observer key={bucket.key + value.key}>
-        {() => {
-          const { product } = useStore()
-          const attr = _.find(product.filters.attributes, { name: bucket.key, value: value.key })
-          return (
-            <Checkbox label={`${value.key} (${value.doc_count})`} id={bucket.key + value.key} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!attr} />
-          )
-        }}
-      </Observer>
-    ))}
-  </FilterGroup>
-)
+const AttributeFilter = ({ bucket, onChange }) => {
+  const { product, attribute } = useStore()
+  const attr = attribute.attributes[bucket.key]
+  return (
+    <FilterGroup title={attr && attr.name} count={bucket.doc_count}>
+      {bucket.valueId.buckets.map(value => (
+        <Observer key={`attr-${bucket.key}-${value.key}`}>
+          {() => {
+            attribute.fetchAttributeValues(bucket.key)
+            const attrValue = attr && attr.children && _.find(attr.children, { id: value.key })
+            const exists = product.filters.attributes.find(attr => attr.id == bucket.key && attr.valueId == value.key)
+            return (
+              <Checkbox label={`${attrValue && attrValue.value} (${value.doc_count})`} id={`attr-${bucket.key}-${value.key}`} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!exists} />
+            )
+          }}
+        </Observer>
+      ))}
+    </FilterGroup>
+  )
+}
 
 const Filter = ({ results }) => {
   const { product } = useStore()
@@ -84,8 +89,8 @@ const Filter = ({ results }) => {
     }
   }
 
-  const handleChangeAttribute = (attr, val, enable) => {
-    enable ? product.addAttribute(attr, val) : product.removeAttribute(attr, val)
+  const handleChangeAttribute = (attrId, valueId, enable) => {
+    enable ? product.addAttribute(attrId, valueId) : product.removeAttribute(attrId, valueId)
   }
 
   return (
@@ -93,7 +98,7 @@ const Filter = ({ results }) => {
       {hits && results.aggregations.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
-      {hits && results.aggregations.attributes.name.buckets.map(bucket => (
+      {hits && results.aggregations.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
       {!hits && <Placeholder numLines={20} />}
@@ -191,11 +196,12 @@ const SearchBox = observer(() => {
 })
 
 const Search = () => {
-  const { product } = useStore()
+  const { product, attribute } = useStore()
 
   product.doSearchProducts
 
   useEffect(() => {
+    attribute.fetchAttributes()
     product.fetchDepartments()
     product.fetchCategories()
     product.clearFilters()

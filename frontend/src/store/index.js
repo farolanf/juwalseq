@@ -5,6 +5,7 @@ load(
   'department', 
   'product', 
   'region',
+  'attribute',
   'route', 
   'script',
 )

@@ -131,8 +131,8 @@ function getDoc (record) {
     id: c.id,
   }))
   doc.attributes = (record.AttributeValues || []).map(av => ({
-    name: av.Attribute.name,
-    value: av.value
+    id: av.Attribute.id,
+    valueId: av.id
   }))
   doc.images = (record.Images || []).map(c => ({
     url: c.url
@@ -206,10 +206,10 @@ function attributesQuery (attributes) {
         bool: {
           must: [
             {
-              match: { 'attributes.name': attr.name }
+              match: { 'attributes.id': attr.id }
             },
             {
-              match: { 'attributes.value': attr.value }
+              match: { 'attributes.valueId': attr.valueId }
             }
           ]
         }
@@ -241,11 +241,11 @@ function aggs () {
     attributes: {
       nested: { path: 'attributes' },
       aggs: {
-        name: {
-          terms: { field: 'attributes.name' },
+        id: {
+          terms: { field: 'attributes.id' },
           aggs: {
-            value: {
-              terms: { field: 'attributes.value' }
+            valueId: {
+              terms: { field: 'attributes.valueId' }
             }
           }
         }

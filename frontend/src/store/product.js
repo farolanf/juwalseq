@@ -96,26 +96,26 @@ class ProductStore {
   }
 
   @action
-  addCategory (name) {
-    const i = this.filters.categories.findIndex(val => val == name)
-    i === -1 && this.filters.categories.push(name)
+  addCategory (id) {
+    const i = this.filters.categories.findIndex(val => val == id)
+    i === -1 && this.filters.categories.push(id)
   }
 
   @action
-  removeCategory (name) {
-    const i = this.filters.categories.findIndex(val => val == name)
+  removeCategory (id) {
+    const i = this.filters.categories.findIndex(val => val == id)
     i >= 0 && this.filters.categories.splice(i, 1)
   }
 
   @action
-  addAttribute (name, value) {
-    const i = this.filters.attributes.findIndex(attr => attr.name === name && attr.value === value)
-    i === -1 && this.filters.attributes.push({ name, value })
+  addAttribute (id, valueId) {
+    const i = this.filters.attributes.findIndex(attr => attr.id === id && attr.valueId === valueId)
+    i === -1 && this.filters.attributes.push({ id, valueId })
   }
 
   @action
-  removeAttribute (name, value) {
-    const i = this.filters.attributes.findIndex(attr => attr.name === name && attr.value === value)
+  removeAttribute (id, valueId) {
+    const i = this.filters.attributes.findIndex(attr => attr.id === id && attr.valueId === valueId)
     i >= 0 && this.filters.attributes.splice(i, 1)
   }
 }
