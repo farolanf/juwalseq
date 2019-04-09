@@ -8,6 +8,7 @@ const seed = require('@db/seeders/init')
 const demo = require('@db/seeders/demo')
 
 cmd.add('data', 'initdb', 'Initialize database', initDb)
+cmd.add('data', 'sync-alter', 'Sync database with models', syncAlterDb)
 cmd.add('data', 'populate', 'Populate database', populateDb)
 cmd.add('data', 'demo', 'Populate database with demo products', populateDemoDb)
 cmd.add('data', 'reset', 'Init and populate database', resetDb)
@@ -17,6 +18,11 @@ cmd.add('data', 'routes', 'Create admin user', dumpRoutes)
 async function initDb(program, argv) {
   program.parse(argv)
   await db.sequelize.sync({ force: true })
+}
+
+async function syncAlterDb(program, argv) {
+  program.parse(argv)
+  await db.sequelize.sync({ alter: true })
 }
 
 async function populateDb(program, argv) {
