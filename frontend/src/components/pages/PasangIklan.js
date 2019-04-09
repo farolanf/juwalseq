@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import autosize from 'autosize'
 import * as yup from 'yup'
+import { observer, Observer } from 'mobx-react-lite'
 
 import InputField from '$comp/InputField'
 import FormField from '$comp/FormField'
@@ -9,6 +10,7 @@ import ImageUploads from '$comp/ImageUploads'
 
 import { addProduct } from '$api/product'
 import { createBlob } from '$lib/dom'
+import useStore from '$useStore'
 
 const titleMin = 15,
   titleMax = 70,
@@ -24,6 +26,8 @@ const schema = yup.object().shape({
   price: yup.number().min(priceMin).max(priceMax).required(),
   nego: yup.bool(),
   images: yup.array().max(imageMax),
+  provinsiId: yup.number().required(),
+  kabupatenId: yup.number().required(),
 })
 
 const messages = {
@@ -49,12 +53,21 @@ const createFormData = values => {
 const PasangIklan = () => {
   const [descRef, setDescRef] = useState()
   const [error, setError] = useState()
+  const { region } = useStore()
 
   const onSubmit = (values, { setSubmitting }) => {
     addProduct(createFormData(values))
       .catch(err => setError(messages[err.response.data.error]))
       .finally(() => setSubmitting(false))
   }
+
+  const onValues = values => {
+    region.fetchKabupatens(values.provinsiId)
+  }
+
+  useEffect(() => {
+    region.fetchProvinsis()
+  }, [])
 
   useEffect(() => {
     if (descRef) {
@@ -71,34 +84,53 @@ const PasangIklan = () => {
         price: 350000,
         nego: true,
         images: [],
+        provinsiId: '',
+        kabupatenId: '',
       }}
       validationSchema={schema}
       onSubmit={onSubmit}
     >
-      {({ values, setFieldValue, isSubmitting }) => (
-        <div className='md:max-w-sm'>
-          <h2>Pasang iklan</h2>
-          {error && <div className='alert alert-danger'>{error}</div>}
-          <Form className='form-horizontal field-label-right'>
-            <InputField name='title' label='Judul' placeholder='Judul iklan...' 
-            help='Pilih judul yang singkat dan jelas.' full maxLength={titleMax} extra={(
-              <span className='text-xs text-grey'>{(values.title || '').length}/{titleMax}</span>
-            )} />
-            <InputField name='description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
-              <span className='text-xs text-grey'>{(values.description || '').length}/{descMax}</span>
-            )} />
-            <InputField name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
-            <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
-            <FormField full containerClass='justify-center md:justify-start'>
-              <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
-                <i className='fa fa-spinner fa-spin' hidden={!isSubmitting} /> Simpan
-              </button>
-            </FormField>
-          </Form>
-        </div>
+      {({ values, setFieldValue, isSubmitting, handleChange }) => (
+        <Observer>
+          {() => (
+            <div className='md:max-w-sm'>
+              <h2>Pasang iklan</h2>
+              {error && <div className='alert alert-danger'>{error}</div>}
+              <Form className='form-horizontal field-label-right'>
+                <InputField name='title' label='Judul' placeholder='Judul iklan...' 
+                help='Pilih judul yang singkat dan jelas.' full maxLength={titleMax} extra={(
+                  <span className='text-xs text-grey'>{(values.title || '').length}/{titleMax}</span>
+                )} />
+                <InputField name='description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
+                  <span className='text-xs text-grey'>{(values.description || '').length}/{descMax}</span>
+                )} />
+                <InputField name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
+                <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
+                <InputField name='provinsiId' component='select' label='Provinsi'>
+                  <option></option>
+                  {_.map(region.sortedProvinsis, provinsi => (
+                    <option key={provinsi.id} value={provinsi.id}>{provinsi.name}</option>
+                  ))}
+                </InputField>
+                <InputField name='kabupatenId' component='select' label='Kabupaten'>
+                  <option></option>
+                  {values.provinsiId && (region.provinsis[values.provinsiId].kabupatens || []).map(kabupaten => (
+                    <option key={kabupaten.id} value={kabupaten.id}>{kabupaten.name}</option>
+                  ))}
+                </InputField>
+                <FormField full containerClass='justify-center md:justify-start'>
+                  <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
+                    <i className='fa fa-spinner fa-spin' hidden={!isSubmitting} /> Simpan
+                  </button>
+                </FormField>
+              </Form>
+              {onValues(values)}
+            </div>
+          )}
+        </Observer>
       )}
     </Formik>
   )
 }
 
-export default PasangIklan
+export default observer(PasangIklan)

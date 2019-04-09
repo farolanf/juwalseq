@@ -4,6 +4,7 @@ load(
   'user', 
   'department', 
   'product', 
+  'region',
   'route', 
   'script',
 )
