@@ -9,8 +9,12 @@ class NestedGroup {
     this.fetchChildrenApi = fetchChildrenApi
     this[`fetch${parentName}`] = this.fetchParents
     this[`fetch${childrenName}`] = this.fetchChildren
-    this[`sorted${parentName}`] = this.sortedParents
-    Object.defineProperty(this, parentName.toLowerCase(), {
+    Object.defineProperty(this, `sorted${_.capitalize(parentName)}`, {
+      get () {
+        return this.sortedParents
+      }
+    })
+    Object.defineProperty(this, _.camelCase(parentName), {
       get () {
         return this.parents
       }
