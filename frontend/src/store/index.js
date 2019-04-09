@@ -2,7 +2,6 @@ const store = {}
 
 load(
   'user', 
-  'department', 
   'product', 
   'region',
   'attribute',

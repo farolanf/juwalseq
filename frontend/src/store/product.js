@@ -28,10 +28,12 @@ class ProductStore {
   }
 
   fetchDepartments = _.debounce(flow(function* () {
+    if (this.departments) return
     this.departments = yield fetchDepartments().then(res => res.data)
   }), 300)
 
   fetchCategories = _.debounce(flow(function* () {
+    if (this.categories) return
     this.categories = yield fetchCategories().then(res => res.data)
   }), 300)
 
