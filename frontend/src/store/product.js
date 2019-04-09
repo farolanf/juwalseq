@@ -27,20 +27,6 @@ class ProductStore {
     )
   }
 
-  // force changes
-  @action
-  tick () {
-    this.ticks++
-  }
-
-  resetFilters () {
-    this.filters = {
-      departments: [],
-      categories: [],
-      attributes: [],
-    }
-  }
-
   fetchDepartments = _.debounce(flow(function* () {
     this.departments = yield fetchDepartments().then(res => res.data)
   }), 300)
@@ -69,12 +55,34 @@ class ProductStore {
     })
   }
 
-  
+  // force changes
+  @action
+  tick () {
+    this.ticks++
+  }
+
   @action
   setPage (num) {
     this.page = num
   }
 
+  @action
+  initFromQuery (query) {
+    this.q = query.q || ''
+    this.filters.departments = query.departments || []
+    this.filters.categories = query.categories || []
+    this.filters.attributes = query.attributes || []
+  }
+
+  @action
+  resetFilters () {
+    this.filters = {
+      departments: [],
+      categories: [],
+      attributes: [],
+    }
+  }
+  
   @action
   clearFilters () {
     this.q = ''

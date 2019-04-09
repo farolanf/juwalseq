@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { reaction } from 'mobx'
 import { observer, Observer } from 'mobx-react-lite'
+import { navigate } from '@reach/router'
+import qs from 'qs'
+
 import useStore from '$useStore'
 
 import Pagination from '$comp/Pagination'
@@ -196,6 +200,36 @@ const Search = () => {
     product.fetchDepartments()
     product.fetchCategories()
     product.clearFilters()
+
+    let noReaction = false
+
+    const handleRouteChange = () => {
+      // init filters from query string
+      const query = qs.parse(location.search, { ignoreQueryPrefix: true })
+      noReaction = true
+      product.initFromQuery(query)
+      noReaction = false
+    }
+    handleRouteChange()
+
+    // serialize filters to query string
+    const dispose = reaction(
+      () => [product.q, JSON.stringify(product.filters)],
+      () => {
+        if (noReaction) return
+        const query = qs.stringify({ 
+          q: product.q ? product.q : undefined, 
+          ...product.filters 
+        })
+        navigate(location.pathname + (query ? '?' + query : ''))
+      })
+    
+    window.addEventListener('popstate', handleRouteChange)
+    
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange)
+      dispose()
+    }
   }, [])
 
   const handleChangePage = num => {
