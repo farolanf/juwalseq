@@ -5,6 +5,8 @@ class NestedGroup {
   parentsLoaded = false
 
   constructor (fetchParentsApi, fetchChildrenApi, parentName, childrenName) {
+    this.parentName = parentName
+    this.childrenName = childrenName
     this.fetchParentsApi = fetchParentsApi
     this.fetchChildrenApi = fetchChildrenApi
     this[`fetch${parentName}`] = this.fetchParents
@@ -54,6 +56,11 @@ class NestedGroup {
     parent.childrenLoading = true
     this.parents[parentId] = parent
     parent.children = yield this.fetchChildrenApi(parentId).then(res => res.data)
+    Object.defineProperty(parent, _.camelCase(this.childrenName), {
+      get () {
+        return this.children
+      }
+    })
     this.parents = _.clone(this.parents)
     delete parent.childrenLoading
   })
