@@ -40,7 +40,7 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
         <Observer key={`${bucket.key}/${category.key}`}>
           {() => {
             const categoryName = product.categories ? _.find(product.categories, { id: category.key }).name : category.key
-            const item = product.filters.categories.find(val => val === category.key)
+            const item = product.filters.categories.find(val => val == category.key)
             if (item) setExpand(true)
             return (
               <Checkbox label={`${categoryName} (${category.doc_count})`} id={`${bucket.key}/${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />

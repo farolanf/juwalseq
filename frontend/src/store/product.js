@@ -89,13 +89,13 @@ class ProductStore {
 
   @action
   addCategory (name) {
-    const i = this.filters.categories.findIndex(val => val === name)
+    const i = this.filters.categories.findIndex(val => val == name)
     i === -1 && this.filters.categories.push(name)
   }
 
   @action
   removeCategory (name) {
-    const i = this.filters.categories.findIndex(val => val === name)
+    const i = this.filters.categories.findIndex(val => val == name)
     i >= 0 && this.filters.categories.splice(i, 1)
   }
 
