@@ -40,6 +40,8 @@ const ProductDoc = {
   },
   associations: {
     include: [
+      db.Provinsi,
+      db.Kabupaten,
       {
         model: db.Category,
         include: db.Department,
@@ -117,6 +119,8 @@ function getDoc (record) {
     'description',
     'price',
   ])
+  doc.provinsi = record.Provinsi.id
+  doc.kabupaten = record.Kabupaten.id
   doc.departments = (record.Categories || []).map(c => ({
     id: c.Department.id,
     categories: record.Categories.filter(cat => cat.Department.name === c.Department.name).map(c => ({

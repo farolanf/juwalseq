@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
   Product.associate = function(models) {
+    Product.belongsTo(models.Provinsi)
+    Product.belongsTo(models.Kabupaten)
     Product.belongsTo(models.User)
     Product.belongsToMany(models.AttributeValue, { through: 'ProductAttribute' })
     Product.belongsToMany(models.Category, { through: 'ProductCategory' })

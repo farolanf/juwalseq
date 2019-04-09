@@ -1,4 +1,5 @@
 'use strict';
+const db = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -7,10 +8,15 @@ module.exports = {
     const brands = ['Xiaomi', 'LG', 'ASUS', 'Samsung']
     
     for (let i = 0; i < numProducts; i++) {
+      const kabupaten = await db.Kabupaten.findOne({
+        order: [db.sequelize.fn('RAND')],
+        limit: 1,
+        include: db.Provinsi,
+      })
       const brand = brands[Math.floor(Math.random() * brands.length)]
       let price = Math.random() * 2500000 + 350000
       price = Math.round(price / 10000) * 10000
-      products.push({ name: `HP ${brand} - ${Date()}`, description: 'Seperti judul...', price, UserId: 1 })
+      products.push({ name: `HP ${brand} - ${Date()}`, description: 'Seperti judul...', price, UserId: 1, ProvinsiId: kabupaten.Provinsi.id, KabupatenId: kabupaten.id })
     }
 
     await queryInterface.bulkInsert('Products', products)
