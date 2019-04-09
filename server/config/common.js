@@ -62,6 +62,8 @@ module.exports = {
           { path: '/search/.*', method: 'GET' },
 
           // public resources
+          { path: '/Provinsis(/.*)?', method: 'GET' },
+          { path: '/Kabupatens(/.*)?', method: 'GET' },
           { path: '/Departments(/.*)?', method: 'GET' },
           { path: '/Categories(/.*)?', method: 'GET' },
           { path: '/Attributes(/.*)?', method: 'GET' },

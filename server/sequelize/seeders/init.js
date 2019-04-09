@@ -1,18 +1,13 @@
 'use strict';
+const provinsi = require('./provinsi.json')
+const kabupaten = require('./kabupaten.json')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
+      await queryInterface.bulkInsert('Provinsis', provinsi)
+      await queryInterface.bulkInsert('Kabupatens', kabupaten)
 
-      Example:
-      return queryInterface.bulkInsert('People', [{
-        name: 'John Doe',
-        isBetaMember: false
-      }], {});
-    */
-    await queryInterface.bulkInsert('Departments', [
+      await queryInterface.bulkInsert('Departments', [
       { id: 1, name: 'Mobil', description: null },
       { id: 2, name: 'Motor', description: null },
       { id: 3, name: 'Properti', description: null },
