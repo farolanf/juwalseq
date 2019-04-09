@@ -30,7 +30,7 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
   )
 }
 
-const CategoryFilter = ({ bucket, onChange }) => {
+const CategoryFilter = observer(({ bucket, onChange }) => {
   const [expand, setExpand] = useState(false)
   const { product } = useStore()
   const departmentName = product.departments ? _.find(product.departments, { id: bucket.key }).name : bucket.key
@@ -50,7 +50,7 @@ const CategoryFilter = ({ bucket, onChange }) => {
       ))}
     </FilterGroup>
   )
-}
+})
 
 const AttributeFilter = ({ bucket, onChange }) => (
   <FilterGroup title={bucket.key} count={bucket.doc_count}>
@@ -87,10 +87,10 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {hits && results.aggregations.search.departments.id.buckets.map(bucket => (
+      {hits && results.aggregations.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
-      {hits && results.aggregations.search.attributes.name.buckets.map(bucket => (
+      {hits && results.aggregations.attributes.name.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
       {!hits && <Placeholder numLines={20} />}
