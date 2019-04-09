@@ -62,3 +62,11 @@
 .input-suffix {
   @apply text-grey px-2 absolute pin-r;
 }
+
+.select {
+  @apply bg-white w-full px-2 border border-solid border-grey rounded;
+  &.has-error {
+    @apply border-2 border-red-dark;
+  }
+  height: 2rem;
+}
