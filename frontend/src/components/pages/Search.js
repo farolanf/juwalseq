@@ -32,16 +32,18 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
 
 const CategoryFilter = ({ bucket, onChange }) => {
   const [expand, setExpand] = useState(false)
+  const { product } = useStore()
+  const departmentName = product.departments ? _.find(product.departments, { id: bucket.key }).name : bucket.key
   return (
-    <FilterGroup title={bucket.key} count={bucket.doc_count} expand={expand}>
-      {bucket.category.name.buckets.map(category => (
-        <Observer key={bucket.key + category.key}>
+    <FilterGroup title={departmentName} count={bucket.doc_count} expand={expand}>
+      {bucket.categories.id.buckets.map(category => (
+        <Observer key={`${bucket.key}/${category.key}`}>
           {() => {
-            const { product } = useStore()
+            const categoryName = product.categories ? _.find(product.categories, { id: category.key }).name : category.key
             const item = product.filters.categories.find(val => val === category.key)
             if (item) setExpand(true)
             return (
-              <Checkbox label={`${category.key} (${category.doc_count})`} id={bucket.key + category.key} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
+              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`${bucket.key}/${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
             )
           }}
         </Observer>
@@ -85,10 +87,10 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {hits && results.aggregations.all.search.departments.name.buckets.map(bucket => (
+      {hits && results.aggregations.search.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
-      {hits && results.aggregations.all.search.attributes.name.buckets.map(bucket => (
+      {hits && results.aggregations.search.attributes.name.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
       {!hits && <Placeholder numLines={20} />}
@@ -191,6 +193,8 @@ const Search = () => {
   product.doSearchProducts
 
   useEffect(() => {
+    product.fetchDepartments()
+    product.fetchCategories()
     product.clearFilters()
   }, [])
 

@@ -118,13 +118,13 @@ function getDoc (record) {
     'price',
   ])
   doc.departments = (record.Categories || []).map(c => ({
-    name: c.Department.name,
+    id: c.Department.id,
     categories: record.Categories.filter(cat => cat.Department.name === c.Department.name).map(c => ({
-      name: c.name
+      id: c.id,
     }))
   }))
   doc.categories = (record.Categories || []).map(c => ({
-    name: c.name
+    id: c.id,
   }))
   doc.attributes = (record.AttributeValues || []).map(av => ({
     name: av.Attribute.name,
@@ -155,18 +155,13 @@ function buildQuery (params) {
       }
     },
     aggs: {
-      all: {
-        global: {},
-        aggs: {
-          search: {
-            filter: {
-              bool: {
-                must: searchQuery(params.q),
-              }
-            },
-            aggs: aggs()
+      search: {
+        filter: {
+          bool: {
+            must: searchQuery(params.q),
           }
-        }
+        },
+        aggs: aggs()
       }
     }
   }
@@ -194,7 +189,7 @@ function departmentsQuery (departments) {
     nested: {
       path: 'departments',
       query: {
-        terms: { 'departments.name': _.castArray(departments) }
+        terms: { 'departments.id': _.castArray(departments) }
       }
     }
   }
@@ -205,7 +200,7 @@ function categoriesQuery (categories) {
     nested: {
       path: 'categories',
       query: {
-        terms: { 'categories.name': _.castArray(categories) }
+        terms: { 'categories.id': _.castArray(categories) }
       }
     }
   }
@@ -236,26 +231,18 @@ function aggs () {
     departments: {
       nested: { path: 'departments' },
       aggs: {
-        name: {
-          terms: { field: 'departments.name' },
+        id: {
+          terms: { field: 'departments.id' },
           aggs: {
-            category: {
+            categories: {
               nested: { path: 'departments.categories' },
               aggs: {
-                name: {
-                  terms: { field: 'departments.categories.name' }
+                id: {
+                  terms: { field: 'departments.categories.id' }
                 }
               }
             }
           }
-        }
-      }
-    },
-    categories: {
-      nested: { path: 'categories' },
-      aggs: {
-        name: {
-          terms: { field: 'categories.name' }
         }
       }
     },
