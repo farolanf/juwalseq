@@ -62,7 +62,7 @@ const PasangIklan = () => {
   }
 
   const onValues = values => {
-    region.fetchKabupatens(values.provinsiId)
+    values.provinsiId && region.fetchKabupatens(values.provinsiId)
   }
 
   useEffect(() => {
