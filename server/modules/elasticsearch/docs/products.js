@@ -170,10 +170,22 @@ function searchQuery (q) {
 
 function filterQuery (params) {
   return [].concat(
+    ...regionQuery(params),
     (params.departments && [departmentsQuery(params.departments)] || []),
     (params.categories && [categoriesQuery(params.categories)] || []),
     (params.attributes && [attributesQuery(params.attributes)] || [])
   )
+}
+
+function regionQuery (params) {
+  const query = []
+  params.provinsi && query.push({
+    term: { provinsi: params.provinsi }
+  })
+  params.kabupaten && query.push({
+    term: { kabupaten: params.kabupaten }
+  })
+  return query
 }
 
 function departmentsQuery (departments) {
@@ -220,6 +232,12 @@ function attributesQuery (attributes) {
 
 function aggs () {
   return {
+    provinsi: {
+      terms: { field: 'provinsi' },
+    },
+    kabupaten: {
+      terms: { field: 'kabupaten' },
+    },
     departments: {
       nested: { path: 'departments' },
       aggs: {
