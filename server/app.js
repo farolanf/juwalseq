@@ -7,12 +7,14 @@ if (process.env.LOAD_ENV || process.env.NODE_ENV !== 'production') {
   })
 }
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
+const compression = require('compression')
 const app = express()
 const config = require('./config')
 
 app.disable('x-powered-by')
+
+app.use(compression())
 
 const frontendUrl = url.parse(process.env.FRONTEND_HOST)
 const origin = `${frontendUrl.protocol}//${frontendUrl.host}`
@@ -22,8 +24,7 @@ app.use(cors({
   exposedHeaders: ['Content-Range']
 }))
 
-app.use(bodyParser.json({
-  inflate: true,
+app.use(express.json({
   strict: false
 }))
 
