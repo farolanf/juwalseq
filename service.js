@@ -2,10 +2,11 @@ const path = require('path')
 const Service = require('node-linux').Service
 
 const service = new Service({
-  name: 'turingfullstack',
-  description: 'Turing fullstack challenge',
+  name: 'juwal',
+  description: 'Juwal backend',
   script: path.resolve(__dirname, './server/index.js'),
   env: [
+    { name: 'LOAD_ENV', value: 'true' },
     { name: 'NODE_ENV', value: 'production' }
   ]
 })
