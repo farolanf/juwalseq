@@ -97,22 +97,22 @@ const PasangIklan = () => {
               <h2>Pasang iklan</h2>
               {error && <div className='alert alert-danger'>{error}</div>}
               <Form className='form-horizontal field-label-right'>
-                <InputField name='title' label='Judul' placeholder='Judul iklan...' 
+                <InputField name='title' id='edit-title' label='Judul' placeholder='Judul iklan...' 
                 help='Pilih judul yang singkat dan jelas.' full maxLength={titleMax} extra={(
                   <span className='text-xs text-grey'>{(values.title || '').length}/{titleMax}</span>
                 )} />
-                <InputField name='description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
+                <InputField name='description' id='edit-description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
                   <span className='text-xs text-grey'>{(values.description || '').length}/{descMax}</span>
                 )} />
-                <InputField name='price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
+                <InputField name='price' id='edit-price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
                 <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
-                <InputField name='provinsiId' component='select' label='Provinsi'>
+                <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi'>
                   <option></option>
                   {_.map(region.sortedProvinsis, provinsi => (
                     <option key={provinsi.id} value={provinsi.id}>{provinsi.name}</option>
                   ))}
                 </InputField>
-                <InputField name='kabupatenId' component='select' label='Kabupaten'>
+                <InputField name='kabupatenId' id='edit-kabupaten' component='select' label='Kabupaten'>
                   <option></option>
                   {values.provinsiId && (region.provinsis[values.provinsiId].kabupatens || []).map(kabupaten => (
                     <option key={kabupaten.id} value={kabupaten.id}>{kabupaten.name}</option>

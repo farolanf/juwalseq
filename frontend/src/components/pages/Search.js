@@ -23,7 +23,7 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
 
   return (
     <div className='mb-1'>
-      <div className='text-sm text-grey-dark hover:text-grey-darker cursor-pointer' onClick={handleClickTitle}>
+      <div className='text-sm text-grey-darker hover:text-grey-darker cursor-pointer' onClick={handleClickTitle}>
         <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {title} ({count})
       </div>
       <Collapse show={show}>
@@ -95,9 +95,15 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
+      {/* <div className='text-sm text-grey-dark'>Daerah</div>
+      {hits && results.aggregations.provinsi.buckets.map(bucket => (
+        <RegionFilter key={bucket.key} bucket={bucket} onChange={handleChangeRegion} />
+      ))} */}
+      {hits && <div className='text-sm text-grey-darker mt-1'>Kategori</div>}
       {hits && results.aggregations.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
+      {hits && <div className='text-sm text-grey-darker mt-1'>Spek</div>}
       {hits && results.aggregations.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
@@ -114,7 +120,7 @@ const Product = ({ hit }) => {
       <div className='h-full flex flex-col items-center border border-solid border-grey-lighter shadow hover:shadow-md p-1'>
         <div style={{ backgroundImage: thumbnail && `url(${thumbnail.url})`, height: '60%' }} className={cn('w-full bg-contain bg-center bg-no-repeat mb-2', !thumbnail && 'border border-solid border-grey-lighter bg-grey-lightest')} />
         <div className='text-center md:text-sm px-1'>{hit._source.name}</div>
-        <div className='flex-grow w-full flex justify-end items-end pr-2 pb-1 text-green md:text-sm'>Rp {price}</div>
+        <div className='flex-grow w-full flex justify-end items-end pr-2 pb-1 text-green-dark font-bold md:text-sm'>Rp {price}</div>
       </div>
     </a>
   )
@@ -127,7 +133,7 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   const hits = results && results.hits && !!results.hits.total && results.hits.hits
   return (
     <div className='flex flex-col content'>
-      <div className='text-grey text-xs mb-1'>{from} - {to} / {total}</div>
+      <div className='text-grey-darker text-xs mb-1'>{from} - {to} / {total}</div>
       <div className='flex flex-col md:flex-row md:flex-wrap mb-2'>
         {hits && hits.map((hit, i) => (
           <Product hit={hit} key={i} />
@@ -158,15 +164,15 @@ const SearchBox = observer(() => {
     <div className='mb-2'>
       <div className='list-y-2 md:list-x-1 md:items-center'>
         <div className='form-control flex-grow'>
-          <input className='input input-sm' placeholder='Kota' />
+          <input className='input input-sm' placeholder='Kota' aria-label='Kota' />
         </div>
         <div className='form-control flex-grow'>
-          <input className='input input-sm' placeholder='Kategori' />
+          <input className='input input-sm' placeholder='Kategori' aria-label='Kategori' />
         </div>
         <form className='flex-grow' onSubmit={handleSubmitQuery}>
           <div className='form-control'>
             <span className='fa fa-search input-prefix px-3' />
-            <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} />
+            <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} aria-label='Cari' />
           </div>
         </form>
       </div>
