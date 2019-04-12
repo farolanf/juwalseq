@@ -16,9 +16,7 @@ Personal project
 
 - copy `.env.example` to `.env.development` and configure
 - `npm install`
-- `npm run initdb` to initialize and populate database
-- `node cmd data:create-admin admin admin@foo.com` to create the admin user
-- `node cmd es:rebuild` to rebuild ElasticSearch index
+- `npm run reset:dev` to initialize and populate database
 - `npm start`
 
 ### Frontend
