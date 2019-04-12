@@ -152,10 +152,25 @@ function buildQuery (params) {
     ),
     query: {
       bool: {
-        must: [searchQuery(params.q), ...filterQuery(params)]
+        must: searchQuery(params.q),
+        filter: {
+          bool: {
+            should: filterQuery(params)
+          }
+        }
       }
     },
-    aggs: aggs()
+    aggs: {
+      all: {
+        global: {},
+        aggs: {
+          search: {
+            filter: searchQuery(params.q),
+            aggs: aggs()
+          },
+        }
+      }
+    }
   }
   return search
 }
