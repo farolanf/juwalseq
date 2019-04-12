@@ -33,6 +33,29 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
   )
 }
 
+const RegionFilter = observer(({ bucket, onChange }) => {
+  const [expand, setExpand] = useState(false)
+  const { product, region } = useStore()
+  const provinsiName = region.provinsis[bucket.key] && region.provinsis[bucket.key].name || bucket.key
+  const provinsiSelected = product.filters.provinsi == bucket.key
+  const kabupatenBuckets = _.get(product.results, 'aggregations.all.search.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
+  
+  return (
+    <FilterGroup title={provinsiName} count={bucket.doc_count} expand={expand}>
+      <Checkbox label={`Seluruh ${provinsiName} (${bucket.doc_count})`} id={`region-${bucket.key}`} onChange={() => onChange(bucket.key, undefined, !provinsiSelected)} value={provinsiSelected} />
+      {kabupatenBuckets && kabupatenBuckets.map(kabBucket => {
+        const id = `region-${bucket.key}-${kabBucket.key}`
+        const kabupaten = region.getKabupaten(bucket.key, kabBucket.key)
+        const kabSelected = product.filters.kabupaten == kabBucket.key
+        !expand && kabSelected && setExpand(true)
+        return (
+          <Checkbox key={id} label={`${kabupaten && kabupaten.name} (${kabBucket.doc_count})`} id={id} onChange={e => onChange(bucket.key, kabBucket.key, e.target.checked)} value={kabSelected} />
+        )
+      })}
+    </FilterGroup>
+  )
+})
+
 const CategoryFilter = observer(({ bucket, onChange }) => {
   const [expand, setExpand] = useState(false)
   const { product } = useStore()
@@ -43,10 +66,10 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
         <Observer key={`category-${bucket.key}-${category.key}`}>
           {() => {
             const categoryName = product.categories ? _.find(product.categories, { id: category.key }).name : category.key
-            const item = product.filters.categories.find(val => val == category.key)
-            if (item) setExpand(true)
+            const selected = !!product.filters.categories.find(val => val == category.key)
+            !expand && selected && setExpand(true)
             return (
-              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={!!item} />
+              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={selected} />
             )
           }}
         </Observer>
@@ -63,7 +86,6 @@ const AttributeFilter = ({ bucket, onChange }) => {
       {bucket.valueId.buckets.map(value => (
         <Observer key={`attr-${bucket.key}-${value.key}`}>
           {() => {
-            attribute.fetchAttributeValues(bucket.key)
             const attrValue = attr && attr.children && _.find(attr.children, { id: value.key })
             const exists = product.filters.attributes.find(attr => attr.id == bucket.key && attr.valueId == value.key)
             return (
@@ -81,6 +103,10 @@ const Filter = ({ results }) => {
 
   const hits = results && results.hits && !!results.hits.total && results.hits.hits
 
+  const handleChangeRegion = (provinsi, kabupaten, enable) => {
+    product.setRegion(provinsi, kabupaten, enable)
+  }
+
   const handleChangeCategory = (department, category, enable) => {
     if (enable) {
       product.addCategory(category)
@@ -95,16 +121,16 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {/* <div className='text-sm text-grey-dark'>Daerah</div>
-      {hits && results.aggregations.provinsi.buckets.map(bucket => (
+      {hits && <div className='text-sm text-grey-darker'>Daerah</div>}
+      {hits && results.aggregations.all.search.provinsi.buckets.map(bucket => (
         <RegionFilter key={bucket.key} bucket={bucket} onChange={handleChangeRegion} />
-      ))} */}
+      ))}
       {hits && <div className='text-sm text-grey-darker mt-1'>Kategori</div>}
-      {hits && results.aggregations.departments.id.buckets.map(bucket => (
+      {hits && results.aggregations.all.search.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
       {hits && <div className='text-sm text-grey-darker mt-1'>Spek</div>}
-      {hits && results.aggregations.attributes.id.buckets.map(bucket => (
+      {hits && results.aggregations.all.search.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
       {!hits && <Placeholder numLines={20} />}
@@ -202,15 +228,27 @@ const SearchBox = observer(() => {
 })
 
 const Search = () => {
-  const { product, attribute } = useStore()
+  const { product, attribute, region } = useStore()
 
   product.doSearchProducts
 
   useEffect(() => {
-    attribute.fetchAttributes()
     product.fetchDepartments()
     product.fetchCategories()
     product.clearFilters()
+
+    region.fetchProvinsis()
+    attribute.fetchAttributes()
+
+    const disposeProvinsiReaction = reaction(
+      () => [...(_.get(product.results, 'aggregations.all.search.provinsi.buckets') || [])],
+      provinsis => provinsis.forEach(provinsi => region.fetchKabupatens(provinsi.key))
+    )
+
+    const disposeAttrReaction = reaction(
+      () => [...(_.get(product.results, 'aggregations.all.search.attributes.id.buckets') || [])],
+      attrs => attrs.forEach(attr => attribute.fetchAttributeValues(attr.key))
+    )
 
     const handleRouteChange = () => {
       // init filters from query string
@@ -219,7 +257,7 @@ const Search = () => {
     handleRouteChange()
 
     // serialize filters to query string
-    const dispose = reaction(
+    const disposeFilterReaction = reaction(
       () => [product.q, JSON.stringify(product.filters)],
       () => {
         queryString.update(query => {
@@ -234,7 +272,9 @@ const Search = () => {
     
     return () => {
       window.removeEventListener('popstate', handleRouteChange)
-      dispose()
+      disposeFilterReaction()
+      disposeAttrReaction()
+      disposeProvinsiReaction()
     }
   }, [])
 

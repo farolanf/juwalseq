@@ -10,6 +10,8 @@ class ProductStore {
   @observable page = 1
   @observable q = ''
   @observable filters = {
+    provinsi: undefined,
+    kabupaten: undefined,
     departments: [],
     categories: [],
     attributes: [],
@@ -51,6 +53,8 @@ class ProductStore {
       count: this.pageSize,
       offset: (this.page - 1) * this.pageSize,
       q: this.q,
+      provinsi: this.filters.provinsi,
+      kabupaten: this.filters.kabupaten,
       departments: [...this.filters.departments],
       categories: [...this.filters.categories],
       attributes: [...this.filters.attributes],
@@ -71,6 +75,8 @@ class ProductStore {
   @action
   initFromQuery (query) {
     this.q = query.q || ''
+    this.filters.provinsi = query.provinsi || undefined
+    this.filters.kabupaten = query.kabupaten || undefined
     this.filters.departments = query.departments || []
     this.filters.categories = query.categories || []
     this.filters.attributes = query.attributes || []
@@ -79,6 +85,8 @@ class ProductStore {
   @action
   resetFilters () {
     this.filters = {
+      provinsi: undefined,
+      kabupaten: undefined,
       departments: [],
       categories: [],
       attributes: [],
@@ -98,15 +106,24 @@ class ProductStore {
   }
 
   @action
-  addCategory (id) {
-    const i = this.filters.categories.findIndex(val => val == id)
-    i === -1 && this.filters.categories.push(id)
+  setRegion (provinsi, kabupaten, enable) {
+    this.filters.provinsi = enable && typeof kabupaten === 'undefined' ? provinsi : undefined
+    this.filters.kabupaten = enable ? kabupaten : undefined
+  }
+
+  addCategory (id) { this.addFilter(this.filters.categories, id) }
+  removeCategory (id) { this.removeFilter(this.filters.categories, id) }
+
+  @action
+  addFilter (filters, id) {
+    const i = filters.findIndex(val => val == id)
+    i === -1 && filters.push(id)
   }
 
   @action
-  removeCategory (id) {
-    const i = this.filters.categories.findIndex(val => val == id)
-    i >= 0 && this.filters.categories.splice(i, 1)
+  removeFilter (filters, id) {
+    const i = filters.findIndex(val => val == id)
+    i >= 0 && filters.splice(i, 1)
   }
 
   @action
