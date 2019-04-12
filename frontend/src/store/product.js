@@ -111,13 +111,13 @@ class ProductStore {
 
   @action
   addAttribute (id, valueId) {
-    const i = this.filters.attributes.findIndex(attr => attr.id === id && attr.valueId === valueId)
+    const i = this.filters.attributes.findIndex(attr => attr.id == id && attr.valueId == valueId)
     i === -1 && this.filters.attributes.push({ id, valueId })
   }
 
   @action
   removeAttribute (id, valueId) {
-    const i = this.filters.attributes.findIndex(attr => attr.id === id && attr.valueId === valueId)
+    const i = this.filters.attributes.findIndex(attr => attr.id == id && attr.valueId == valueId)
     i >= 0 && this.filters.attributes.splice(i, 1)
   }
 }
