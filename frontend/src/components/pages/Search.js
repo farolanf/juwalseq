@@ -37,7 +37,7 @@ const RegionFilter = observer(({ bucket, onChange }) => {
   const [expand, setExpand] = useState(false)
   const { product, region } = useStore()
   const provinsiName = region.provinsis[bucket.key] && region.provinsis[bucket.key].name || bucket.key
-  const provinsiSelected = product.filters.provinsi == bucket.key
+  const provinsiSelected = !!product.filters.provinsi.find(x => x == bucket.key)
   const kabupatenBuckets = _.get(product.results, 'aggregations.all.search.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
   
   return (
@@ -46,7 +46,7 @@ const RegionFilter = observer(({ bucket, onChange }) => {
       {kabupatenBuckets && kabupatenBuckets.map(kabBucket => {
         const id = `region-${bucket.key}-${kabBucket.key}`
         const kabupaten = region.getKabupaten(bucket.key, kabBucket.key)
-        const kabSelected = product.filters.kabupaten == kabBucket.key
+        const kabSelected = !!product.filters.kabupaten.find(x => x == kabBucket.key)
         !expand && kabSelected && setExpand(true)
         return (
           <Checkbox key={id} label={`${kabupaten && kabupaten.name} (${kabBucket.doc_count})`} id={id} onChange={e => onChange(bucket.key, kabBucket.key, e.target.checked)} value={kabSelected} />
@@ -104,7 +104,11 @@ const Filter = ({ results }) => {
   const hits = results && results.hits && !!results.hits.total && results.hits.hits
 
   const handleChangeRegion = (provinsi, kabupaten, enable) => {
-    product.setRegion(provinsi, kabupaten, enable)
+    if (provinsi && kabupaten) {
+      enable ? product.addKabupaten(kabupaten) : product.removeKabupaten(kabupaten)
+    } else if (provinsi) {
+      enable ? product.addProvinsi(provinsi) : product.removeProvinsi(provinsi)
+    }
   }
 
   const handleChangeCategory = (department, category, enable) => {
@@ -262,6 +266,8 @@ const Search = () => {
       () => {
         queryString.update(query => {
           query.q = product.q ? product.q : undefined
+          query.provinsi = product.filters.provinsi
+          query.kabupaten = product.filters.kabupaten
           query.departments = product.filters.departments
           query.categories = product.filters.categories
           query.attributes = product.filters.attributes

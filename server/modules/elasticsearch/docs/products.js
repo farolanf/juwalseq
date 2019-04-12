@@ -195,10 +195,10 @@ function filterQuery (params) {
 function regionQuery (params) {
   const query = []
   params.provinsi && query.push({
-    term: { provinsi: params.provinsi }
+    terms: { provinsi: _.castArray(params.provinsi) }
   })
   params.kabupaten && query.push({
-    term: { kabupaten: params.kabupaten }
+    terms: { kabupaten: _.castArray(params.kabupaten) }
   })
   return query
 }
