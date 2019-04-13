@@ -5,6 +5,7 @@
                 url('patua_one_v9_latin_400.woff') format('woff');
    font-style:  normal;
    font-weight: 400;
+   font-display: auto;
 }
 @font-face {
    font-family: 'Cabin Condensed';
@@ -13,6 +14,7 @@
                 url('cabin_condensed_bold_v12_latin_700.woff') format('woff');
    font-style:  normal;
    font-weight: 700;
+   font-display: auto;
 }
 @font-face {
    font-family: 'Cabin Condensed';
@@ -21,4 +23,5 @@
                 url('cabin_condensed_v12_latin_400.woff') format('woff');
    font-style:  normal;
    font-weight: 400;
+   font-display: auto;
 }
