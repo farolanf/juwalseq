@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { observer, Observer } from 'mobx-react-lite'
 
 import InputField from '$comp/InputField'
+import FormikCheckbox from '$comp/FormikCheckbox'
 import FormField from '$comp/FormField'
 import ImageUploads from '$comp/ImageUploads'
 
@@ -90,7 +91,7 @@ const PasangIklan = () => {
       validationSchema={schema}
       onSubmit={onSubmit}
     >
-      {({ values, setFieldValue, isSubmitting, handleChange }) => (
+      {({ values, setFieldValue, isSubmitting }) => (
         <Observer>
           {() => (
             <div className='md:max-w-sm'>
@@ -104,7 +105,10 @@ const PasangIklan = () => {
                 <InputField name='description' id='edit-description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
                   <span className='text-xs text-grey'>{(values.description || '').length}/{descMax}</span>
                 )} />
-                <InputField name='price' id='edit-price' type='number' label='Harga' leftPrefix='Rp.' min='0' inputClass='pl-10' />
+                <FormField full label='Harga' containerClass=''>
+                  <InputField name='price' id='edit-price' type='number' leftPrefix='Rp.' min='0' inputClass='pl-10' />
+                  <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' />
+                </FormField>
                 <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
                 <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi'>
                   <option></option>
