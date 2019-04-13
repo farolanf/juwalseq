@@ -26,8 +26,6 @@ export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) =>
   
   components.unshift(
     <title key='siteTitle'>{config.siteMetadata.title}</title>,
-    <link key='preconnectApi' href={process.env.GATSBY_API_HOST} rel="preconnect" />,
-    <link key='preconnectFonts' href="http://fonts.gstatic.com" rel="preconnect" />
   )
 
   replaceHeadComponents(components)
