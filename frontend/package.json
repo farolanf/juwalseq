@@ -66,10 +66,10 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "watch": "npm-watch",
     "fonts": "mkdir -p src/assets/fonts; best-served-local -o src/assets/fonts/fonts.css -d src/assets/fonts -w \"Patua One:400\" \"Cabin Condensed:400,700\"",
-    "deploy": "rm public -rf && npm run build && npm run deploy:push && npm run deploy:invalidate",
-    "deploy:push": "aws s3 sync public s3://juwal-web --acl public-read --delete --exclude '*.js' --exclude '*.js.map' --exclude '*.css' --exclude 'static/*'",
-    "deploy:push-assets": "aws s3 sync public s3://juwal-web --acl public-read --delete --cache-control 31536000 --exclude '*' --include '*.js' --include '*.js.map' --include '*.css' --include 'static/*'",
-    "deploy:invalidate": "aws cloudfront create-invalidation --distribution-id E2YSGE4LW1C9FA --paths '/*'"
+    "deploy": "rm public -rf && npm run build && npm run deploy:push && npm run deploy:push-assets && npm run deploy:invalidate",
+    "deploy:push": "aws s3 sync public s3://juwal-web --acl public-read --delete --exclude '*.js' --exclude '*.js.map' --exclude '*.css' --exclude 'icons/*' --exclude 'static/*'",
+    "deploy:push-assets": "aws s3 sync public s3://juwal-web --acl public-read --delete --cache-control 31536000 --exclude '*' --include '*.js' --include '*.js.map' --include '*.css' --include 'icons/*' --include 'static/*'",
+    "deploy:invalidate": "aws cloudfront create-invalidation --distribution-id $JUWAL_CF_DIST --paths '/*'"
   },
   "watch": {
     "tailwind": {
