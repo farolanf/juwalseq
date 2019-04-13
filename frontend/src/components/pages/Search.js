@@ -39,7 +39,8 @@ const RegionFilter = observer(({ bucket, onChange }) => {
   const provinsiName = region.provinsis[bucket.key] && region.provinsis[bucket.key].name || bucket.key
   const provinsiSelected = !!product.filters.provinsi.find(x => x == bucket.key)
   const kabupatenBuckets = _.get(product.results, 'aggregations.all.search.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
-  
+  !expand && provinsiSelected && setExpand(true)  
+
   return (
     <FilterGroup title={provinsiName} count={bucket.doc_count} expand={expand}>
       <Checkbox label={`Seluruh ${provinsiName} (${bucket.doc_count})`} id={`region-${bucket.key}`} onChange={() => onChange(bucket.key, undefined, !provinsiSelected)} value={provinsiSelected} />
@@ -255,6 +256,7 @@ const Search = () => {
     )
 
     const handleRouteChange = () => {
+      console.log('route change')
       // init filters from query string
       queryString.withoutUpdate(query => product.initFromQuery(query))
     }
@@ -264,6 +266,7 @@ const Search = () => {
     const disposeFilterReaction = reaction(
       () => [product.q, JSON.stringify(product.filters)],
       () => {
+        console.log('filter reaction')
         queryString.update(query => {
           query.q = product.q ? product.q : undefined
           query.provinsi = product.filters.provinsi
