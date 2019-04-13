@@ -255,18 +255,13 @@ const Search = () => {
       attrs => attrs.forEach(attr => attribute.fetchAttributeValues(attr.key))
     )
 
-    const handleRouteChange = () => {
-      console.log('route change')
-      // init filters from query string
-      queryString.withoutUpdate(query => product.initFromQuery(query))
-    }
-    handleRouteChange()
+    // init filters from query string
+    queryString.withoutUpdate(query => product.initFromQuery(query))
 
     // serialize filters to query string
     const disposeFilterReaction = reaction(
       () => [product.q, JSON.stringify(product.filters)],
       () => {
-        console.log('filter reaction')
         queryString.update(query => {
           query.q = product.q ? product.q : undefined
           query.provinsi = product.filters.provinsi
@@ -277,10 +272,8 @@ const Search = () => {
         })
       })
     
-    window.addEventListener('popstate', handleRouteChange)
     
     return () => {
-      window.removeEventListener('popstate', handleRouteChange)
       disposeFilterReaction()
       disposeAttrReaction()
       disposeProvinsiReaction()
