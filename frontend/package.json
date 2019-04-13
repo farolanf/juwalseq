@@ -65,6 +65,7 @@
     "tailwind": "tailwind build tailwind.css -c tailwind.js -o src/assets/css/tailwind.css",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "watch": "npm-watch",
+    "fonts": "mkdir -p src/assets/fonts; best-served-local -o src/assets/fonts/fonts.css -d src/assets/fonts -w \"Patua One:400\" \"Cabin Condensed:400,700\"",
     "deploy": "rm public -rf && npm run build && npm run deploy:push && npm run deploy:invalidate",
     "deploy:push": "aws s3 sync public s3://juwal-web --acl public-read --delete",
     "deploy:invalidate": "aws cloudfront create-invalidation --distribution-id E2YSGE4LW1C9FA --paths '/*'"

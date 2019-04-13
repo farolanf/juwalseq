@@ -1,4 +1,5 @@
 import 'font-awesome/css/font-awesome.min.css'
+import '$assets/fonts/fonts.css'
 import '$assets/css/index.css'
 import '$assets/css/tailwind.css'
 

@@ -1,0 +1,24 @@
+@font-face {
+   font-family: 'Patua One';
+   src:         local('Patua One'), local('PatuaOne-Regular'), 
+                url('patua_one_v9_latin_400.woff2') format('woff2'),
+                url('patua_one_v9_latin_400.woff') format('woff');
+   font-style:  normal;
+   font-weight: 400;
+}
+@font-face {
+   font-family: 'Cabin Condensed';
+   src:         local('Cabin Condensed Bold'), local('CabinCondensed-Bold'), 
+                url('cabin_condensed_bold_v12_latin_700.woff2') format('woff2'),
+                url('cabin_condensed_bold_v12_latin_700.woff') format('woff');
+   font-style:  normal;
+   font-weight: 700;
+}
+@font-face {
+   font-family: 'Cabin Condensed';
+   src:         local('Cabin Condensed'), local('CabinCondensed-Regular'), 
+                url('cabin_condensed_v12_latin_400.woff2') format('woff2'),
+                url('cabin_condensed_v12_latin_400.woff') format('woff');
+   font-style:  normal;
+   font-weight: 400;
+}
