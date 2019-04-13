@@ -1,5 +1,92 @@
-======== build-javascript
+====================== build-javascript
 [
+  {
+    "test": {},
+    "use": [
+      {
+        "options": {
+          "hmr": false
+        },
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/mini-css-extract-plugin/dist/loader.js"
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/index.js",
+        "options": {
+          "sourceMap": false,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "importLoaders": 1,
+          "modules": true
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby-plugin-postcss/node_modules/postcss-loader/src/index.js",
+        "options": {
+          "sourceMap": false,
+          "plugins": [
+            null,
+            null,
+            null,
+            null,
+            {
+              "version": "7.0.14",
+              "plugins": [
+                null,
+                null,
+                null
+              ],
+              "postcssPlugin": "tailwind",
+              "postcssVersion": "7.0.14"
+            },
+            null,
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "test": {},
+    "use": [
+      {
+        "options": {},
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/mini-css-extract-plugin/dist/loader.js"
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/index.js",
+        "options": {
+          "sourceMap": false,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "importLoaders": 1
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby-plugin-postcss/node_modules/postcss-loader/src/index.js",
+        "options": {
+          "sourceMap": false,
+          "plugins": [
+            null,
+            null,
+            null,
+            null,
+            {
+              "version": "7.0.14",
+              "plugins": [
+                null,
+                null,
+                null
+              ],
+              "postcssPlugin": "tailwind",
+              "postcssVersion": "7.0.14"
+            },
+            null,
+            null
+          ]
+        }
+      }
+    ]
+  },
   {
     "use": [
       {
@@ -9,7 +96,7 @@
         "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/mini-css-extract-plugin/dist/loader.js"
       },
       {
-        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/css-loader/index.js",
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/index.js",
         "options": {
           "sourceMap": false,
           "camelCase": "dashesOnly",
@@ -37,7 +124,7 @@
         "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/mini-css-extract-plugin/dist/loader.js"
       },
       {
-        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/css-loader/index.js",
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/index.js",
         "options": {
           "sourceMap": false,
           "camelCase": "dashesOnly",
@@ -51,6 +138,90 @@
           "ident": "postcss-2",
           "sourceMap": false
         }
+      }
+    ],
+    "test": {}
+  }
+]
+
+
+====================== build-html
+[
+  {
+    "test": {},
+    "use": [
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/locals.js",
+        "options": {
+          "sourceMap": false,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "importLoaders": 1,
+          "modules": true
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby-plugin-postcss/node_modules/postcss-loader/src/index.js",
+        "options": {
+          "sourceMap": false,
+          "plugins": [
+            null,
+            null,
+            null,
+            null,
+            {
+              "version": "7.0.14",
+              "plugins": [
+                null,
+                null,
+                null
+              ],
+              "postcssPlugin": "tailwind",
+              "postcssVersion": "7.0.14"
+            },
+            null,
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "test": {},
+    "use": [
+      {
+        "options": {},
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/null-loader/index.js"
+      }
+    ]
+  },
+  {
+    "use": [
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/gatsby/node_modules/css-loader/locals.js",
+        "options": {
+          "sourceMap": false,
+          "camelCase": "dashesOnly",
+          "localIdentName": "[name]--[local]--[hash:base64:5]",
+          "modules": true,
+          "importLoaders": 1
+        }
+      },
+      {
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/postcss-loader/lib/index.js",
+        "options": {
+          "ident": "postcss-1",
+          "sourceMap": false
+        }
+      }
+    ],
+    "test": {}
+  },
+  {
+    "use": [
+      {
+        "options": {},
+        "loader": "/home/farolan/projects/juwalseq/frontend/node_modules/null-loader/index.js"
       }
     ],
     "test": {}
