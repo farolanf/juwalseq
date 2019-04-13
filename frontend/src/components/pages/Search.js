@@ -23,7 +23,7 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
 
   return (
     <div className='mb-1'>
-      <div className='text-sm text-grey-darker hover:text-grey-darker cursor-pointer' onClick={handleClickTitle}>
+      <div className='text-sm text-grey-darker hover:text-grey-darkest cursor-pointer' onClick={handleClickTitle}>
         <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {title} ({count})
       </div>
       <Collapse show={show}>
