@@ -26,8 +26,8 @@ module.exports = {
         postCssPlugins: [
           require('postcss-import'),
           require('postcss-mixins'),
-          require('postcss-for'),
           require('postcss-simple-vars'),
+          require('postcss-for'),
           require('tailwindcss')('./tailwind.js'),
           require('postcss-nested')({
             bubble: ['screen'],
