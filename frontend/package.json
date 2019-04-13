@@ -56,8 +56,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "rm .env.production && ln -s .env.production.prod .env.production && gatsby build",
-    "build:local": "rm .env.production && ln -s .env.production.local .env.production && gatsby build",
+    "build": "rm .env.production -f && ln -s .env.production.prod .env.production && gatsby build",
+    "build:local": "rm .env.production -f && ln -s .env.production.local .env.production && gatsby build",
     "build:dev": "gatsby build --verbose --no-uglify",
     "develop": "gatsby develop -H 0.0.0.0",
     "start": "npm run develop",
