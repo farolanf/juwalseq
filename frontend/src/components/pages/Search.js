@@ -247,12 +247,12 @@ const Search = () => {
 
     const disposeProvinsiReaction = reaction(
       () => [...(_.get(product.results, 'aggregations.all.search.provinsi.buckets') || [])],
-      provinsis => provinsis.forEach(provinsi => region.fetchKabupatens(provinsi.key))
+      provinsis => region.fetchKabupatens(provinsis.map(x => x.key))
     )
 
     const disposeAttrReaction = reaction(
       () => [...(_.get(product.results, 'aggregations.all.search.attributes.id.buckets') || [])],
-      attrs => attrs.forEach(attr => attribute.fetchAttributeValues(attr.key))
+      attrs => attribute.fetchAttributeValues(attrs.map(x => x.key))
     )
 
     // init filters from query string

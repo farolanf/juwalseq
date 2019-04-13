@@ -5,10 +5,10 @@ export const fetchAttributes = () => {
   return axios.get(API_BASE + '/Attributes')
 }
 
-export const fetchAttributeValues = (attrId) => {
+export const fetchAttributeValues = (...ids) => {
   return axios.get(API_BASE + '/AttributeValues', {
     params: {
-      AttributeId: attrId
+      AttributeId: ids
     }
   })
 }

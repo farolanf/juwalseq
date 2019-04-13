@@ -9,6 +9,8 @@ class NestedGroup {
   constructor (fetchParentsApi, fetchChildrenApi, parentName, childrenName) {
     this.parentName = parentName
     this.childrenName = childrenName
+    this.parentNameSingular = pluralize.singular(parentName)
+    this.childrenNameSingular = pluralize.singular(childrenName)
     this.fetchParentsApi = fetchParentsApi
     this.fetchChildrenApi = fetchChildrenApi
     this[`fetch${parentName}`] = this.fetchParents
@@ -23,7 +25,7 @@ class NestedGroup {
         return this.parents
       }
     })
-    this[`get${pluralize.singular(childrenName)}`] = (parentId, childId) => {
+    this[`get${this.childrenNameSingular}`] = (parentId, childId) => {
       return this.parents[parentId] && this.parents[parentId].children && this.parents[parentId].children.find(child => child.id == childId)
     }
   }
@@ -54,20 +56,28 @@ class NestedGroup {
     this.parentsLoading = false
   })
 
-  fetchChildren = flow(function* (parentId) {
-    if (!parentId) throw new Error('Missing parentId')
-    if (!this.parents[parentId]) {
-      this.parents[parentId] = {}
-    }
-    if (this.parents[parentId].children || this.parents[parentId].childrenLoading) return
-    this.parents[parentId].childrenLoading = true
-    this.parents[parentId].children = yield this.fetchChildrenApi(parentId).then(res => res.data)
-    Object.defineProperty(this.parents[parentId], _.camelCase(this.childrenName), {
-      get () {
-        return this.children
+  fetchChildren = flow(function* (parentIds) {
+    if (!parentIds) throw new Error('Missing parentId')
+    parentIds = _.castArray(parentIds)
+    parentIds.forEach(id => {
+      if (!this.parents[id]) {
+        this.parents[id] = {}
       }
     })
-    this.parents[parentId].childrenLoading = false
+    parentIds = parentIds.filter(id => !this.parents[id].children && !this.parents[id].childrenLoading)
+    parentIds.forEach(id => {
+      this.parents[id].childrenLoading = true 
+    })
+    const childrens = yield this.fetchChildrenApi(...parentIds).then(res => res.data)
+    parentIds.forEach(id => {
+      this.parents[id].children = childrens.filter(child => child[`${this.parentNameSingular}Id`] == id)
+      Object.defineProperty(this.parents[id], _.camelCase(this.childrenName), {
+        get () {
+          return this.children
+        }
+      })
+      this.parents[id].childrenLoading = false
+    })
   })
 }
 

@@ -5,10 +5,10 @@ export const fetchProvinsis = () => {
   return axios.get(API_BASE + '/Provinsis')
 }
 
-export const fetchKabupatens = (provinsiId) => {
+export const fetchKabupatens = (...ids) => {
   return axios.get(API_BASE + '/Kabupatens', {
     params: {
-      ProvinsiId: provinsiId
+      ProvinsiId: ids
     }
   })
 }
