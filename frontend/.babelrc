@@ -15,6 +15,16 @@
       "libraryName": "@material-ui/core",
       "libraryDirectory": "/",
       "camel2DashComponentName": false,
-    }, "material-ui"]
+    }, "material-ui"],
+    ["babel-plugin-import", {
+      "libraryName": "lodash",
+      "libraryDirectory": "/",
+      "camel2DashComponentName": false,
+    }, "lodash"],
+    ["babel-plugin-import", {
+      "libraryName": "lodash/fp",
+      "libraryDirectory": "/",
+      "camel2DashComponentName": false,
+    }, "lodash/fp"]
   ]
 }
