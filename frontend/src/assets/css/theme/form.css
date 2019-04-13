@@ -9,6 +9,9 @@
       }
     }
   }
+  .form-field {
+    @apply mb-0;
+  }
 }
 
 .field-control {
