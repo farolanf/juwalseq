@@ -41,13 +41,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Juwal`,
+        short_name: `Juwal`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
-        display: `minimal-ui`,
-        //icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        display: `standalone`,
+        icon: `src/assets/icons/icon.png`, // This path is relative to the root of the site.
+        cache_busting_mode: `name`,
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
