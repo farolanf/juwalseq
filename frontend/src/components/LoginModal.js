@@ -126,8 +126,8 @@ const LoginModal = ({ open, onClose }) => {
                 </>)}
                 {['login', 'register'].includes(mode) && (
                   <div className='list-y-2'>
-                    <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
-                      <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Masuk
+                    <button type='submit' className='btn btn-primary capitalize' disabled={isSubmitting}>
+                      <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> {mode}
                     </button>
                     <p className='text-center text-grey'>Atau masuk dengan</p>
                     <a href={API_HOST + '/auth/facebook'} className='btn btn-primary'>
