@@ -41,6 +41,7 @@ module.exports = {
       options: {
         printRejected: true,
         tailwind: true,
+        ignore: ['react-dragula/dist/dragula.min.css']
       }
     },
     `gatsby-transformer-sharp`,
