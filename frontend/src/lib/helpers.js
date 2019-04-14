@@ -15,3 +15,8 @@ export function getItem (name, defaultValue) {
   if (typeof localStorage === 'undefined') return defaultValue
   return localStorage.getItem(name) || defaultValue
 }
+
+export function removeItem (name) {
+  if (typeof localStorage === 'undefined') return
+  return localStorage.removeItem(name)
+}
