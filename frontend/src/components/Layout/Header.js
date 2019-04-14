@@ -60,26 +60,22 @@ const PageHeader = ({
           <div className='navbar-right'>
             <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
             {user.user && user.user.admin && <Link to='/admin' className='navbar-link'>Admin</Link>}
-            {!user.loggedIn && (
-              <a className='navbar-link' onClick={showLoginModal}>
-                <i className='fa fa-sign-in hidden md:inline' />
-                <span className='md:hidden'>Masuk</span>
-              </a>
-            )}
-            {user.loggedIn && (<>
-              <a className='navbar-link' id='account-menu'>
-                <i className='fa fa-user hidden md:inline' />
-                <span className='md:hidden'>Akun</span>
-              </a>
-              <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
-                <span>Hai {user.user && user.user.username}!</span>
-                <a>Profil</a>
-                <a onClick={doLogout}>Keluar</a>
-              </Popup>
-            </>)}
+            <a className='navbar-link' onClick={showLoginModal} data-hidden={user.loggedIn}>
+              <i className='fa fa-sign-in hidden md:inline' />
+              <span className='md:hidden'>Masuk</span>
+            </a>
+            <a className='navbar-link' id='account-menu' data-hidden={!user.loggedIn}>
+              <i className='fa fa-user hidden md:inline' />
+              <span className='md:hidden'>Akun</span>
+            </a>
           </div>
         </div>
       </div>
+      <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
+        <span>Hai {user.user && user.user.username}!</span>
+        <a>Profil</a>
+        <a onClick={doLogout}>Keluar</a>
+      </Popup>
       <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
   )
