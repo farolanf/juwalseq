@@ -29,11 +29,10 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onChange, mobile }) => {
+const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, images, onChange, mobile }) => {
   const prefix = 'image-uploads-'
   const [sortableRef, setSortableRef] = useState()
   const [cropperRef, setCropperRef] = useState()
-  const [images, setImages] = useState([])
   const [flipX, setFlipX] = useState(1)
   const [flipY, setFlipY] = useState(1)
   const [error, setError] = useState()
@@ -41,16 +40,12 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onCha
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
   useEffect(() => {
-    onChange(images)
-  }, [images])
-
-  useEffect(() => {
     if (images.length !== max) {
       const items = images.slice()
       for (let i = images.length; i < max; i++) {
         items.push({ key: i })
       }
-      setImages(items)
+      onChange(items)
     }
   })
 
@@ -110,7 +105,7 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onCha
     items.forEach(item => {
       ordered.push(getItem(item.getAttribute('data-key')))
     })
-    setImages(ordered)
+    onChange(ordered)
   }
 
   function getItem (key) {
@@ -129,7 +124,7 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onCha
   const handleDrop = item => async files => {
     if (files.length) {
       item.file = await loadFile(files[0])
-      setImages(images.slice())
+      onChange(images.slice())
     }
   }
 
@@ -153,7 +148,7 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onCha
     const input = sortableRef.querySelector(`[data-image-uploads-item][data-key="${item.key}"] input[type="file"]`)
     input.value = ''
     item.file = null
-    setImages(images
+    onChange(images
       .sort((a, b) => (a.file ? 0 : 1) - (b.file ? 0 : 1))
       .slice())
   }
@@ -176,7 +171,7 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, onCha
 
   const handleSave = item => () => {
     item.file.dataURL = cropperRef.getCroppedCanvas().toDataURL()
-    setImages(images.slice())
+    onChange(images.slice())
   }
 
   const renderEditModal = item => (
