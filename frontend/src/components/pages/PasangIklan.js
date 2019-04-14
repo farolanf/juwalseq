@@ -80,9 +80,9 @@ const PasangIklan = () => {
   return (
     <Formik
       initialValues={{
-        title: 'Jual HP milik pribadi ok banget',
-        description: 'Seperti judul, dijual HP mantap murah',
-        price: 350000,
+        title: process.env.NODE_ENV !== 'production' ? 'Jual HP milik pribadi ok banget' : '',
+        description: process.env.NODE_ENV !== 'production' ? 'Seperti judul, dijual HP mantap murah' : '',
+        price: process.env.NODE_ENV !== 'production' ? 350000 : '',
         nego: true,
         images: [],
         provinsiId: '',
