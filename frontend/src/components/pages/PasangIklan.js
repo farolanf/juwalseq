@@ -105,9 +105,9 @@ const PasangIklan = () => {
                 <InputField name='description' id='edit-description' component='textarea' maxLength={descMax} rows='4' label='Deskripsi' placeholder='Deskripsi iklan...' help='Jelaskan barang atau jasa dengan singkat beserta minusnya jika ada.' full inputRef={setDescRef} extra={(
                   <span className='text-xs text-grey'>{(values.description || '').length}/{descMax}</span>
                 )} />
-                <FormField full label='Harga' containerClass=''>
+                <FormField full label='Harga'>
                   <InputField name='price' id='edit-price' type='number' leftPrefix='Rp.' min='0' inputClass='pl-10' />
-                  <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' />
+                  <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' checked={values.nego} />
                 </FormField>
                 <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
                 <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi'>
