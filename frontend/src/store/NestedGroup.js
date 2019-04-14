@@ -65,6 +65,7 @@ class NestedGroup {
       }
     })
     parentIds = parentIds.filter(id => !this.parents[id].children && !this.parents[id].childrenLoading)
+    if (!parentIds.length) return
     parentIds.forEach(id => {
       this.parents[id].childrenLoading = true 
     })
