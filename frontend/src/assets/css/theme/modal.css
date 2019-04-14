@@ -14,7 +14,7 @@
     @apply px-4;
   }
   @screen md {
-    @apply relative w-full max-w-xs mx-auto px-8 rounded;
+    @apply relative w-xs mx-auto px-8 rounded;
     margin-top: 20vh;
   }
 }
