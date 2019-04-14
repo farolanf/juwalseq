@@ -21,13 +21,10 @@ module.exports = {
 
     await queryInterface.bulkInsert('Products', products)
 
+    const url = process.env.NODE_ENV === 'production' ? 'https://s3-ap-southeast-1.amazonaws.com/juwal/users/2/img/1555221918214-5b2ef715ca48a4aba2e061195c2aa641-apple.xs.jpg' : 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.xs.jpg'
+
     await queryInterface.bulkInsert('Files', [
-      { id: 1, url: 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.xs.jpg', UserId: 1},
-      { id: 2, url: 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.sm.jpg', UserId: 1},
-      { id: 3, url: 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.lg.jpg', UserId: 1},
-      { id: 4, url: 'http://localhost:3000/static/users/2/img/1554518074701-0f031536202d0359cf68ce1e2fd80777-tomato.xs.jpg', UserId: 1},
-      { id: 5, url: 'http://localhost:3000/static/users/2/img/1554518074701-0f031536202d0359cf68ce1e2fd80777-tomato.sm.jpg', UserId: 1},
-      { id: 6, url: 'http://localhost:3000/static/users/2/img/1554518074701-0f031536202d0359cf68ce1e2fd80777-tomato.lg.jpg', UserId: 1},
+      { id: 1, url, UserId: 1},
     ])
 
     const entityFiles = []
@@ -35,11 +32,6 @@ module.exports = {
     for (let i = 1; i <= numProducts; i++) {
       entityFiles.push(
         { entity: 'Product', meta: 'image', EntityId: i, FileId: 1 },
-        { entity: 'Product', meta: 'image', EntityId: i, FileId: 2 },
-        { entity: 'Product', meta: 'image', EntityId: i, FileId: 3 },
-        { entity: 'Product', meta: 'image', EntityId: i, FileId: 4 },
-        { entity: 'Product', meta: 'image', EntityId: i, FileId: 5 },
-        { entity: 'Product', meta: 'image', EntityId: i, FileId: 6 },
       )
     }
 
