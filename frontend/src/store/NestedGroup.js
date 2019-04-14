@@ -54,6 +54,7 @@ class NestedGroup {
     })
     this.parentsLoaded = true
     this.parentsLoading = false
+    this.parents = _.clone(this.parents)
   })
 
   fetchChildren = flow(function* (parentIds) {
@@ -79,6 +80,7 @@ class NestedGroup {
       })
       this.parents[id].childrenLoading = false
     })
+    this.parents = _.clone(this.parents)
   })
 }
 
