@@ -13,6 +13,8 @@ import { addProduct } from '$api/product'
 import { createBlob } from '$lib/dom'
 import useStore from '$useStore'
 
+import { setItem, getItem, removeItem } from "$lib/helpers";
+
 const titleMin = 15,
   titleMax = 70,
   descMin = 30,
@@ -55,7 +57,17 @@ const PasangIklan = () => {
   const [descRef, setDescRef] = useState()
   const [error, setError] = useState()
   const [message, setMessage] = useState()
-  const { region } = useStore()
+  const [initialValues] = useState(getItem('pasangIklanForm') && JSON.parse(getItem('pasangIklanForm')) || {
+    title: process.env.NODE_ENV !== 'production' ? 'Jual HP milik pribadi ok banget' : '',
+    description: process.env.NODE_ENV !== 'production' ? 'Seperti judul, dijual HP mantap murah' : '',
+    price: process.env.NODE_ENV !== 'production' ? 350000 : '',
+    nego: true,
+    images: [],
+    provinsiId: '',
+    kabupatenId: '',
+  })
+
+  const { region, user } = useStore()
 
   const onSubmit = (values, { setSubmitting, resetForm }) => {
     setMessage()
@@ -63,6 +75,7 @@ const PasangIklan = () => {
       .then(() => {
         resetForm()
         setMessage('Iklan sudah disimpan.')
+        setTimeout(() => removeItem('pasangIklanForm'))
       })
       .catch(err => setError(messages[err.response.data.error]))
       .finally(() => setSubmitting(false))
@@ -70,6 +83,7 @@ const PasangIklan = () => {
 
   const onValues = values => {
     values.provinsiId && region.fetchKabupatens(values.provinsiId)
+    setItem('pasangIklanForm', JSON.stringify(values))
   }
 
   useEffect(() => {
@@ -85,15 +99,7 @@ const PasangIklan = () => {
 
   return (
     <Formik
-      initialValues={{
-        title: process.env.NODE_ENV !== 'production' ? 'Jual HP milik pribadi ok banget' : '',
-        description: process.env.NODE_ENV !== 'production' ? 'Seperti judul, dijual HP mantap murah' : '',
-        price: process.env.NODE_ENV !== 'production' ? 350000 : '',
-        nego: true,
-        images: [],
-        provinsiId: '',
-        kabupatenId: '',
-      }}
+      initialValues={initialValues}
       validationSchema={schema}
       onSubmit={onSubmit}
     >
@@ -129,8 +135,9 @@ const PasangIklan = () => {
                     <option key={kabupaten.id} value={kabupaten.id}>{kabupaten.name}</option>
                   ))}
                 </InputField>
-                <FormField full containerClass='justify-center md:justify-start'>
-                  <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
+                <FormField full containerClass='flex-col justify-center md:items-start'>
+                  <div className='alert' hidden={user.loggedIn}>Silahkan masuk terlebih dahulu agar dapat menyimpan iklan ini.</div>
+                  <button type='submit' className='btn btn-primary' disabled={isSubmitting || !user.loggedIn}>
                     <i className='fa fa-spinner fa-spin' hidden={!isSubmitting} /> Simpan
                   </button>
                 </FormField>
