@@ -2587,6 +2587,42 @@
   height: 1px;
 }
 
+.h-xs {
+  height: 20rem;
+}
+
+.h-sm {
+  height: 30rem;
+}
+
+.h-md {
+  height: 40rem;
+}
+
+.h-lg {
+  height: 50rem;
+}
+
+.h-xl {
+  height: 60rem;
+}
+
+.h-2xl {
+  height: 70rem;
+}
+
+.h-3xl {
+  height: 80rem;
+}
+
+.h-4xl {
+  height: 90rem;
+}
+
+.h-5xl {
+  height: 100rem;
+}
+
 .h-full {
   height: 100%;
 }
@@ -5736,6 +5772,42 @@
 
 .w-5\/6 {
   width: 83.33333%;
+}
+
+.w-xs {
+  width: 20rem;
+}
+
+.w-sm {
+  width: 30rem;
+}
+
+.w-md {
+  width: 40rem;
+}
+
+.w-lg {
+  width: 50rem;
+}
+
+.w-xl {
+  width: 60rem;
+}
+
+.w-2xl {
+  width: 70rem;
+}
+
+.w-3xl {
+  width: 80rem;
+}
+
+.w-4xl {
+  width: 90rem;
+}
+
+.w-5xl {
+  width: 100rem;
 }
 
 .w-full {
@@ -12122,6 +12194,42 @@
     height: 1px;
   }
 
+  .sm\:h-xs {
+    height: 20rem;
+  }
+
+  .sm\:h-sm {
+    height: 30rem;
+  }
+
+  .sm\:h-md {
+    height: 40rem;
+  }
+
+  .sm\:h-lg {
+    height: 50rem;
+  }
+
+  .sm\:h-xl {
+    height: 60rem;
+  }
+
+  .sm\:h-2xl {
+    height: 70rem;
+  }
+
+  .sm\:h-3xl {
+    height: 80rem;
+  }
+
+  .sm\:h-4xl {
+    height: 90rem;
+  }
+
+  .sm\:h-5xl {
+    height: 100rem;
+  }
+
   .sm\:h-full {
     height: 100%;
   }
@@ -15255,6 +15363,42 @@
 
   .sm\:w-5\/6 {
     width: 83.33333%;
+  }
+
+  .sm\:w-xs {
+    width: 20rem;
+  }
+
+  .sm\:w-sm {
+    width: 30rem;
+  }
+
+  .sm\:w-md {
+    width: 40rem;
+  }
+
+  .sm\:w-lg {
+    width: 50rem;
+  }
+
+  .sm\:w-xl {
+    width: 60rem;
+  }
+
+  .sm\:w-2xl {
+    width: 70rem;
+  }
+
+  .sm\:w-3xl {
+    width: 80rem;
+  }
+
+  .sm\:w-4xl {
+    width: 90rem;
+  }
+
+  .sm\:w-5xl {
+    width: 100rem;
   }
 
   .sm\:w-full {
@@ -21642,6 +21786,42 @@
     height: 1px;
   }
 
+  .md\:h-xs {
+    height: 20rem;
+  }
+
+  .md\:h-sm {
+    height: 30rem;
+  }
+
+  .md\:h-md {
+    height: 40rem;
+  }
+
+  .md\:h-lg {
+    height: 50rem;
+  }
+
+  .md\:h-xl {
+    height: 60rem;
+  }
+
+  .md\:h-2xl {
+    height: 70rem;
+  }
+
+  .md\:h-3xl {
+    height: 80rem;
+  }
+
+  .md\:h-4xl {
+    height: 90rem;
+  }
+
+  .md\:h-5xl {
+    height: 100rem;
+  }
+
   .md\:h-full {
     height: 100%;
   }
@@ -24775,6 +24955,42 @@
 
   .md\:w-5\/6 {
     width: 83.33333%;
+  }
+
+  .md\:w-xs {
+    width: 20rem;
+  }
+
+  .md\:w-sm {
+    width: 30rem;
+  }
+
+  .md\:w-md {
+    width: 40rem;
+  }
+
+  .md\:w-lg {
+    width: 50rem;
+  }
+
+  .md\:w-xl {
+    width: 60rem;
+  }
+
+  .md\:w-2xl {
+    width: 70rem;
+  }
+
+  .md\:w-3xl {
+    width: 80rem;
+  }
+
+  .md\:w-4xl {
+    width: 90rem;
+  }
+
+  .md\:w-5xl {
+    width: 100rem;
   }
 
   .md\:w-full {
@@ -31162,6 +31378,42 @@
     height: 1px;
   }
 
+  .lg\:h-xs {
+    height: 20rem;
+  }
+
+  .lg\:h-sm {
+    height: 30rem;
+  }
+
+  .lg\:h-md {
+    height: 40rem;
+  }
+
+  .lg\:h-lg {
+    height: 50rem;
+  }
+
+  .lg\:h-xl {
+    height: 60rem;
+  }
+
+  .lg\:h-2xl {
+    height: 70rem;
+  }
+
+  .lg\:h-3xl {
+    height: 80rem;
+  }
+
+  .lg\:h-4xl {
+    height: 90rem;
+  }
+
+  .lg\:h-5xl {
+    height: 100rem;
+  }
+
   .lg\:h-full {
     height: 100%;
   }
@@ -34295,6 +34547,42 @@
 
   .lg\:w-5\/6 {
     width: 83.33333%;
+  }
+
+  .lg\:w-xs {
+    width: 20rem;
+  }
+
+  .lg\:w-sm {
+    width: 30rem;
+  }
+
+  .lg\:w-md {
+    width: 40rem;
+  }
+
+  .lg\:w-lg {
+    width: 50rem;
+  }
+
+  .lg\:w-xl {
+    width: 60rem;
+  }
+
+  .lg\:w-2xl {
+    width: 70rem;
+  }
+
+  .lg\:w-3xl {
+    width: 80rem;
+  }
+
+  .lg\:w-4xl {
+    width: 90rem;
+  }
+
+  .lg\:w-5xl {
+    width: 100rem;
   }
 
   .lg\:w-full {
@@ -40682,6 +40970,42 @@
     height: 1px;
   }
 
+  .xl\:h-xs {
+    height: 20rem;
+  }
+
+  .xl\:h-sm {
+    height: 30rem;
+  }
+
+  .xl\:h-md {
+    height: 40rem;
+  }
+
+  .xl\:h-lg {
+    height: 50rem;
+  }
+
+  .xl\:h-xl {
+    height: 60rem;
+  }
+
+  .xl\:h-2xl {
+    height: 70rem;
+  }
+
+  .xl\:h-3xl {
+    height: 80rem;
+  }
+
+  .xl\:h-4xl {
+    height: 90rem;
+  }
+
+  .xl\:h-5xl {
+    height: 100rem;
+  }
+
   .xl\:h-full {
     height: 100%;
   }
@@ -43815,6 +44139,42 @@
 
   .xl\:w-5\/6 {
     width: 83.33333%;
+  }
+
+  .xl\:w-xs {
+    width: 20rem;
+  }
+
+  .xl\:w-sm {
+    width: 30rem;
+  }
+
+  .xl\:w-md {
+    width: 40rem;
+  }
+
+  .xl\:w-lg {
+    width: 50rem;
+  }
+
+  .xl\:w-xl {
+    width: 60rem;
+  }
+
+  .xl\:w-2xl {
+    width: 70rem;
+  }
+
+  .xl\:w-3xl {
+    width: 80rem;
+  }
+
+  .xl\:w-4xl {
+    width: 90rem;
+  }
+
+  .xl\:w-5xl {
+    width: 100rem;
   }
 
   .xl\:w-full {
