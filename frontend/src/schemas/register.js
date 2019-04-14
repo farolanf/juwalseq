@@ -11,6 +11,6 @@ export default yup.object().shape({
   newPassword: yup.string().min(5).max(100).required(),
   passwordConfirm: yup.string().required()
     .test('passwordConfirm', messages.test.passwordConfirm, function (value) {
-      return value === this.parent.password
+      return value === this.parent.newPassword
     }),
 })
