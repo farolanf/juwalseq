@@ -1,4 +1,4 @@
-import { observable, flow, computed } from 'mobx'
+import { observable, extendObservable, flow, computed } from 'mobx'
 import pluralize from 'pluralize'
 
 class NestedGroup {
@@ -54,7 +54,6 @@ class NestedGroup {
     })
     this.parentsLoaded = true
     this.parentsLoading = false
-    this.parents = _.clone(this.parents)
   })
 
   fetchChildren = flow(function* (parentIds) {
@@ -62,7 +61,12 @@ class NestedGroup {
     parentIds = _.castArray(parentIds)
     parentIds.forEach(id => {
       if (!this.parents[id]) {
-        this.parents[id] = {}
+        extendObservable(this.parents, { 
+          [id]: {
+            children: null,
+            childrenLoading: false,
+          },
+        })
       }
     })
     parentIds = parentIds.filter(id => !this.parents[id].children && !this.parents[id].childrenLoading)
@@ -73,14 +77,11 @@ class NestedGroup {
     const childrens = yield this.fetchChildrenApi(...parentIds).then(res => res.data)
     parentIds.forEach(id => {
       this.parents[id].children = childrens.filter(child => child[`${this.parentNameSingular}Id`] == id)
-      Object.defineProperty(this.parents[id], _.camelCase(this.childrenName), {
-        get () {
-          return this.children
-        }
-      })
       this.parents[id].childrenLoading = false
+      extendObservable(this.parents[id], {
+        [_.camelCase(this.childrenName)]: this.parents[id].children
+      })
     })
-    this.parents = _.clone(this.parents)
   })
 }
 
