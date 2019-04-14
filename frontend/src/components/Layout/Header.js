@@ -66,22 +66,20 @@ const PageHeader = ({
                 <span className='md:hidden'>Masuk</span>
               </a>
             )}
-            {user.loggedIn && (
+            {user.loggedIn && (<>
               <a className='navbar-link' id='account-menu'>
                 <i className='fa fa-user hidden md:inline' />
                 <span className='md:hidden'>Akun</span>
               </a>
-            )}
+              <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
+                <span>Hai {user.user && user.user.username}!</span>
+                <a>Profil</a>
+                <a onClick={doLogout}>Keluar</a>
+              </Popup>
+            </>)}
           </div>
         </div>
       </div>
-      {user.loggedIn && (
-        <Popup target='#account-menu' hover click hideDelay={100} className='menu'>
-            <span>Hai {user.user && user.user.username}!</span>
-            <a>Profil</a>
-            <a onClick={doLogout}>Keluar</a>
-        </Popup>
-      )}
       <LoginModal open={loginModalOpen} onClose={hideLoginModal} />
     </nav>
   )
