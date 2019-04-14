@@ -17,27 +17,27 @@ module.exports = function (app, config) {
           return promisify(fn)(file.path, dst, { copyOriginal: false })
         })
       )
+      const images = await Promise.all(
+        info.map(item => {
+          const url = getURL(app.modules.uploadfs, item, 'xs')
+          return { url, UserId: req.user.id }
+        })
+      )
       const kabupaten = await Kabupaten.findByPk(req.body.kabupatenId)
-      const product = await Product.create({
+      await Product.create({
         UserId: req.user.id,
         name: req.body.title,
         description: req.body.description,
         price: req.body.price,
         ProvinsiId: kabupaten.ProvinsiId,
         KabupatenId: kabupaten.id,
+        Images: images,
+      }, {
+        include: {
+          model: File,
+          as: 'Images',
+        }
       })
-      const sizes = ['xs', 'sm', 'lg']
-      await Promise.all(
-        info.map(item => {
-          return Promise.all(
-            sizes.map(async size => {
-              const url = getURL(app.modules.uploadfs, item, size)
-              const file = await File.create({ url, UserId: req.user.id })
-              product.addImage(file)
-            })
-          )
-        })
-      )
       res.sendStatus(200)
     })
   })
