@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 const Modal = ({ target, noCloseButton, closeOnClick, className, dialogClass, children }) => {
   const [ref, setRef] = useState()
-  const [visible, setVisible] = useState()
+
+  // set true initially to render CSS selectors so it can be whitelisted by purgecss
+  const [visible, setVisible] = useState(true)
 
   const handleModalClick = () => setVisible(false)
 
@@ -12,6 +14,10 @@ const Modal = ({ target, noCloseButton, closeOnClick, className, dialogClass, ch
   }
 
   const handleClose = () => setVisible(false)
+
+  useEffect(() => {
+    setVisible(false)
+  }, [])
 
   useEffect(() => {
     if (ref) {
