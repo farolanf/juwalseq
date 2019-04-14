@@ -3,7 +3,7 @@ const passport = require('passport')
 const yup = require('yup')
 const { Op } = require('sequelize')
 
-const { User, UserGroup, Token } = require('../../sequelize')
+const { User, UserGroup, Token, sequelize } = require('../../sequelize')
 const { publicUser, internalUser, userInclude } = require('../../lib/user')
 
 const events = require('../../lib/events')
@@ -18,7 +18,7 @@ const { sendMail } = require('@lib/mail')
 
 const registerSchema = yup.object().shape({
   email: yup.string().email().max(100).required(),
-  password: yup.string().min(8).max(100).required(),
+  password: yup.string().min(5).max(100).required(),
 })
 
 const forgotPasswordSchema = yup.object().shape({
@@ -47,6 +47,13 @@ function verifyToken (token, secret) {
 }
 
 module.exports = function (app, config) {
+  events.on('userCreated', async user => {
+    await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
+      UserId: user.id,
+      group
+    })))
+  })
+
   // decode token and set req.user
   app.use(async (req, res, next) => {
     const token = tokenFromRequest(req)
@@ -130,23 +137,21 @@ module.exports = function (app, config) {
   })
 
   app.post(config.app.apiBase + '/auth/register', async (req, res) => {
-    if (!await registerSchema.isValid(req.body)) {
-      return res.sendStatus(400)
-    }
-    const { email, password } = req.body
-    const count = await User.count()
-    const username = 'user' + (count + 1)
-    const user = await User.create({ username, email, password })
-    await events.emit('userCreated', user)
-    await UserGroup.bulkCreate(config.auth.defaultGroups.map(group => ({
-      UserId: user.id,
-      group
-    })))
-    const _user = await User.findOne({
-      where: { id: user.id },
-      include: userInclude()
+    sequelize.transaction(async () => {
+      if (!await registerSchema.isValid(req.body)) {
+        return res.sendStatus(400)
+      }
+      const { email, password } = req.body
+      const count = await User.count()
+      const username = 'user' + (count + 1)
+      const user = await User.create({ username, email, password })
+      await events.emit('userCreated', user)
+      const _user = await User.findOne({
+        where: { id: user.id },
+        include: userInclude()
+      })
+      sendUser(_user, res)
     })
-    sendUser(_user, res)
   })
 
   app.get(config.app.apiBase + '/auth/verify', async (req, res) => {

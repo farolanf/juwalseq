@@ -6,49 +6,46 @@ const GoogleStrategy = require('passport-google-oauth20')
 
 const {
   User,
-  UserGroup,
-  Sequelize: { Op }
+  Sequelize: { Op },
+  sequelize,
 } = require('../../sequelize')
 
 const { userInclude } = require('../../lib/user')
 
-const config = require('../../config')
 const events = require('../../lib/events')
 
 async function handleProfile (accessToken, refreshToken, profile, done) {
   try {
-    const { provider } = profile
-    const count = await User.count()
-    const username = profile.emails[0].value.split('@')[0] + (count + 1)
-    const email = profile.emails[0].value
-    User.findOrCreate({
-      where: {
-        [Op.or]: [
-          { [provider + 'Id']: profile.id },
-          { email }
-        ]
-      },
-      defaults: {
-        email,
-        username,
-        password: uuid(),
-        [provider + 'Id']: profile.id,
-      },
-      include: userInclude()
-    })
-    .then(async ([user, created]) => {
-      if (created) {
-        await UserGroup.bulkCreate((config.auth.defaultGroups || []).map(group => ({
-          UserId: user.id,
-          group
-        })))
-        await events.emit('userCreated', user)
-        await user.reload()
-      } else {
-        user[provider + 'Id'] = profile.id
-        user = await user.save()
-      }
-      user ? done(null, user) : done(null, false)
+    sequelize.transaction(async () => {
+      const { provider } = profile
+      const count = await User.count()
+      const username = profile.emails[0].value.split('@')[0] + (count + 1)
+      const email = profile.emails[0].value
+      User.findOrCreate({
+        where: {
+          [Op.or]: [
+            { [provider + 'Id']: profile.id },
+            { email }
+          ]
+        },
+        defaults: {
+          email,
+          username,
+          password: uuid(),
+          [provider + 'Id']: profile.id,
+        },
+        include: userInclude()
+      })
+      .then(async ([user, created]) => {
+        if (created) {
+          await events.emit('userCreated', user)
+          await user.reload()
+        } else {
+          user[provider + 'Id'] = profile.id
+          user = await user.save()
+        }
+        user ? done(null, user) : done(null, false)
+      })
     })
   }
   catch (err) {
