@@ -23,7 +23,7 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
 
   return (
     <div className='mb-1'>
-      <div className='text-sm text-grey-darker hover:text-grey-darkest cursor-pointer' onClick={handleClickTitle}>
+      <div className='text-xs text-grey-darker hover:text-grey-darkest cursor-pointer' onClick={handleClickTitle}>
         <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {title} ({count})
       </div>
       <Collapse show={show}>
@@ -43,14 +43,14 @@ const RegionFilter = observer(({ bucket, onChange }) => {
 
   return (
     <FilterGroup title={provinsiName} count={bucket.doc_count} expand={expand}>
-      <Checkbox label={`Seluruh ${provinsiName} (${bucket.doc_count})`} id={`region-${bucket.key}`} onChange={() => onChange(bucket.key, undefined, !provinsiSelected)} value={provinsiSelected} />
+      <Checkbox label={`Seluruh ${provinsiName} (${bucket.doc_count})`} id={`region-${bucket.key}`} onChange={() => onChange(bucket.key, undefined, !provinsiSelected)} value={provinsiSelected} className='text-xs' />
       {kabupatenBuckets && kabupatenBuckets.map(kabBucket => {
         const id = `region-${bucket.key}-${kabBucket.key}`
         const kabupaten = region.getKabupaten(bucket.key, kabBucket.key)
         const kabSelected = !!product.filters.kabupaten.find(x => x == kabBucket.key)
         !expand && kabSelected && setExpand(true)
         return (
-          <Checkbox key={id} label={`${kabupaten && kabupaten.name} (${kabBucket.doc_count})`} id={id} onChange={e => onChange(bucket.key, kabBucket.key, e.target.checked)} value={kabSelected} />
+          <Checkbox key={id} label={`${kabupaten && kabupaten.name} (${kabBucket.doc_count})`} id={id} onChange={e => onChange(bucket.key, kabBucket.key, e.target.checked)} value={kabSelected} className='text-xs' />
         )
       })}
     </FilterGroup>
@@ -70,7 +70,7 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
             const selected = !!product.filters.categories.find(val => val == category.key)
             !expand && selected && setExpand(true)
             return (
-              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={selected} />
+              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={selected} className='text-xs' />
             )
           }}
         </Observer>
@@ -90,7 +90,7 @@ const AttributeFilter = ({ bucket, onChange }) => {
             const attrValue = attr && attr.children && _.find(attr.children, { id: value.key })
             const exists = product.filters.attributes.find(attr => attr.id == bucket.key && attr.valueId == value.key)
             return (
-              <Checkbox label={`${attrValue && attrValue.value} (${value.doc_count})`} id={`attr-${bucket.key}-${value.key}`} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!exists} />
+              <Checkbox label={`${attrValue && attrValue.value} (${value.doc_count})`} id={`attr-${bucket.key}-${value.key}`} onChange={e => onChange(bucket.key, value.key, e.target.checked)} value={!!exists} className='text-xs' />
             )
           }}
         </Observer>
@@ -126,15 +126,15 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {hits && <div className='text-sm text-grey-darker'>Daerah</div>}
+      {hits && <div className='text-xs text-grey-darker'>Daerah</div>}
       {hits && results.aggregations.all.search.provinsi.buckets.map(bucket => (
         <RegionFilter key={bucket.key} bucket={bucket} onChange={handleChangeRegion} />
       ))}
-      {hits && <div className='text-sm text-grey-darker mt-1'>Kategori</div>}
+      {hits && <div className='text-xs text-grey-darker mt-1'>Kategori</div>}
       {hits && results.aggregations.all.search.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
-      {hits && <div className='text-sm text-grey-darker mt-1'>Spek</div>}
+      {hits && <div className='text-xs text-grey-darker mt-1'>Spek</div>}
       {hits && results.aggregations.all.search.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}

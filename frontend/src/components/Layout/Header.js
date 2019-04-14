@@ -53,10 +53,10 @@ const PageHeader = ({
           </button>
         </div>
         <div className='navbar-collapse'>
-          <a className='navbar-link'>Kategori</a>
-          <a className='navbar-link'>Diskon</a>
-          <Link to='/search' className='navbar-link'>Cari</Link>
-          <Link to='/demo/form' className='navbar-link'>Form Demo</Link>
+          <a className='navbar-link' hidden>Kategori</a>
+          <a className='navbar-link' hidden>Diskon</a>
+          <Link to='/search' className='navbar-link' hidden>Cari</Link>
+          <Link to='/demo/form' className='navbar-link' hidden>Form Demo</Link>
           <div className='navbar-right'>
             <Link to='/pasang-iklan' className='navbar-link'>Pasang iklan</Link>
             {user.user && user.user.admin && <Link to='/admin' className='navbar-link'>Admin</Link>}

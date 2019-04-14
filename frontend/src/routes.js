@@ -36,7 +36,7 @@ const Page = ({
 
 const AppRoutes = () => (
   <Router>
-    <Page path='/' component={FrontPage} title='Depan' />
+    <Page path='/' component={Search} title='Depan' />
     <Page path='/pasang-iklan' component={PasangIklan} title='Pasang iklan' role='member' />
     <Page path='/reset-password' component={ResetPassword} title='Reset password' />
     <Page path='/search' component={Search} title='Cari' />
