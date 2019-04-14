@@ -54,10 +54,16 @@ const createFormData = values => {
 const PasangIklan = () => {
   const [descRef, setDescRef] = useState()
   const [error, setError] = useState()
+  const [message, setMessage] = useState()
   const { region } = useStore()
 
-  const onSubmit = (values, { setSubmitting }) => {
+  const onSubmit = (values, { setSubmitting, resetForm }) => {
+    setMessage()
     addProduct(createFormData(values))
+      .then(() => {
+        resetForm()
+        setMessage('Iklan sudah disimpan.')
+      })
       .catch(err => setError(messages[err.response.data.error]))
       .finally(() => setSubmitting(false))
   }
@@ -97,6 +103,7 @@ const PasangIklan = () => {
             <div className='md:max-w-sm'>
               <h2>Pasang iklan</h2>
               {error && <div className='alert alert-danger'>{error}</div>}
+              {message && <div className='alert alert-success'>{message}</div>}
               <Form className='form-horizontal field-label-right'>
                 <InputField name='title' id='edit-title' label='Judul' placeholder='Judul iklan...' 
                 help='Pilih judul yang singkat dan jelas.' full maxLength={titleMax} extra={(
@@ -109,7 +116,7 @@ const PasangIklan = () => {
                   <InputField name='price' id='edit-price' type='number' leftPrefix='Rp.' min='0' inputClass='pl-10' />
                   <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' checked={values.nego} />
                 </FormField>
-                <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' onChange={images => setFieldValue('images', images)} />
+                <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' images={values.images} onChange={images => setFieldValue('images', images)} />
                 <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi'>
                   <option></option>
                   {_.map(region.sortedProvinsis, provinsi => (
