@@ -20,7 +20,7 @@ module.exports = function (app, config) {
       const images = await Promise.all(
         info.map(item => {
           const url = getURL(app.modules.uploadfs, item, 'xs')
-          return { url, UserId: req.user.id }
+          return { url: encodeURI(url), UserId: req.user.id }
         })
       )
       const kabupaten = await Kabupaten.findByPk(req.body.kabupatenId)
