@@ -106,7 +106,7 @@ const PasangIklan = () => {
       validationSchema={schema}
       onSubmit={onSubmit}
     >
-      {({ values, setFieldValue, isSubmitting }) => (
+      {({ values, setFieldValue, handleChange, isSubmitting }) => (
         <Observer>
           {() => (
             <div className='md:max-w-sm'>
@@ -126,7 +126,10 @@ const PasangIklan = () => {
                   <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' checked={values.nego} />
                 </FormField>
                 <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' images={values.images} onChange={images => setFieldValue('images', images)} />
-                <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi'>
+                <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi' onChange={e => {
+                  handleChange(e)
+                  setFieldValue('kabupatenId', '')
+                }}>
                   <option></option>
                   {_.map(region.sortedProvinsis, provinsi => (
                     <option key={provinsi.id} value={provinsi.id}>{provinsi.name}</option>
