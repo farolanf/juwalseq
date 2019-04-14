@@ -21,7 +21,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Products', products)
 
-    const url = process.env.NODE_ENV === 'production' ? 'https://s3-ap-southeast-1.amazonaws.com/juwal/users/2/img/1555221918214-5b2ef715ca48a4aba2e061195c2aa641-apple.xs.jpg' : 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.xs.jpg'
+    const url = process.env.NODE_ENV === 'production' ? 'https://d1vy0w68bm0zhd.cloudfront.net/users/2/img/1555221918214-5b2ef715ca48a4aba2e061195c2aa641-apple.xs.jpg' : 'http://localhost:3000/static/users/2/img/1554518074701-0dd91fb599687e50cc5eac38177b65ac-apple.xs.jpg'
 
     await queryInterface.bulkInsert('Files', [
       { id: 1, url, UserId: 1},
