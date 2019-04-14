@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: { type: DataTypes.STRING(100), allowNull: false },
     description: { type: DataTypes.STRING(4000), allowNull: false },
     price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
+    nego: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
   }, {
     timestamps: false,
   });

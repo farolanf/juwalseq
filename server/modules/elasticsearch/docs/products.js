@@ -10,7 +10,10 @@ const ProductDoc = {
     properties: {
       name: { type: 'text' },
       description: { type: 'text' },
-      price: { type: 'float' },
+      price: { type: 'long' },
+      nego: { type: 'boolean' },
+      provinsi: { type: 'integer' },
+      kabupaten: { type: 'integer' },
       departments: {
         type: 'nested',
         properties: {
@@ -118,6 +121,7 @@ function getDoc (record) {
     'name',
     'description',
     'price',
+    'nego',
   ])
   doc.provinsi = record.Provinsi.id
   doc.kabupaten = record.Kabupaten.id
@@ -185,11 +189,26 @@ function searchQuery (q) {
 
 function filterQuery (params) {
   return [].concat(
+    ...priceQuery(params),
     ...regionQuery(params),
     (params.departments && [departmentsQuery(params.departments)] || []),
     (params.categories && [categoriesQuery(params.categories)] || []),
     (params.attributes && [attributesQuery(params.attributes)] || [])
   )
+}
+
+function priceQuery (params) {
+  const query = []
+  if (params.nego) {
+    query.push({ term: { nego: params.nego } })
+  }
+  if (params.priceMin || params.priceMax) {
+    const q = { range: { price: {} } }
+    params.priceMin && (q.range.price.gte = params.priceMin)
+    params.priceMax && (q.range.price.lte = params.priceMax)
+    query.push(q)
+  }
+  return query
 }
 
 function regionQuery (params) {
