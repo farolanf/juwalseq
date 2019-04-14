@@ -28,6 +28,7 @@ common.uploadfs = {
       height: 1280,
     }
   ],
+  cachingTime: 31536000,
   parallel: process.env.UPLOADFS_PARALLEL || 4,
 }
 
