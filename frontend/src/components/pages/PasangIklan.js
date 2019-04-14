@@ -88,6 +88,9 @@ const PasangIklan = () => {
 
   useEffect(() => {
     region.fetchProvinsis()
+    if (initialValues.provinsiId && initialValues.kabupatenId) {
+      region.fetchKabupatens(initialValues.provinsiId)
+    }
   }, [])
 
   useEffect(() => {
@@ -131,7 +134,7 @@ const PasangIklan = () => {
                 </InputField>
                 <InputField name='kabupatenId' id='edit-kabupaten' component='select' label='Kabupaten'>
                   <option></option>
-                  {values.provinsiId && (region.provinsis[values.provinsiId].kabupatens || []).map(kabupaten => (
+                  {values.provinsiId && (region.provinsis[values.provinsiId] && region.provinsis[values.provinsiId].kabupatens || []).map(kabupaten => (
                     <option key={kabupaten.id} value={kabupaten.id}>{kabupaten.name}</option>
                   ))}
                 </InputField>
