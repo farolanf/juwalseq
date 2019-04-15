@@ -57,12 +57,18 @@ const PasangIklan = () => {
   const [descRef, setDescRef] = useState()
   const [error, setError] = useState()
   const [message, setMessage] = useState()
+
+  const images = []
+  for (let i = 0; i < imageMax; i++) {
+    images.push({ key: i })
+  }
+
   const [initialValues] = useState(getItem('pasangIklanForm') && JSON.parse(getItem('pasangIklanForm')) || {
     title: process.env.NODE_ENV !== 'production' ? 'Jual HP milik pribadi ok banget' : '',
     description: process.env.NODE_ENV !== 'production' ? 'Seperti judul, dijual HP mantap murah' : '',
     price: process.env.NODE_ENV !== 'production' ? 350000 : '',
     nego: true,
-    images: [],
+    images,
     provinsiId: '',
     kabupatenId: '',
   })

@@ -38,9 +38,17 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     config.module = {
       rules: [
         {
-          test: /react-dragula|react-file-drop/,
+          test: /react-dragula/,
           use: loaders.null(),
         },
+        {
+          test: /react-file-drop/,
+          use: 'imports-loader?jsdomGlobal=jsdom-global,window=>global.window',
+        },
+        {
+          test: /\.node$/,
+          use: 'node-loader'
+        }
       ]
     }
   }

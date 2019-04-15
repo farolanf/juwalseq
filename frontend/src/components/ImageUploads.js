@@ -29,7 +29,7 @@ function loadDataUrl (file) {
   })
 }
 
-const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, images, onChange, mobile }) => {
+const ImageUploads = ({ maxSize = 3000 * 1024, label, text, linkText, images, onChange, mobile }) => {
   const prefix = 'image-uploads-'
   const [sortableRef, setSortableRef] = useState()
   const [cropperRef, setCropperRef] = useState()
@@ -39,15 +39,7 @@ const ImageUploads = ({ max, maxSize = 3000 * 1024, label, text, linkText, image
 
   const imageCount = images.reduce((acc, item) => acc + (item.file ? 1 : 0), 0)
 
-  useEffect(() => {
-    if (images.length !== max) {
-      const items = images.slice()
-      for (let i = images.length; i < max; i++) {
-        items.push({ key: i })
-      }
-      onChange(items)
-    }
-  })
+  const max = images.length
 
   useEffect(() => {
     cropperRef && cropperRef.scale(flipX, flipY)

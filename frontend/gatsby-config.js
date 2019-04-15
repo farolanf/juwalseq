@@ -39,9 +39,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-purgecss`,
       options: {
-        printRejected: true,
+        printRejected: false,
         tailwind: true,
-        ignore: ['react-dragula/dist/dragula.min.css']
+        ignore: [
+          'react-dragula/dist/dragula.min.css',
+          'cropperjs/dist/cropper.min.css',
+        ]
       }
     },
     `gatsby-transformer-sharp`,
