@@ -123,7 +123,7 @@ const PasangIklan = () => {
                 )} />
                 <FormField full label='Harga'>
                   <InputField name='price' id='edit-price' type='number' leftPrefix='Rp.' min='0' inputClass='pl-10' />
-                  <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' checked={values.nego} />
+                  <FormikCheckbox name='nego' id='edit-nego' label='Bisa nego' className='ml-2' />
                 </FormField>
                 <ImageUploads max={imageMax} label='Foto' text='' linkText='Pilih' images={values.images} onChange={images => setFieldValue('images', images)} />
                 <InputField name='provinsiId' id='edit-provinsi' component='select' label='Provinsi' onChange={e => {
