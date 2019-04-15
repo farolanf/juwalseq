@@ -266,6 +266,8 @@ function attributesQuery (attributes) {
 
 function aggs () {
   return {
+    min_price: { min: { field: 'price' } },
+    max_price: { max: { field: 'price' } },
     provinsi: {
       terms: { field: 'provinsi' },
     },

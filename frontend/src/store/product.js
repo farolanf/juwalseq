@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { observable, action, flow, computed, reaction } from 'mobx'
+import { observable, action, flow, computed, reaction, toJS } from 'mobx'
 import { searchProducts, fetchDepartments, fetchCategories } from '$api/product'
 
 class ProductStore {
@@ -10,6 +10,9 @@ class ProductStore {
   @observable page = 1
   @observable q = ''
   @observable filters = {
+    priceMin: undefined,
+    priceMax: undefined,
+    nego: undefined,
     provinsi: [],
     kabupaten: [],
     departments: [],
@@ -53,11 +56,7 @@ class ProductStore {
       count: this.pageSize,
       offset: (this.page - 1) * this.pageSize,
       q: this.q,
-      provinsi: [...this.filters.provinsi],
-      kabupaten: [...this.filters.kabupaten],
-      departments: [...this.filters.departments],
-      categories: [...this.filters.categories],
-      attributes: [...this.filters.attributes],
+      ...toJS(this.filters),
     })
   }
 
@@ -75,6 +74,9 @@ class ProductStore {
   @action
   initFromQuery (query) {
     this.q = query.q || ''
+    this.filters.nego = typeof query.nego !== 'undefined' ? query.nego === 'true' : undefined
+    this.filters.priceMin = +query.priceMin || undefined
+    this.filters.priceMax = +query.priceMax || undefined
     this.filters.provinsi = query.provinsi || []
     this.filters.kabupaten = query.kabupaten || []
     this.filters.departments = query.departments || []
@@ -85,6 +87,9 @@ class ProductStore {
   @action
   resetFilters () {
     this.filters = {
+      priceMin: undefined,
+      priceMax: undefined,
+      nego: undefined,
       provinsi: [],
       kabupaten: [],
       departments: [],
@@ -103,6 +108,21 @@ class ProductStore {
   @action
   setQuery (q) {
     this.q = q
+  }
+
+  @action
+  setNego (enable) {
+    this.filters.nego = enable
+  }
+
+  @action
+  setPriceMin (val) {
+    this.filters.priceMin = val
+  }
+
+  @action
+  setPriceMax (val) {
+    this.filters.priceMax = val
   }
 
   addProvinsi (id) { this.addFilter(this.filters.provinsi, id) }
