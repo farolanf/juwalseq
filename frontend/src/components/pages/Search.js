@@ -255,8 +255,11 @@ const Search = () => {
       attrs => attribute.fetchAttributeValues(attrs.map(x => x.key))
     )
 
+    const handleRouteChange = () => {
     // init filters from query string
     queryString.withoutUpdate(query => product.initFromQuery(query))
+    }
+    handleRouteChange()
 
     // serialize filters to query string
     const disposeFilterReaction = reaction(
@@ -264,16 +267,14 @@ const Search = () => {
       () => {
         queryString.update(query => {
           query.q = product.q ? product.q : undefined
-          query.provinsi = product.filters.provinsi
-          query.kabupaten = product.filters.kabupaten
-          query.departments = product.filters.departments
-          query.categories = product.filters.categories
-          query.attributes = product.filters.attributes
+          Object.assign(query, product.filters)
         })
       })
     
+    window.addEventListener('popstate', handleRouteChange)
     
     return () => {
+      window.removeEventListener('popstate', handleRouteChange)
       disposeFilterReaction()
       disposeAttrReaction()
       disposeProvinsiReaction()
