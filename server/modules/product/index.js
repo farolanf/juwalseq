@@ -29,6 +29,7 @@ module.exports = function (app, config) {
         name: req.body.title,
         description: req.body.description,
         price: req.body.price,
+        nego: req.body.nego,
         ProvinsiId: kabupaten.ProvinsiId,
         KabupatenId: kabupaten.id,
         Images: images,
