@@ -44,7 +44,8 @@ module.exports = {
         ignore: [
           'react-dragula/dist/dragula.min.css',
           'cropperjs/dist/cropper.min.css',
-        ]
+        ],
+        whitelist: 'fa-lock'.split(' ')
       }
     },
     `gatsby-transformer-sharp`,
