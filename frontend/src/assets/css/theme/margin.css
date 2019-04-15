@@ -15,9 +15,6 @@
   &.m-ax-16 {
     @apply mr-16;
   }
-  &:last-child {
-    @apply mr-0;
-  }
 }
 
 @define-mixin margin-auto-y $default: 2 {
@@ -36,8 +33,5 @@
   }
   &.m-ay-16 {
     @apply mb-16;
-  }
-  &:last-child {
-    @apply mb-0;
   }
 }
