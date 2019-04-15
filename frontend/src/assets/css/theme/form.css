@@ -43,6 +43,9 @@
 
 .input {
   @apply w-full px-2 border border-solid border-grey rounded;
+  &.input-xs {
+    height: 1.5rem;
+  }
   &.input-sm {
     height: 1.75rem;
   }
