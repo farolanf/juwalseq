@@ -5,7 +5,7 @@ const Checkbox = ({ label, value, checked, indeterminate, id, className, style, 
 
   useEffect(() => {
     ref && (ref.indeterminate = indeterminate)
-  }, [ref])
+  }, [ref, indeterminate])
 
   const _props = {}
   if (component === 'input') {
