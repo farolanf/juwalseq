@@ -236,7 +236,6 @@ const SearchBox = observer(() => {
   const handleSubmitQuery = e => {
     e.preventDefault()
     product.setQuery(query)
-    product.tick()
     setQuery('')
   }
 
@@ -312,10 +311,11 @@ const Search = () => {
 
     // serialize filters to query string
     const disposeFilterReaction = reaction(
-      () => [product.q, JSON.stringify(product.filters)],
+      () => [product.q, product.page, JSON.stringify(product.filters)],
       () => {
         queryString.update(query => {
           query.q = product.q ? product.q : undefined
+          query.page = product.page
           Object.assign(query, product.filters)
         })
       })

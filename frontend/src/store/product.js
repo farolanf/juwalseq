@@ -22,13 +22,15 @@ class ProductStore {
   
   @observable loading = false
   @observable.ref results
-  
-  @observable ticks = 0
 
+  _initFromQuery = false
+  
   constructor () {
     reaction(
-      () => [this.q, this.ticks],
-      () => this.resetFilters() 
+      () => [this.q, JSON.stringify(this.filters)],
+      () => {
+        !this._initFromQuery && this.setPage(1)
+      }
     )
   }
 
@@ -51,19 +53,12 @@ class ProductStore {
   // we use computed instead of autorun/reaction so it will not run when not observed
   @computed
   get doSearchProducts () {
-    this.ticks
     return this.searchProducts({
       count: this.pageSize,
       offset: (this.page - 1) * this.pageSize,
       q: this.q,
       ...toJS(this.filters),
     })
-  }
-
-  // force changes
-  @action
-  tick () {
-    this.ticks++
   }
 
   @action
@@ -73,7 +68,10 @@ class ProductStore {
 
   @action
   initFromQuery (query) {
+    this._initFromQuery = true
+    setTimeout(() => { this._initFromQuery = false })
     this.q = query.q || ''
+    this.page = +query.page || 1
     this.filters.nego = typeof query.nego !== 'undefined' ? query.nego === 'true' : undefined
     this.filters.priceMin = +query.priceMin || undefined
     this.filters.priceMax = +query.priceMax || undefined
