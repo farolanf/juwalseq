@@ -112,33 +112,32 @@ const LoginModal = ({ open, onClose }) => {
               {/* set form key to force remount on mode change for autofill to work */}
               <Form key={mode} onSubmit={handleSubmit} className='mb-0'>
                 <ResetForm {...{ open, mode, resetForm }} />
-                {mode === 'login' ? (<>
+                <div hidden={mode !== 'login'}>
                   <InputField key='email' name='email' placeholder='Username atau email...' icon='user' />
                   <InputField key='password' name='password' type='password' placeholder='Password...' icon='lock' extra={
                     <div className='flex justify-end'>
                       <a className='link text-sm' onClick={modeForgot}>Lupa password?</a>
                     </div>
                   } />
-                </>) : mode === 'register' && (<>
+                </div>
+                <div hidden={mode !== 'register'}>
                   <InputField key='newEmail' name='newEmail' placeholder='Alamat email...' icon='user' />
                   <InputField key='newPassword' name='newPassword' type='password' placeholder='Password...' icon='lock' />
                   <InputField name='passwordConfirm' type='password' placeholder='Ulangi password...' icon='lock' />
-                </>)}
-                {['login', 'register'].includes(mode) && (
-                  <div className='list-y-2'>
-                    <button type='submit' className='btn btn-primary capitalize' disabled={isSubmitting}>
-                      <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> {mode}
-                    </button>
-                    <p className='text-center text-grey'>Atau masuk dengan</p>
-                    <a href={API_HOST + '/auth/facebook'} className='btn btn-primary'>
-                      <i className='fa fa-facebook' /> Facebook
-                    </a>
-                    <a href={API_HOST + '/auth/google'} className='btn btn-primary'>
-                    <i className='fa fa-google' /> Google
-                    </a>
-                  </div>
-                )}
-                {mode === 'forgot' && (<>
+                </div>
+                <div className='list-y-2' hidden={!['login', 'register'].includes(mode)}>
+                  <button type='submit' className='btn btn-primary capitalize' disabled={isSubmitting}>
+                    <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> {mode}
+                  </button>
+                  <p className='text-center text-grey'>Atau masuk dengan</p>
+                  <a href={API_HOST + '/auth/facebook'} className='btn btn-primary'>
+                    <i className='fa fa-facebook' /> Facebook
+                  </a>
+                  <a href={API_HOST + '/auth/google'} className='btn btn-primary'>
+                  <i className='fa fa-google' /> Google
+                  </a>
+                </div>
+                <div hidden={mode !== 'forgot'}>
                   {error && <div className='alert alert-danger'>{error}</div>}
                   <div className='alert'>
                     Masukkan email yang terdaftar untuk mengganti password.
@@ -149,10 +148,8 @@ const LoginModal = ({ open, onClose }) => {
                       <i className='fa fa-spinner fa-pulse' hidden={!isSubmitting} /> Reset password
                     </button>
                   </div>
-                </>)}
-                {mode === 'forgotNotice' && (
-                  <div className='alert alert-success'>{message}</div>
-                )}
+                </div>
+                <div className='alert alert-success' hidden={mode !== 'forgotNotice'}>{message}</div>
                 <div className='list-x-1 justify-end mt-4'>
                   <button type='button' className='btn' onClick={toggleMode}>
                     {messages[otherMode]}
