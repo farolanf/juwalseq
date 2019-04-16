@@ -23,7 +23,7 @@ function list ({ addUtilities, config }) {
     style[`.list-x-${i}`] = {
       display: 'flex',
       'flex-direction': 'row',
-      '& > *': {
+      '& > *:not(:last-child)': {
         'margin-right': margin[i],
       }
     }
@@ -32,7 +32,7 @@ function list ({ addUtilities, config }) {
     style[`.list-y-${i}`] = {
       display: 'flex',
       'flex-direction': 'column',
-      '& > *': {
+      '& > *:not(:last-child)': {
         'margin-bottom': margin[i],
       }
     }
