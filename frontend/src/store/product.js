@@ -32,6 +32,10 @@ class ProductStore {
         !this._initFromQuery && this.setPage(1)
       }
     )
+    reaction(
+      () => this.q,
+      () => this.resetFilters()
+    )
   }
 
   fetchDepartments = _.debounce(flow(function* () {
