@@ -66,7 +66,7 @@ const CategoryFilter = observer(({ bucket, onChange }) => {
       {bucket.categories.id.buckets.map(category => (
         <Observer key={`category-${bucket.key}-${category.key}`}>
           {() => {
-            const categoryName = product.categories ? _.find(product.categories, { id: category.key }).name : category.key
+            const categoryName = product.categories ? product.categories[category.key].name : category.key
             const selected = !!product.filters.categories.find(val => val == category.key)
             !expand && selected && setExpand(true)
             return (

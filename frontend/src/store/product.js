@@ -45,7 +45,8 @@ class ProductStore {
 
   fetchCategories = _.debounce(flow(function* () {
     if (this.categories) return
-    this.categories = yield fetchCategories().then(res => res.data)
+    const categories = yield fetchCategories().then(res => res.data)
+    this.categories = _.mapKeys(categories, x => x.id)
   }), 300)
 
   searchProducts = _.debounce(flow(function* (params) {
