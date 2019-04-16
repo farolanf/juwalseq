@@ -3,6 +3,7 @@ import pluralize from 'pluralize'
 
 class NestedGroup {
   @observable parents = {}
+  @observable children = {}
   parentsLoaded = false
   parentsLoading = false
 
@@ -23,6 +24,11 @@ class NestedGroup {
     Object.defineProperty(this, _.camelCase(parentName), {
       get () {
         return this.parents
+      }
+    })
+    Object.defineProperty(this, _.camelCase(childrenName), {
+      get () {
+        return this.children
       }
     })
     this[`get${this.childrenNameSingular}`] = (parentId, childId) => {
@@ -77,11 +83,15 @@ class NestedGroup {
     const childrens = yield this.fetchChildrenApi(...parentIds).then(res => res.data)
     parentIds.forEach(id => {
       this.parents[id].children = childrens.filter(child => child[`${this.parentNameSingular}Id`] == id)
-      this.parents[id].childrenLoading = false
       extendObservable(this.parents[id], {
         [_.camelCase(this.childrenName)]: this.parents[id].children
       })
+      this.parents[id].childrenLoading = false
     })
+    extendObservable(this.children, childrens.reduce((obj, x) => {
+      obj[x.id] = x
+      return obj
+    }, {}))
   })
 }
 

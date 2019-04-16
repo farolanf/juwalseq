@@ -1,0 +1,14 @@
+.tag {
+  @apply px-2 py-1 text-xs text-grey-darkest bg-grey-lighter rounded flex items-center cursor-pointer;
+  &::after {
+    content: "\00D7";
+    font-size: 1.2rem;
+    line-height: 0.5;
+    height: 18px;
+    margin-left: 3px;
+    padding: 2px 4px;
+  }
+  &:hover {
+    @apply bg-grey-lightest text-grey-dark;
+  }
+}

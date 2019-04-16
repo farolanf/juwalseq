@@ -237,6 +237,68 @@ const ProductList = ({ results, pageSize, currentPage, totalPages, onChangePage 
   )
 }
 
+const FilterTag = ({ label, ...props }) => {
+  return <span className='tag mb-2' {...props}>{label}</span>
+}
+
+const ActiveFilters = observer(() => {
+  const { product, region, attribute } = useStore()
+
+  const priceMin = Intl.NumberFormat().format(product.filters.priceMin)
+  const priceMax = Intl.NumberFormat().format(product.filters.priceMax)
+
+  const createHandleRemoveProvinsi = id => () => product.removeProvinsi(id)
+  
+  const createHandleRemoveKabupaten = id => () => product.removeKabupaten(id)
+
+  const createHandleRemoveCategory = id => () => product.removeCategory(id)
+
+  const createHandleRemoveAttribute = attr => () => product.removeAttribute(attr.id, attr.valueId)
+
+  const handleRemoveNego = () => product.setNego()
+
+  const handleRemovePriceMin = () => product.setPriceMin()
+
+  const handleRemovePriceMax = () => product.setPriceMax()
+
+  const handleReset = () => product.resetFilters()
+
+  return (
+    <fieldset className='border border-solid border-grey-lighter mb-2 relative' hidden={!product.hasFilters}>
+      <legend className='ml-2 text-xs text-grey-dark'>Filter</legend>
+      <span className='absolute pin-t pin-r mt-2 p-1 text-xs text-grey-dark hover:bg-grey-lightest cursor-pointer fa fa-remove' onClick={handleReset} />
+      <div className='list-x-2 flex-wrap pt-2 pb-1 px-2'>
+        {product.filters.provinsi.map(id => (
+          <FilterTag label={_.get(region.provinsis, [id, 'name'])} key={`provinsi-${id}`} onClick={createHandleRemoveProvinsi(id)} />
+        ))}
+        {product.filters.kabupaten.map(id => (
+          <FilterTag label={_.get(region.kabupatens, [id, 'name'])} key={`kabupaten-${id}`} onClick={createHandleRemoveKabupaten(id)} />
+        ))}
+        {product.filters.categories.map(id => (
+          <FilterTag label={_.get(product.categories, [id, 'name'])} key={`category-${id}`} onClick={createHandleRemoveCategory(id)} />
+        ))}
+        {product.filters.attributes.map(attr => {
+          const name = _.get(attribute.attributes, [attr.id, 'name'])
+          const value = _.get(attribute.attributeValues, [attr.valueId, 'value'])
+          const title = `${name}: ${value}`
+          return (
+            <FilterTag label={title} key={`attribute-${attr.id}-${attr.valueId}`} onClick={createHandleRemoveAttribute(attr)} />
+          )
+        })}
+        {typeof product.filters.nego !== 'undefined' && (
+          <FilterTag label={product.filters.nego ? 'Bisa nego' : 'Tidak nego'} key='nego' onClick={handleRemoveNego} />
+        )}
+        {typeof product.filters.priceMin !== 'undefined' && (
+          <FilterTag label={`Harga min: ${priceMin}`} key='price-min' onClick={handleRemovePriceMin} />
+        )}
+        {typeof product.filters.priceMax !== 'undefined' && (
+          <FilterTag label={`Harga max: ${priceMax}`} key='price-max' onClick={handleRemovePriceMax} />
+        )}
+      </div>
+    </fieldset>
+  )
+})
+
 const SearchBox = observer(() => {
   const [query, setQuery] = useState('')
   const { product } = useStore()
@@ -251,20 +313,21 @@ const SearchBox = observer(() => {
 
   return (
     <div className='mb-2'>
-      <div className='list-y-2 md:list-x-1 md:items-center'>
+      <div className='list-y-2 mb-2 md:mb-0 md:list-x-1'>
         <div className='form-control flex-grow'>
           <input className='input input-sm' placeholder='Kota' aria-label='Kota' />
         </div>
         <div className='form-control flex-grow'>
           <input className='input input-sm' placeholder='Kategori' aria-label='Kategori' />
         </div>
-        <form className='flex-grow' onSubmit={handleSubmitQuery}>
+        <form className='flex-grow mb-0' onSubmit={handleSubmitQuery}>
           <div className='form-control'>
             <span className='fa fa-search input-prefix px-3' />
             <input className='input input-sm pl-9' placeholder='Cari...' value={query} onChange={handleChangeQuery} aria-label='Cari' />
           </div>
         </form>
       </div>
+      <ActiveFilters />
       {product.q && (
         <div className='text-xs text-grey-dark'>
           <div>

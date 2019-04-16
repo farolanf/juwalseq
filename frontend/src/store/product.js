@@ -100,6 +100,11 @@ class ProductStore {
       attributes: [],
     }
   }
+
+  @computed
+  get hasFilters () {
+    return _.some(this.filters, x => typeof x !== 'undefined' && (!Array.isArray(x) || x.length))
+  }
   
   @action
   clearFilters () {
