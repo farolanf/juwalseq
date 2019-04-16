@@ -101,6 +101,16 @@ const PriceFilter = ({ onChangeNego, onChangePriceMin, onChangePriceMax }) => {
     onChangePriceMax(priceMax)
   }
 
+  useEffect(() => {
+    return reaction(
+      () => [product.filters.priceMin, product.filters.priceMax],
+      ([priceMin, priceMax]) => {
+        setPriceMin(priceMin || '')
+        setPriceMax(priceMax || '')
+      }
+    )
+  }, [])
+
   return (<>
     <Checkbox label='Bisa nego' id='filter-nego' onChange={e => onChangeNego(e.target.checked)} value={product.filters.nego || false} indeterminate={product.filters.nego === undefined} className='text-xs' />
     <div className='flex items-center text-xs mb-1'>
