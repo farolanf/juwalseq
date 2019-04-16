@@ -156,25 +156,10 @@ function buildQuery (params) {
     ),
     query: {
       bool: {
-        must: searchQuery(params.q),
-        filter: {
-          bool: {
-            should: filterQuery(params)
-          }
-        }
+        must: filterQuery(params),
       }
     },
-    aggs: {
-      all: {
-        global: {},
-        aggs: {
-          search: {
-            filter: searchQuery(params.q),
-            aggs: aggs()
-          },
-        }
-      }
-    }
+    aggs: aggs()
   }
   return search
 }
@@ -189,8 +174,9 @@ function searchQuery (q) {
 
 function filterQuery (params) {
   return [].concat(
-    ...priceQuery(params),
-    ...regionQuery(params),
+    searchQuery(params.q),
+    priceQuery(params),
+    regionQuery(params),
     (params.departments && [departmentsQuery(params.departments)] || []),
     (params.categories && [categoriesQuery(params.categories)] || []),
     (params.attributes && [attributesQuery(params.attributes)] || [])

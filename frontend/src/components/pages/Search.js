@@ -38,7 +38,7 @@ const RegionFilter = observer(({ bucket, onChange }) => {
   const { product, region } = useStore()
   const provinsiName = region.provinsis[bucket.key] && region.provinsis[bucket.key].name || bucket.key
   const provinsiSelected = !!product.filters.provinsi.find(x => x == bucket.key)
-  const kabupatenBuckets = _.get(product.results, 'aggregations.all.search.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
+  const kabupatenBuckets = _.get(product.results, 'aggregations.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
   !expand && provinsiSelected && setExpand(true)  
 
   return (
@@ -84,8 +84,8 @@ const PriceFilter = ({ onChangeNego, onChangePriceMin, onChangePriceMax }) => {
   const [priceMax, setPriceMax] = useState('')
   const { product } = useStore()
   
-  const min = _.get(product.results, 'aggregations.all.search.min_price.value')
-  const max = _.get(product.results, 'aggregations.all.search.max_price.value')
+  const min = _.get(product.results, 'aggregations.min_price.value')
+  const max = _.get(product.results, 'aggregations.max_price.value')
 
   const handleChangePriceMin = e => setPriceMin(e.target.value)
 
@@ -182,11 +182,11 @@ const Filter = ({ results }) => {
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
       {hits && <div className='text-xs text-grey-darker'>Daerah</div>}
-      {hits && results.aggregations.all.search.provinsi.buckets.map(bucket => (
+      {hits && results.aggregations.provinsi.buckets.map(bucket => (
         <RegionFilter key={bucket.key} bucket={bucket} onChange={handleChangeRegion} />
       ))}
       {hits && <div className='text-xs text-grey-darker mt-1'>Kategori</div>}
-      {hits && results.aggregations.all.search.departments.id.buckets.map(bucket => (
+      {hits && results.aggregations.departments.id.buckets.map(bucket => (
         <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
       ))}
       {hits && (<>
@@ -194,7 +194,7 @@ const Filter = ({ results }) => {
         <PriceFilter onChangeNego={handleChangeNego} onChangePriceMin={handleChangePriceMin} onChangePriceMax={handleChangePriceMax} />
       </>)}
       {hits && <div className='text-xs text-grey-darker mt-1'>Spek</div>}
-      {hits && results.aggregations.all.search.attributes.id.buckets.map(bucket => (
+      {hits && results.aggregations.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
       {!hits && <Placeholder numLines={20} />}
@@ -304,12 +304,12 @@ const Search = () => {
     attribute.fetchAttributes()
 
     const disposeProvinsiReaction = reaction(
-      () => [...(_.get(product.results, 'aggregations.all.search.provinsi.buckets') || [])],
+      () => [...(_.get(product.results, 'aggregations.provinsi.buckets') || [])],
       provinsis => region.fetchKabupatens(provinsis.map(x => x.key))
     )
 
     const disposeAttrReaction = reaction(
-      () => [...(_.get(product.results, 'aggregations.all.search.attributes.id.buckets') || [])],
+      () => [...(_.get(product.results, 'aggregations.attributes.id.buckets') || [])],
       attrs => attribute.fetchAttributeValues(attrs.map(x => x.key))
     )
 
