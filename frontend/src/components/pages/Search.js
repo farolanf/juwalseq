@@ -93,12 +93,12 @@ const PriceFilter = ({ onChangeNego, onChangePriceMin, onChangePriceMax }) => {
 
   const handleSubmitPriceMin = e => {
     e.preventDefault()
-    onChangePriceMin(priceMin)
+    onChangePriceMin(priceMin || undefined)
   }
 
   const handleSubmitPriceMax = e => {
     e.preventDefault()
-    onChangePriceMax(priceMax)
+    onChangePriceMax(priceMax || undefined)
   }
 
   useEffect(() => {
