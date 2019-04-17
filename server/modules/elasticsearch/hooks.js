@@ -13,6 +13,11 @@ function initHooks (Doc) {
   _.each(Doc.hooks, (definition, name) => {
     const model = db[name]
     model.addHook('afterUpdate', async instance => {
+      handler(instance)
+      // eslint-disable-next-line
+      console.log('afterUpdate', name)
+    })
+    async function handler (instance) {
       const records = await Doc.model.findAll({
         include: definition.include(instance)
       })
@@ -23,9 +28,7 @@ function initHooks (Doc) {
         include: Doc.associations.include
       })
       _records.forEach(updateRecord(Doc))
-      // eslint-disable-next-line
-      console.log('Reindex', _records.length, Doc.type, 'by', name)
-    })
+    }
   })
 }
 
@@ -100,5 +103,8 @@ function deleteRecord (Doc) {
 }
 
 module.exports = {
-  createRecord
+  createRecord,
+  updateRecord,
+  createFullRecord,
+  updateFullRecord,
 }
