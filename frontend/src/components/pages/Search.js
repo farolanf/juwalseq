@@ -33,49 +33,66 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
   )
 }
 
-const RegionFilter = observer(({ bucket, onChange }) => {
-  const [expand, setExpand] = useState(false)
+const RegionFilter = observer(({ buckets, onChange }) => {
   const { product, region } = useStore()
-  const provinsiName = region.provinsis[bucket.key] && region.provinsis[bucket.key].name || bucket.key
-  const provinsiSelected = !!product.filters.provinsi.find(x => x == bucket.key)
-  const kabupatenBuckets = _.get(product.results, 'aggregations.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(bucket.key, kabBucket.key))
-  !expand && provinsiSelected && setExpand(true)  
+
+  const hasProvinsiFilter = product.filters.provinsi.length > 0
+  const hasKabupatenFilter = product.filters.kabupaten.length > 0
+
+  const provinsiId = product.filters.provinsi.length && product.filters.provinsi[0]
+  const kabupatenId = product.filters.kabupaten.length && product.filters.kabupaten[0]
+  const current = provinsiId ? provinsiId : kabupatenId ? `kabupaten-${kabupatenId}` : ''
+
+  const getKabupatenName = id => _.get(region.kabupatens, [id, 'name'], id)
+
+  const handleChange = e => {
+    const provinsiId = e.target.value.startsWith('kabupaten-') ? undefined : e.target.value
+    const kabupatenId = e.target.value.startsWith('kabupaten-') ? e.target.value.replace('kabupaten-', '') : undefined
+    onChange(provinsiId, kabupatenId, true)
+  }
 
   return (
-    <FilterGroup title={provinsiName} count={bucket.doc_count} expand={expand}>
-      <Checkbox label={`Seluruh ${provinsiName} (${bucket.doc_count})`} id={`region-${bucket.key}`} onChange={() => onChange(bucket.key, undefined, !provinsiSelected)} value={provinsiSelected} className='text-xs' />
-      {kabupatenBuckets && kabupatenBuckets.map(kabBucket => {
-        const id = `region-${bucket.key}-${kabBucket.key}`
-        const kabupaten = region.getKabupaten(bucket.key, kabBucket.key)
-        const kabSelected = !!product.filters.kabupaten.find(x => x == kabBucket.key)
-        !expand && kabSelected && setExpand(true)
-        return (
-          <Checkbox key={id} label={`${kabupaten && kabupaten.name} (${kabBucket.doc_count})`} id={id} onChange={e => onChange(bucket.key, kabBucket.key, e.target.checked)} value={kabSelected} className='text-xs' />
-        )
+    <select className='select select-sm mb-1' value={current} onChange={handleChange}>
+      <option>-- Pilih lokasi --</option>
+      {buckets.map(provinsi => {
+        const provinsiName = _.get(region.provinsis, [provinsi.key, 'name'], provinsi.key)
+        const kabupatenBuckets = _.get(product.results, 'aggregations.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(provinsi.key, kabBucket.key))
+        return (<React.Fragment key={`provinsi-${provinsi.key}`}>
+          <optgroup label={provinsiName}>
+            {!hasKabupatenFilter && <option value={provinsi.key}>Semua di {provinsiName} ({provinsi.doc_count})</option>}
+            {!hasProvinsiFilter && kabupatenBuckets.map(kabupaten => (
+              <option key={`kabupaten-${kabupaten.key}`} value={`kabupaten-${kabupaten.key}`}>{getKabupatenName(kabupaten.key)} ({kabupaten.doc_count})</option>
+            ))}
+          </optgroup>
+        </React.Fragment>)
       })}
-    </FilterGroup>
+    </select>
   )
 })
 
-const CategoryFilter = observer(({ bucket, onChange }) => {
-  const [expand, setExpand] = useState(false)
-  const { product } = useStore()
-  const departmentName = product.departments ? _.find(product.departments, { id: bucket.key }).name : bucket.key
+const CategoryFilter = observer(({ buckets, onChange }) => {
+  const { product, category } = useStore()
+
+  const current = product.filters.categories.length && product.filters.categories[0]
+
+  const getCategoryName = id => _.get(category.categories, [id, 'name'], id)
+
+  const handleChange = e => onChange(e.target.value || undefined)
+
   return (
-    <FilterGroup title={departmentName} count={bucket.doc_count} expand={expand}>
-      {bucket.categories.id.buckets.map(category => (
-        <Observer key={`category-${bucket.key}-${category.key}`}>
-          {() => {
-            const categoryName = product.categories ? product.categories[category.key].name : category.key
-            const selected = !!product.filters.categories.find(val => val == category.key)
-            !expand && selected && setExpand(true)
-            return (
-              <Checkbox label={`${categoryName} (${category.doc_count})`} id={`category-${bucket.key}-${category.key}`} onChange={e => onChange(bucket.key, category.key, e.target.checked)} value={selected} className='text-xs' />
-            )
-          }}
-        </Observer>
-      ))}
-    </FilterGroup>
+    <select className='select select-sm' value={current} onChange={handleChange}>
+      <option>-- Pilih kategori --</option>
+      {buckets.map(department => {
+        const departmentName = _.get(category.departments, [department.key, 'name'], department.key)
+        return (<React.Fragment key={`department-${department.key}`}>
+          <optgroup label={departmentName}>
+            {department.categories.id.buckets.map(category => (
+              <option key={`category-${category.key}`} value={category.key}>{getCategoryName(category.key)} ({category.doc_count})</option>
+            ))}
+          </optgroup>
+        </React.Fragment>)
+      })}
+    </select>
   )
 })
 
@@ -154,20 +171,14 @@ const Filter = ({ results }) => {
   const hits = results && results.hits && !!results.hits.total && results.hits.hits
 
   const handleChangeRegion = (provinsi, kabupaten, enable) => {
-    if (provinsi && kabupaten) {
-      enable ? product.addKabupaten(kabupaten) : product.removeKabupaten(kabupaten)
-    } else if (provinsi) {
+    if (provinsi) {
       enable ? product.addProvinsi(provinsi) : product.removeProvinsi(provinsi)
+    } else if (kabupaten) {
+      enable ? product.addKabupaten(kabupaten) : product.removeKabupaten(kabupaten)
     }
   }
 
-  const handleChangeCategory = (department, category, enable) => {
-    if (enable) {
-      product.addCategory(category)
-    } else {
-      product.removeCategory(category)
-    }
-  }
+  const handleChangeCategory = category => product.addCategory(category)
 
   const handleChangeAttribute = (attrId, valueId, enable) => {
     enable ? product.addAttribute(attrId, valueId) : product.removeAttribute(attrId, valueId)
@@ -181,14 +192,12 @@ const Filter = ({ results }) => {
 
   return (
     <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
-      {hits && <div className='text-xs text-grey-darker'>Daerah</div>}
-      {hits && results.aggregations.provinsi.buckets.map(bucket => (
-        <RegionFilter key={bucket.key} bucket={bucket} onChange={handleChangeRegion} />
-      ))}
-      {hits && <div className='text-xs text-grey-darker mt-1'>Kategori</div>}
-      {hits && results.aggregations.departments.id.buckets.map(bucket => (
-        <CategoryFilter key={bucket.key} bucket={bucket} onChange={handleChangeCategory} />
-      ))}
+      {hits && (
+        <RegionFilter buckets={results.aggregations.provinsi.buckets} onChange={handleChangeRegion} />
+      )}
+      {hits && (
+        <CategoryFilter buckets={results.aggregations.departments.id.buckets} onChange={handleChangeCategory} />
+      )}
       {hits && (<>
         <div className='text-xs text-grey-darker mt-1'>Harga</div>
         <PriceFilter onChangeNego={handleChangeNego} onChangePriceMin={handleChangePriceMin} onChangePriceMax={handleChangePriceMax} />
@@ -242,7 +251,7 @@ const FilterTag = ({ label, ...props }) => {
 }
 
 const ActiveFilters = observer(() => {
-  const { product, region, attribute } = useStore()
+  const { product, region, category, attribute } = useStore()
 
   const priceMin = Intl.NumberFormat().format(product.filters.priceMin)
   const priceMax = Intl.NumberFormat().format(product.filters.priceMax)
@@ -275,7 +284,7 @@ const ActiveFilters = observer(() => {
           <FilterTag label={_.get(region.kabupatens, [id, 'name'])} key={`kabupaten-${id}`} onClick={createHandleRemoveKabupaten(id)} />
         ))}
         {product.filters.categories.map(id => (
-          <FilterTag label={_.get(product.categories, [id, 'name'])} key={`category-${id}`} onClick={createHandleRemoveCategory(id)} />
+          <FilterTag label={_.get(category.categories, [id, 'name'])} key={`category-${id}`} onClick={createHandleRemoveCategory(id)} />
         ))}
         {product.filters.attributes.map(attr => {
           const name = _.get(attribute.attributes, [attr.id, 'name'])
@@ -354,21 +363,25 @@ const SearchBox = observer(() => {
 })
 
 const Search = () => {
-  const { product, attribute, region } = useStore()
+  const { product, attribute, region, category } = useStore()
 
   product.doSearchProducts
 
   useEffect(() => {
-    product.fetchDepartments()
-    product.fetchCategories()
     product.clearFilters()
 
+    category.fetchDepartments()
     region.fetchProvinsis()
     attribute.fetchAttributes()
 
     const disposeProvinsiReaction = reaction(
       () => [...(_.get(product.results, 'aggregations.provinsi.buckets') || [])],
       provinsis => region.fetchKabupatens(provinsis.map(x => x.key))
+    )
+
+    const disposeCategoryReaction = reaction(
+      () => [...(_.get(product.results, 'aggregations.departments.id.buckets') || [])],
+      departments => category.fetchCategories(departments.map(x => x.key))
     )
 
     const disposeAttrReaction = reaction(
@@ -399,6 +412,7 @@ const Search = () => {
       window.removeEventListener('popstate', handleRouteChange)
       disposeFilterReaction()
       disposeAttrReaction()
+      disposeCategoryReaction()
       disposeProvinsiReaction()
     }
   }, [])

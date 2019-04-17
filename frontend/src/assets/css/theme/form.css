@@ -74,5 +74,13 @@
   &.has-error {
     @apply border-2 border-red-dark;
   }
+  &.select-xs {
+    @apply text-sm;
+    height: 1.5rem;
+  }
+  &.select-sm {
+    @apply text-sm;
+    height: 1.75rem;
+  }
   height: 2rem;
 }
