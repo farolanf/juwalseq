@@ -24,7 +24,7 @@ const FilterGroup = ({ title, count, expand = true, children }) => {
   }, [expand])
 
   return (
-    <div className='mb-1'>
+    <div className='mb-2'>
       <div className='text-xs text-grey-darker hover:text-grey-darkest cursor-pointer' onClick={handleClickTitle}>
         <i className={cn('fa text-xs', show ? 'fa-minus' : 'fa-plus')} /> {title} ({count})
       </div>
@@ -55,7 +55,7 @@ const RegionFilter = observer(({ buckets, onChange }) => {
   }
 
   return (
-    <select className='select select-sm mb-1' value={current} onChange={handleChange}>
+    <select className='select select-sm mb-2' value={current} onChange={handleChange}>
       <option value=''>-- Pilih lokasi --</option>
       {buckets.sort(sortBucketByName(region.provinsis)).map(provinsi => {
         const provinsiName = _.get(region.provinsis, [provinsi.key, 'name'], provinsi.key)
@@ -134,7 +134,7 @@ const PriceFilter = ({ onChangeNego, onChangePriceMin, onChangePriceMax }) => {
   }, [])
 
   return (<>
-    <Checkbox label='Bisa nego' id='filter-nego' onChange={e => onChangeNego(e.target.checked)} value={product.filters.nego || false} indeterminate={product.filters.nego === undefined} className='text-xs' />
+    <Checkbox label='Bisa nego' id='filter-nego' onChange={e => onChangeNego(e.target.checked)} value={product.filters.nego || false} indeterminate={product.filters.nego === undefined} className='text-xs mb-1' />
     <div className='flex items-center text-xs mb-1'>
       <label htmlFor='filter-price-min' className='w-6 mr-2 text-right'>Min</label>
       <form onSubmit={handleSubmitPriceMin} className='mb-0'>
@@ -196,7 +196,7 @@ const Filter = ({ results }) => {
   const handleChangePriceMax = val => product.setPriceMax(val)
 
   return (
-    <div className='sidebar mb-2 pr-2 md:mb-0 md:float-left' style={{ top: 8 }}>
+    <div className='sidebar mb-2 pr-3 md:mb-0 md:float-left' style={{ top: 8 }}>
       {hits && (
         <RegionFilter buckets={results.aggregations.provinsi.buckets} onChange={handleChangeRegion} />
       )}
@@ -204,10 +204,10 @@ const Filter = ({ results }) => {
         <CategoryFilter buckets={results.aggregations.departments.id.buckets} onChange={handleChangeCategory} />
       )}
       {hits && (<>
-        <div className='text-xs text-grey-darker mt-1'>Harga</div>
+        <div className='text-xs text-grey-darker mt-3 mb-1'>Harga</div>
         <PriceFilter onChangeNego={handleChangeNego} onChangePriceMin={handleChangePriceMin} onChangePriceMax={handleChangePriceMax} />
       </>)}
-      {hits && <div className='text-xs text-grey-darker mt-1'>Spek</div>}
+      {hits && <div className='text-xs text-grey-darker mt-3 mb-1'>Spek</div>}
       {hits && results.aggregations.attributes.id.buckets.map(bucket => (
         <AttributeFilter key={bucket.key} bucket={bucket} onChange={handleChangeAttribute} />
       ))}
