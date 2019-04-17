@@ -3,7 +3,10 @@ const multer = require('multer')
 const upload = multer({ dest: '/tmp' })
 
 const { getURL } = require('@lib/upload')
-const { File, Product, Kabupaten, sequelize } = require('@db')
+const { File, Product, Kabupaten, Category, sequelize } = require('@db')
+
+const Doc = require('../elasticsearch/docs').products
+const { createFullRecord } = require('../elasticsearch/hooks')
 
 module.exports = function (app, config) {
   const { modules: { uploadfs } } = app
@@ -23,8 +26,9 @@ module.exports = function (app, config) {
           return { url: encodeURI(url), UserId: req.user.id }
         })
       )
+      const category = await Category.findByPk(req.body.categoryId)
       const kabupaten = await Kabupaten.findByPk(req.body.kabupatenId)
-      await Product.create({
+      const product = await Product.create({
         UserId: req.user.id,
         name: req.body.title,
         description: req.body.description,
@@ -34,11 +38,16 @@ module.exports = function (app, config) {
         KabupatenId: kabupaten.id,
         Images: images,
       }, {
-        include: {
-          model: File,
-          as: 'Images',
-        }
+        hooks: false,
+        include: [
+          {
+            model: File,
+            as: 'Images',
+          },
+        ],
       })
+      await product.addCategory(category)
+      await createFullRecord(Doc)(product)
       res.sendStatus(200)
     })
   })

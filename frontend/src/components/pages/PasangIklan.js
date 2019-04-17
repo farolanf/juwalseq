@@ -8,6 +8,7 @@ import InputField from '$comp/InputField'
 import FormikCheckbox from '$comp/FormikCheckbox'
 import FormField from '$comp/FormField'
 import ImageUploads from '$comp/ImageUploads'
+import CategoryPicker from '$comp/CategoryPicker'
 
 import { addProduct } from '$api/product'
 import { createBlob } from '$lib/dom'
@@ -69,6 +70,7 @@ const PasangIklan = () => {
     price: process.env.NODE_ENV !== 'production' ? 350000 : '',
     nego: true,
     images,
+    categoryId: '',
     provinsiId: '',
     kabupatenId: '',
   })
@@ -120,6 +122,7 @@ const PasangIklan = () => {
               {error && <div className='alert alert-danger'>{error}</div>}
               {message && <div className='alert alert-success'>{message}</div>}
               <Form className='form-horizontal field-label-right'>
+                <CategoryPicker Component={InputField} component='select' name='categoryId' label='Kategori' />
                 <InputField name='title' id='edit-title' label='Judul' placeholder='Judul iklan...' 
                 help='Pilih judul yang singkat dan jelas.' full maxLength={titleMax} extra={(
                   <span className='text-xs text-grey'>{(values.title || '').length}/{titleMax}</span>
