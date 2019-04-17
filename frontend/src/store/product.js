@@ -1,11 +1,8 @@
 import _ from 'lodash'
 import { observable, action, flow, computed, reaction, toJS } from 'mobx'
-import { searchProducts, fetchDepartments, fetchCategories } from '$api/product'
+import { searchProducts } from '$api/product'
 
 class ProductStore {
-  @observable.ref departments
-  @observable.ref categories
-
   @observable pageSize = 15
   @observable page = 1
   @observable q = ''
@@ -37,17 +34,6 @@ class ProductStore {
       () => this.resetFilters()
     )
   }
-
-  fetchDepartments = _.debounce(flow(function* () {
-    if (this.departments) return
-    this.departments = yield fetchDepartments().then(res => res.data)
-  }), 300)
-
-  fetchCategories = _.debounce(flow(function* () {
-    if (this.categories) return
-    const categories = yield fetchCategories().then(res => res.data)
-    this.categories = _.mapKeys(categories, x => x.id)
-  }), 300)
 
   searchProducts = _.debounce(flow(function* (params) {
     this.loading = true
