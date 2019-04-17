@@ -45,6 +45,10 @@ const RegionFilter = observer(({ buckets, onChange }) => {
 
   const getKabupatenName = id => _.get(region.kabupatens, [id, 'name'], id)
 
+  const sortProvinsi = (a, b) => _.get(region.provinsis, [a.key, 'name'], ''+a.key).localeCompare(_.get(region.provinsis, [b.key, 'name'], ''+b.key))
+
+  const sortKabupaten = (a, b) => _.get(region.kabupatens, [a.key, 'name'], ''+a.key).localeCompare(_.get(region.kabupatens, [b.key, 'name'], ''+b.key))
+
   const handleChange = e => {
     if (!e.target.value) return
     const provinsiId = e.target.value.startsWith('kabupaten-') ? undefined : e.target.value
@@ -55,12 +59,13 @@ const RegionFilter = observer(({ buckets, onChange }) => {
   return (
     <select className='select select-sm mb-1' value={current} onChange={handleChange}>
       <option value=''>-- Pilih lokasi --</option>
+      {buckets.sort(sortProvinsi).map(provinsi => {
         const provinsiName = _.get(region.provinsis, [provinsi.key, 'name'], provinsi.key)
         const kabupatenBuckets = _.get(product.results, 'aggregations.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(provinsi.key, kabBucket.key))
         return (<React.Fragment key={`provinsi-${provinsi.key}`}>
           <optgroup label={provinsiName}>
-            {!hasKabupatenFilter && <option value={provinsi.key}>Semua di {provinsiName} ({provinsi.doc_count})</option>}
-            {!hasProvinsiFilter && kabupatenBuckets.map(kabupaten => (
+            {!hasKabupatenFilter && <option value={provinsi.key}>Seluruh {provinsiName} ({provinsi.doc_count})</option>}
+            {!hasProvinsiFilter && kabupatenBuckets.sort(sortKabupaten).map(kabupaten => (
               <option key={`kabupaten-${kabupaten.key}`} value={`kabupaten-${kabupaten.key}`}>{getKabupatenName(kabupaten.key)} ({kabupaten.doc_count})</option>
             ))}
           </optgroup>
