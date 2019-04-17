@@ -317,6 +317,8 @@ const SearchBox = observer(() => {
   const [query, setQuery] = useState('')
   const { product } = useStore()
 
+  const totalFormat = Intl.NumberFormat().format(product.results ? product.results.hits.total : 0)
+
   const handleChangeQuery = e => setQuery(e.target.value)
 
   const handleSubmitQuery = e => {
@@ -342,27 +344,25 @@ const SearchBox = observer(() => {
         </form>
       </div>
       <ActiveFilters />
-      {product.q && (
-        <div className='text-xs text-grey-dark'>
+      <div className='text-xs text-grey-dark'>
+        <div hidden={product.q || !product.hasFilters}>
+          <div hidden={!product.isEmpty} className='text-red'>Tidak ada hasil, ubah filter...</div>
+          <div hidden={product.isEmpty}>Ditemukan <b className='text-grey-darkest'>{totalFormat}</b> produk yang cocok dalam {product.results && product.results.took} ms</div>
+        </div>
+        <div hidden={!product.q}>
           <div>
-            {product.loading ? (
-              <div>
-                Mencari <b className='text-grey-darkest'>{product.q}</b>... <i className='fa fa-spinner fa-pulse text-sm' />
-              </div>
-            ) : (
-              !product.results || !product.results.hits.total ? (
-                <div>
-                  <b className='text-grey-darkest'>{product.q}</b> <span className='text-red'>tidak ditemukan</span>
-                </div>
-              ) : (
-                <div>
-                  <b className='text-grey-darkest'>{product.q}</b> ditemukan dalam {product.results.took} ms
-                </div>
-              )
-            )}
+            <div hidden={!product.loading}>
+              Mencari <b className='text-grey-darkest'>{product.q}</b>... <i className='fa fa-spinner fa-pulse text-sm' />
+            </div>
+            <div hidden={product.results && product.results.hits.total}>
+              <b className='text-grey-darkest'>{product.q}</b> <span className='text-red'>tidak ditemukan</span>
+            </div>
+            <div hidden={!product.results || !product.results.hits.total}>
+              <b className='text-grey-darkest'>{product.q}</b> ditemukan pada <b className='text-grey-darkest'>{totalFormat}</b> produk dalam {product.results && product.results.took} ms
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 })

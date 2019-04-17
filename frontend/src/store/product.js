@@ -52,6 +52,11 @@ class ProductStore {
     })
   }
 
+  @computed
+  get isEmpty () {
+    return !this.results || this.results.hits && !this.results.hits.total
+  }
+
   @action
   setPage (num) {
     this.page = num
