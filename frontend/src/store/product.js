@@ -20,6 +20,9 @@ class ProductStore {
   @observable loading = false
   @observable.ref results
 
+  // increase this to force execution of dependent reactions
+  @observable ticks = 0
+
   _initFromQuery = false
   
   constructor () {
@@ -44,6 +47,7 @@ class ProductStore {
   // we use computed instead of autorun/reaction so it will not run when not observed
   @computed
   get doSearchProducts () {
+    this.ticks
     return this.searchProducts({
       count: this.pageSize,
       offset: (this.page - 1) * this.pageSize,
@@ -55,6 +59,11 @@ class ProductStore {
   @computed
   get isEmpty () {
     return !this.results || this.results.hits && !this.results.hits.total
+  }
+
+  @action
+  tick () {
+    this.ticks++
   }
 
   @action

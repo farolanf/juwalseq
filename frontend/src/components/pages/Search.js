@@ -324,6 +324,7 @@ const SearchBox = observer(() => {
   const handleSubmitQuery = e => {
     e.preventDefault()
     product.setQuery(query)
+    product.tick()
     setQuery('')
   }
 
