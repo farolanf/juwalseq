@@ -46,6 +46,7 @@ const RegionFilter = observer(({ buckets, onChange }) => {
   const getKabupatenName = id => _.get(region.kabupatens, [id, 'name'], id)
 
   const handleChange = e => {
+    if (!e.target.value) return
     const provinsiId = e.target.value.startsWith('kabupaten-') ? undefined : e.target.value
     const kabupatenId = e.target.value.startsWith('kabupaten-') ? e.target.value.replace('kabupaten-', '') : undefined
     onChange(provinsiId, kabupatenId, true)
@@ -53,8 +54,7 @@ const RegionFilter = observer(({ buckets, onChange }) => {
 
   return (
     <select className='select select-sm mb-1' value={current} onChange={handleChange}>
-      <option>-- Pilih lokasi --</option>
-      {buckets.map(provinsi => {
+      <option value=''>-- Pilih lokasi --</option>
         const provinsiName = _.get(region.provinsis, [provinsi.key, 'name'], provinsi.key)
         const kabupatenBuckets = _.get(product.results, 'aggregations.kabupaten.buckets', []).filter(kabBucket => region.getKabupaten(provinsi.key, kabBucket.key))
         return (<React.Fragment key={`provinsi-${provinsi.key}`}>
@@ -77,11 +77,11 @@ const CategoryFilter = observer(({ buckets, onChange }) => {
 
   const getCategoryName = id => _.get(category.categories, [id, 'name'], id)
 
-  const handleChange = e => onChange(e.target.value || undefined)
+  const handleChange = e => e.target.value && onChange(e.target.value || undefined)
 
   return (
     <select className='select select-sm' value={current} onChange={handleChange}>
-      <option>-- Pilih kategori --</option>
+      <option value=''>-- Pilih kategori --</option>
       {buckets.map(department => {
         const departmentName = _.get(category.departments, [department.key, 'name'], department.key)
         return (<React.Fragment key={`department-${department.key}`}>
