@@ -4,6 +4,7 @@ import { StaticQuery, graphql } from "gatsby"
 
 import SEO from '$comp/SEO'
 import Header from './Header'
+import Footer from './Footer'
 
 const PageLayout = ({ children }) => (
   <StaticQuery
@@ -24,6 +25,7 @@ const PageLayout = ({ children }) => (
         <div className='container'>
           <main className='py-2 md:py-4'>{children}</main>
         </div>
+        <Footer />
       </div>
     )}
   />
